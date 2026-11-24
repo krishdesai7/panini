@@ -5,6 +5,7 @@
 **Goal:** Build a Pāṇinian derivation engine for laṭ/laṅ of seven bhvādi roots, with a local (restricted-siddha) resolver, a one-pass tripādī, a text trace, and a generated HTML explorer.
 
 **Architecture:**
+
 - Rules are declarative `Rule` objects. Each has `find`/`rewrite` functions over an immutable `State`, plus hand-annotated `blocks` lists.
 - An engine loop collects candidates, and a pluggable `Resolver` picks one: blocking → narrow para → nitya → commuting tie-break, else `UnresolvedConflict`.
 - After the main body, the tripādī runs once in sūtra order.
@@ -38,7 +39,7 @@
 
 ## File map
 
-```
+```text
 pyproject.toml                    dev group, script entry panini = "panini.cli:main"
 .gitignore                        build/, .venv/, __pycache__/, .pytest_cache/
 src/panini/
@@ -76,23 +77,25 @@ README.md                         usage + known limitations
 ### Task 1: Scaffold, transliteration, sound classes
 
 **Files:**
+
 - Modify: `pyproject.toml`, `src/panini/__init__.py`
 - Create: `.gitignore`, `src/panini/translit.py`, `src/panini/sounds.py`
 - Test: `tests/test_translit.py`, `tests/test_sounds.py`
 
 **Interfaces:**
+
 - Produces:
-  - `iast_to_slp1(text: str) -> str` and `slp1_to_iast(text: str) -> str`. Both NFC-normalize their input. `~` passes through unchanged.
-  - `pratyahara(name: str) -> frozenset[str]`. Names are in SLP1: `"ik","ak","ac","hal","Jal","yaR","Kar","val","yaY","eN","ec","Sar","jaS","car","cu","wu"`.
-  - `is_vowel(c) -> bool`, `is_savarna(a, b) -> bool`, `guna(c) -> str`, `vrddhi(c) -> str`, `is_hrasva(c) -> bool`, `dirgha(c) -> str`.
+    - `iast_to_slp1(text: str) -> str` and `slp1_to_iast(text: str) -> str`. Both NFC-normalize their input. `~` passes through unchanged.
+    - `pratyahara(name: str) -> frozenset[str]`. Names are in SLP1: `"ik","ak","ac","hal","Jal","yaR","Kar","val","yaY","eN","ec","Sar","jaS","car","cu","wu"`.
+    - `is_vowel(c) -> bool`, `is_savarna(a, b) -> bool`, `guna(c) -> str`, `vrddhi(c) -> str`, `is_hrasva(c) -> bool`, `dirgha(c) -> str`.
 
 - [ ] **Step 1: Branch and scaffold.** Run `git switch -c slice-1`. In `pyproject.toml`:
-  - set the description;
-  - change the script to `panini = "panini.cli:main"`;
-  - add `[dependency-groups] dev = ["pytest", "vidyut==0.4.*"]`;
-  - add `[tool.pytest.ini_options] testpaths = ["tests"]`.
+    - set the description;
+    - change the script to `panini = "panini.cli:main"`;
+    - add `[dependency-groups] dev = ["pytest", "vidyut==0.4.*"]`;
+    - add `[tool.pytest.ini_options] testpaths = ["tests"]`.
 
-  Empty `src/panini/__init__.py`. Add the `.gitignore` from the file map. Run `uv sync`.
+    Empty `src/panini/__init__.py`. Add the `.gitignore` from the file map. Run `uv sync`.
 
 - [ ] **Step 2: Write failing tests**
 
@@ -145,38 +148,40 @@ def test_savarna_and_dirgha():
 ### Task 2: Data model, edits, sthānivat and augment placement
 
 **Files:**
+
 - Create: `src/panini/model.py`, `src/panini/edits.py`, `src/panini/meta.py`
 - Test: `tests/test_model_edits.py`
 
 **Interfaces:**
+
 - Consumes: `translit`, `sounds` (Task 1).
 - Produces:
-  - **`model.py`:**
-    - `Sound(char: str, it: bool = False, nasal: bool = False, agama: bool = False)`, frozen.
-    - `TermKind(Enum)`: `ROOT, LA, TIN, VIKARANA, AGAMA`.
-    - `Term(kind, upadesha: str, sounds: tuple[Sound, ...], tags: frozenset[str] = frozenset(), markers: frozenset[str] = frozenset(), replaced: Term | None = None)`, frozen. Its members:
-      - `Term.from_upadesha(kind, upadesha_slp1: str, tags=frozenset()) -> Term`. `~` after a vowel sets `nasal` on it. The accent marks `\` and `^` are stripped from the sounds and recorded as tags: `"anudattet"`/`"svaritet"` when they sit on the marker vowel, otherwise ignored.
-      - `.text -> str`: SLP1 of the current sounds.
-      - `.has_marker(m: str) -> bool`: checks its own `markers`, then `replaced.has_marker` (1.1.56).
-      - `.has_tag(t) -> bool`: same inheritance.
-    - `Time(Enum) PRESENT, PAST_NOT_TODAY`; `Coreference(Enum) NONE, ADDRESSEE, SPEAKER`; `Number(Enum) ONE, TWO, MANY`.
-    - `Intent(time, coreference, number, fruit_to_agent: bool)`, frozen.
-    - `State(terms: tuple[Term, ...], intent: Intent)`, frozen.
-    - `Span(term: int, start: int, end: int)`: half-open sound positions. `end == -1` means the whole term.
-    - `Site(spans: tuple[Span, ...])` with `.overlaps(other: Site) -> bool`, and `Site.term(i)` for a whole-term site.
-  - **`edits.py`:**
-    - Ops (frozen dataclasses): `AddTags(term, tags)`, `MarkIt(term, positions: tuple[int, ...], markers: frozenset[str])`, `DeleteSounds(term, positions)`, `ReplaceSounds(term, start, end, sounds)`, `InsertTerm(index, term)`, `ReplaceTerm(index, term)`, `InsertSounds(term, at: int, sounds)`, `Ekadesha(left: int, right: int, sounds)`.
-      - `MarkIt` sets `it=True` on the sounds at those positions and adds the marker letters to `term.markers`.
-      - `Ekadesha` replaces the last sound of `left` and the first sound of `right` with `sounds`. It puts them at the end of `left` and deletes the first sound of `right` (6.1.84–85).
-    - `Edit = tuple[Op, ...]`.
-    - `apply_edit(state, edit) -> State`.
-    - `apply_simultaneous(state, edits: Sequence[Edit]) -> State`. It applies ops in descending position order, so indices stay valid. If two edits touch the same sound, or the same term index via Insert/ReplaceTerm, it raises `EditConflict`.
-  - **`meta.py`:**
-    - `substitute_term(old: Term, kind: TermKind, upadesha: str) -> Term`: 1.1.56. The new term has `replaced=old` and fresh `markers`. Tags and markers are inherited through `has_tag`/`has_marker`.
-    - `sthanivat_note(term: Term) -> str | None`. Example: `"ti counts as ṅit via 1.1.56 (it replaced l)"`.
-    - `augment_edit(state, target: int, augment: Term) -> Edit`: 1.1.46. A ṭit augment becomes `InsertTerm(target, …)`, before the target. A kit augment becomes `InsertTerm(target+1, …)`.
-    - `augment_in_term_edit(state, term: int, after_pos: int, sounds: tuple[Sound, ...]) -> Edit`: kit augment inside a term (tuk), as `InsertSounds` with `agama=True`.
-    - 1.1.47 (mit) isn't needed by the slice. Don't add it.
+    - **`model.py`:**
+        - `Sound(char: str, it: bool = False, nasal: bool = False, agama: bool = False)`, frozen.
+        - `TermKind(Enum)`: `ROOT, LA, TIN, VIKARANA, AGAMA`.
+        - `Term(kind, upadesha: str, sounds: tuple[Sound, ...], tags: frozenset[str] = frozenset(), markers: frozenset[str] = frozenset(), replaced: Term | None = None)`, frozen. Its members:
+            - `Term.from_upadesha(kind, upadesha_slp1: str, tags=frozenset()) -> Term`. `~` after a vowel sets `nasal` on it. The accent marks `\` and `^` are stripped from the sounds and recorded as tags: `"anudattet"`/`"svaritet"` when they sit on the marker vowel, otherwise ignored.
+            - `.text -> str`: SLP1 of the current sounds.
+            - `.has_marker(m: str) -> bool`: checks its own `markers`, then `replaced.has_marker` (1.1.56).
+            - `.has_tag(t) -> bool`: same inheritance.
+        - `Time(Enum) PRESENT, PAST_NOT_TODAY`; `Coreference(Enum) NONE, ADDRESSEE, SPEAKER`; `Number(Enum) ONE, TWO, MANY`.
+        - `Intent(time, coreference, number, fruit_to_agent: bool)`, frozen.
+        - `State(terms: tuple[Term, ...], intent: Intent)`, frozen.
+        - `Span(term: int, start: int, end: int)`: half-open sound positions. `end == -1` means the whole term.
+        - `Site(spans: tuple[Span, ...])` with `.overlaps(other: Site) -> bool`, and `Site.term(i)` for a whole-term site.
+    - **`edits.py`:**
+        - Ops (frozen dataclasses): `AddTags(term, tags)`, `MarkIt(term, positions: tuple[int, ...], markers: frozenset[str])`, `DeleteSounds(term, positions)`, `ReplaceSounds(term, start, end, sounds)`, `InsertTerm(index, term)`, `ReplaceTerm(index, term)`, `InsertSounds(term, at: int, sounds)`, `Ekadesha(left: int, right: int, sounds)`.
+            - `MarkIt` sets `it=True` on the sounds at those positions and adds the marker letters to `term.markers`.
+            - `Ekadesha` replaces the last sound of `left` and the first sound of `right` with `sounds`. It puts them at the end of `left` and deletes the first sound of `right` (6.1.84–85).
+        - `Edit = tuple[Op, ...]`.
+        - `apply_edit(state, edit) -> State`.
+        - `apply_simultaneous(state, edits: Sequence[Edit]) -> State`. It applies ops in descending position order, so indices stay valid. If two edits touch the same sound, or the same term index via Insert/ReplaceTerm, it raises `EditConflict`.
+    - **`meta.py`:**
+        - `substitute_term(old: Term, kind: TermKind, upadesha: str) -> Term`: 1.1.56. The new term has `replaced=old` and fresh `markers`. Tags and markers are inherited through `has_tag`/`has_marker`.
+        - `sthanivat_note(term: Term) -> str | None`. Example: `"ti counts as ṅit via 1.1.56 (it replaced l)"`.
+        - `augment_edit(state, target: int, augment: Term) -> Edit`: 1.1.46. A ṭit augment becomes `InsertTerm(target, …)`, before the target. A kit augment becomes `InsertTerm(target+1, …)`.
+        - `augment_in_term_edit(state, term: int, after_pos: int, sounds: tuple[Sound, ...]) -> Edit`: kit augment inside a term (tuk), as `InsertSounds` with `agama=True`.
+        - 1.1.47 (mit) isn't needed by the slice. Don't add it.
 
 - [ ] **Step 1: Write failing tests**
 
@@ -228,40 +233,43 @@ def test_site_overlap():
 ### Task 3: Rule type, sūtra data, resolver, engine loop, tripādī
 
 **Files:**
+
 - Create: `src/panini/rules/base.py`, `src/panini/rules/__init__.py` (empty `ALL_RULES = ()` for now), `src/panini/data/sutras.toml`, `src/panini/resolver.py`, `src/panini/engine.py`, `src/panini/derivation.py`
 - Test: `tests/test_engine_meta.py` (toy rules only)
 
 **Interfaces:**
+
 - Consumes: Task 2.
 - Produces:
-  - **`rules/base.py`:**
-    - `Optionality(Enum) VA, VIBHASHA, ANYATARASYAM`.
-    - `Rule`, a frozen dataclass:
-      - `id: str`, `find: Callable[[State], list[Site]]`, `rewrite: Callable[[State, Site], Edit]`;
-      - `blocks: tuple[str, ...] = ()`;
-      - `near_miss: Callable[[State], str | None] | None = None`;
-      - `note: Callable[[State, Site], str | None] | None = None`;
-      - `optional: Optionality | None = None`;
-      - `assigns: str | None = None` (the saṃjñā name, for 1.4.2);
-      - `tuk_or_satva: bool = False`;
-      - `reintroduces_upadesha: bool = False` (see the tripādī step below).
-    - Properties: `key -> tuple[int, int, int]`; `in_tripadi` (≥ 8.2.1); `in_ekasamjna` (1.4.1–2.2.38); `in_6_1_86_domain` (6.1.87–6.1.110); `in_abhiya` (6.4.23–6.4.175); `text`, `gloss` (from `sutras.toml`, via `sutra_info(id) -> tuple[str, str]`; a missing entry raises `KeyError`).
-  - **`resolver.py`:**
-    - `Candidate(rule: Rule, site: Site)`, `Loser(rule_id: str, reason: str)`, `Choice(winner: Candidate, losers: tuple[Loser, ...])`.
-    - `class Resolver(Protocol): def choose(self, state: State, candidates: Sequence[Candidate], rules: Sequence[Rule]) -> Choice`.
-    - `LocalResolver`.
-    - `UnresolvedConflict(Exception)` with attributes `rule_ids`, `sites`, `outcomes: tuple[str, ...]`.
-  - **`derivation.py`:**
-    - `Status(Enum) OK, EXPECTED_FAILURE, UNAVAILABLE, ERROR`.
-    - `TermView(chars: tuple[tuple[str, bool], ...])`: (IAST char, is_marker), with `.iast() -> str` rendering IAST with markers in capitals and the nasal `~` kept.
-    - `StepRecord(rule_ids: tuple[str, ...], before: tuple[TermView, ...], after: tuple[TermView, ...], note: str | None, losers: tuple[Loser, ...], near_misses: tuple[str, ...], warnings: tuple[str, ...], alternatives: tuple[str, ...] = ())`.
-    - `Derivation(request: dict, status: Status, result: str | None, alternatives: tuple[str, ...], reference: tuple[str, ...] | None, steps: tuple[StepRecord, ...], message: str | None)`, with `.to_json() -> dict` (plain JSON types only).
-    - `render_terms(terms) -> tuple[TermView, ...]`.
-  - **`engine.py`:**
-    - `run(state: State, rules: Sequence[Rule], *, resolver: Resolver | None = None, max_steps: int = 400, disabled: frozenset[str] = frozenset()) -> tuple[State, tuple[StepRecord, ...], tuple[str, ...]]`. Returns the final state, the steps, and alternative final forms from optional rules.
-    - `StepLimitExceeded(Exception)`, `OptionalRuleNotSupported(Exception)`.
+    - **`rules/base.py`:**
+        - `Optionality(Enum) VA, VIBHASHA, ANYATARASYAM`.
+        - `Rule`, a frozen dataclass:
+            - `id: str`, `find: Callable[[State], list[Site]]`, `rewrite: Callable[[State, Site], Edit]`;
+            - `blocks: tuple[str, ...] = ()`;
+            - `near_miss: Callable[[State], str | None] | None = None`;
+            - `note: Callable[[State, Site], str | None] | None = None`;
+            - `optional: Optionality | None = None`;
+            - `assigns: str | None = None` (the saṃjñā name, for 1.4.2);
+            - `tuk_or_satva: bool = False`;
+            - `reintroduces_upadesha: bool = False` (see the tripādī step below).
+        - Properties: `key -> tuple[int, int, int]`; `in_tripadi` (≥ 8.2.1); `in_ekasamjna` (1.4.1–2.2.38); `in_6_1_86_domain` (6.1.87–6.1.110); `in_abhiya` (6.4.23–6.4.175); `text`, `gloss` (from `sutras.toml`, via `sutra_info(id) -> tuple[str, str]`; a missing entry raises `KeyError`).
+    - **`resolver.py`:**
+        - `Candidate(rule: Rule, site: Site)`, `Loser(rule_id: str, reason: str)`, `Choice(winner: Candidate, losers: tuple[Loser, ...])`.
+        - `class Resolver(Protocol): def choose(self, state: State, candidates: Sequence[Candidate], rules: Sequence[Rule]) -> Choice`.
+        - `LocalResolver`.
+        - `UnresolvedConflict(Exception)` with attributes `rule_ids`, `sites`, `outcomes: tuple[str, ...]`.
+    - **`derivation.py`:**
+        - `Status(Enum) OK, EXPECTED_FAILURE, UNAVAILABLE, ERROR`.
+        - `TermView(chars: tuple[tuple[str, bool], ...])`: (IAST char, is_marker), with `.iast() -> str` rendering IAST with markers in capitals and the nasal `~` kept.
+        - `StepRecord(rule_ids: tuple[str, ...], before: tuple[TermView, ...], after: tuple[TermView, ...], note: str | None, losers: tuple[Loser, ...], near_misses: tuple[str, ...], warnings: tuple[str, ...], alternatives: tuple[str, ...] = ())`.
+        - `Derivation(request: dict, status: Status, result: str | None, alternatives: tuple[str, ...], reference: tuple[str, ...] | None, steps: tuple[StepRecord, ...], message: str | None)`, with `.to_json() -> dict` (plain JSON types only).
+        - `render_terms(terms) -> tuple[TermView, ...]`.
+    - **`engine.py`:**
+        - `run(state: State, rules: Sequence[Rule], *, resolver: Resolver | None = None, max_steps: int = 400, disabled: frozenset[str] = frozenset()) -> tuple[State, tuple[StepRecord, ...], tuple[str, ...]]`. Returns the final state, the steps, and alternative final forms from optional rules.
+        - `StepLimitExceeded(Exception)`, `OptionalRuleNotSupported(Exception)`.
 
 **Main-body algorithm.** This is spec "Main-body resolver", plus two precisions:
+
 1. **Collect.** Gather `(rule, site)` for every non-tripādī rule that isn't disabled. Exclude pairs already applied to an identical `(site, state.terms)` input (the no-reapplication guard).
 2. **Block.** Use the raw `find` of every rule, **without the no-reapplication guard**. This matters for niṣedha rules like 1.3.4, whose rewrite is a no-op tag: they keep blocking after they have applied once.
 3. **Para.** Only for two candidates with `assigns` on the same term, both `in_ekasamjna`.
@@ -269,25 +277,27 @@ def test_site_overlap():
 5. **Ties.** Check commutation with `apply_edit` in both orders. If the results are equal, take the lowest `key`. Otherwise raise `UnresolvedConflict`.
 
 **Tripādī algorithm.** Rules run once each, in `key` order, at all their sites, with blocking still checked.
+
 - **Optional rules (amendment A1):** `VA` applies, `VIBHASHA` skips, `ANYATARASYAM` raises `OptionalRuleNotSupported`. The road not taken is computed by finishing the derivation with that rule disabled. It goes into `alternatives` and the step note: `"optional (vā, ‘preferably’ per Kiparsky): also correct: abhavad"`. The same handling applies in the main body.
 - **Amendment A2:** after a rule with `reintroduces_upadesha=True` applies (8.2.66 introduces `ru~`), the engine immediately runs the it-rules (ids 1.3.2–1.3.9) on the result, as recorded steps, then continues the tripādī pass.
 
 **Warnings:**
+
 - If two `in_abhiya` rules apply in one derivation, add the warning `"6.4.22: <a> and <b> are both in the ābhīya section; asiddhavat not modelled in slice 1"` to the later step.
 - For `tuk_or_satva` rules, `find` is evaluated on the state with every rewrite from an `in_6_1_86_domain` rule undone. Implement this by keeping a shadow state that skips those edits.
 
 **Near-misses.** After each step, call every `near_miss`. Each distinct message is recorded once, on the step where it first appears.
 
 - [ ] **Step 1: Write failing toy-rule tests** in `tests/test_engine_meta.py`. Toy rules operate on single-term states such as `Term.from_upadesha(TermKind.ROOT, "aba")`. Seed `sutras.toml` with toy ids `"9.9.1"`…`"9.9.9"`, each under a `[toy]` comment (texts `"toy"`). The tests:
-  - `test_blocking_special_beats_general`: rule `9.9.2` (a→i anywhere) is blocked by `9.9.3` (a→u word-initially, `blocks=("9.9.2",)`). Result `"ubi"`; the losers in step 1 include `Loser("9.9.2", "blocked by 9.9.3")`.
-  - `test_collective_blocking`: `9.9.4` with `blocks=("9.9.2", "9.9.5")` beats both at an overlapping site.
-  - `test_nisedha_keeps_blocking`: a no-op rule `9.9.6` blocks `9.9.2` at a site. After it has applied once, `9.9.2` still never applies there.
-  - `test_nitya_preference`: X deletes the final vowel, Y changes the second-to-last consonant (still applicable after X), X stays applicable after Y. The test asserts the order chosen and the reason string `"deferred: 9.9.x is nitya"`.
-  - `test_commuting_tie_lowest_id` and `test_noncommuting_tie_raises` (`UnresolvedConflict` names both ids).
-  - `test_tripadi_one_pass`: a later tripādī rule feeds an earlier one, and the earlier one does not reapply.
-  - `test_step_limit`: two rules that undo each other raise `StepLimitExceeded`.
-  - `test_optional_va_alternative`: a `VA` tripādī rule applies, and `alternatives` contains the form without it.
-  - `test_derivation_to_json_roundtrips_types`: `json.dumps(d.to_json())` works.
+    - `test_blocking_special_beats_general`: rule `9.9.2` (a→i anywhere) is blocked by `9.9.3` (a→u word-initially, `blocks=("9.9.2",)`). Result `"ubi"`; the losers in step 1 include `Loser("9.9.2", "blocked by 9.9.3")`.
+    - `test_collective_blocking`: `9.9.4` with `blocks=("9.9.2", "9.9.5")` beats both at an overlapping site.
+    - `test_nisedha_keeps_blocking`: a no-op rule `9.9.6` blocks `9.9.2` at a site. After it has applied once, `9.9.2` still never applies there.
+    - `test_nitya_preference`: X deletes the final vowel, Y changes the second-to-last consonant (still applicable after X), X stays applicable after Y. The test asserts the order chosen and the reason string `"deferred: 9.9.x is nitya"`.
+    - `test_commuting_tie_lowest_id` and `test_noncommuting_tie_raises` (`UnresolvedConflict` names both ids).
+    - `test_tripadi_one_pass`: a later tripādī rule feeds an earlier one, and the earlier one does not reapply.
+    - `test_step_limit`: two rules that undo each other raise `StepLimitExceeded`.
+    - `test_optional_va_alternative`: a `VA` tripādī rule applies, and `alternatives` contains the form without it.
+    - `test_derivation_to_json_roundtrips_types`: `json.dumps(d.to_json())` works.
 - [ ] **Step 2: Run them.** `uv run pytest tests/test_engine_meta.py -v`. Expected: FAIL.
 - [ ] **Step 3: Implement** `rules/base.py`, `resolver.py`, `engine.py`, `derivation.py`. Toy ids sort after every real sūtra. `in_tripadi` is false for `9.9.x` unless a test overrides it: give `Rule` an optional `section_override: str | None = None` field for tests.
 - [ ] **Step 4: Run them.** Same command. Expected: PASS.
@@ -298,50 +308,55 @@ def test_site_overlap():
 ### Task 4: Lexicon, requests, reference fixture
 
 **Files:**
+
 - Create: `src/panini/lexicon.py`, `src/panini/request.py`, `scripts/make_reference.py`, `tests/data/reference_forms.json`
 - Test: `tests/test_request_lexicon.py`
 
 **Interfaces:**
+
 - Produces:
-  - **`lexicon.py`:**
-    - `Root(key: str, upadesha: str, gana: str, meaning: str, pada: Literal["P", "A", "U"])`.
-    - `ROOTS: dict[str, Root]`, in this order (upadeśa in SLP1, accents as in Vidyut's dhātupāṭha):
+    - **`lexicon.py`:**
+        - `Root(key: str, upadesha: str, gana: str, meaning: str, pada: Literal["P", "A", "U"])`.
+        - `ROOTS: dict[str, Root]`, in this order (upadeśa in SLP1, accents as in Vidyut's dhātupāṭha):
 
-      | key | upadesha | meaning | pada |
-      |---|---|---|---|
-      | bhū | `BU` | to be, become | P |
-      | paṭh | `paWa~` | to speak clearly, recite | P |
-      | gam | `ga\mx~` | to go | P |
-      | smṛ | `smf\` | to remember | P |
-      | edh | `eDa~\` | to grow, prosper | A |
-      | nī | `RI\Y` | to lead | U |
-      | pac | `qupa\ca~^z` | to cook | U |
+            | key  | upadesha     | meaning                  | pada |
+            | ---- | ------------ | ------------------------ | ---- |
+            | bhū  | `BU`         | to be, become            | P    |
+            | paṭh | `paWa~`      | to speak clearly, recite | P    |
+            | gam  | `ga\mx~`     | to go                    | P    |
+            | smṛ  | `smf\`       | to remember              | P    |
+            | edh  | `eDa~\`      | to grow, prosper         | A    |
+            | nī   | `RI\Y`       | to lead                  | U    |
+            | pac  | `qupa\ca~^z` | to cook                  | U    |
 
-      All are in gana "bhvādi".
-    - `lookup_root(text: str) -> Root`. It NFC-normalizes, strips whitespace and a trailing `-`, and accepts the key or the IAST upadeśa. Otherwise it raises `UnknownRoot(text, available=tuple(ROOTS))`.
-  - **`request.py`:**
-    - `Lakara(Enum) LAT, LAN`, with `.iast` returning `"laṭ"`/`"laṅ"`.
-    - `Purusha(Enum) PRATHAMA, MADHYAMA, UTTAMA`; `Vacana(Enum) EKA, DVI, BAHU`; `Voice(Enum) ACTIVE, MIDDLE`.
-    - `Request(root: Root, lakara, purusha, vacana, voice)`, frozen, with these members:
-      - `.intent() -> Intent`. Present → PRESENT, laṅ → PAST_NOT_TODAY. Prathama → NONE, madhyama → ADDRESSEE, uttama → SPEAKER. `fruit_to_agent = voice is MIDDLE`.
-      - `.key -> str`: `"paṭh|laṭ|P|3|sg"`, where the pada letter is P for ACTIVE and Ā for MIDDLE.
-      - `.describe() -> tuple[str, str]`: Pāṇinian, PIE. E.g. `("laṭ · prathama puruṣa ekavacana · parasmaipada", "3sg present imperfective active")`.
-    - `parse_request(root: str, tense: str, person: str | int, number: str, voice: str = "active") -> Request` accepts:
-      - tense: `laṭ|lat|present|present imperfective` and `laṅ|lan|imperfect|past|past imperfective`;
-      - person: `3|prathama`, `2|madhyama`, `1|uttama`;
-      - number: `sg|eka|ekavacana`, `du|dvi|dvivacana`, `pl|bahu|bahuvacana`;
-      - voice: `active|parasmaipada|P`, `middle|ātmanepada|atmanepada|A|Ā`.
+            All are in gana "bhvādi".
 
-      Anything else raises `ValueError` with the accepted spellings.
-    - `availability(req: Request) -> tuple[str, str] | None` returns `(reason, rule_id)` or None. Cases: P root + middle → `("paṭh takes parasmaipada only", "1.3.78")`. A root + active → `("edh takes ātmanepada only: its marker vowel is anudātta", "1.3.12")`.
-    - `all_requests() -> list[Request]`: every root × lakāra × voice × person × number (7 × 2 × 2 × 3 × 3 = 252), unavailable ones included.
+        - `lookup_root(text: str) -> Root`. It NFC-normalizes, strips whitespace and a trailing `-`, and accepts the key or the IAST upadeśa. Otherwise it raises `UnknownRoot(text, available=tuple(ROOTS))`.
+
+    - **`request.py`:**
+        - `Lakara(Enum) LAT, LAN`, with `.iast` returning `"laṭ"`/`"laṅ"`.
+        - `Purusha(Enum) PRATHAMA, MADHYAMA, UTTAMA`; `Vacana(Enum) EKA, DVI, BAHU`; `Voice(Enum) ACTIVE, MIDDLE`.
+        - `Request(root: Root, lakara, purusha, vacana, voice)`, frozen, with these members:
+            - `.intent() -> Intent`. Present → PRESENT, laṅ → PAST_NOT_TODAY. Prathama → NONE, madhyama → ADDRESSEE, uttama → SPEAKER. `fruit_to_agent = voice is MIDDLE`.
+            - `.key -> str`: `"paṭh|laṭ|P|3|sg"`, where the pada letter is P for ACTIVE and Ā for MIDDLE.
+            - `.describe() -> tuple[str, str]`: Pāṇinian, PIE. E.g. `("laṭ · prathama puruṣa ekavacana · parasmaipada", "3sg present imperfective active")`.
+        - `parse_request(root: str, tense: str, person: str | int, number: str, voice: str = "active") -> Request` accepts:
+            - tense: `laṭ|lat|present|present imperfective` and `laṅ|lan|imperfect|past|past imperfective`;
+            - person: `3|prathama`, `2|madhyama`, `1|uttama`;
+            - number: `sg|eka|ekavacana`, `du|dvi|dvivacana`, `pl|bahu|bahuvacana`;
+            - voice: `active|parasmaipada|P`, `middle|ātmanepada|atmanepada|A|Ā`.
+
+            Anything else raises `ValueError` with the accepted spellings.
+
+        - `availability(req: Request) -> tuple[str, str] | None` returns `(reason, rule_id)` or None. Cases: P root + middle → `("paṭh takes parasmaipada only", "1.3.78")`. A root + active → `("edh takes ātmanepada only: its marker vowel is anudātta", "1.3.12")`.
+        - `all_requests() -> list[Request]`: every root × lakāra × voice × person × number (7 × 2 × 2 × 3 × 3 = 252), unavailable ones included.
 
 - [ ] **Step 1: Generate the fixture.** Write `scripts/make_reference.py`. It downloads Vidyut data into `build/vidyut-data` if absent, and derives every available request with `Vyakarana().derive(Pada.Tinanta(dhatu=Dhatu.mula(aupadeshika=…, gana=Gana.Bhvadi), prayoga=Prayoga.Kartari, lakara=…, purusha=…, vacana=…, dhatu_pada=…))`. It writes `{key: [IAST forms…]}` sorted, with no entries for unavailable cells. Run `uv run --group dev scripts/make_reference.py`. Expected: 162 keys. Spot-check:
-  - `"bhū|laṅ|P|3|sg": ["abhavat", "abhavad"]`
-  - `"edh|laṭ|Ā|2|pl": ["edhadhve"]`
-  - `"gam|laṭ|P|3|sg": ["gacchati"]`
-  - `"edh|laṅ|Ā|1|pl": ["aidhāmahi"]`
-  - `"pac|laṅ|Ā|3|pl": ["apacanta"]`
+    - `"bhū|laṅ|P|3|sg": ["abhavat", "abhavad"]`
+    - `"edh|laṭ|Ā|2|pl": ["edhadhve"]`
+    - `"gam|laṭ|P|3|sg": ["gacchati"]`
+    - `"edh|laṅ|Ā|1|pl": ["aidhāmahi"]`
+    - `"pac|laṅ|Ā|3|pl": ["apacanta"]`
 - [ ] **Step 2: Write failing tests**
 
 ```python
@@ -386,44 +401,46 @@ def test_reference_fixture_matches_available_requests():
 ### Task 5: First derivation end to end (paṭhati)
 
 **Files:**
+
 - Create: `src/panini/rules/it.py`, `src/panini/rules/tin.py`
 - Modify: `src/panini/rules/__init__.py` (`ALL_RULES` = concatenation of each module's `RULES`), `src/panini/engine.py` (add `derive`), `src/panini/data/sutras.toml`
 - Test: `tests/test_rules_core.py`
 
 **Interfaces:**
+
 - Consumes: Tasks 2–4.
 - Produces: `derive(req: Request, *, resolver: Resolver | None = None, rules: Sequence[Rule] | None = None, disabled: frozenset[str] = frozenset(), reference: Mapping[str, list[str]] | None = None) -> Derivation`; `load_reference(path: Path = Path("tests/data/reference_forms.json")) -> dict[str, list[str]]` (in `request.py`; returns `{}` if the file is absent). Its behaviour:
-  - If `availability` returns a reason, give `UNAVAILABLE` with the reason as the message.
-  - Otherwise the initial state is `(Term.from_upadesha(ROOT, root.upadesha),)` with `req.intent()`.
-  - `UnresolvedConflict`, `StepLimitExceeded` and `OptionalRuleNotSupported` become `ERROR` with the exception message.
-  - `reference` is `tuple(reference[req.key])` when a mapping is given and has the key, else None.
-  - `request` in the record is `{"key", "root", "panini", "pie"}`.
-  - `get_rule(id) -> Rule`.
+    - If `availability` returns a reason, give `UNAVAILABLE` with the reason as the message.
+    - Otherwise the initial state is `(Term.from_upadesha(ROOT, root.upadesha),)` with `req.intent()`.
+    - `UnresolvedConflict`, `StepLimitExceeded` and `OptionalRuleNotSupported` become `ERROR` with the exception message.
+    - `reference` is `tuple(reference[req.key])` when a mapping is given and has the key, else None.
+    - `request` in the record is `{"key", "root", "panini", "pie"}`.
+    - `get_rule(id) -> Rule`.
 
 **Rules for this task.** Each gets a `sutras.toml` entry with an IAST text and a plain-English gloss, anuvṛtti filled in.
 
-| id | effect | notes |
-|---|---|---|
-| 1.3.1 | tag root term `dhātu` | |
-| 1.3.2 | mark nasal vowels in an upadeśa as it | runs on any term with unmarked nasal vowels |
-| 1.3.3 | mark final consonant of an upadeśa | `blocks` nothing; is blocked by 1.3.4 |
-| 1.3.4 | niṣedha: final t/th/d/dh, n, s, m of a vibhakti (tiṅ) is not it | no-op rewrite (tag), `blocks=("1.3.3",)` |
-| 1.3.5 | initial ñi/ṭu/ḍu of a root is it | pac |
-| 1.3.7 | initial cu/ṭu of a pratyaya is it | **find excludes the jh of jhi/jha** with a note; see amendment A3 |
-| 1.3.8 | initial l/ś/ku of a non-taddhita pratyaya is it | śap |
-| 1.3.9 | delete all it sounds | |
-| 6.1.64, 6.1.65 | root-initial ṣ→s, ṇ→n | nī |
-| 3.2.123 | add `la~w` (LA) after the dhātu if intent time PRESENT | note: "present time → laṭ" |
-| 3.2.111 | add `la~N` if PAST_NOT_TODAY | note mentions "past not of today" |
-| 1.3.12 | tag l `ātmanepada` if root `anudattet` or ṅit | `blocks=("1.3.78",)` |
-| 1.3.72 | tag l `ātmanepada` if root `svaritet` or ñit, and `fruit_to_agent` | `blocks=("1.3.78",)` |
-| 1.3.78 | tag l `parasmaipada` | |
-| 3.4.78 | replace l by the tiṅ chosen from pada tag, coreference, number (via `substitute_term`) | note cites 1.4.99/100, 1.4.101 + 1.4.105–108, 1.4.102 + 1.4.22 as the selection; those ids go in `sutras.toml` (cited, not rules) |
-| 3.4.113 | tag tiṅ and śit pratyayas `sārvadhātuka` | |
-| 3.1.68 | insert `Sap` (VIKARANA) between dhātu and a sārvadhātuka tiṅ (kartari) | |
-| 1.2.4 | tag apit sārvadhātuka `ṅit-vat` | |
-| 1.4.13 | tag the term before a pratyaya `aṅga` (`assigns="aṅga"`) | |
-| 1.4.14 | tag the word `pada` once a tiṅ is final | `assigns="pada"` |
+| id             | effect                                                                                 | notes                                                                                                                             |
+| -------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| 1.3.1          | tag root term `dhātu`                                                                  |                                                                                                                                   |
+| 1.3.2          | mark nasal vowels in an upadeśa as it                                                  | runs on any term with unmarked nasal vowels                                                                                       |
+| 1.3.3          | mark final consonant of an upadeśa                                                     | `blocks` nothing; is blocked by 1.3.4                                                                                             |
+| 1.3.4          | niṣedha: final t/th/d/dh, n, s, m of a vibhakti (tiṅ) is not it                        | no-op rewrite (tag), `blocks=("1.3.3",)`                                                                                          |
+| 1.3.5          | initial ñi/ṭu/ḍu of a root is it                                                       | pac                                                                                                                               |
+| 1.3.7          | initial cu/ṭu of a pratyaya is it                                                      | **find excludes the jh of jhi/jha** with a note; see amendment A3                                                                 |
+| 1.3.8          | initial l/ś/ku of a non-taddhita pratyaya is it                                        | śap                                                                                                                               |
+| 1.3.9          | delete all it sounds                                                                   |                                                                                                                                   |
+| 6.1.64, 6.1.65 | root-initial ṣ→s, ṇ→n                                                                  | nī                                                                                                                                |
+| 3.2.123        | add `la~w` (LA) after the dhātu if intent time PRESENT                                 | note: "present time → laṭ"                                                                                                        |
+| 3.2.111        | add `la~N` if PAST_NOT_TODAY                                                           | note mentions "past not of today"                                                                                                 |
+| 1.3.12         | tag l `ātmanepada` if root `anudattet` or ṅit                                          | `blocks=("1.3.78",)`                                                                                                              |
+| 1.3.72         | tag l `ātmanepada` if root `svaritet` or ñit, and `fruit_to_agent`                     | `blocks=("1.3.78",)`                                                                                                              |
+| 1.3.78         | tag l `parasmaipada`                                                                   |                                                                                                                                   |
+| 3.4.78         | replace l by the tiṅ chosen from pada tag, coreference, number (via `substitute_term`) | note cites 1.4.99/100, 1.4.101 + 1.4.105–108, 1.4.102 + 1.4.22 as the selection; those ids go in `sutras.toml` (cited, not rules) |
+| 3.4.113        | tag tiṅ and śit pratyayas `sārvadhātuka`                                               |                                                                                                                                   |
+| 3.1.68         | insert `Sap` (VIKARANA) between dhātu and a sārvadhātuka tiṅ (kartari)                 |                                                                                                                                   |
+| 1.2.4          | tag apit sārvadhātuka `ṅit-vat`                                                        |                                                                                                                                   |
+| 1.4.13         | tag the term before a pratyaya `aṅga` (`assigns="aṅga"`)                               |                                                                                                                                   |
+| 1.4.14         | tag the word `pada` once a tiṅ is final                                                | `assigns="pada"`                                                                                                                  |
 
 - [ ] **Step 1: Write failing tests**
 
@@ -469,25 +486,26 @@ def test_unavailable():
 ### Task 6: Aṅga operations and vowel sandhi (main body)
 
 **Files:**
+
 - Create: `src/panini/rules/anga.py`, `src/panini/rules/sandhi.py`
 - Modify: `rules/__init__.py`, `data/sutras.toml`
 - Test: `tests/test_rules_anga_sandhi.py`
 
 **Rules:**
 
-| id | effect | blocks / flags |
-|---|---|---|
-| 7.3.84 | ik-final aṅga + sārvadhātuka/ārdhadhātuka → guṇa of the final (uses `sounds.guna`, so 1.1.51 rapara is automatic; cite 1.1.51 in the note when ṛ) | |
-| 7.3.86 | guṇa of a light ik upadhā | `near_miss`: if the aṅga upadhā is a light non-ik vowel before sārvadhātuka: "7.3.86 (guṇa of a light penultimate vowel) does not apply: {v} is not an ik vowel (1.1.3)" |
-| 7.3.101 | a-final aṅga → ā before a yañ-initial sārvadhātuka | |
-| 7.1.3 | jh of a pratyaya → ant | |
-| 7.3.77 | final of iṣ/gam/yam → ch before śit | |
-| 6.1.73 | tuk after a short vowel before ch (`augment_in_term_edit`) | `tuk_or_satva=True` |
-| 6.1.78 | e/o/ai/au + vowel → ay/av/āy/āv | |
-| 6.1.87 | a/ā + vowel → guṇa (Ekadesha) | |
-| 6.1.88 | a/ā + ec → vṛddhi | `blocks=("6.1.87",)` |
-| 6.1.97 | non-final short a + guṇa vowel → the latter (pararūpa) | `blocks=("6.1.87","6.1.101")`, Kiparsky's collective blocking |
-| 6.1.101 | aK + savarṇa → long | `blocks=("6.1.87",)` |
+| id      | effect                                                                                                                                            | blocks / flags                                                                                                                                                           |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 7.3.84  | ik-final aṅga + sārvadhātuka/ārdhadhātuka → guṇa of the final (uses `sounds.guna`, so 1.1.51 rapara is automatic; cite 1.1.51 in the note when ṛ) |                                                                                                                                                                          |
+| 7.3.86  | guṇa of a light ik upadhā                                                                                                                         | `near_miss`: if the aṅga upadhā is a light non-ik vowel before sārvadhātuka: "7.3.86 (guṇa of a light penultimate vowel) does not apply: {v} is not an ik vowel (1.1.3)" |
+| 7.3.101 | a-final aṅga → ā before a yañ-initial sārvadhātuka                                                                                                |                                                                                                                                                                          |
+| 7.1.3   | jh of a pratyaya → ant                                                                                                                            |                                                                                                                                                                          |
+| 7.3.77  | final of iṣ/gam/yam → ch before śit                                                                                                               |                                                                                                                                                                          |
+| 6.1.73  | tuk after a short vowel before ch (`augment_in_term_edit`)                                                                                        | `tuk_or_satva=True`                                                                                                                                                      |
+| 6.1.78  | e/o/ai/au + vowel → ay/av/āy/āv                                                                                                                   |                                                                                                                                                                          |
+| 6.1.87  | a/ā + vowel → guṇa (Ekadesha)                                                                                                                     |                                                                                                                                                                          |
+| 6.1.88  | a/ā + ec → vṛddhi                                                                                                                                 | `blocks=("6.1.87",)`                                                                                                                                                     |
+| 6.1.97  | non-final short a + guṇa vowel → the latter (pararūpa)                                                                                            | `blocks=("6.1.87","6.1.101")`, Kiparsky's collective blocking                                                                                                            |
+| 6.1.101 | aK + savarṇa → long                                                                                                                               | `blocks=("6.1.87",)`                                                                                                                                                     |
 
 - [ ] **Step 1: Write failing tests.** These are main-body-only forms that need no tripādī rule. Disable nothing, since the tripādī doesn't exist yet. Use `ids` from Task 5.
 
@@ -531,22 +549,23 @@ def test_smarati_cites_rapara():
 ### Task 7: Tripādī rules: laṭ active paradigms complete
 
 **Files:**
+
 - Create: `src/panini/rules/tripadi.py`
 - Modify: `rules/__init__.py`, `data/sutras.toml`
 - Test: `tests/test_paradigms.py` (a shared harness, extended in Tasks 8–9)
 
 **Rules** (all `in_tripadi`; the engine applies them in sūtra order):
 
-| id | effect | flags |
-|---|---|---|
-| 8.2.23 | delete the final consonant of a word-final cluster | |
-| 8.2.39 | word-final jhal → jaś (t→d) | |
+| id     | effect                                                           | flags                        |
+| ------ | ---------------------------------------------------------------- | ---------------------------- |
+| 8.2.23 | delete the final consonant of a word-final cluster               |                              |
+| 8.2.39 | word-final jhal → jaś (t→d)                                      |                              |
 | 8.2.66 | word-final s → `ru~` (via `ReplaceSounds` with a fresh `r`,`u~`) | `reintroduces_upadesha=True` |
-| 8.3.15 | word-final r → visarga `H` | |
-| 8.3.24 | non-final n/m before jhal → anusvāra | |
-| 8.4.40 | s/tu-class before or after ś/cu-class → ś/cu-class | gatch → gacch |
-| 8.4.56 | final jhal at pause → car (d→t) | `optional=Optionality.VA` |
-| 8.4.58 | anusvāra before yay → savarṇa of the following | |
+| 8.3.15 | word-final r → visarga `H`                                       |                              |
+| 8.3.24 | non-final n/m before jhal → anusvāra                             |                              |
+| 8.4.40 | s/tu-class before or after ś/cu-class → ś/cu-class               | gatch → gacch                |
+| 8.4.56 | final jhal at pause → car (d→t)                                  | `optional=Optionality.VA`    |
+| 8.4.58 | anusvāra before yay → savarṇa of the following                   |                              |
 
 - [ ] **Step 1: Write the failing paradigm harness**
 
@@ -583,17 +602,18 @@ def test_form_matches_reference(req):
 ### Task 8: Ātmanepada endings: laṭ middle paradigms
 
 **Files:**
+
 - Create: `src/panini/rules/endings.py` (the ātmanepada part)
 - Modify: `rules/sandhi.py` (6.1.66), `rules/anga.py` (7.2.81), `data/sutras.toml`, `tests/test_paradigms.py`
 
 **Rules:**
 
-| id | effect |
-|---|---|
+| id     | effect                                                                          |
+| ------ | ------------------------------------------------------------------------------- |
 | 3.4.79 | in a ṭit lakāra, the ṭi (last vowel onward, 1.1.64) of an ātmanepada ending → e |
-| 3.4.80 | in a ṭit lakāra, thās → se (`blocks=("3.4.79",)`) |
-| 7.2.81 | ā of a ṅit (incl. ṅit-vat, sthānivat) ending after an a-final aṅga → iy |
-| 6.1.66 | y/v before a val consonant is deleted |
+| 3.4.80 | in a ṭit lakāra, thās → se (`blocks=("3.4.79",)`)                               |
+| 7.2.81 | ā of a ṅit (incl. ṅit-vat, sthānivat) ending after an a-final aṅga → iy         |
+| 6.1.66 | y/v before a val consonant is deleted                                           |
 
 - [ ] **Step 1: Widen the test scope.** Make `IN_SCOPE` cover laṭ in both voices. Add a golden to `tests/test_paradigms.py`:
 
@@ -615,36 +635,37 @@ def test_edhete_order():
 ### Task 9: Laṅ: all 162 forms, goldens, findings
 
 **Files:**
+
 - Modify: `rules/endings.py`, `rules/sandhi.py` (6.1.90), `data/sutras.toml`, `tests/test_paradigms.py`
 - Create: `tests/test_goldens.py`, `docs/findings.md`
 
 **Rules:**
 
-| id | effect | notes |
-|---|---|---|
-| 6.4.71 | aṭ (ṭit augment) before an aṅga in laṅ (`augment_edit`) | `in_abhiya` |
-| 6.4.72 | āṭ before a vowel-initial aṅga | `blocks=("6.4.71",)`, `in_abhiya` |
-| 6.1.90 | āṭ + vowel → vṛddhi | `blocks=("6.1.87","6.1.88")` |
-| 3.4.99 | in a ṅit lakāra, final s of an uttama ending is deleted | relies on 1.1.56 (the ending `has_marker("N")`); the step note includes `sthanivat_note` |
-| 3.4.100 | in a ṅit lakāra, final i of a parasmaipada ending is deleted | same |
-| 3.4.101 | in a ṅit lakāra, tas/thas/tha/mip → tām/tam/ta/am | same |
+| id      | effect                                                       | notes                                                                                    |
+| ------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| 6.4.71  | aṭ (ṭit augment) before an aṅga in laṅ (`augment_edit`)      | `in_abhiya`                                                                              |
+| 6.4.72  | āṭ before a vowel-initial aṅga                               | `blocks=("6.4.71",)`, `in_abhiya`                                                        |
+| 6.1.90  | āṭ + vowel → vṛddhi                                          | `blocks=("6.1.87","6.1.88")`                                                             |
+| 3.4.99  | in a ṅit lakāra, final s of an uttama ending is deleted      | relies on 1.1.56 (the ending `has_marker("N")`); the step note includes `sthanivat_note` |
+| 3.4.100 | in a ṅit lakāra, final i of a parasmaipada ending is deleted | same                                                                                     |
+| 3.4.101 | in a ṅit lakāra, tas/thas/tha/mip → tām/tam/ta/am            | same                                                                                     |
 
 - [ ] **Step 1: Widen the test scope.** Make `IN_SCOPE` always true (162 cases). Write `tests/test_goldens.py`. Each golden asserts a subset of rule ids and pairwise orders, taken from the traditional derivation (Vidyut's order is the stand-in):
-  - `bhavanti`: ids ⊇ {7.1.3, 7.3.84, 6.1.78, 6.1.97, 8.3.24, 8.4.58}; order 7.3.84<6.1.78, 7.1.3<6.1.97, 8.3.24<8.4.58.
-  - `gacchati`: 7.3.77<6.1.73<8.4.40.
-  - `aidhata`: ids ⊇ {3.2.111, 6.4.72, 6.1.90}; 6.4.72<6.1.90; no 3.4.79.
-  - `abhavam`: 3.4.101<6.1.97; 6.4.71 present; the 3.4.101 step note contains `"1.1.56"`.
-  - `abhavat`: the 8.4.56 step has `alternatives == ("abhavad",)`, and `d.alternatives == ("abhavad",)`.
-  - `abhavan`: 3.4.100<7.1.3; 8.2.23 present.
-  - `bhavāmaḥ` (laṭ): 8.2.66 is followed directly by a 1.3.2 step and then 8.3.15 (amendment A2).
+    - `bhavanti`: ids ⊇ {7.1.3, 7.3.84, 6.1.78, 6.1.97, 8.3.24, 8.4.58}; order 7.3.84<6.1.78, 7.1.3<6.1.97, 8.3.24<8.4.58.
+    - `gacchati`: 7.3.77<6.1.73<8.4.40.
+    - `aidhata`: ids ⊇ {3.2.111, 6.4.72, 6.1.90}; 6.4.72<6.1.90; no 3.4.79.
+    - `abhavam`: 3.4.101<6.1.97; 6.4.71 present; the 3.4.101 step note contains `"1.1.56"`.
+    - `abhavat`: the 8.4.56 step has `alternatives == ("abhavad",)`, and `d.alternatives == ("abhavad",)`.
+    - `abhavan`: 3.4.100<7.1.3; 8.2.23 present.
+    - `bhavāmaḥ` (laṭ): 8.2.66 is followed directly by a 1.3.2 step and then 8.3.15 (amendment A2).
 - [ ] **Step 2: Run them.** `uv run pytest tests/test_paradigms.py tests/test_goldens.py -v`. Expected: the laṅ forms FAIL.
 - [ ] **Step 3: Implement** the rules.
 - [ ] **Step 4: Run** `uv run pytest -v`. Expected: 162 paradigm cases pass or are xfail with explanations, and the goldens pass.
 - [ ] **Step 5: Write `docs/findings.md`.** Sections:
-  - *Expected failures* (mirror `XFAIL`, one paragraph each).
-  - *Kiparsky vs. tradition*: every golden where the resolver's non-commuting order differs from Vidyut's. Find them by running the comparison script inline in the test session and noting the cases.
-  - *Engine exceptions*: A2 (ru~ it-processing) and A3 (the 1.3.7 jh exclusion), with their justification.
-  - *Known limitations*: no 8.4.46–47 doubling; no 8.4.68 (closed ă, invisible in IAST); 6.4.22 detection only; 1.1.47 not implemented.
+    - _Expected failures_ (mirror `XFAIL`, one paragraph each).
+    - _Kiparsky vs. tradition_: every golden where the resolver's non-commuting order differs from Vidyut's. Find them by running the comparison script inline in the test session and noting the cases.
+    - _Engine exceptions_: A2 (ru~ it-processing) and A3 (the 1.3.7 jh exclusion), with their justification.
+    - _Known limitations_: no 8.4.46–47 doubling; no 8.4.68 (closed ă, invisible in IAST); 6.4.22 detection only; 1.1.47 not implemented.
 - [ ] **Step 6: Commit.** `git add -A && git commit -m "feat: laṅ; all slice-1 paradigms; goldens and findings"`
 
 ---
@@ -652,23 +673,25 @@ def test_edhete_order():
 ### Task 10: Text trace, CLI, README
 
 **Files:**
+
 - Create: `src/panini/trace.py`, `src/panini/cli.py`, `README.md`
 - Test: `tests/test_trace_cli.py`
 
 **Interfaces:**
+
 - Consumes: `derive`, `parse_request`, `lookup_root`, `UnknownRoot`.
 - Produces:
-  - `render_text(d: Derivation, verbosity: int = 0) -> str`. The format is spec "Target shape of the default output":
-    - a header line `"{root}-, {panini}  →  {result}"`;
-    - numbered steps: form after, then sūtra id, then text, with the gloss/note on the next line;
-    - `↳` lines for near-misses;
-    - at `verbosity >= 1`, losers as `"   ✗ {id}: {reason}"`; at `>= 2`, also every rule checked.
-    - Consecutive `1.3.x` it-steps on the same term may merge into one line listing both ids.
-  - `main(argv: list[str] | None = None) -> int` (argparse) with subcommands:
-    - `derive ROOT TENSE PERSON NUMBER [VOICE] [-v|-vv]`;
-    - `site [--out PATH] [--open]` (wired in Task 11).
+    - `render_text(d: Derivation, verbosity: int = 0) -> str`. The format is spec "Target shape of the default output":
+        - a header line `"{root}-, {panini}  →  {result}"`;
+        - numbered steps: form after, then sūtra id, then text, with the gloss/note on the next line;
+        - `↳` lines for near-misses;
+        - at `verbosity >= 1`, losers as `"   ✗ {id}: {reason}"`; at `>= 2`, also every rule checked.
+        - Consecutive `1.3.x` it-steps on the same term may merge into one line listing both ids.
+    - `main(argv: list[str] | None = None) -> int` (argparse) with subcommands:
+        - `derive ROOT TENSE PERSON NUMBER [VOICE] [-v|-vv]`;
+        - `site [--out PATH] [--open]` (wired in Task 11).
 
-    Errors (`UnknownRoot`, `ValueError` from parsing) print one line to stderr and return 2.
+        Errors (`UnknownRoot`, `ValueError` from parsing) print one line to stderr and return 2.
 
 - [ ] **Step 1: Write failing tests**
 
@@ -705,36 +728,39 @@ def test_cli_unknown_root(capsys):
 ### Task 11: HTML explorer (`panini site`)
 
 **Files:**
+
 - Create: `src/panini/site/__init__.py`, `src/panini/site/build.py`, `src/panini/site/template.html`, `src/panini/site/app.js`, `src/panini/site/style.css`
 - Modify: `src/panini/cli.py` (wire `site`), `pyproject.toml` (include `site/*` and `data/*` as package data, if uv_build needs it)
 - Test: `tests/test_site.py`
 
 **Interfaces:**
+
 - Consumes: `all_requests`, `derive`, `Derivation.to_json`, `ROOTS`.
 - Produces:
-  - `site_data() -> dict`, shaped `{"roots": [{key, upadesha_iast, meaning, gana, pada}], "derivations": {request_key: Derivation.to_json()}}`. It contains all 252 requests, unavailable ones included. Derivations run with `reference=load_reference()`. A derivation that raises unexpectedly is caught and stored as `ERROR` with the message.
-  - `build_site(out: Path, style_dir: Path | None = None) -> Path`. It writes one HTML file containing:
-    - the template;
-    - `style.css` inlined;
-    - the `@font-face` CSS from `uv run --no-project <fonts_dir>/../../scripts/font_faces.py --embed --faces body,sans,caps,mono`, run as a subprocess;
-    - the data as `<script type="application/json" id="data">`;
-    - `app.js` inlined.
+    - `site_data() -> dict`, shaped `{"roots": [{key, upadesha_iast, meaning, gana, pada}], "derivations": {request_key: Derivation.to_json()}}`. It contains all 252 requests, unavailable ones included. Derivations run with `reference=load_reference()`. A derivation that raises unexpectedly is caught and stored as `ERROR` with the message.
+    - `build_site(out: Path, style_dir: Path | None = None) -> Path`. It writes one HTML file containing:
+        - the template;
+        - `style.css` inlined;
+        - the `@font-face` CSS from `uv run --no-project <fonts_dir>/../../scripts/font_faces.py --embed --faces body,sans,caps,mono`, run as a subprocess;
+        - the data as `<script type="application/json" id="data">`;
+        - `app.js` inlined.
 
-    `style_dir` (the style skill's root, which holds `scripts/font_faces.py` and `assets/`) defaults to `$PANINI_STYLE_DIR`, else `~/.local/state/claude/skills/krish-frontend-style` (amendment A5). If it's missing, or the script fails, print a warning to stderr and omit the font CSS.
+        `style_dir` (the style skill's root, which holds `scripts/font_faces.py` and `assets/`) defaults to `$PANINI_STYLE_DIR`, else `~/.local/state/claude/skills/krish-frontend-style` (amendment A5). If it's missing, or the script fails, print a warning to stderr and omit the font CSS.
 
 **Page behaviour** (spec "GUI"). Load the `krish-frontend-style` skill before writing CSS. The layout follows the spec sketch.
+
 - **Header:** eyebrow "PĀṆINI", title "Prakriyā explorer", and the `◐` glass theme toggle, with the blocking theme script in `<head>` and storage access wrapped in try/catch.
 - **Root picker:** a `<select>` labelled "Root".
 - **Tables:** a 2×2 grid of 3×3 tables. Rows are present/past imperfective with laṭ/laṅ; columns are active/middle with parasmaipada/ātmanepada. Inside each table, rows are 3/2/1 (prathama/madhyama/uttama) and columns are sg/du/pl.
-  - An unavailable table is greyed with `"{reason} ({rule})"`.
-  - A cell with `ERROR`/`EXPECTED_FAILURE`, or whose result is not in `reference`, is marked oxblood (`--neg`) and shows the reference form too.
-  - Alternatives show small after the main form (e.g. "abhavat · abhavad").
+    - An unavailable table is greyed with `"{reason} ({rule})"`.
+    - A cell with `ERROR`/`EXPECTED_FAILURE`, or whose result is not in `reference`, is marked oxblood (`--neg`) and shows the reference form too.
+    - Alternatives show small after the main form (e.g. "abhavat · abhavad").
 - **Derivation panel** below the tables:
-  - the form, both descriptions, then an ordered list of steps;
-  - each step shows the after-form (markers as `<span class="it">` capitals in `--accent`, term boundaries ` + `), the sūtra id in Monaspace, the sūtra text, and the gloss/note;
-  - near-misses render as `↳` lines;
-  - losers go in `<details><summary>competitors</summary>`;
-  - warnings render as a muted note.
+    - the form, both descriptions, then an ordered list of steps;
+    - each step shows the after-form (markers as `<span class="it">` capitals in `--accent`, term boundaries `+`), the sūtra id in Monaspace, the sūtra text, and the gloss/note;
+    - near-misses render as `↳` lines;
+    - losers go in `<details><summary>competitors</summary>`;
+    - warnings render as a muted note.
 - **URL hash** `#root/laṭ|laṅ/P|Ā/3|2|1/sg|du|pl`. Write `parseHash(hash, data) -> {root, key|null}` as a pure function in `app.js`. Invalid input falls back to the first root and no selection.
 - No network requests. It must work from `file://`.
 
@@ -775,14 +801,15 @@ def test_one_failing_derivation_does_not_abort(monkeypatch, tmp_path):
 - [ ] **Step 3: Implement** `build.py`, the template, the CSS (trimmed `base.css` plus page styles) and `app.js`. Wire `panini site` in `cli.py`; `--open` uses `webbrowser.open(out.as_uri())`.
 - [ ] **Step 4: Run** `uv run pytest -v`. Expected: PASS.
 - [ ] **Step 5: Check by eye.** Run `uv run panini site --open`. In light and dark themes, check:
-  - paṭh: middle tables greyed with 1.3.78;
-  - click paṭhati: the steps show `paṭhA~`, then `tiP`, and the 7.3.86 near-miss;
-  - bhavanti: competitors list 6.1.101 and 6.1.87;
-  - abhavat shows "· abhavad";
-  - load with `#xyz/laṭ/P/9/sg`: falls back without console errors;
-  - phone width (≤ 480px): tables stack.
+    - paṭh: middle tables greyed with 1.3.78;
+    - click paṭhati: the steps show `paṭhA~`, then `tiP`, and the 7.3.86 near-miss;
+    - bhavanti: competitors list 6.1.101 and 6.1.87;
+    - abhavat shows "· abhavad";
+    - load with `#xyz/laṭ/P/9/sg`: falls back without console errors;
+    - phone width (≤ 480px): tables stack.
 
-  Run through the style skill's checklist (faces, numerals, warm colours, texture subtle, glass has colour behind it). Fix anything off.
+    Run through the style skill's checklist (faces, numerals, warm colours, texture subtle, glass has colour behind it). Fix anything off.
+
 - [ ] **Step 6: Commit.** `git add -A && git commit -m "feat: static HTML explorer"`
 
 ---
@@ -790,10 +817,10 @@ def test_one_failing_derivation_does_not_abort(monkeypatch, tmp_path):
 ## Self-review notes
 
 - **Spec coverage:**
-  - intent/goals (Tasks 5–11); non-goals respected (no accent, other gaṇas or anuvṛtti parsing);
-  - anti-goals (failure policy in Global Constraints, `UnresolvedConflict` in Task 3, verbosity levels in Tasks 10–11);
-  - representation (Task 2); rules (Task 3); resolver (Task 3); tiṅ choice (Task 5); sthānivat/augments (Tasks 2 and 9);
-  - tripādī (Tasks 3 and 7); asiddha domains (Task 3); request vocabulary (Task 4); display (Tasks 3, 5, 10, 11);
-  - data format (Task 3); GUI (Task 11); CLI (Task 10); lexicon (Task 4); testing (Tasks 4, 7–9, 11).
-  - Slice-2 preservation: pure rules, `apply_simultaneous`, the `Resolver` protocol, and room for alternatives in `StepRecord`.
+    - intent/goals (Tasks 5–11); non-goals respected (no accent, other gaṇas or anuvṛtti parsing);
+    - anti-goals (failure policy in Global Constraints, `UnresolvedConflict` in Task 3, verbosity levels in Tasks 10–11);
+    - representation (Task 2); rules (Task 3); resolver (Task 3); tiṅ choice (Task 5); sthānivat/augments (Tasks 2 and 9);
+    - tripādī (Tasks 3 and 7); asiddha domains (Task 3); request vocabulary (Task 4); display (Tasks 3, 5, 10, 11);
+    - data format (Task 3); GUI (Task 11); CLI (Task 10); lexicon (Task 4); testing (Tasks 4, 7–9, 11).
+    - Slice-2 preservation: pure rules, `apply_simultaneous`, the `Resolver` protocol, and room for alternatives in `StepRecord`.
 - **Proportion:** this plan gives signatures, rule tables and tests, not rule bodies. Each rule body is a few lines of `find`/`rewrite`, written by the implementer from the table row and the sūtra.
