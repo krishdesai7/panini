@@ -306,22 +306,22 @@ text trace and the tests all read it, and it serializes to JSON:
 
 - the request in both vocabularies, and the intent;
 - `status`, one of:
-  - `ok`;
-  - `expected_failure`: known wrong, with an explanation of where the
-    meta-rules break down;
-  - `unavailable`: e.g. edh active, with the reason and governing rule;
-  - `error`: e.g. `UnresolvedConflict` or an optional rule reached, with
-    the message;
+    - `ok`;
+    - `expected_failure`: known wrong, with an explanation of where the
+      meta-rules break down;
+    - `unavailable`: e.g. edh active, with the reason and governing rule;
+    - `error`: e.g. `UnresolvedConflict` or an optional rule reached, with
+      the message;
 - `result` (final form) and, where a reference form exists, `reference`;
 - `steps`. Each step has:
-  - rule id(s), plus sūtra text and gloss;
-  - before/after as a term list, with per-phoneme marker flags so the page
-    can render markers;
-  - an optional note;
-  - competitors and why they lost;
-  - near-misses;
-  - warnings (e.g. the 6.4.22 detection);
-  - room for slice 2's "alternatives considered".
+    - rule id(s), plus sūtra text and gloss;
+    - before/after as a term list, with per-phoneme marker flags so the page
+      can render markers;
+    - an optional note;
+    - competitors and why they lost;
+    - near-misses;
+    - warnings (e.g. the 6.4.22 detection);
+    - room for slice 2's "alternatives considered".
 
 ### GUI
 
@@ -366,18 +366,18 @@ Layout (app register of the user's style; 1100px column):
 - **Tables:** four 3×3 tables. Rows are present/past imperfective (laṭ/laṅ),
   columns are active/middle (parasmaipada/ātmanepada), and both
   vocabularies label each one.
-  - Inside each table, rows are persons 3/2/1 (Pāṇinian order) and columns
-    are sg/du/pl.
-  - Unavailable tables are greyed with the reason and rule.
-  - Cells with `expected_failure` or `error` are visibly marked (oxblood),
-    and their derivation explains why.
-  - A cell whose result differs from the reference shows both forms.
+    - Inside each table, rows are persons 3/2/1 (Pāṇinian order) and columns
+      are sg/du/pl.
+    - Unavailable tables are greyed with the reason and rule.
+    - Cells with `expected_failure` or `error` are visibly marked (oxblood),
+      and their derivation explains why.
+    - A cell whose result differs from the reference shows both forms.
 - **Derivation panel:** below the tables. It shows the selected form and
   its full description in both vocabularies, then the steps.
-  - Markers render as capitals in a distinct (meaningful) colour, so they
-    stand out from real phonemes. Term boundaries show as `+`.
-  - Near-misses appear inline. Competitors sit in an expandable
-    `<details>` per step, which is the GUI equivalent of `-v`.
+    - Markers render as capitals in a distinct (meaningful) colour, so they
+      stand out from real phonemes. Term boundaries show as `+`.
+    - Near-misses appear inline. Competitors sit in an expandable
+      `<details>` per step, which is the GUI equivalent of `-v`.
 - **URL hash** encodes the selection (e.g. `#paṭh/laṭ/P/3/sg`), so
   reload, back/forward and bookmarks work.
 - **Light and dark themes** (liquid-glass dark) per the style skill.
@@ -439,14 +439,14 @@ must keep the coverage in the right-hand column.
   guard, `UnresolvedConflict` on a constructed non-commuting tie, the
   tripādī being one-pass.
 - **Failures policy (agreed with the user):**
-  - Fixing a missing or wrong `blocks` entry is allowed. Each entry cites
-    the traditional utsarga/apavāda relation it encodes.
-  - Adding a meta-principle Kiparsky rejects (e.g. word-internal
-    antaraṅga), or special-casing one rule's order, is not allowed without
-    asking.
-  - A form that still fails is marked `expected_failure` (pytest xfail)
-    with a written explanation. It doesn't block the slice, and the GUI
-    shows it as such.
+    - Fixing a missing or wrong `blocks` entry is allowed. Each entry cites
+      the traditional utsarga/apavāda relation it encodes.
+    - Adding a meta-principle Kiparsky rejects (e.g. word-internal
+      antaraṅga), or special-casing one rule's order, is not allowed without
+      asking.
+    - A form that still fails is marked `expected_failure` (pytest xfail)
+      with a written explanation. It doesn't block the slice, and the GUI
+      shows it as such.
 - **GUI:** a smoke test that `panini site` builds and the embedded data
   covers every lexicon form. Then render the page and check it by eye in
   both themes (the style skill's checklist).
