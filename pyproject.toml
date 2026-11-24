@@ -1,7 +1,7 @@
 [project]
 name = "panini"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Pāṇinian prakriyā engine: watch the Aṣṭādhyāyī derive Sanskrit verb forms step by step"
 authors = [
     { name = "Krish Desai", email = "27725015+krishdesai7@users.noreply.github.com" }
 ]
@@ -9,7 +9,13 @@ requires-python = ">=3.15"
 dependencies = []
 
 [project.scripts]
-panini = "panini:main"
+panini = "panini.cli:main"
+
+[dependency-groups]
+dev = ["pytest", "vidyut==0.4.*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 [build-system]
 requires = ["uv_build>=0.13.9,<0.14.0"]
