@@ -50,6 +50,7 @@ class StepRecord:
     near_misses: tuple[str, ...]
     warnings: tuple[str, ...]
     alternatives: tuple[str, ...] = ()
+    kind: str = "change"  # "change" (the form changes), "category" (assigns a label), "prohibition"
 
     def to_json(self) -> dict:
         from panini.rules.base import sutra_info
@@ -74,6 +75,7 @@ class StepRecord:
             "near_misses": list(self.near_misses),
             "warnings": list(self.warnings),
             "alternatives": list(self.alternatives),
+            "kind": self.kind,
         }
 
 

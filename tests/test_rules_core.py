@@ -48,3 +48,22 @@ def test_affix_glosses_name_their_headings():
     for rid in ("3.2.123", "3.2.111", "3.1.68"):
         assert "3.1.91" in sutra_info(rid)[1] and "3.1.2" in sutra_info(rid)[1]
     assert sutra_info("3.1.2")[0] == "paraś ca"
+
+
+def test_lakara_note_cites_each_heading_at_its_word():
+    d = derive(parse_request("bhū", "laṭ", 3, "sg", "active"))
+    note = next(s.note for s in d.steps if "3.2.123" in s.rule_ids)
+    assert "an affix (3.1.1) placed after (3.1.2) the root (3.1.91)" in note
+    assert "by tradition" in note
+
+
+def test_steps_say_what_kind_of_step_they_are():
+    d = derive(parse_request("pac", "laṭ", 1, "pl", "active"))
+    kind = {s.rule_ids[0]: s.kind for s in d.steps}
+    assert kind["3.2.123"] == "change" and kind["1.3.78"] == "category" and kind["1.3.4"] == "prohibition"
+    assert d.to_json()["steps"][0]["kind"] in ("change", "category", "prohibition")
+
+
+def test_pada_note_names_the_rule_that_uses_it():
+    d = derive(parse_request("bhū", "laṭ", 3, "sg", "active"))
+    assert "3.4.78" in next(s.note for s in d.steps if "1.3.78" in s.rule_ids)

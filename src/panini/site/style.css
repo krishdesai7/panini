@@ -143,3 +143,18 @@ ol.steps > li::before { content: counter(step); color: var(--faint); text-align:
 .tip.on { opacity: 1; }
 /* Sanskrit in the picker needs Cochineal: Heliotrope has no dot-below letters (ṭ, ṛ, ṇ). */
 .picker select { font-family: var(--serif); }
+
+/* Heliotrope has no ṇ: draw the dot under its own caps n, to match the ā's macron. */
+.dot-below { position: relative; }
+.dot-below::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.2em;
+  width: 0.15em;
+  height: 0.15em;
+  border-radius: 50%;
+  background: currentColor;
+  transform: translateX(-50%);
+}
+.steps .kind { margin: 0.15rem 0 0; font-size: var(--fs-14); color: var(--muted); }

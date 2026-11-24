@@ -37,3 +37,9 @@ def test_cli_exits_nonzero_when_derivation_errors(monkeypatch, capsys):
 def test_trace_has_no_bare_tildes():
     out = render_text(derive(parse_request("paṭh", "laṭ", 3, "sg", "active")))
     assert "~" not in out and "lãṭ" in out
+
+
+def test_trace_flags_steps_that_leave_the_form_unchanged():
+    out = render_text(derive(parse_request("bhū", "laṭ", 3, "sg", "active")))
+    line = next(l for l in out.splitlines() if "1.3.78" in l and "śeṣāt" in l)
+    assert "form unchanged" in out.splitlines()[out.splitlines().index(line) + 1]

@@ -6,6 +6,12 @@ from panini.derivation import Derivation, Status, StepRecord
 from panini.rules.base import sutra_info
 
 
+_UNCHANGED = {
+    "category": "(form unchanged: assigns a category later rules use) ",
+    "prohibition": "(form unchanged: prevents another rule) ",
+}
+
+
 def _form(views) -> str:
     return " + ".join(v.iast() for v in views)
 
@@ -47,7 +53,7 @@ def _render_step(n: int, s: StepRecord, width: int, verbosity: int) -> list[str]
         out.append(f"{'':>4}  {'(' + _form(s.before) + ')':<{width}}")
     out.append(f"{n:>4}  {_form(s.after):<{width}}{rid:<9}{_text(rid)}")
     if s.note:
-        out.append(f"{'':>4}  {'':<{width}}{'':<9}{s.note}")
+        out.append(f"{'':>4}  {'':<{width}}{'':<9}{_UNCHANGED.get(s.kind, '')}{s.note}")
     for nm in s.near_misses:
         out.append(f"{'':>4}  ↳ {nm}")
     if verbosity >= 1:

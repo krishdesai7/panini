@@ -187,6 +187,11 @@ if (typeof document !== "undefined") (function () {
       rule.appendChild(el("div", {}, [el("span", { class: "sid", "data-tip": sutraTitle(su.id, data.sutras || {}), tabindex: "0", text: su.id }),
                                       el("span", { class: "stext", text: su.text })]));
     });
+    if (s.kind === "category" || s.kind === "prohibition") {
+      rule.appendChild(el("p", { class: "kind", text: s.kind === "category"
+        ? "Form unchanged: this rule assigns a category that later rules use."
+        : "Form unchanged: this rule prevents another rule from applying." }));
+    }
     if (s.note) rule.appendChild(el("p", { class: "snote" }, [cite(s.note)]));
     s.sutras.forEach(function (su) { if (su.gloss) rule.appendChild(el("p", { class: "gloss" }, [cite(su.gloss)])); });
     var li = el("li", {}, [renderTerms(s.after), rule]);

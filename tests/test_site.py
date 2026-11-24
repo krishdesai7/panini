@@ -98,3 +98,8 @@ def test_tooltip_sits_below_the_word_and_stays_on_screen():
 def test_page_uses_instant_tooltips_not_title_attributes(tmp_path):
     html = build_site(tmp_path / "p.html", style_dir=tmp_path / "nope").read_text()
     assert "data-tip" in html and 'title: title' not in html
+
+
+def test_heading_monogram_draws_the_dot_and_keeps_the_real_name_for_screen_readers(tmp_path):
+    html = build_site(tmp_path / "p.html", style_dir=tmp_path / "nope").read_text()
+    assert 'aria-label="Pāṇini"' in html and 'class="dot-below"' in html

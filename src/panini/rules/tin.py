@@ -49,9 +49,10 @@ def _insert_la(upadesha: str):
 
 
 def _la_note(meaning: str, written: str, recited: str) -> str:
-    return (f"{meaning} → {written}, an affix placed after the root (3.1.1, 3.1.2, 3.1.91). "
-            f"It is recited {recited}: the nasal ã, unwritten in the text, carries the l and is a marker, "
-            f"like the final consonant")
+    return (f"{meaning} → {written}, an affix (3.1.1) placed after (3.1.2) the root (3.1.91). "
+            f"The text writes {written}; by tradition it is taught as {recited}, its vowel nasal (nasality was "
+            f"never written down), so that vowel, there only to make the l pronounceable, is a marker (1.3.2), "
+            f"as is the final consonant (1.3.3)")
 
 
 R_3_2_123 = Rule("3.2.123", _add_la(Time.PRESENT), _insert_la("la~w"),
@@ -77,14 +78,16 @@ def _tag_pada(pada: str, rule_id: str):
 
 R_1_3_12 = Rule("1.3.12", _pada_find(lambda st, root: "anudattet" in root.tags or root.has_marker("N")),
                 _tag_pada("ātmanepada", "1.3.12"), blocks=("1.3.78",),
-                note=lambda st, site: "the root's marker vowel is anudātta → ātmanepada endings")
+                note=lambda st, site: "the root's marker vowel is anudātta, so l is classed as taking ātmanepada "
+                "(middle) endings; 3.4.78 will choose from that set")
 R_1_3_72 = Rule("1.3.72", _pada_find(lambda st, root: ("svaritet" in root.tags or root.has_marker("Y"))
                                      and st.intent.fruit_to_agent),
                 _tag_pada("ātmanepada", "1.3.72"), blocks=("1.3.78",),
-                note=lambda st, site: "the root is svarita/ñ-marked and the fruit of the action goes to the "
-                "agent → ātmanepada endings (middle)")
+                note=lambda st, site: "the root is svarita/ñ-marked and the fruit of the action goes to the agent, so l is classed as "
+                "taking ātmanepada (middle) endings; 3.4.78 will choose from that set")
 R_1_3_78 = Rule("1.3.78", _pada_find(lambda st, root: True), _tag_pada("parasmaipada", "1.3.78"),
-                note=lambda st, site: "no rule assigns ātmanepada, so the agent takes parasmaipada endings (active)")
+                note=lambda st, site: "no rule assigns ātmanepada, so l is classed as taking parasmaipada (active) "
+                "endings; 3.4.78 will choose from that set")
 
 
 # 3.4.78: l is replaced by the ending the intent selects.

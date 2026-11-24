@@ -8,7 +8,7 @@ from typing import Literal
 from collections.abc import Mapping
 
 from panini.derivation import Derivation, Status, StepRecord, render_terms
-from panini.edits import Edit, InsertTerm, ReplaceTerm, apply_edit
+from panini.edits import AddTags, Edit, InsertTerm, ReplaceTerm, apply_edit
 from panini.model import Site, State, Term, TermKind
 from panini.request import Request, availability
 from panini.resolver import Candidate, LocalResolver, Loser, Resolver, UnresolvedConflict, blocked_by
@@ -47,6 +47,15 @@ def run(
 
 
 type Resume = tuple[Literal["main"]] | tuple[Literal["tripadi"], tuple[int, int, int]]
+
+
+def _step_kind(edit: Edit) -> str:
+    """change: the form changes; category: only labels are assigned; prohibition: nothing (a niṣedha)."""
+    if not edit:
+        return "prohibition"
+    if all(isinstance(op, AddTags) for op in edit):
+        return "category"
+    return "change"
 
 
 def _join(*parts: str | None) -> str | None:
@@ -218,6 +227,7 @@ class _Runner:
             near_misses=tuple(near),
             warnings=tuple(warnings),
             alternatives=alternatives,
+            kind=_step_kind(edit),
         ))
         return new, edit
 
