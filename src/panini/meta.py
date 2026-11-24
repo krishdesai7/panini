@@ -38,10 +38,15 @@ def sthanivat_note(term: Term) -> str | None:
 
 
 def augment_edit(state: State, target: int, augment: Term) -> Edit:
-    """Place a ṭit augment before ``target`` or a kit augment after it (1.1.46)."""
-    if augment.has_marker("w"):
+    """Place a ṭit augment before ``target`` or a kit augment after it (1.1.46).
+
+    1.1.46 refers to the augment as taught, so the marker is read from its upadeśa
+    when the it-rules have not yet run on it.
+    """
+    final = augment.upadesha.rstrip("~")[-1:]
+    if augment.has_marker("w") or final == "w":
         return (InsertTerm(target, augment),)
-    if augment.has_marker("k"):
+    if augment.has_marker("k") or final == "k":
         return (InsertTerm(target + 1, augment),)
     raise ValueError(f"augment {augment.upadesha} is neither ṭit nor kit")
 

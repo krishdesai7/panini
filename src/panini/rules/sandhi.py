@@ -102,3 +102,19 @@ R_6_1_66 = Rule("6.1.66", _find_6166,
                 " before a consonant other than y is deleted")
 
 RULES = (*RULES, R_6_1_66)
+
+
+# 6.1.90 āṭaś ca
+def _find_6190(st: State) -> list[Site]:
+    return [_site(st, l, r) for l, r, x, y in junctions(st)
+            if st.terms[l].upadesha == "Aw" and x == "A" and is_vowel(y)]
+
+
+R_6_1_90 = Rule("6.1.90", _find_6190,
+                lambda st, site: (Ekadesha(site.spans[0].term, site.spans[1].term,
+                                           _sounds(vrddhi(st.terms[site.spans[1].term].sounds[0].char))),),
+                blocks=("6.1.87", "6.1.88", "6.1.101"),
+                note=lambda st, site: f"the augment ā and {slp1_to_iast(st.terms[site.spans[1].term].sounds[0].char)} "
+                f"→ {slp1_to_iast(vrddhi(st.terms[site.spans[1].term].sounds[0].char))} (vṛddhi)")
+
+RULES = (*RULES, R_6_1_90)

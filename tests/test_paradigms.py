@@ -7,7 +7,7 @@ from panini.request import all_requests, availability
 
 REF = json.loads(Path("tests/data/reference_forms.json").read_text())
 XFAIL: dict[str, str] = {}   # key -> explanation (mirrors docs/findings.md)
-IN_SCOPE = lambda r: r.lakara.iast == "laṭ"   # widened in Task 9
+IN_SCOPE = lambda r: True
 
 CASES = [r for r in all_requests() if availability(r) is None and IN_SCOPE(r)]
 
