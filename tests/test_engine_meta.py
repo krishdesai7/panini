@@ -129,3 +129,28 @@ def test_derivation_to_json_roundtrips_types():
     d = Derivation({"key": "toy"}, Status.OK, final_text(state), alts, None, steps, None)
     data = json.loads(json.dumps(d.to_json()))
     assert data["status"] == "ok" and data["steps"][0]["after"][0]["iast"] == "abi"
+
+
+def test_commuting_candidate_applies_before_an_open_conflict():
+    # 9.9.2 and 9.9.5 conflict on "a"; 9.9.8 (a higher id) commutes with both and, once applied,
+    # enables 9.9.6, a no-op niṣedha that blocks 9.9.5 — so the conflict dissolves.
+    a = replace_rule("9.9.2", "a", "i")
+    b = replace_rule("9.9.5", "a", "e", only_at=0)
+    c = replace_rule("9.9.8", "b", "p")
+    d = Rule("9.9.6", lambda st: [Site.at(0, 0)] if "p" in st.terms[0].text else [],
+             lambda st, site: (), blocks=("9.9.5",))
+    state, steps, _ = run(S("ab"), [a, b, c, d])
+    assert final_text(state) == "ip"
+
+
+def test_orders_converging_on_the_same_final_form_are_not_a_conflict():
+    # 9.9.2 a→i then 9.9.3 i→e, versus 9.9.5 a→e directly (which leaves a tag behind):
+    # different intermediate states, same final form, so no UnresolvedConflict.
+    from panini.edits import AddTags
+    a = replace_rule("9.9.2", "a", "i")
+    b = replace_rule("9.9.3", "i", "e")
+    c = Rule("9.9.5", lambda st: [Site.at(0, 0)] if st.terms[0].adi == "a" else [],
+             lambda st, site: (ReplaceSounds(0, 0, 1, (Sound("e"),)), AddTags(0, frozenset({"x"}))))
+    state, steps, _ = run(S("a"), [a, b, c])
+    assert final_text(state) == "e"
+    assert any("both orders give e" in l.reason for s in steps for l in s.losers)

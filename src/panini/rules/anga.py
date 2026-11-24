@@ -141,3 +141,24 @@ R_6_1_73 = Rule("6.1.73", _find_6173,
                 "being kit, it goes at the end of what it is added to (1.1.46)")
 
 RULES = (R_7_3_84, R_7_3_86, R_7_3_101, R_7_1_3, R_7_3_77, R_6_1_73)
+
+
+# 7.2.81 āto ṅitaḥ
+def _find_7281(st: State) -> list[Site]:
+    out = []
+    nonempty = [i for i, t in enumerate(st.terms) if t.sounds]
+    for a, j in zip(nonempty, nonempty[1:]):
+        t = st.terms[j]
+        if (t.kind is TermKind.TIN and t.sounds[0].char == "A" and st.terms[a].antya == "a"
+                and (t.has_tag("ṅit-vat") or t.has_marker("N"))):
+            out.append(Site.at(j, 0))
+    return out
+
+
+# Apavāda of 6.1.101 and 6.1.87: wherever 7.2.81 applies (a + ā of a ṅit ending), both of
+# them apply too, so its domain is properly included in theirs (yena nāprāpte; Kiparsky's (19)).
+R_7_2_81 = Rule("7.2.81", _find_7281, lambda st, site: (ReplaceSounds(site.spans[0].term, 0, 1, _sounds("iy")),),
+                blocks=("6.1.101", "6.1.87"),
+                note=lambda st, site: "after a base in a, the ā of an ending that counts as ṅit becomes iy")
+
+RULES = (*RULES, R_7_2_81)

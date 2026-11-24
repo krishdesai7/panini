@@ -7,7 +7,7 @@ from panini.request import all_requests, availability
 
 REF = json.loads(Path("tests/data/reference_forms.json").read_text())
 XFAIL: dict[str, str] = {}   # key -> explanation (mirrors docs/findings.md)
-IN_SCOPE = lambda r: r.lakara.iast == "laṭ" and r.voice.name == "ACTIVE"   # widened in Tasks 8 and 9
+IN_SCOPE = lambda r: r.lakara.iast == "laṭ"   # widened in Task 9
 
 CASES = [r for r in all_requests() if availability(r) is None and IN_SCOPE(r)]
 
@@ -18,3 +18,10 @@ def test_form_matches_reference(req):
     d = derive(req)
     assert d.status is Status.OK, d.message
     assert [d.result, *d.alternatives] == REF[req.key]
+
+
+def test_edhete_order():
+    from panini.request import parse_request
+    o = [i for s in derive(parse_request("edh", "laṭ", 3, "du", "middle")).steps for i in s.rule_ids]
+    for a, b in [("3.4.79", "7.2.81"), ("7.2.81", "6.1.66"), ("6.1.66", "6.1.87")]:
+        assert o.index(a) < o.index(b)

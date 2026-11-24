@@ -71,6 +71,7 @@ class _Runner:
         self.abhiya: list[str] = []
         self.losers_seen: set[Loser] = set()
         self.count = 0
+        self.nested = False  # lookahead runners don't look ahead again
 
     # -- bookkeeping -------------------------------------------------------
 
@@ -109,7 +110,7 @@ class _Runner:
             cands = [c for c in cands if self._guard_key(state, c) not in self.applied]
             if not cands:
                 return state
-            choice = self.resolver.choose(state, cands, self.rules)
+            choice = self.resolver.choose(state, cands, self.rules, finish=self._finish if not self.nested else None)
             if choice is None:
                 return state
             edit = choice.winner.rule.rewrite(state, choice.winner.site)
@@ -143,6 +144,13 @@ class _Runner:
         return state
 
     # -- applying one rule -------------------------------------------------
+
+    def _finish(self, state: State) -> str:
+        """Final form reached from ``state`` (a lookahead for the resolver's conflict check)."""
+        sub = _Runner(self.all_rules, self.resolver, self.max_steps, self.disabled)
+        sub.applied, sub.count, sub.nested = set(self.applied), self.count, True
+        final, _, _ = sub.run(state)
+        return final_text(final)
 
     def _alternative(self, state: State, extra_disabled: frozenset[str], resume: Resume) -> tuple[str, ...]:
         alt = _Runner(self.all_rules, self.resolver, self.max_steps, self.disabled | extra_disabled)

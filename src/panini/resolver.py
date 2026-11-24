@@ -8,14 +8,14 @@ LocalResolver implements the restricted siddha principle, the slice-1 design:
    ekasaṃjñā section 1.4.1–2.2.38, as Kiparsky restricts it;
 3. nitya: prefer X if X still makes the same change after Y applies, but
    Y no longer does after X (śabdāntaraprāpti: a changed effect doesn't count);
-4. ties: if the remaining candidates commute, the lowest sūtra number goes
-   first (an arbitrary order with an identical result); otherwise raise
-   UnresolvedConflict. The resolver never guesses.
+4. ties: the lowest-numbered candidate that commutes with all the others goes
+   first (an arbitrary order with an identical result); if none commutes with
+   all the others, raise UnresolvedConflict. The resolver never guesses.
 """
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Protocol
 
@@ -55,8 +55,12 @@ class UnresolvedConflict(Exception):
         )
 
 
+type Finish = Callable[[State], str]
+
+
 class Resolver(Protocol):
-    def choose(self, state: State, candidates: Sequence[Candidate], rules: Sequence[Rule]) -> Choice | None: ...
+    def choose(self, state: State, candidates: Sequence[Candidate], rules: Sequence[Rule],
+               finish: Finish | None = None) -> Choice | None: ...
 
 
 def state_text(state: State) -> str:
@@ -136,7 +140,8 @@ def _site_terms(site: Site) -> frozenset[int]:
 
 
 class LocalResolver:
-    def choose(self, state: State, candidates: Sequence[Candidate], rules: Sequence[Rule]) -> Choice | None:
+    def choose(self, state: State, candidates: Sequence[Candidate], rules: Sequence[Rule],
+               finish: Finish | None = None) -> Choice | None:
         losers: list[Loser] = []
         remaining: list[Candidate] = []
         for c in candidates:
@@ -174,10 +179,34 @@ class LocalResolver:
             undominated = remaining
 
         undominated.sort(key=lambda c: (c.rule.key, [(sp.term, sp.start) for sp in c.site.spans]))
-        first = undominated[0]
-        for other in undominated[1:]:
-            a, b = then(state, first, other), then(state, other, first)
-            if a != b:
-                raise UnresolvedConflict((first.rule.id, other.rule.id), (first.site, other.site),
-                                         (state_text(a), state_text(b)))
-        return Choice(first, tuple(losers))
+        # Apply the lowest candidate that commutes with every other one: its order is
+        # immaterial, so it decides nothing, and it may give the next step the information
+        # (a new blocker, a nitya relation) that settles a remaining conflict.
+        conflict: tuple[Candidate, Candidate, State, State] | None = None
+        for c in undominated:
+            for other in undominated:
+                if other is c:
+                    continue
+                a, b = then(state, c, other), then(state, other, c)
+                if a != b:
+                    conflict = conflict or (c, other, a, b)
+                    break
+            else:
+                return Choice(c, tuple(losers))
+        assert conflict is not None
+        c, other, a, b = conflict
+        # The immediate states differ. If both orders still lead to the same final form,
+        # the order is immaterial to the result (the siddha definition compares results).
+        if finish is not None:
+            try:
+                fa, fb = finish(a), finish(b)
+            except UnresolvedConflict:
+                fa, fb = None, None
+            if fa is not None and fa == fb:
+                losers.append(Loser(other.rule.id, f"order with {c.rule.id} is immaterial: both orders give {fa}; "
+                                                   "the lower-numbered rule goes first"))
+                return Choice(c, tuple(losers))
+            if fa is not None:
+                a_text, b_text = fa, fb or "?"
+                raise UnresolvedConflict((c.rule.id, other.rule.id), (c.site, other.site), (a_text, b_text))
+        raise UnresolvedConflict((c.rule.id, other.rule.id), (c.site, other.site), (state_text(a), state_text(b)))

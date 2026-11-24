@@ -8,6 +8,10 @@ gloss = "Where guṇa or vṛddhi is prescribed without naming the vowel it repl
 text = "ādyantau ṭakitau"
 gloss = "An augment marked with ṭ is placed at the beginning of what it is added to; one marked with k, at the end."
 
+["1.1.50"]
+text = "sthāne 'ntaratamaḥ"
+gloss = "A substitute is the one closest to the original (in place, manner, and so on)."
+
 ["1.1.51"]
 text = "uraṇ raparaḥ"
 gloss = "A vowel that replaces ṛ or ḷ is followed by r (or l)."
@@ -15,6 +19,10 @@ gloss = "A vowel that replaces ṛ or ḷ is followed by r (or l)."
 ["1.1.56"]
 text = "sthānivad ādeśo 'nalvidhau"
 gloss = "A substitute is treated like what it replaces, except in operations conditioned by a single sound."
+
+["1.1.64"]
+text = "aco 'ntyādi ṭi"
+gloss = "The last vowel and whatever follows it is called ṭi."
 
 ["1.2.4"]
 text = "sārvadhātukam apit"
@@ -136,6 +144,14 @@ gloss = "(Heading) In place of l, the general tense/mood affix:"
 text = "tiptasjhisipthasthamibvasmastātāṃjhathāsāthāṃdhvamiḍvahimahiṅ"
 gloss = "l is replaced by one of the eighteen person/number endings: tip tas jhi, sip thas tha, mip vas mas (parasmaipada); ta ātām jha, thās āthām dhvam, iṭ vahi mahiṅ (ātmanepada)."
 
+["3.4.79"]
+text = "ṭita ātmanepadānāṃ ṭer e"
+gloss = "In place of a lakāra marked with ṭ (e.g. laṭ), the ṭi of an ātmanepada ending is replaced by e."
+
+["3.4.80"]
+text = "thāsaḥ se"
+gloss = "In place of a lakāra marked with ṭ, the ending thās is replaced by se."
+
 ["3.4.113"]
 text = "tiṅśit sārvadhātukam"
 gloss = "A verb ending (tiṅ), or an affix marked with ś, is called sārvadhātuka."
@@ -147,6 +163,10 @@ gloss = "A root-initial ṣ is replaced by s."
 ["6.1.65"]
 text = "ṇo naḥ"
 gloss = "A root-initial ṇ is replaced by n."
+
+["6.1.66"]
+text = "lopo vyor vali"
+gloss = "y and v are deleted before any consonant other than y (val)."
 
 ["6.1.73"]
 text = "che ca"
@@ -183,6 +203,10 @@ gloss = "A vowel a, i, u, ṛ, ḷ and a following vowel of the same kind are to
 ["7.1.3"]
 text = "jho 'ntaḥ"
 gloss = "The jh of an affix is replaced by ant."
+
+["7.2.81"]
+text = "āto ṅitaḥ"
+gloss = "After a base ending in a, the ā of an ending marked with ṅ (or treated as such) is replaced by iy."
 
 ["7.3.77"]
 text = "iṣugamiyamāṃ chaḥ"

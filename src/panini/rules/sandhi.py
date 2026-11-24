@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterator
 
-from panini.edits import Ekadesha, ReplaceSounds
+from panini.edits import DeleteSounds, Ekadesha, ReplaceSounds
 from panini.model import Site, Sound, Span, State
 from panini.rules.base import Rule
 from panini.sounds import dirgha, guna, is_savarna, is_vowel, pratyahara, vrddhi
@@ -70,12 +70,35 @@ R_6_1_87 = _sandhi_rule("6.1.87", lambda x, y: x in "aA" and is_vowel(y), lambda
 # 6.1.88 vṛddhir eci
 R_6_1_88 = _sandhi_rule("6.1.88", lambda x, y: x in "aA" and y in EC, lambda x, y: vrddhi(y),
                         "a and a following e/o/ai/au are replaced by vṛddhi", blocks=("6.1.87",))
-# 6.1.97 ato guṇe — collectively blocks 6.1.87 and 6.1.101 (Kiparsky, Architecture §1.4.2)
+# 6.1.97 ato guṇe — its domain (short a + a/e/o) lies inside 6.1.101 (a+a) ∪ 6.1.88 (a+e/o)
+# ∪ 6.1.87, so it collectively blocks all three (Kiparsky, Architecture §1.4.2, (23) and (32)).
 R_6_1_97 = _sandhi_rule("6.1.97", lambda x, y: x == "a" and y in "aeo", lambda x, y: y,
-                        "short a and a following guṇa vowel are replaced by the second", blocks=("6.1.87", "6.1.101"))
+                        "short a and a following guṇa vowel are replaced by the second",
+                        blocks=("6.1.87", "6.1.88", "6.1.101"))
 # 6.1.101 akaḥ savarṇe dīrghaḥ
 R_6_1_101 = _sandhi_rule("6.1.101", lambda x, y: x in AK and is_vowel(y) and is_savarna(x, y),
                          lambda x, y: dirgha(x), "a vowel and a like vowel are replaced by the long vowel",
                          blocks=("6.1.87",))
 
 RULES = (R_6_1_78, R_6_1_87, R_6_1_88, R_6_1_97, R_6_1_101)
+
+
+# 6.1.66 lopo vyor vali
+VAL = pratyahara("val")
+
+
+def _word(st: State) -> list[tuple[int, int, str]]:
+    return [(i, k, s.char) for i, t in enumerate(st.terms) for k, s in enumerate(t.sounds)]
+
+
+def _find_6166(st: State) -> list[Site]:
+    w = _word(st)
+    return [Site.at(i, k) for (i, k, c), (_, _, nxt) in zip(w, w[1:]) if c in "yv" and nxt in VAL]
+
+
+R_6_1_66 = Rule("6.1.66", _find_6166,
+                lambda st, site: (DeleteSounds(site.spans[0].term, (site.spans[0].start,)),),
+                note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)}"
+                " before a consonant other than y is deleted")
+
+RULES = (*RULES, R_6_1_66)

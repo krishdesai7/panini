@@ -22,7 +22,8 @@ VARGAS: tuple[frozenset[str], ...] = (
 )
 
 _GUNA = {"a": "a", "A": "a", "i": "e", "I": "e", "u": "o", "U": "o",
-         "f": "ar", "F": "ar", "x": "al", "X": "al"}
+         "f": "ar", "F": "ar", "x": "al", "X": "al",
+         "e": "e", "E": "e", "o": "o", "O": "o"}  # nearest guṇa (1.1.50) for 6.1.87 with a following ec
 _VRDDHI = {"a": "A", "A": "A", "i": "E", "I": "E", "u": "O", "U": "O",
            "f": "Ar", "F": "Ar", "x": "Al", "X": "Al",
            "e": "E", "E": "E", "o": "O", "O": "O"}

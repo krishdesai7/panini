@@ -14,3 +14,7 @@ def test_guna_vrddhi():
 def test_savarna_and_dirgha():
     assert is_savarna("a", "A") and not is_savarna("a", "i")
     assert dirgha("a") == "A"
+
+
+def test_guna_of_diphthongs_is_nearest_guna_vowel():
+    assert [guna(c) for c in "eEoO"] == ["e", "e", "o", "o"]
