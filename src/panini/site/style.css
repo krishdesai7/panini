@@ -119,4 +119,27 @@ ol.steps > li::before { content: counter(step); color: var(--faint); text-align:
   cursor: help;
 }
 .term:focus-visible { outline: 1px dotted var(--link-underline); outline-offset: 2px; }
-.sid[title] { cursor: help; }
+.sid[data-tip], .it[data-tip] { cursor: help; }
+
+/* Instant tooltip: a floating glass card, like the other floating controls. */
+.tip {
+  position: fixed;
+  z-index: 40;
+  max-width: 24rem;
+  padding: 0.45rem 0.75rem;
+  font: 400 var(--fs-14)/1.45 var(--serif);
+  color: var(--ink);
+  white-space: pre-line;
+  background: var(--control-strong);
+  -webkit-backdrop-filter: var(--control-blur);
+  backdrop-filter: var(--control-blur);
+  border: 1px solid var(--control-edge);
+  border-radius: var(--radius);
+  box-shadow: var(--control-shadow);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.tip.on { opacity: 1; }
+/* Sanskrit in the picker needs Cochineal: Heliotrope has no dot-below letters (ṭ, ṛ, ṇ). */
+.picker select { font-family: var(--serif); }

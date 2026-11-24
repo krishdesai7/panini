@@ -35,3 +35,16 @@ def test_nisedha_applies_once_and_losers_not_repeated():
     blocked = [l for s in d.steps for l in s.losers if l.rule_id == "1.3.3" and "1.3.4" in l.reason]
     assert len(blocked) == 1
     assert not any("commutes" in l.reason for s in d.steps for l in s.losers)
+
+
+def test_lakara_note_explains_the_unwritten_nasal_and_the_placement():
+    d = derive(parse_request("paṭh", "laṭ", 3, "sg", "active"))
+    note = next(s.note for s in d.steps if "3.2.123" in s.rule_ids)
+    assert "lãṭ" in note and "3.1.2" in note
+
+
+def test_affix_glosses_name_their_headings():
+    from panini.rules.base import sutra_info
+    for rid in ("3.2.123", "3.2.111", "3.1.68"):
+        assert "3.1.91" in sutra_info(rid)[1] and "3.1.2" in sutra_info(rid)[1]
+    assert sutra_info("3.1.2")[0] == "paraś ca"

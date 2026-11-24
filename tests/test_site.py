@@ -83,3 +83,18 @@ def test_split_citations_marks_known_sutra_numbers():
 def test_sutra_title_is_text_then_gloss():
     assert _node(f"app.sutraTitle('1.3.78', {json.dumps(SUTRAS)})") == (
         "1.3.78 śeṣāt kartari parasmaipadam\nAfter all other roots, the parasmaipada endings are used.")
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_tooltip_sits_below_the_word_and_stays_on_screen():
+    pos = _node("app.tipPosition({left: 100, bottom: 50, top: 30}, {width: 200, height: 40}, {width: 1000, height: 800})")
+    assert pos == {"left": 100, "top": 56}
+    right_edge = _node("app.tipPosition({left: 950, bottom: 50, top: 30}, {width: 200, height: 40}, {width: 1000, height: 800})")
+    assert right_edge["left"] == 1000 - 200 - 8
+    bottom_edge = _node("app.tipPosition({left: 100, bottom: 790, top: 770}, {width: 200, height: 40}, {width: 1000, height: 800})")
+    assert bottom_edge["top"] == 770 - 40 - 6
+
+
+def test_page_uses_instant_tooltips_not_title_attributes(tmp_path):
+    html = build_site(tmp_path / "p.html", style_dir=tmp_path / "nope").read_text()
+    assert "data-tip" in html and 'title: title' not in html

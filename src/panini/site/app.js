@@ -50,7 +50,16 @@ function sutraTitle(id, sutras) {
   return s ? id + " " + s.text + "\n" + s.gloss : id;
 }
 
-if (typeof module !== "undefined") module.exports = { parseHash: parseHash, keyOf: keyOf, splitCitations: splitCitations, sutraTitle: sutraTitle };
+/* Where to put a tooltip: just below the word, kept 8px inside the viewport; above it if
+   there's no room below. rect: the word's box; size: the tooltip's; view: the viewport's. */
+function tipPosition(rect, size, view) {
+  var left = Math.max(8, Math.min(rect.left, view.width - size.width - 8));
+  var top = rect.bottom + 6;
+  if (top + size.height > view.height - 8) top = rect.top - size.height - 6;
+  return { left: left, top: top };
+}
+
+if (typeof module !== "undefined") module.exports = { parseHash: parseHash, keyOf: keyOf, splitCitations: splitCitations, sutraTitle: sutraTitle, tipPosition: tipPosition };
 
 if (typeof document !== "undefined") (function () {
   var data = JSON.parse(document.getElementById("data").textContent);
@@ -80,7 +89,7 @@ if (typeof document !== "undefined") (function () {
       if (i) span.appendChild(el("span", { class: "plus", text: "+" }));
       v.chars.forEach(function (pair) {
         var c = pair[0], marker = pair[1];
-        if (marker) span.appendChild(el("span", { class: "it", title: "marker (it)", text: c.charAt(0).toUpperCase() + c.slice(1) }));
+        if (marker) span.appendChild(el("span", { class: "it", "data-tip": "marker (it): deleted by 1.3.9", text: c.charAt(0).toUpperCase() + c.slice(1) }));
         else span.appendChild(document.createTextNode(c));
       });
     });
@@ -88,7 +97,7 @@ if (typeof document !== "undefined") (function () {
   }
 
   /* A plain word with a dotted underline whose tooltip gives Pāṇini's term. */
-  function term(text, title) { return el("span", { class: "term", title: title, tabindex: "0", text: text }); }
+  function term(text, tip) { return el("span", { class: "term", "data-tip": tip, tabindex: "0", text: text }); }
 
   /* Text with every sūtra number given a tooltip showing the rule. */
   function cite(text) {
@@ -175,7 +184,7 @@ if (typeof document !== "undefined") (function () {
   function step(s) {
     var rule = el("div", { class: "rule" });
     s.sutras.forEach(function (su) {
-      rule.appendChild(el("div", {}, [el("span", { class: "sid", title: sutraTitle(su.id, data.sutras || {}), text: su.id }),
+      rule.appendChild(el("div", {}, [el("span", { class: "sid", "data-tip": sutraTitle(su.id, data.sutras || {}), tabindex: "0", text: su.id }),
                                       el("span", { class: "stext", text: su.text })]));
     });
     if (s.note) rule.appendChild(el("p", { class: "snote" }, [cite(s.note)]));
@@ -187,7 +196,7 @@ if (typeof document !== "undefined") (function () {
       li.appendChild(el("details", {}, [
         el("summary", { text: "competitors" }),
         el("ul", {}, s.losers.map(function (l) {
-          return el("li", {}, [el("span", { class: "sid", title: sutraTitle(l.rule_id, data.sutras || {}), text: l.rule_id }), cite(l.reason)]);
+          return el("li", {}, [el("span", { class: "sid", "data-tip": sutraTitle(l.rule_id, data.sutras || {}), tabindex: "0", text: l.rule_id }), cite(l.reason)]);
         })),
       ]));
     }
@@ -231,6 +240,34 @@ if (typeof document !== "undefined") (function () {
     var saved; try { saved = localStorage.getItem("theme"); } catch (err) {}
     if (!saved) document.documentElement.dataset.theme = e.matches ? "dark" : "light";
   });
+
+  /* One shared tooltip, shown at once on hover or keyboard focus (native title tooltips
+     carry a browser delay the page cannot change). */
+  var tip = el("div", { class: "tip", role: "tooltip", id: "tip" });
+  document.body.appendChild(tip);
+  function showTip(target) {
+    tip.textContent = target.getAttribute("data-tip");
+    tip.classList.add("on");
+    var pos = tipPosition(target.getBoundingClientRect(), tip.getBoundingClientRect(),
+                          { width: window.innerWidth, height: window.innerHeight });
+    tip.style.left = pos.left + "px";
+    tip.style.top = pos.top + "px";
+    target.setAttribute("aria-describedby", "tip");
+  }
+  function hideTip(target) { tip.classList.remove("on"); if (target) target.removeAttribute("aria-describedby"); }
+  ["mouseover", "focusin"].forEach(function (ev) {
+    document.addEventListener(ev, function (e) {
+      var t = e.target.closest && e.target.closest("[data-tip]");
+      if (t) showTip(t);
+    });
+  });
+  ["mouseout", "focusout"].forEach(function (ev) {
+    document.addEventListener(ev, function (e) {
+      var t = e.target.closest && e.target.closest("[data-tip]");
+      if (t && !(e.relatedTarget && t.contains(e.relatedTarget))) hideTip(t);
+    });
+  });
+  window.addEventListener("scroll", function () { hideTip(null); }, { passive: true });
 
   render();
 })();

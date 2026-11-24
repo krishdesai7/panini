@@ -128,17 +128,29 @@ gloss = "The uttama (first person) is used when the agent is the speaker (asmad 
 text = "śeṣe prathamaḥ"
 gloss = "The prathama (third person) is used in the remaining cases."
 
+["3.1.1"]
+text = "pratyayaḥ"
+gloss = "(Heading over books 3–5) What is introduced from here on is an affix (pratyaya)."
+
+["3.1.2"]
+text = "paraś ca"
+gloss = "(Heading) And it is placed after what it is added to."
+
 ["3.1.68"]
 text = "kartari śap"
-gloss = "When a sārvadhātuka affix denoting the agent follows, the stem suffix śap is added to the root."
+gloss = "When a sārvadhātuka affix denoting the agent follows, the stem suffix śap is added to the root (as an affix, 3.1.1, placed after it, 3.1.2, after a root, 3.1.91)."
+
+["3.1.91"]
+text = "dhātoḥ"
+gloss = "(Heading over the rest of book 3) The affixes introduced from here on are added after a root."
 
 ["3.2.111"]
 text = "anadyatane laṅ"
-gloss = "laṅ is added to a root to denote past time not of today."
+gloss = "To denote past time not of today, laṅ is added to a root (as an affix, 3.1.1, placed after it, 3.1.2, after a root, 3.1.91)."
 
 ["3.2.123"]
 text = "vartamāne laṭ"
-gloss = "laṭ is added to a root to denote present (ongoing) time."
+gloss = "To denote present (ongoing) time, laṭ is added to a root (as an affix, 3.1.1, placed after it, 3.1.2, after a root, 3.1.91)."
 
 ["3.4.77"]
 text = "lasya"

@@ -48,10 +48,16 @@ def _insert_la(upadesha: str):
                                                                                    frozenset({"pratyaya"}))),)
 
 
+def _la_note(meaning: str, written: str, recited: str) -> str:
+    return (f"{meaning} → {written}, an affix placed after the root (3.1.1, 3.1.2, 3.1.91). "
+            f"It is recited {recited}: the nasal ã, unwritten in the text, carries the l and is a marker, "
+            f"like the final consonant")
+
+
 R_3_2_123 = Rule("3.2.123", _add_la(Time.PRESENT), _insert_la("la~w"),
-                 note=lambda st, site: "present time → laṭ")
+                 note=lambda st, site: _la_note("present time", "laṭ", "lãṭ"))
 R_3_2_111 = Rule("3.2.111", _add_la(Time.PAST_NOT_TODAY), _insert_la("la~N"),
-                 note=lambda st, site: "past time, not of today → laṅ")
+                 note=lambda st, site: _la_note("past time, not of today", "laṅ", "lãṅ"))
 
 
 # Pada: 1.3.12 anudāttaṅita ātmanepadam, 1.3.72 svaritañitaḥ kartrabhiprāye kriyāphale,
