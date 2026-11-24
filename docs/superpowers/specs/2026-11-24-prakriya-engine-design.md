@@ -7,11 +7,11 @@ Status: draft, awaiting approval
 
 A personal tool for watching Pāṇini's grammar work. The user is not a
 Pāṇinian specialist and finds the Aṣṭādhyāyī too compact to apply by hand.
-They give a root and a target form (in PIE-style or Pāṇinian terms). The tool
-derives the form and prints the derivation (prakriyā) one step at a time. Each
-step names the sūtra, glosses it in plain English and shows the form before
-and after. It also explains the interesting cases where a rule did _not_
-apply, or lost to another rule.
+They pick a root in a browser page and see its conjugated forms. Clicking a
+form shows its derivation (prakriyā) one step at a time. Each step names the
+sūtra, glosses it in plain English and shows the form before and after. It
+also explains the interesting cases where a rule did _not_ apply, or lost to
+another rule.
 
 The only user is the author. Readability of the derivation matters more than
 speed or coverage.
@@ -27,9 +27,10 @@ siddha-principle_).
   not of today", 3.2.111) form of a small set of **bhvādi** roots: 3 persons
   × 3 numbers, parasmaipada and ātmanepada as each root allows, kartari
   (agent) voice only.
-- Print a readable derivation trace (format below).
-- Accept requests in PIE-style labels and in Pāṇinian labels. Show how the
-  first map onto the second.
+- A generated browser page: root picker → paradigm tables → click a form →
+  its derivation (see "GUI").
+- A plain-text trace from the command line, for debugging and tests.
+- Label everything in PIE-style terms and Pāṇinian terms side by side.
 - Keep the meta-rules explicit and inspectable as data, not buried in
   control flow: blocking relations, rule sections, asiddha domains.
 - Structure rules so the slice-2 resolver (extended siddha principle,
@@ -73,9 +74,12 @@ siddha-principle_).
 
 ## Constraints
 
-- Python ≥ 3.15, managed with uv (existing scaffold: `pyproject.toml`,
-  `src/panini/`).
-- Terminal output. IAST for all user-facing input and output.
+- Python, managed with uv (existing scaffold: `pyproject.toml`,
+  `src/panini/`). The scaffold says ≥ 3.15 only because that's the machine
+  default. Lower it if a needed library lacks 3.15 wheels.
+- IAST for everything the user sees.
+- Visual style: the user's own design language (`krish-frontend-style`
+  skill). Load it before writing any HTML/CSS.
 - Personal use, single machine.
 
 ## Approaches considered
@@ -103,6 +107,17 @@ can show the road not taken, but noticeably more to build and debug.
 **Chosen: B for slice 1, C as slice 2.** Rules are written now so that C
 needs only a new resolver: they are pure find/rewrite functions, and two
 rewrites can be applied simultaneously to the same input.
+
+### GUI delivery
+
+- **Generated static page (chosen).** One command runs the engine over the
+  whole lexicon and writes a self-contained HTML file with all forms and
+  derivations embedded. No server. The lexicon is fixed, so precomputing
+  loses nothing. Rerun after rule changes.
+- **Local web server.** Always live, but adds a process and a dependency.
+  Easy to move to later, since the page and data format would be shared.
+- **Desktop app** (Qt/Tk/TUI). Rejected: the user's typographic style is
+  native to HTML/CSS.
 
 ## Design
 
@@ -272,7 +287,7 @@ overlapping site. Kiparsky: "strictly in order, modulo blocking."
 
 Target shape of the default output:
 
-```
+```text
 paṭh-, laṭ, 3sg parasmaipada  →  paṭhati
 
  1  paṭha~            1.3.1    bhūvādayo dhātavaḥ    'paṭha~' is a root (dhātu)
