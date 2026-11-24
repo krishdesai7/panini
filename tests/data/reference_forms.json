@@ -1,0 +1,494 @@
+{
+ "bhū|laṅ|P|1|du": [
+  "abhavāva"
+ ],
+ "bhū|laṅ|P|1|pl": [
+  "abhavāma"
+ ],
+ "bhū|laṅ|P|1|sg": [
+  "abhavam"
+ ],
+ "bhū|laṅ|P|2|du": [
+  "abhavatam"
+ ],
+ "bhū|laṅ|P|2|pl": [
+  "abhavata"
+ ],
+ "bhū|laṅ|P|2|sg": [
+  "abhavaḥ"
+ ],
+ "bhū|laṅ|P|3|du": [
+  "abhavatām"
+ ],
+ "bhū|laṅ|P|3|pl": [
+  "abhavan"
+ ],
+ "bhū|laṅ|P|3|sg": [
+  "abhavat",
+  "abhavad"
+ ],
+ "bhū|laṭ|P|1|du": [
+  "bhavāvaḥ"
+ ],
+ "bhū|laṭ|P|1|pl": [
+  "bhavāmaḥ"
+ ],
+ "bhū|laṭ|P|1|sg": [
+  "bhavāmi"
+ ],
+ "bhū|laṭ|P|2|du": [
+  "bhavathaḥ"
+ ],
+ "bhū|laṭ|P|2|pl": [
+  "bhavatha"
+ ],
+ "bhū|laṭ|P|2|sg": [
+  "bhavasi"
+ ],
+ "bhū|laṭ|P|3|du": [
+  "bhavataḥ"
+ ],
+ "bhū|laṭ|P|3|pl": [
+  "bhavanti"
+ ],
+ "bhū|laṭ|P|3|sg": [
+  "bhavati"
+ ],
+ "edh|laṅ|Ā|1|du": [
+  "aidhāvahi"
+ ],
+ "edh|laṅ|Ā|1|pl": [
+  "aidhāmahi"
+ ],
+ "edh|laṅ|Ā|1|sg": [
+  "aidhe"
+ ],
+ "edh|laṅ|Ā|2|du": [
+  "aidhethām"
+ ],
+ "edh|laṅ|Ā|2|pl": [
+  "aidhadhvam"
+ ],
+ "edh|laṅ|Ā|2|sg": [
+  "aidhathāḥ"
+ ],
+ "edh|laṅ|Ā|3|du": [
+  "aidhetām"
+ ],
+ "edh|laṅ|Ā|3|pl": [
+  "aidhanta"
+ ],
+ "edh|laṅ|Ā|3|sg": [
+  "aidhata"
+ ],
+ "edh|laṭ|Ā|1|du": [
+  "edhāvahe"
+ ],
+ "edh|laṭ|Ā|1|pl": [
+  "edhāmahe"
+ ],
+ "edh|laṭ|Ā|1|sg": [
+  "edhe"
+ ],
+ "edh|laṭ|Ā|2|du": [
+  "edhethe"
+ ],
+ "edh|laṭ|Ā|2|pl": [
+  "edhadhve"
+ ],
+ "edh|laṭ|Ā|2|sg": [
+  "edhase"
+ ],
+ "edh|laṭ|Ā|3|du": [
+  "edhete"
+ ],
+ "edh|laṭ|Ā|3|pl": [
+  "edhante"
+ ],
+ "edh|laṭ|Ā|3|sg": [
+  "edhate"
+ ],
+ "gam|laṅ|P|1|du": [
+  "agacchāva"
+ ],
+ "gam|laṅ|P|1|pl": [
+  "agacchāma"
+ ],
+ "gam|laṅ|P|1|sg": [
+  "agaccham"
+ ],
+ "gam|laṅ|P|2|du": [
+  "agacchatam"
+ ],
+ "gam|laṅ|P|2|pl": [
+  "agacchata"
+ ],
+ "gam|laṅ|P|2|sg": [
+  "agacchaḥ"
+ ],
+ "gam|laṅ|P|3|du": [
+  "agacchatām"
+ ],
+ "gam|laṅ|P|3|pl": [
+  "agacchan"
+ ],
+ "gam|laṅ|P|3|sg": [
+  "agacchat",
+  "agacchad"
+ ],
+ "gam|laṭ|P|1|du": [
+  "gacchāvaḥ"
+ ],
+ "gam|laṭ|P|1|pl": [
+  "gacchāmaḥ"
+ ],
+ "gam|laṭ|P|1|sg": [
+  "gacchāmi"
+ ],
+ "gam|laṭ|P|2|du": [
+  "gacchathaḥ"
+ ],
+ "gam|laṭ|P|2|pl": [
+  "gacchatha"
+ ],
+ "gam|laṭ|P|2|sg": [
+  "gacchasi"
+ ],
+ "gam|laṭ|P|3|du": [
+  "gacchataḥ"
+ ],
+ "gam|laṭ|P|3|pl": [
+  "gacchanti"
+ ],
+ "gam|laṭ|P|3|sg": [
+  "gacchati"
+ ],
+ "nī|laṅ|P|1|du": [
+  "anayāva"
+ ],
+ "nī|laṅ|P|1|pl": [
+  "anayāma"
+ ],
+ "nī|laṅ|P|1|sg": [
+  "anayam"
+ ],
+ "nī|laṅ|P|2|du": [
+  "anayatam"
+ ],
+ "nī|laṅ|P|2|pl": [
+  "anayata"
+ ],
+ "nī|laṅ|P|2|sg": [
+  "anayaḥ"
+ ],
+ "nī|laṅ|P|3|du": [
+  "anayatām"
+ ],
+ "nī|laṅ|P|3|pl": [
+  "anayan"
+ ],
+ "nī|laṅ|P|3|sg": [
+  "anayat",
+  "anayad"
+ ],
+ "nī|laṅ|Ā|1|du": [
+  "anayāvahi"
+ ],
+ "nī|laṅ|Ā|1|pl": [
+  "anayāmahi"
+ ],
+ "nī|laṅ|Ā|1|sg": [
+  "anaye"
+ ],
+ "nī|laṅ|Ā|2|du": [
+  "anayethām"
+ ],
+ "nī|laṅ|Ā|2|pl": [
+  "anayadhvam"
+ ],
+ "nī|laṅ|Ā|2|sg": [
+  "anayathāḥ"
+ ],
+ "nī|laṅ|Ā|3|du": [
+  "anayetām"
+ ],
+ "nī|laṅ|Ā|3|pl": [
+  "anayanta"
+ ],
+ "nī|laṅ|Ā|3|sg": [
+  "anayata"
+ ],
+ "nī|laṭ|P|1|du": [
+  "nayāvaḥ"
+ ],
+ "nī|laṭ|P|1|pl": [
+  "nayāmaḥ"
+ ],
+ "nī|laṭ|P|1|sg": [
+  "nayāmi"
+ ],
+ "nī|laṭ|P|2|du": [
+  "nayathaḥ"
+ ],
+ "nī|laṭ|P|2|pl": [
+  "nayatha"
+ ],
+ "nī|laṭ|P|2|sg": [
+  "nayasi"
+ ],
+ "nī|laṭ|P|3|du": [
+  "nayataḥ"
+ ],
+ "nī|laṭ|P|3|pl": [
+  "nayanti"
+ ],
+ "nī|laṭ|P|3|sg": [
+  "nayati"
+ ],
+ "nī|laṭ|Ā|1|du": [
+  "nayāvahe"
+ ],
+ "nī|laṭ|Ā|1|pl": [
+  "nayāmahe"
+ ],
+ "nī|laṭ|Ā|1|sg": [
+  "naye"
+ ],
+ "nī|laṭ|Ā|2|du": [
+  "nayethe"
+ ],
+ "nī|laṭ|Ā|2|pl": [
+  "nayadhve"
+ ],
+ "nī|laṭ|Ā|2|sg": [
+  "nayase"
+ ],
+ "nī|laṭ|Ā|3|du": [
+  "nayete"
+ ],
+ "nī|laṭ|Ā|3|pl": [
+  "nayante"
+ ],
+ "nī|laṭ|Ā|3|sg": [
+  "nayate"
+ ],
+ "pac|laṅ|P|1|du": [
+  "apacāva"
+ ],
+ "pac|laṅ|P|1|pl": [
+  "apacāma"
+ ],
+ "pac|laṅ|P|1|sg": [
+  "apacam"
+ ],
+ "pac|laṅ|P|2|du": [
+  "apacatam"
+ ],
+ "pac|laṅ|P|2|pl": [
+  "apacata"
+ ],
+ "pac|laṅ|P|2|sg": [
+  "apacaḥ"
+ ],
+ "pac|laṅ|P|3|du": [
+  "apacatām"
+ ],
+ "pac|laṅ|P|3|pl": [
+  "apacan"
+ ],
+ "pac|laṅ|P|3|sg": [
+  "apacat",
+  "apacad"
+ ],
+ "pac|laṅ|Ā|1|du": [
+  "apacāvahi"
+ ],
+ "pac|laṅ|Ā|1|pl": [
+  "apacāmahi"
+ ],
+ "pac|laṅ|Ā|1|sg": [
+  "apace"
+ ],
+ "pac|laṅ|Ā|2|du": [
+  "apacethām"
+ ],
+ "pac|laṅ|Ā|2|pl": [
+  "apacadhvam"
+ ],
+ "pac|laṅ|Ā|2|sg": [
+  "apacathāḥ"
+ ],
+ "pac|laṅ|Ā|3|du": [
+  "apacetām"
+ ],
+ "pac|laṅ|Ā|3|pl": [
+  "apacanta"
+ ],
+ "pac|laṅ|Ā|3|sg": [
+  "apacata"
+ ],
+ "pac|laṭ|P|1|du": [
+  "pacāvaḥ"
+ ],
+ "pac|laṭ|P|1|pl": [
+  "pacāmaḥ"
+ ],
+ "pac|laṭ|P|1|sg": [
+  "pacāmi"
+ ],
+ "pac|laṭ|P|2|du": [
+  "pacathaḥ"
+ ],
+ "pac|laṭ|P|2|pl": [
+  "pacatha"
+ ],
+ "pac|laṭ|P|2|sg": [
+  "pacasi"
+ ],
+ "pac|laṭ|P|3|du": [
+  "pacataḥ"
+ ],
+ "pac|laṭ|P|3|pl": [
+  "pacanti"
+ ],
+ "pac|laṭ|P|3|sg": [
+  "pacati"
+ ],
+ "pac|laṭ|Ā|1|du": [
+  "pacāvahe"
+ ],
+ "pac|laṭ|Ā|1|pl": [
+  "pacāmahe"
+ ],
+ "pac|laṭ|Ā|1|sg": [
+  "pace"
+ ],
+ "pac|laṭ|Ā|2|du": [
+  "pacethe"
+ ],
+ "pac|laṭ|Ā|2|pl": [
+  "pacadhve"
+ ],
+ "pac|laṭ|Ā|2|sg": [
+  "pacase"
+ ],
+ "pac|laṭ|Ā|3|du": [
+  "pacete"
+ ],
+ "pac|laṭ|Ā|3|pl": [
+  "pacante"
+ ],
+ "pac|laṭ|Ā|3|sg": [
+  "pacate"
+ ],
+ "paṭh|laṅ|P|1|du": [
+  "apaṭhāva"
+ ],
+ "paṭh|laṅ|P|1|pl": [
+  "apaṭhāma"
+ ],
+ "paṭh|laṅ|P|1|sg": [
+  "apaṭham"
+ ],
+ "paṭh|laṅ|P|2|du": [
+  "apaṭhatam"
+ ],
+ "paṭh|laṅ|P|2|pl": [
+  "apaṭhata"
+ ],
+ "paṭh|laṅ|P|2|sg": [
+  "apaṭhaḥ"
+ ],
+ "paṭh|laṅ|P|3|du": [
+  "apaṭhatām"
+ ],
+ "paṭh|laṅ|P|3|pl": [
+  "apaṭhan"
+ ],
+ "paṭh|laṅ|P|3|sg": [
+  "apaṭhat",
+  "apaṭhad"
+ ],
+ "paṭh|laṭ|P|1|du": [
+  "paṭhāvaḥ"
+ ],
+ "paṭh|laṭ|P|1|pl": [
+  "paṭhāmaḥ"
+ ],
+ "paṭh|laṭ|P|1|sg": [
+  "paṭhāmi"
+ ],
+ "paṭh|laṭ|P|2|du": [
+  "paṭhathaḥ"
+ ],
+ "paṭh|laṭ|P|2|pl": [
+  "paṭhatha"
+ ],
+ "paṭh|laṭ|P|2|sg": [
+  "paṭhasi"
+ ],
+ "paṭh|laṭ|P|3|du": [
+  "paṭhataḥ"
+ ],
+ "paṭh|laṭ|P|3|pl": [
+  "paṭhanti"
+ ],
+ "paṭh|laṭ|P|3|sg": [
+  "paṭhati"
+ ],
+ "smṛ|laṅ|P|1|du": [
+  "asmarāva"
+ ],
+ "smṛ|laṅ|P|1|pl": [
+  "asmarāma"
+ ],
+ "smṛ|laṅ|P|1|sg": [
+  "asmaram"
+ ],
+ "smṛ|laṅ|P|2|du": [
+  "asmaratam"
+ ],
+ "smṛ|laṅ|P|2|pl": [
+  "asmarata"
+ ],
+ "smṛ|laṅ|P|2|sg": [
+  "asmaraḥ"
+ ],
+ "smṛ|laṅ|P|3|du": [
+  "asmaratām"
+ ],
+ "smṛ|laṅ|P|3|pl": [
+  "asmaran"
+ ],
+ "smṛ|laṅ|P|3|sg": [
+  "asmarat",
+  "asmarad"
+ ],
+ "smṛ|laṭ|P|1|du": [
+  "smarāvaḥ"
+ ],
+ "smṛ|laṭ|P|1|pl": [
+  "smarāmaḥ"
+ ],
+ "smṛ|laṭ|P|1|sg": [
+  "smarāmi"
+ ],
+ "smṛ|laṭ|P|2|du": [
+  "smarathaḥ"
+ ],
+ "smṛ|laṭ|P|2|pl": [
+  "smaratha"
+ ],
+ "smṛ|laṭ|P|2|sg": [
+  "smarasi"
+ ],
+ "smṛ|laṭ|P|3|du": [
+  "smarataḥ"
+ ],
+ "smṛ|laṭ|P|3|pl": [
+  "smaranti"
+ ],
+ "smṛ|laṭ|P|3|sg": [
+  "smarati"
+ ]
+}
