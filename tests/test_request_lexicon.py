@@ -40,3 +40,17 @@ def test_missing_reference_warns(tmp_path, capsys):
     from panini.request import load_reference
     assert load_reference(tmp_path / "nope.json") == {}
     assert "warning" in capsys.readouterr().err.lower()
+
+
+@pytest.mark.parametrize("text,key", [("gamḷ", "gam"), ("paṭha", "paṭh"), ("ḍupacaṣ", "pac"), ("Bhū", "bhū"), ("PAṬH", "paṭh")])
+def test_lookup_ignores_nasal_sign_and_case(text, key):
+    assert lookup_root(text).key == key
+
+
+def test_lexicon_pada_class_agrees_with_root_markers():
+    # availability() reads Root.pada; the engine reads the markers (1.3.12, 1.3.72, 1.3.78).
+    from panini.model import Term, TermKind
+    for root in ROOTS.values():
+        t = Term.from_upadesha(TermKind.ROOT, root.upadesha)
+        derived = "A" if "anudattet" in t.tags else "U" if ("svaritet" in t.tags or root.upadesha.endswith("Y")) else "P"
+        assert root.pada == derived, root.key

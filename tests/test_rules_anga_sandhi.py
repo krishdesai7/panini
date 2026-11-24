@@ -26,3 +26,13 @@ def test_pathati_near_miss():
 def test_smarati_cites_rapara():
     d = derive(parse_request("smṛ", "laṭ", 3, "sg", "active"))
     assert "1.1.51" in next(s.note for s in d.steps if "7.3.84" in s.rule_ids)
+
+
+def test_7386_near_miss_only_for_the_root_as_recited():
+    d = derive(parse_request("nī", "laṭ", 3, "sg", "active"))   # nay (after guṇa) is not a light-a root
+    assert not any("7.3.86" in n for s in d.steps for n in s.near_misses)
+
+
+def test_7377_note_names_the_replaced_sound():
+    d = derive(parse_request("gam", "laṭ", 3, "sg", "active"))
+    assert "final m of gam" in next(s.note for s in d.steps if "7.3.77" in s.rule_ids)

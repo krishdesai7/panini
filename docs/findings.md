@@ -102,6 +102,18 @@ Kiparsky's meta-rules and the tradition derive differently. The debated cases
 lie outside laṭ/laṅ of these roots (Joshi & Kiparsky's *adhītya*,
 *sed-vas-Ṅas*) and are slice 2's job.
 
+## Notes for slice 2
+
+- **Nitya depends on step granularity.** 3.1.68 counts as nitya over 7.3.84
+  partly because the newly inserted śap isn't yet tagged sārvadhātuka in the
+  very next state. The derivation search in slice 2 should compare
+  derivations, not single states, which removes this sensitivity.
+- **The tripādī never re-checks a blocked candidate.** It stays skipped even
+  if its blocker later disappears. No slice-1 form is affected.
+- **The page build looks for the style skill in a fixed home-directory
+  location.** `PANINI_STYLE_DIR` overrides it, which is enough for a
+  personal tool.
+
 ## Known limitations
 
 - **No 8.4.46–47 doubling** (*aco rahābhyāṃ dve*, *anaci ca*). Forms are

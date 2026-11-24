@@ -8,7 +8,7 @@ from typing import Literal
 from collections.abc import Mapping
 
 from panini.derivation import Derivation, Status, StepRecord, render_terms
-from panini.edits import InsertTerm, ReplaceTerm, apply_edit
+from panini.edits import Edit, InsertTerm, ReplaceTerm, apply_edit
 from panini.model import Site, State, Term, TermKind
 from panini.request import Request, availability
 from panini.resolver import Candidate, LocalResolver, Loser, Resolver, UnresolvedConflict, blocked_by
@@ -113,8 +113,7 @@ class _Runner:
             choice = self.resolver.choose(state, cands, self.rules, finish=self._finish if not self.nested else None)
             if choice is None:
                 return state
-            edit = choice.winner.rule.rewrite(state, choice.winner.site)
-            state = self._apply(state, choice.winner, choice.losers, resume)
+            state, edit = self._apply(state, choice.winner, choice.losers, resume)
             if rules is not self.it_rules and any(isinstance(op, (InsertTerm, ReplaceTerm)) for op in edit):
                 # A newly introduced upadeśa is read with its markers (amendment A2, generalized).
                 state = self._main(state, self.it_rules, resume)
@@ -136,7 +135,7 @@ class _Runner:
                     free.append(cand)
                 if not free:
                     break
-                state = self._apply(state, free[0], (), ("tripadi", rule.key))
+                state, _ = self._apply(state, free[0], (), ("tripadi", rule.key))
                 if rule.reintroduces_upadesha:
                     # Amendment A2: newly introduced upadeśa material gets its
                     # markers identified and deleted right away.
@@ -168,7 +167,7 @@ class _Runner:
         self.losers_seen.update(fresh)
         return fresh
 
-    def _apply(self, state: State, cand: Candidate, losers: tuple[Loser, ...], resume: Resume) -> State:
+    def _apply(self, state: State, cand: Candidate, losers: tuple[Loser, ...], resume: Resume) -> tuple[State, Edit]:
         self._tick()
         rule = cand.rule
         self.applied.add(self._guard_key(state, cand))
@@ -220,7 +219,7 @@ class _Runner:
             warnings=tuple(warnings),
             alternatives=alternatives,
         ))
-        return new
+        return new, edit
 
 
 def derive(

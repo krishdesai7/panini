@@ -36,13 +36,16 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def _derive(args: argparse.Namespace) -> int:
-    from panini.engine import derive
     from panini.request import load_reference, parse_request
     from panini.trace import render_text
 
+    from panini import engine
+    from panini.derivation import Status
+
     req = parse_request(args.root, args.tense, args.person, args.number, args.voice)
-    print(render_text(derive(req, reference=load_reference()), verbosity=args.verbose))
-    return 0
+    d = engine.derive(req, reference=load_reference())
+    print(render_text(d, verbosity=args.verbose))
+    return 1 if d.status is Status.ERROR else 0
 
 
 def _site(args: argparse.Namespace) -> int:

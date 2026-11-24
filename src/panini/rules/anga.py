@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from panini.edits import ReplaceSounds
+from panini.edits import VIKRTA, ReplaceSounds
 from panini.meta import augment_in_term_edit
 from panini.model import Site, Sound, State, TermKind
 from panini.rules.base import Rule, adi, is_pratyaya
@@ -73,7 +73,9 @@ def _find_7386(st: State) -> list[Site]:
 def _near_7386(st: State) -> str | None:
     for i in _before_sarvadhatuka(st):
         k = _light_upadha(st, i)
-        if k is not None and st.terms[i].kind is TermKind.ROOT and st.terms[i].sounds[k].char not in IK:
+        t = st.terms[i]
+        if (k is not None and t.kind is TermKind.ROOT and VIKRTA not in t.tags
+                and t.sounds[k].char not in IK):
             v = slp1_to_iast(st.terms[i].sounds[k].char)
             return (f"7.3.86 (guṇa of a light penultimate vowel) does not apply: "
                     f"{v} is not an ik vowel (1.1.3)")
@@ -121,7 +123,8 @@ def _find_7377(st: State) -> list[Site]:
 R_7_3_77 = Rule("7.3.77", _find_7377,
                 lambda st, site: (ReplaceSounds(site.spans[0].term, site.spans[0].start, site.spans[0].end,
                                                 (Sound("C"),)),),
-                note=lambda st, site: "the final of gam is replaced by ch before an affix marked ś (śap)")
+                note=lambda st, site: f"the final {slp1_to_iast(st.terms[site.spans[0].term].antya or '')} of "
+                f"{slp1_to_iast(st.terms[site.spans[0].term].text)} is replaced by ch before an affix marked ś (śap)")
 
 
 # 6.1.73 che ca (tuk after a short vowel before ch)

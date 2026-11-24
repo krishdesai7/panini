@@ -511,7 +511,7 @@ confirmation.
   skill's root directory (`PANINI_STYLE_DIR`), because the font script
   lives there. This replaces `PANINI_FONTS_DIR`.
 
-## Amendment during implementation: pending the user's confirmation
+## Amendment during implementation (confirmed by the user, 2026-11-24)
 
 - **A6. A result-based commutation check.** Approach B looks one step ahead.
   When two candidates neither block nor dominate each other, and their
@@ -527,5 +527,4 @@ confirmation.
     equally valid;
   - each such conflict costs two extra sub-derivations.
 
-  The alternative is to restrict the fallback to the listed case, or to drop
-  it and record *naye* as an expected failure until slice 2.
+  The user chose to keep it as designed.

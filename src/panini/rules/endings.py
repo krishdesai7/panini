@@ -10,6 +10,9 @@ from panini.sounds import is_vowel
 from panini.translit import slp1_to_iast
 
 
+TER_E_DONE = "ṭer-e-done"  # the ending's final part has been dealt with (3.4.79 or 3.4.80)
+
+
 def _sounds(text: str) -> tuple[Sound, ...]:
     return tuple(Sound(c) for c in text)
 
@@ -40,7 +43,7 @@ def _find_3479(st: State) -> list[Site]:
     out = []
     for i, t in enumerate(st.terms):
         if (t.kind is TermKind.TIN and t.has_tag("ātmanepada") and _in_tit_lakara(t)
-                and "3.4.79" not in t.tags and (k := _ti_start(t)) is not None):
+                and TER_E_DONE not in t.tags and (k := _ti_start(t)) is not None):
             out.append(Site.at(i, k, len(t.sounds)))
     return out
 
@@ -48,7 +51,7 @@ def _find_3479(st: State) -> list[Site]:
 R_3_4_79 = Rule("3.4.79", _find_3479,
                 lambda st, site: (ReplaceSounds(site.spans[0].term, site.spans[0].start, site.spans[0].end,
                                                 (Sound("e"),)),
-                                  AddTags(site.spans[0].term, frozenset({"3.4.79"}))),
+                                  AddTags(site.spans[0].term, frozenset({TER_E_DONE}))),
                 note=lambda st, site: "in laṭ (marked ṭ), the last vowel-and-after (ṭi, 1.1.64) of an ātmanepada "
                 f"ending, {slp1_to_iast(''.join(s.char for s in st.terms[site.spans[0].term].sounds[site.spans[0].start:]))}, "
                 "becomes e")
@@ -62,7 +65,7 @@ def _find_3480(st: State) -> list[Site]:
 
 R_3_4_80 = Rule("3.4.80", _find_3480,
                 lambda st, site: (ReplaceSounds(site.spans[0].term, 0, site.spans[0].end, _sounds("se")),
-                                  AddTags(site.spans[0].term, frozenset({"3.4.79"}))),
+                                  AddTags(site.spans[0].term, frozenset({TER_E_DONE}))),
                 blocks=("3.4.79",),
                 note=lambda st, site: "in laṭ, the ending thās is replaced by se")
 
