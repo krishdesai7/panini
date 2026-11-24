@@ -25,6 +25,13 @@ condition (*Architecture* (19) and (23)):
   blocking, the same reasoning Kiparsky gives for 6.1.97 against 6.1.101 and
   6.1.87 (his (32)).
 
+The final review found a third gap of the same kind, this time a missing rule:
+**1.1.5 *kṅiti ca*** (no guṇa before an affix marked k/ṅ) was absent. Every
+form still came out right, because śap always intervenes before guṇa applies.
+But the trace told the learner that guṇa of *nī* before the ṅit *tas* was
+merely deferred, when the grammar forbids it. It is now a niṣedha that blocks
+7.3.84 and 7.3.86, like 1.3.4.
+
 ## Precisions to the restricted siddha principle
 
 The local resolver in the spec needed three clarifications to work on real
