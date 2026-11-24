@@ -1,0 +1,599 @@
+/* ==========================================================================
+   Krish — base stylesheet
+   Distilled from desai.ml (_sass/design/_themes.scss, _sass/layout/_base.scss)
+   and WealthPlanner (history_template.py). Copy, then trim what you don't use.
+
+   Themes are driven by <html data-theme="light|dark">, set by the blocking
+   script in SKILL.md before first paint. Add data-dark="glass" on <html> to
+   opt the dark theme into the liquid-glass variant (app/dashboard register).
+
+   Fonts: generate @font-face rules with scripts/font_faces.py and put them
+   above this file.
+   ========================================================================== */
+
+/* ---------- Tokens: light (warm paper) ---------- */
+:root {
+  color-scheme: light;
+
+  /* Type */
+  --serif: "Cochineal", "Iowan Old Style", Georgia, serif;
+  --sans: "Heliotrope", "Helvetica Neue", system-ui, sans-serif;
+  --caps: "Heliotrope Caps", "Heliotrope", system-ui, sans-serif;
+  --mono: "Monaspace Xenon", "SFMono-Regular", ui-monospace, monospace;
+
+  /* Small-caps tracking. Heliotrope Caps is already spaced for caps: open it up
+     only a hair. Never go wider than ~.04em, even at tiny sizes. */
+  --caps-track: 0.02em;
+  --caps-track-small: 0.035em; /* labels at or below ~.85rem */
+
+  /* Modular scale, ratio 1.25 on a 16px root */
+  --fs-10: 0.716rem; /* ms(-1.5) */
+  --fs-11: 0.757rem; /* ms(-1.25) */
+  --fs-12: 0.8rem; /* ms(-1) */
+  --fs-14: 0.894rem; /* ms(-0.5) */
+  --fs-16: 1rem; /* ms(0) */
+  --fs-18: 1.118rem; /* ms(0.5) — body */
+  --fs-20: 1.25rem; /* ms(1) */
+  --fs-25: 1.563rem; /* ms(2) */
+  --fs-32: 1.953rem; /* ms(3) */
+  --fs-40: 2.441rem; /* ms(4) */
+
+  /* Vertical rhythm */
+  --baseline: 1.65rem;
+  --quarter-baseline: calc(0.25 * var(--baseline));
+  --third-baseline: calc(0.333 * var(--baseline));
+  --half-baseline: calc(0.5 * var(--baseline));
+  --three-quarters-baseline: calc(0.75 * var(--baseline));
+  --one-and-half-baseline: calc(1.5 * var(--baseline));
+  --double-baseline: calc(2 * var(--baseline));
+  --triple-baseline: calc(3 * var(--baseline));
+  --quadruple-baseline: calc(4 * var(--baseline));
+
+  /* Surfaces */
+  --page: #fdfcfa; /* paper white */
+  --bg: #f8f6f3; /* paper cream: header/footer, insets */
+  --surface: #fffefc; /* cards, tables */
+  --hover: #f0ede8; /* paper beige */
+  --band: #f8f6f3; /* table head, group rows */
+  --total: #f0ede8;
+  --code-bg: #e8e4de; /* paper stone */
+
+  /* Ink */
+  --ink-strong: #1a1816;
+  --ink: #2d2a27;
+  --ink-2: #4a4642;
+  --muted: #6b6662;
+  --faint: #8b8682;
+
+  /* Lines */
+  --line: #e0dcd6;
+  --line-2: #d0cbc4;
+  --line-strong: #b8b3ac;
+
+  /* Links: sepia ink, dusky-purple dotted underline, terracotta hover */
+  --link: #5a4636;
+  --link-visited: #3f2e23;
+  --link-hover: #955a45;
+  --link-underline: #6a4a8a;
+
+  /* Data / control accent and signal colours (WealthPlanner) */
+  --accent: #2a5aab;
+  --on-accent: #fffefc;
+  --good: #2f6b35;
+  --good-soft: #f0f1e3;
+  --neg: #883327;
+  --warn-bg: #fdecc8;
+  --warn-ink: #6b4a00;
+
+  /* Selection: aged parchment, never browser blue */
+  --selection-bg: #cfc7bd;
+  --selection-ink: #1a1816;
+
+  /* Shape */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-table: 6px;
+
+  /* Two shadow vocabularies — pick one per project:
+     --shadow-offset: the website's letterpress card (hard offset slab + soft drop)
+     --shadow-soft:   the app register's barely-there lift */
+  --shadow-offset-color: #b8b3ac;
+  --shadow-offset-border: #e0dcd6;
+  --shadow-offset:
+    4px 4px 0 0 var(--shadow-offset-color),
+    4px 4px 0 1px var(--shadow-offset-border); /* subtle: a thin slab, no blur */
+  --shadow-offset-lg: /* portraits/hero images only, sparingly */
+    8px 8px 0 0 var(--shadow-offset-color),
+    8px 8px 0 1px var(--shadow-offset-border),
+    16px 16px 25px rgba(0, 0, 0, 0.18);
+  --shadow-soft: 0 1px 2px rgba(45, 42, 39, 0.04), 0 6px 20px rgba(45, 42, 39, 0.05);
+  --shadow: var(--shadow-soft);
+  --glass: none;
+
+  /* Floating glass controls (used in both themes) */
+  --control: rgba(255, 254, 252, 0.52);
+  --control-strong: rgba(255, 254, 252, 0.72);
+  --control-edge: rgba(255, 255, 255, 0.75);
+  --control-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(45, 42, 39, 0.05),
+    0 8px 28px rgba(45, 42, 39, 0.14);
+  --control-blur: blur(18px) saturate(190%);
+
+  /* Texture layers (gold leaf in light) */
+  --rib: 2.8px;
+  --rib-a: rgba(176, 130, 30, 0.02);
+  --rib-b: rgba(176, 130, 30, 0.028);
+  --grain-a: rgba(176, 130, 30, 0.014);
+  --grain-b: rgba(176, 130, 30, 0.014);
+  --fleck: rgba(200, 150, 30, 0.45);
+  --fleck-soft: rgba(215, 170, 60, 0.3);
+  --sheen-hi: rgba(235, 195, 95, 0.07);
+  --sheen-lo: rgba(176, 130, 30, 0.045);
+
+  /* Chart palette (resolve at draw time; see references/data-ui.md) */
+  --viz-axis: #c3c2b7;
+  --viz-grid: #e8e6df;
+  --viz-1: #2a5aab; /* blue */
+  --viz-2: #883327; /* oxblood */
+  --viz-3: #3e8343; /* forest */
+  --viz-4: #349ab6; /* teal */
+  --viz-5: #6a4a8a; /* dusky purple */
+  --viz-6: #b08a3e; /* ochre */
+  --viz-prior: #c3c2b7;
+}
+
+/* ---------- Tokens: dark, traditional (warm charcoal, reading sites) ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --page: #10110c; /* olive charcoal */
+  --bg: #0f0e0c;
+  --surface: #161412;
+  --hover: #1c1a17;
+  --band: #1c1a17;
+  --total: #22201c;
+  --code-bg: #22201c;
+
+  --ink-strong: #f3efe9;
+  --ink: #e7e1d9;
+  --ink-2: #cfc7bd;
+  --muted: #a69e93;
+  --faint: #8b8682;
+
+  --line: #3a352f;
+  --line-2: #4a4440;
+  --line-strong: #4a4440;
+
+  --link: #eee6d2;
+  --link-visited: #e4d7b7;
+  --link-hover: #955a45;
+  --link-underline: #6a4a8a;
+
+  --accent: #8fb0ea;
+  --on-accent: #161412;
+  --good: #86bd8a;
+  --good-soft: rgba(106, 168, 110, 0.15);
+  --neg: #d97f6a;
+
+  --selection-bg: #7a5f49;
+  --selection-ink: #0f0e0c;
+
+  --shadow-offset-color: rgba(0, 0, 0, 0.4);
+  --shadow-offset-border: #3a352f;
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  --control: rgba(44, 40, 34, 0.5);
+  --control-strong: rgba(44, 40, 34, 0.72);
+  --control-edge: rgba(255, 255, 255, 0.14);
+  --control-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  /* Gold leaf switches off; ribs/grain go neutral and blend soft-light */
+  --rib-a: rgba(255, 255, 255, 0.02);
+  --rib-b: rgba(0, 0, 0, 0.02);
+  --grain-a: rgba(255, 255, 255, 0.015);
+  --grain-b: rgba(0, 0, 0, 0.015);
+  --fleck: transparent;
+  --fleck-soft: transparent;
+  --sheen-hi: transparent;
+  --sheen-lo: transparent;
+
+  --viz-axis: rgba(255, 255, 255, 0.2);
+  --viz-grid: rgba(255, 255, 255, 0.07);
+  --viz-1: #4c7bc8;
+  --viz-2: #b5503f;
+  --viz-3: #4f9a56;
+  --viz-4: #3aaccb;
+  --viz-5: #8a68b0;
+  --viz-6: #b8923f;
+  --viz-prior: #5a544c;
+}
+
+/* ---------- Tokens: dark, liquid glass (apps, dashboards, tools) ---------- */
+:root[data-theme="dark"][data-dark="glass"] {
+  --page: #11100d;
+  --bg: rgba(30, 28, 24, 0.42);
+  --surface: rgba(38, 35, 30, 0.46);
+  --line: rgba(255, 255, 255, 0.09);
+  --hover: rgba(255, 255, 255, 0.04);
+  --band: rgba(255, 255, 255, 0.035);
+  --total: rgba(255, 255, 255, 0.055);
+  --shadow: inset 0 1px 0 rgba(255, 255, 255, 0.13), 0 12px 34px rgba(0, 0, 0, 0.34);
+  --radius: 16px;
+  --radius-table: 12px;
+  --glass: blur(22px) saturate(140%);
+}
+
+/* ==========================================================================
+   Page
+   ========================================================================== */
+
+/* Guard against synthesized styles: a face that is not shipped (Heliotrope
+   italic, italic mono, small caps outside the Caps family) renders as the real
+   upright face instead of a browser-faked one. */
+:root, html, body {
+  font-synthesis: none; /* no fake bold/italic/small-caps */
+  font-variant-caps: normal; /* do not auto-enable small-caps */
+  font-feature-settings: "smcp" 0, "c2sc" 0;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font: 400 var(--fs-18) / 1.55 var(--serif); /* dense UI; .prose opens up to 2 */
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  font-feature-settings: "liga" 1, "clig" 1, "kern" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background-color: var(--page);
+
+  /* Gold-leaf paper: foil sheen, three coprime fleck tiles, crossed ribs, grain */
+  background-image:
+    linear-gradient(115deg, transparent 0%, var(--sheen-hi) 22%, transparent 40%,
+      var(--sheen-lo) 62%, transparent 78%, var(--sheen-hi) 100%),
+    radial-gradient(circle at 23px 41px, var(--fleck) 0 0.7px, transparent 1.2px),
+    radial-gradient(circle at 88px 17px, var(--fleck-soft) 0 0.6px, transparent 1.1px),
+    radial-gradient(circle at 61px 109px, var(--fleck) 0 0.5px, transparent 1px),
+    repeating-linear-gradient(45deg, var(--rib-a) 0 var(--rib), transparent var(--rib) calc(var(--rib) * 2)),
+    repeating-linear-gradient(-45deg, var(--rib-b) 0 var(--rib), transparent var(--rib) calc(var(--rib) * 2)),
+    radial-gradient(circle, var(--grain-a) 1px, transparent 0.8px),
+    radial-gradient(circle, var(--grain-b) 1px, transparent 0.8px);
+  background-size: auto, 197px 197px, 131px 131px, 149px 149px, auto, auto, 3px 3px, 3px 3px;
+  background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 1.5px 1.5px;
+  background-repeat: no-repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
+}
+
+:root[data-theme="dark"] body {
+  background-blend-mode: normal, normal, normal, normal, soft-light, soft-light, soft-light, soft-light;
+}
+
+/* Liquid-glass dark: four coloured aurora pools, fixed, plus film grain on top */
+:root[data-theme="dark"][data-dark="glass"] body {
+  background-image:
+    radial-gradient(46vw 40vw at 8% 6%, rgba(70, 115, 200, 0.3), transparent 70%),
+    radial-gradient(44vw 40vw at 92% 22%, rgba(165, 70, 52, 0.24), transparent 70%),
+    radial-gradient(52vw 44vw at 22% 62%, rgba(70, 140, 80, 0.12), transparent 70%),
+    radial-gradient(46vw 40vw at 88% 86%, rgba(52, 154, 182, 0.22), transparent 70%);
+  background-size: auto;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-blend-mode: normal;
+}
+:root[data-theme="dark"][data-dark="glass"] body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-ink);
+}
+
+/* ==========================================================================
+   Type
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 2em 0 0.5em;
+  line-height: 1.2;
+  font-family: var(--sans);
+  font-variant-numeric: lining-nums proportional-nums;
+  text-wrap: balance;
+}
+/* Hierarchy by weight, size and the caps cut — not colour, not italic. Big headings go light. */
+h1 { font-size: var(--fs-25); font-weight: 300; }
+h2 { font-size: var(--fs-20); font-weight: 400; }
+h3 { font-size: var(--fs-16); font-weight: 600; }
+h4 { font-size: var(--fs-12); font-weight: 800; }
+h5 { font-size: var(--fs-12); font-weight: 600; }
+h6 { font-size: var(--fs-11); font-family: var(--caps); font-weight: 600; letter-spacing: var(--caps-track-small); }
+
+/* Heliotrope has no italic. Emphasis inside sans/caps/mono text steps up a
+   weight instead of slanting. Italic belongs to Cochineal only. */
+:is(h1, h2, h3, h4, h5, h6, nav, button, label, caption, thead, .caps, .label, .eyebrow, code, pre, kbd, samp) :is(em, i, cite) {
+  font-style: normal;
+  font-weight: bolder;
+}
+
+p { margin: 0 0 var(--baseline); }
+
+/* Book-style prose: double-spaced, justified, hyphenated, indented continuations */
+.prose { line-height: 2; }
+.prose p, .prose li, .prose blockquote, .prose dd {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+.prose p + p { text-indent: 1.3em; margin-top: calc(-1 * var(--baseline)); }
+.prose ul, .prose ol { text-wrap: pretty; }
+
+/* Small-caps labels use the real caps cut, tracked out */
+.caps, .label, nav a, thead th {
+  font-family: var(--caps);
+  font-weight: 400;
+  letter-spacing: var(--caps-track);
+}
+.label { font-size: 0.85rem; letter-spacing: var(--caps-track-small); color: var(--muted); }
+.eyebrow { font: 600 1rem var(--caps); letter-spacing: var(--caps-track); color: var(--accent); }
+
+small, .small { font-size: var(--fs-12); }
+.muted { color: var(--muted); }
+.note { color: var(--muted); } /* muted roman, not italic: italics are rationed */
+
+code, kbd, samp, pre {
+  font-family: var(--mono);
+  font-weight: 400; /* Monaspace Var defaults to ExtraLight */
+  font-style: normal; /* never italic mono */
+  font-size: var(--fs-12);
+  font-feature-settings: "liga" 0, "clig" 0;
+  font-variant-numeric: normal;
+}
+pre { overflow-x: auto; }
+
+/* Fenced code block: quiet box, subtle slab, copy button top-right on hover/focus.
+   No language label: the code speaks for itself. Markup:
+   <div class="codeblock"><button class="copy" type="button">Copy</button><pre><code>…</code></pre></div> */
+.codeblock { position: relative; margin: var(--baseline) 0; }
+.codeblock pre {
+  margin: 0;
+  padding: var(--half-baseline) var(--three-quarters-baseline);
+  line-height: 1.6;
+  background: var(--code-bg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-offset);
+}
+.codeblock .copy {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  padding: 0.15rem 0.5rem;
+  font: 400 var(--fs-12) var(--sans);
+  color: var(--muted);
+  background: var(--surface);
+  opacity: 0;
+  transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.codeblock:hover .copy, .codeblock .copy:focus-visible, .codeblock .copy.copied { opacity: 1; }
+@media (hover: none) { .codeblock .copy { opacity: 1; } }
+:is(p, li, td, dd, figcaption, a) > code {
+  padding: 0.1rem 0.25rem;
+  color: var(--ink);
+  background: var(--code-bg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+}
+
+/* Links: dotted dusky-purple underline, terracotta on hover */
+a {
+  color: var(--link);
+  text-decoration: underline dotted var(--link-underline);
+  text-underline-offset: 0.24em;
+  transition: color 0.2s ease;
+}
+a:visited { color: var(--link-visited); }
+a:hover { color: var(--link-hover); }
+a:focus-visible { outline: 1px dotted var(--link-underline); outline-offset: 2px; text-decoration: none; }
+
+hr { border: 0; border-top: 1px solid var(--line); margin: var(--baseline) 0; }
+
+/* Description lists are the default for term + explanation pairs (features,
+   research highlights, "why" points, glossaries) — prefer them to a <ul> whose
+   items start with a bold lead-in. Term in the caps cut, description in serif. */
+dl { margin: 0 0 var(--baseline); }
+dt {
+  font-family: var(--caps);
+  font-weight: 400;
+  letter-spacing: var(--caps-track);
+  padding-top: var(--third-baseline);
+}
+dd { margin: 0 0 var(--half-baseline) 0; }
+.prose dd { text-align: justify; hyphens: auto; }
+/* Side-by-side variant for short terms on wide screens */
+dl.dl-grid { display: grid; grid-template-columns: max-content 1fr; column-gap: var(--baseline); }
+dl.dl-grid dt { padding-top: 0; }
+dl.dl-grid dd { margin: 0 0 var(--half-baseline); }
+@media (max-width: 767px) { dl.dl-grid { grid-template-columns: 1fr; } }
+
+/* Lists with figure-dash markers instead of bullets */
+ul.dash { list-style: none; padding-left: 0; }
+ul.dash > li { position: relative; padding-left: var(--baseline); }
+ul.dash > li::before { content: "\2012"; position: absolute; left: 0; color: var(--muted); }
+
+/* Middot-separated inline runs (skills, tags, metadata) */
+.dotted-run > * { display: inline; white-space: nowrap; }
+.dotted-run > *:not(:last-child)::after { content: "\00b7"; margin: 0 0.5em; color: var(--muted); }
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+
+.measure { max-width: 45rem; margin-inline: auto; padding-inline: 1rem; } /* reading pages */
+.wide { max-width: 1100px; margin-inline: auto; padding-inline: 1.25rem; } /* apps/dashboards */
+
+.masthead {
+  background: var(--bg);
+  border-bottom: 1px solid var(--line-strong);
+}
+.site-title {
+  font-family: var(--sans);
+  font-variant: small-caps;
+  font-size: clamp(var(--fs-20), calc(var(--fs-20) + 2vw), var(--fs-40));
+  letter-spacing: 0.015em;
+  line-height: 1;
+}
+.footer {
+  background: var(--bg);
+  border-top: 1px solid var(--line-strong);
+  font: var(--fs-12) var(--mono);
+  color: var(--ink-2);
+  padding: var(--baseline);
+}
+
+/* ==========================================================================
+   Components
+   ========================================================================== */
+
+/* Card: surface + hairline + shadow; goes glassy automatically in glass dark */
+.card {
+  padding: 1rem 1.2rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  -webkit-backdrop-filter: var(--glass);
+  backdrop-filter: var(--glass);
+  min-width: 0;
+}
+/* Letterpress variant (website register): hard offset slab */
+.card--offset { box-shadow: var(--shadow-offset); border-color: var(--line-strong); border-radius: var(--radius-sm); }
+
+/* Stat tile: caps label / big serif number / muted serif meta */
+.stat .label { display: block; }
+.stat .value { margin: 0.3rem 0; font: 400 1.8rem/1.2 var(--serif); letter-spacing: -0.015em; }
+.stat .meta { color: var(--muted); font: 0.95rem/1.4 var(--serif); }
+.pos { color: var(--good); }
+.neg { color: var(--neg); }
+
+/* Buttons: quiet outline by default; hover borrows the link hover colour */
+button, .btn {
+  font: 400 0.92rem var(--sans);
+  font-variant-numeric: lining-nums;
+  padding: 0.5rem 0.8rem;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+button:hover, .btn:hover { color: var(--link-hover); border-color: var(--link-hover); }
+.btn--primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 600; }
+.btn--primary:hover { color: var(--on-accent); filter: brightness(1.08); }
+:is(button, .btn, input, select, textarea):focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+input:not([type="checkbox"], [type="radio"]), select, textarea {
+  font: 400 0.92rem var(--sans);
+  padding: 0.5rem 0.7rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); }
+label { color: var(--muted); font: 400 0.95rem var(--sans); }
+
+/* Floating glass pill (sticky pickers, theme toggle, toolbars) */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.4rem 0.3rem 1rem;
+  background: var(--control);
+  -webkit-backdrop-filter: var(--control-blur);
+  backdrop-filter: var(--control-blur);
+  border: 1px solid var(--control-edge);
+  border-radius: 999px;
+  box-shadow: var(--control-shadow);
+}
+.pill :is(select, input, button) { margin: 0; border: 0; border-radius: 999px; background: transparent; }
+
+/* Sits in the header row by default (flex item, margin-left: auto pushes it
+   right). Add .theme-toggle--floating only when there is no header to hold it,
+   and make sure it cannot cover nav or content. */
+.theme-toggle {
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--muted);
+  background: var(--control);
+  -webkit-backdrop-filter: var(--control-blur);
+  backdrop-filter: var(--control-blur);
+  border: 1px solid var(--control-edge);
+  border-radius: 50%;
+  box-shadow: var(--control-shadow);
+}
+.theme-toggle:hover { color: var(--ink); border-color: var(--control-edge); }
+.theme-toggle--floating { position: fixed; top: 0.8rem; right: max(1.25rem, calc(50vw - 550px)); z-index: 31; }
+
+/* Tables: rounded hairline box, caps header band, tabular oldstyle numerals */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-table);
+  overflow: hidden;
+  -webkit-backdrop-filter: var(--glass);
+  backdrop-filter: var(--glass);
+}
+caption { text-align: left; caption-side: top; margin: 0.5rem 0; font: 600 1rem var(--sans); }
+th, td { padding: 0.6rem 0.85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; font-weight: 400; }
+tr:last-child > :is(th, td) { border-bottom: 0; }
+:is(td, th), :is(td, th) * { font-variant-numeric: oldstyle-nums tabular-nums; }
+thead th { background: var(--band); font-size: 0.85rem; letter-spacing: var(--caps-track-small); color: var(--muted); }
+tbody tr:hover > td { background: var(--hover); }
+td.num, th.num { text-align: right; white-space: nowrap; }
+tr.total > * { background: var(--total); font-weight: 700; }
+
+/* Disclosure: serif ▸/▾ in the accent colour, no browser marker */
+details {
+  margin: 1rem 0;
+  padding: 0.2rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  -webkit-backdrop-filter: var(--glass);
+  backdrop-filter: var(--glass);
+}
+details[open] { padding-bottom: 1rem; }
+summary { cursor: pointer; padding: 0.8rem 0; list-style: none; font: 400 1.2rem var(--sans); }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "▸"; display: inline-block; width: 1.2em; font-family: var(--serif); color: var(--accent); }
+details[open] > summary::before { content: "▾"; }
+
+/* Progress track */
+.track { height: 4px; border-radius: 3px; background: var(--hover); overflow: hidden; }
+.track > span { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+
+/* Portraits/photos: monochrome, offset slab */
+img.portrait { filter: grayscale(100%); object-fit: cover; box-shadow: var(--shadow-offset-lg); }
+
+/* Banner for stale/warning states */
+.banner-warn { padding: 0.7rem 1rem; border-radius: 10px; background: var(--warn-bg); color: var(--warn-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

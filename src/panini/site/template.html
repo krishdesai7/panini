@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" data-dark="glass">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Prakriyā explorer · Pāṇini</title>
+<script>
+  (function () {
+    var t; try { t = localStorage.getItem('theme'); } catch (e) {}
+    var dark = t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    document.documentElement.dataset.dark = 'glass';
+  })();
+</script>
+<style>
+/*FONTS*/
+/*BASE_CSS*/
+/*PAGE_CSS*/
+</style>
+</head>
+<body>
+<div class="wide">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Pāṇini</div>
+      <h1>Prakriyā explorer</h1>
+    </div>
+    <button class="theme-toggle" id="theme" type="button" aria-label="Toggle light and dark theme">◐</button>
+  </header>
+
+  <div class="picker">
+    <span class="pill"><label for="root">Root</label><select id="root"></select></span>
+    <p class="root-info" id="root-info"></p>
+  </div>
+
+  <section class="paradigm" id="paradigm" aria-label="Conjugated forms"></section>
+
+  <section class="derivation" id="derivation" aria-live="polite">
+    <p class="note empty">Pick a form above to see how Pāṇini’s rules derive it.</p>
+  </section>
+</div>
+<script type="application/json" id="data">/*DATA*/</script>
+<script>
+/*APP_JS*/
+</script>
+</body>
+</html>
