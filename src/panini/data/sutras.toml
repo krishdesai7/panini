@@ -1,5 +1,153 @@
 # Sūtra texts (IAST) and plain-English glosses, anuvṛtti filled in.
 
+["1.1.3"]
+text = "iko guṇavṛddhī"
+gloss = "Where guṇa or vṛddhi is prescribed without naming the vowel it replaces, it replaces an ik vowel (i, u, ṛ, ḷ)."
+
+["1.1.46"]
+text = "ādyantau ṭakitau"
+gloss = "An augment marked with ṭ is placed at the beginning of what it is added to; one marked with k, at the end."
+
+["1.1.51"]
+text = "uraṇ raparaḥ"
+gloss = "A vowel that replaces ṛ or ḷ is followed by r (or l)."
+
+["1.1.56"]
+text = "sthānivad ādeśo 'nalvidhau"
+gloss = "A substitute is treated like what it replaces, except in operations conditioned by a single sound."
+
+["1.2.4"]
+text = "sārvadhātukam apit"
+gloss = "A sārvadhātuka affix without the marker p is treated as if marked with ṅ (ṅit)."
+
+["1.3.1"]
+text = "bhūvādayo dhātavaḥ"
+gloss = "bhū ‘be’ and the others listed in the Dhātupāṭha are called dhātu (verbal root)."
+
+["1.3.2"]
+text = "upadeśe 'janunāsika it"
+gloss = "In a form as taught (upadeśa), a nasalized vowel is a marker (it)."
+
+["1.3.3"]
+text = "hal antyam"
+gloss = "In a form as taught, a final consonant is a marker."
+
+["1.3.4"]
+text = "na vibhaktau tusmāḥ"
+gloss = "But in an ending (vibhakti), a final t, th, d, dh, n, s or m is not a marker."
+
+["1.3.5"]
+text = "ādir ñiṭuḍavaḥ"
+gloss = "In a root as taught, an initial ñi, ṭu or ḍu is a marker."
+
+["1.3.7"]
+text = "cuṭū"
+gloss = "In an affix as taught, an initial palatal (c-row) or retroflex (ṭ-row) stop is a marker."
+
+["1.3.8"]
+text = "laśakvataddhite"
+gloss = "In an affix other than a taddhita, an initial l, ś or velar (k-row) is a marker."
+
+["1.3.9"]
+text = "tasya lopaḥ"
+gloss = "A marker is deleted."
+
+["1.3.12"]
+text = "anudāttaṅita ātmanepadam"
+gloss = "After a root whose marker vowel is anudātta, or which has the marker ṅ, the ātmanepada endings are used."
+
+["1.3.72"]
+text = "svaritañitaḥ kartrabhiprāye kriyāphale"
+gloss = "After a root whose marker vowel is svarita, or which has the marker ñ, the ātmanepada endings are used when the fruit of the action goes to the agent."
+
+["1.3.78"]
+text = "śeṣāt kartari parasmaipadam"
+gloss = "After all other roots, the parasmaipada endings are used to denote the agent."
+
+["1.4.2"]
+text = "vipratiṣedhe paraṃ kāryam"
+gloss = "In a conflict between two rules of equal force, the later one takes effect (Kiparsky: within the ekasaṃjñā section only)."
+
+["1.4.13"]
+text = "yasmāt pratyayavidhis tadādi pratyaye 'ṅgam"
+gloss = "Whatever an affix is added after, from its beginning on, is called the base (aṅga) of that affix."
+
+["1.4.14"]
+text = "suptiṅantaṃ padam"
+gloss = "What ends in a case ending (sup) or a verb ending (tiṅ) is called a word (pada)."
+
+["1.4.21"]
+text = "bahuṣu bahuvacanam"
+gloss = "The plural (bahuvacana) is used for many."
+
+["1.4.22"]
+text = "dvyekayor dvivacanaikavacane"
+gloss = "The dual (dvivacana) and singular (ekavacana) are used for two and one."
+
+["1.4.99"]
+text = "laḥ parasmaipadam"
+gloss = "The substitutes of l are called parasmaipada."
+
+["1.4.100"]
+text = "taṅānāv ātmanepadam"
+gloss = "The endings ta … mahiṅ (taṅ) and the participle suffixes in -āna are called ātmanepada."
+
+["1.4.101"]
+text = "tiṅas trīṇi trīṇi prathamamadhyamottamāḥ"
+gloss = "The verb endings, in groups of three, are called prathama, madhyama and uttama (third, second and first person)."
+
+["1.4.102"]
+text = "tāny ekavacanadvivacanabahuvacanāny ekaśaḥ"
+gloss = "Within each group of three, the members are called ekavacana, dvivacana and bahuvacana (singular, dual, plural)."
+
+["1.4.104"]
+text = "vibhaktiś ca"
+gloss = "Those groups of three (of case and verb endings) are also called vibhakti."
+
+["1.4.105"]
+text = "yuṣmady upapade samānādhikaraṇe sthāniny api madhyamaḥ"
+gloss = "The madhyama (second person) is used when the agent is the addressee (yuṣmad ‘you’), whether or not the pronoun is spoken."
+
+["1.4.107"]
+text = "asmady uttamaḥ"
+gloss = "The uttama (first person) is used when the agent is the speaker (asmad ‘I’)."
+
+["1.4.108"]
+text = "śeṣe prathamaḥ"
+gloss = "The prathama (third person) is used in the remaining cases."
+
+["3.1.68"]
+text = "kartari śap"
+gloss = "When a sārvadhātuka affix denoting the agent follows, the stem suffix śap is added to the root."
+
+["3.2.111"]
+text = "anadyatane laṅ"
+gloss = "laṅ is added to a root to denote past time not of today."
+
+["3.2.123"]
+text = "vartamāne laṭ"
+gloss = "laṭ is added to a root to denote present (ongoing) time."
+
+["3.4.77"]
+text = "lasya"
+gloss = "(Heading) In place of l, the general tense/mood affix:"
+
+["3.4.78"]
+text = "tiptasjhisipthasthamibvasmastātāṃjhathāsāthāṃdhvamiḍvahimahiṅ"
+gloss = "l is replaced by one of the eighteen person/number endings: tip tas jhi, sip thas tha, mip vas mas (parasmaipada); ta ātām jha, thās āthām dhvam, iṭ vahi mahiṅ (ātmanepada)."
+
+["3.4.113"]
+text = "tiṅśit sārvadhātukam"
+gloss = "A verb ending (tiṅ), or an affix marked with ś, is called sārvadhātuka."
+
+["6.1.64"]
+text = "dhātvādeḥ ṣaḥ saḥ"
+gloss = "A root-initial ṣ is replaced by s."
+
+["6.1.65"]
+text = "ṇo naḥ"
+gloss = "A root-initial ṇ is replaced by n."
+
 # [toy] rules used by tests/test_engine_meta.py
 ["9.9.1"]
 text = "toy"

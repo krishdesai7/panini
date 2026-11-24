@@ -81,8 +81,15 @@ type Op = AddTags | MarkIt | DeleteSounds | ReplaceSounds | InsertSounds | Inser
 type Edit = tuple[Op, ...]
 
 
+VIKRTA = "vikrta"  # tag: the term's sounds were changed beyond deleting markers
+
+
 def _set_term(terms: list[Term], i: int, term: Term) -> None:
     terms[i] = term
+
+
+def _vikrta(term: Term) -> Term:
+    return term if VIKRTA in term.tags else replace(term, tags=term.tags | {VIKRTA})
 
 
 def _apply_op(terms: list[Term], op: Op) -> None:
@@ -95,21 +102,24 @@ def _apply_op(terms: list[Term], op: Op) -> None:
             _set_term(terms, i, replace(t, sounds=sounds, markers=t.markers | markers))
         case DeleteSounds(term=i, positions=pos):
             t = terms[i]
-            _set_term(terms, i, replace(t, sounds=tuple(s for k, s in enumerate(t.sounds) if k not in pos)))
+            new_t = replace(t, sounds=tuple(s for k, s in enumerate(t.sounds) if k not in pos))
+            if not all(t.sounds[k].it for k in pos if k < len(t.sounds)):
+                new_t = _vikrta(new_t)
+            _set_term(terms, i, new_t)
         case ReplaceSounds(term=i, start=a, end=b, sounds=new):
             t = terms[i]
-            _set_term(terms, i, replace(t, sounds=t.sounds[:a] + tuple(new) + t.sounds[b:]))
+            _set_term(terms, i, _vikrta(replace(t, sounds=t.sounds[:a] + tuple(new) + t.sounds[b:])))
         case InsertSounds(term=i, at=a, sounds=new):
             t = terms[i]
-            _set_term(terms, i, replace(t, sounds=t.sounds[:a] + tuple(new) + t.sounds[a:]))
+            _set_term(terms, i, _vikrta(replace(t, sounds=t.sounds[:a] + tuple(new) + t.sounds[a:])))
         case InsertTerm(index=i, term=term):
             terms.insert(i, term)
         case ReplaceTerm(index=i, term=term):
             _set_term(terms, i, term)
         case Ekadesha(left=l, right=r, sounds=new):
             lt, rt = terms[l], terms[r]
-            _set_term(terms, l, replace(lt, sounds=lt.sounds[:-1] + tuple(new)))
-            _set_term(terms, r, replace(rt, sounds=rt.sounds[1:]))
+            _set_term(terms, l, _vikrta(replace(lt, sounds=lt.sounds[:-1] + tuple(new))))
+            _set_term(terms, r, _vikrta(replace(rt, sounds=rt.sounds[1:])))
 
 
 def apply_edit(state: State, edit: Edit) -> State:

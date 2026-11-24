@@ -180,6 +180,4 @@ class LocalResolver:
             if a != b:
                 raise UnresolvedConflict((first.rule.id, other.rule.id), (first.site, other.site),
                                          (state_text(a), state_text(b)))
-            if other.rule.id != first.rule.id:
-                losers.append(Loser(other.rule.id, f"commutes with {first.rule.id}; applies after it"))
         return Choice(first, tuple(losers))

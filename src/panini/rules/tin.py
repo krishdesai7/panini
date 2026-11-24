@@ -1,0 +1,180 @@
+"""Tense, pada, the person/number ending, śap, and the saṃjñās they need."""
+
+from __future__ import annotations
+
+from panini.edits import AddTags, InsertTerm, ReplaceTerm
+from panini.meta import substitute_term
+from panini.model import Coreference, Number, Site, State, Term, TermKind, Time
+from panini.rules.base import Rule, dhatu_index, is_pratyaya
+from panini.translit import slp1_to_iast
+
+PADA_TAGS = ("parasmaipada", "ātmanepada")
+
+# 3.4.78 tiptasjhisipthasthamibvasmastātāṃjhathāsāthāṃdhvamiḍvahimahiṅ
+TIN = {
+    "parasmaipada": {Coreference.NONE: ("tip", "tas", "Ji"), Coreference.ADDRESSEE: ("sip", "Tas", "Ta"),
+                     Coreference.SPEAKER: ("mip", "vas", "mas")},
+    "ātmanepada": {Coreference.NONE: ("ta", "AtAm", "Ja"), Coreference.ADDRESSEE: ("TAs", "ATAm", "Dvam"),
+                   Coreference.SPEAKER: ("iw", "vahi", "mahiN")},
+}
+_PERSON_REASON = {
+    Coreference.NONE: "neither addressee nor speaker is the agent → prathama (1.4.108 śeṣe prathamaḥ)",
+    Coreference.ADDRESSEE: "the addressee is the agent → madhyama (1.4.105 yuṣmady upapade … madhyamaḥ)",
+    Coreference.SPEAKER: "the speaker is the agent → uttama (1.4.107 asmady uttamaḥ)",
+}
+_NUMBER_REASON = {
+    Number.ONE: "one agent → ekavacana (1.4.22 dvyekayor dvivacanaikavacane)",
+    Number.TWO: "two agents → dvivacana (1.4.22 dvyekayor dvivacanaikavacane)",
+    Number.MANY: "many agents → bahuvacana (1.4.21 bahuṣu bahuvacanam)",
+}
+
+
+def _la_index(st: State) -> int | None:
+    return next((i for i, t in enumerate(st.terms) if t.kind is TermKind.LA), None)
+
+
+# 3.2.123 vartamāne laṭ / 3.2.111 anadyatane laṅ
+def _add_la(time: Time):
+    def find(st: State) -> list[Site]:
+        d = dhatu_index(st)
+        if d is not None and d == len(st.terms) - 1 and "dhātu" in st.terms[d].tags and st.intent.time is time:
+            return [Site.term(d)]
+        return []
+    return find
+
+
+def _insert_la(upadesha: str):
+    return lambda st, site: (InsertTerm(site.spans[0].term + 1, Term.from_upadesha(TermKind.LA, upadesha,
+                                                                                   frozenset({"pratyaya"}))),)
+
+
+R_3_2_123 = Rule("3.2.123", _add_la(Time.PRESENT), _insert_la("la~w"),
+                 note=lambda st, site: "present time → laṭ")
+R_3_2_111 = Rule("3.2.111", _add_la(Time.PAST_NOT_TODAY), _insert_la("la~N"),
+                 note=lambda st, site: "past time, not of today → laṅ")
+
+
+# Pada: 1.3.12 anudāttaṅita ātmanepadam, 1.3.72 svaritañitaḥ kartrabhiprāye kriyāphale,
+# 1.3.78 śeṣāt kartari parasmaipadam
+def _pada_find(condition):
+    def find(st: State) -> list[Site]:
+        la, d = _la_index(st), dhatu_index(st)
+        if la is None or d is None or any(st.terms[la].has_tag(p) for p in PADA_TAGS):
+            return []
+        return [Site.term(la)] if condition(st, st.terms[d]) else []
+    return find
+
+
+def _tag_pada(pada: str, rule_id: str):
+    return lambda st, site: (AddTags(site.spans[0].term, frozenset({pada, f"pada-by:{rule_id}"})),)
+
+
+R_1_3_12 = Rule("1.3.12", _pada_find(lambda st, root: "anudattet" in root.tags or root.has_marker("N")),
+                _tag_pada("ātmanepada", "1.3.12"), blocks=("1.3.78",),
+                note=lambda st, site: "the root's marker vowel is anudātta → ātmanepada endings")
+R_1_3_72 = Rule("1.3.72", _pada_find(lambda st, root: ("svaritet" in root.tags or root.has_marker("Y"))
+                                     and st.intent.fruit_to_agent),
+                _tag_pada("ātmanepada", "1.3.72"), blocks=("1.3.78",),
+                note=lambda st, site: "the root is svarita/ñ-marked and the fruit of the action goes to the "
+                "agent → ātmanepada endings (middle)")
+R_1_3_78 = Rule("1.3.78", _pada_find(lambda st, root: True), _tag_pada("parasmaipada", "1.3.78"),
+                note=lambda st, site: "no rule assigns ātmanepada, so the agent takes parasmaipada endings (active)")
+
+
+# 3.4.78: l is replaced by the ending the intent selects.
+def _find_3478(st: State) -> list[Site]:
+    la = _la_index(st)
+    if la is None or not any(st.terms[la].has_tag(p) for p in PADA_TAGS):
+        return []
+    return [Site.term(la)]
+
+
+def _chosen(st: State, la: Term) -> tuple[str, str]:
+    pada = "ātmanepada" if la.has_tag("ātmanepada") else "parasmaipada"
+    return pada, TIN[pada][st.intent.coreference][st.intent.number.value - 1]
+
+
+def _rewrite_3478(st: State, site: Site):
+    i = site.spans[0].term
+    la = st.terms[i]
+    pada, ending = _chosen(st, la)
+    new = substitute_term(la, TermKind.TIN, ending)
+    return (ReplaceTerm(i, new), AddTags(i, frozenset({"tiṅ", "vibhakti", "pratyaya"})))
+
+
+def _note_3478(st: State, site: Site) -> str:
+    la = st.terms[site.spans[0].term]
+    pada, ending = _chosen(st, la)
+    by = next((t.split(":", 1)[1] for t in la.tags if t.startswith("pada-by:")), "?")
+    pada_rule = "1.4.99 laḥ parasmaipadam" if pada == "parasmaipada" else "1.4.100 taṅānāv ātmanepadam"
+    return (f"l is replaced by {slp1_to_iast(ending)}: {pada} by {by} ({pada_rule}); "
+            f"{_PERSON_REASON[st.intent.coreference]}, the triads named by 1.4.101; "
+            f"{_NUMBER_REASON[st.intent.number]}, the numbers named by 1.4.102")
+
+
+R_3_4_78 = Rule("3.4.78", _find_3478, _rewrite_3478, note=_note_3478)
+
+
+# 3.4.113 tiṅśit sārvadhātukam
+def _find_34113(st: State) -> list[Site]:
+    return [Site.term(i) for i, t in enumerate(st.terms)
+            if (t.kind is TermKind.TIN or (t.kind is TermKind.VIKARANA and t.has_marker("S")))
+            and "sārvadhātuka" not in t.tags]
+
+
+R_3_4_113 = Rule("3.4.113", _find_34113, lambda st, site: (AddTags(site.spans[0].term, frozenset({"sārvadhātuka"})),),
+                 note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].text)} is sārvadhātuka")
+
+
+# 3.1.68 kartari śap
+def _find_3168(st: State) -> list[Site]:
+    d = dhatu_index(st)
+    if d is None or d + 1 >= len(st.terms):
+        return []
+    nxt = st.terms[d + 1]
+    if nxt.kind is TermKind.TIN and "sārvadhātuka" in nxt.tags:
+        return [Site((Site.term(d).spans[0], Site.term(d + 1).spans[0]))]
+    return []
+
+
+R_3_1_68 = Rule("3.1.68", _find_3168,
+                lambda st, site: (InsertTerm(site.spans[1].term, Term.from_upadesha(TermKind.VIKARANA, "Sap",
+                                                                                    frozenset({"pratyaya"}))),),
+                note=lambda st, site: "the stem suffix śap is added before a sārvadhātuka ending (agent voice)")
+
+
+# 1.2.4 sārvadhātukam apit
+def _find_124(st: State) -> list[Site]:
+    return [Site.term(i) for i, t in enumerate(st.terms)
+            if "sārvadhātuka" in t.tags and not t.has_marker("p") and "ṅit-vat" not in t.tags]
+
+
+R_1_2_4 = Rule("1.2.4", _find_124, lambda st, site: (AddTags(site.spans[0].term, frozenset({"ṅit-vat"})),),
+               note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].text)} is sārvadhātuka without "
+               "a p marker, so it counts as ṅit")
+
+
+# 1.4.13 yasmāt pratyayavidhis tadādi pratyaye 'ṅgam
+def _find_1413(st: State) -> list[Site]:
+    return [Site.term(i) for i in range(len(st.terms) - 1)
+            if is_pratyaya(st.terms[i + 1]) and st.terms[i + 1].kind is not TermKind.LA
+            and "aṅga" not in st.terms[i].tags]
+
+
+R_1_4_13 = Rule("1.4.13", _find_1413, lambda st, site: (AddTags(site.spans[0].term, frozenset({"aṅga"})),),
+                assigns="aṅga",
+                note=lambda st, site: "what precedes an affix is its base (aṅga)")
+
+
+# 1.4.14 suptiṅantaṃ padam
+def _find_1414(st: State) -> list[Site]:
+    if st.terms and st.terms[-1].kind is TermKind.TIN and "pada" not in st.terms[-1].tags:
+        return [Site.term(len(st.terms) - 1)]
+    return []
+
+
+R_1_4_14 = Rule("1.4.14", _find_1414, lambda st, site: (AddTags(site.spans[0].term, frozenset({"pada"})),),
+                assigns="pada", note=lambda st, site: "what ends in a verb ending is a word (pada)")
+
+RULES = (R_3_2_123, R_3_2_111, R_1_3_12, R_1_3_72, R_1_3_78, R_3_4_78, R_3_4_113, R_3_1_68, R_1_2_4,
+         R_1_4_13, R_1_4_14)

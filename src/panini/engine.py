@@ -5,10 +5,13 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Literal
 
-from panini.derivation import StepRecord, render_terms
-from panini.edits import apply_edit
-from panini.model import Site, State
-from panini.resolver import Candidate, LocalResolver, Loser, Resolver, blocked_by
+from collections.abc import Mapping
+
+from panini.derivation import Derivation, Status, StepRecord, render_terms
+from panini.edits import InsertTerm, ReplaceTerm, apply_edit
+from panini.model import Site, State, Term, TermKind
+from panini.request import Request, availability
+from panini.resolver import Candidate, LocalResolver, Loser, Resolver, UnresolvedConflict, blocked_by
 from panini.rules.base import Optionality, Rule
 from panini.translit import slp1_to_iast
 
@@ -66,16 +69,23 @@ class _Runner:
         self.applied: set[tuple] = set()
         self.near_seen: set[str] = set()
         self.abhiya: list[str] = []
+        self.losers_seen: set[Loser] = set()
         self.count = 0
 
     # -- bookkeeping -------------------------------------------------------
 
     @staticmethod
     def _fp(state: State, site: Site) -> tuple:
-        return tuple(state.terms[sp.term] if sp.term < len(state.terms) else None for sp in site.spans)
+        """The input a rule reads at a site, independent of term indices (which shift when
+        terms are inserted) and of tags (saṃjñā tags don't make old material new input)."""
+        out = []
+        for sp in site.spans:
+            t = state.terms[sp.term] if sp.term < len(state.terms) else None
+            out.append(None if t is None else (t.kind, t.upadesha, t.sounds, sp.start, sp.end))
+        return tuple(out)
 
     def _guard_key(self, state: State, cand: Candidate) -> tuple:
-        return (cand.rule.id, cand.site, self._fp(state, cand.site))
+        return (cand.rule.id, self._fp(state, cand.site))
 
     def _tick(self) -> None:
         self.count += 1
@@ -102,7 +112,11 @@ class _Runner:
             choice = self.resolver.choose(state, cands, self.rules)
             if choice is None:
                 return state
+            edit = choice.winner.rule.rewrite(state, choice.winner.site)
             state = self._apply(state, choice.winner, choice.losers, resume)
+            if rules is not self.it_rules and any(isinstance(op, (InsertTerm, ReplaceTerm)) for op in edit):
+                # A newly introduced upadeśa is read with its markers (amendment A2, generalized).
+                state = self._main(state, self.it_rules, resume)
 
     def _tripadi(self, state: State, start: tuple[int, int, int] | None) -> State:
         for rule in self.tripadi:
@@ -139,6 +153,12 @@ class _Runner:
         else:
             final, _, alts = alt.run(state, skip_main=True, tripadi_from=resume[1])
         return (final_text(final), *alts)
+
+    def _new_losers(self, losers: tuple[Loser, ...]) -> tuple[Loser, ...]:
+        """Each competitor is reported once, at the first step where it lost."""
+        fresh = tuple(dict.fromkeys(l for l in losers if l not in self.losers_seen))
+        self.losers_seen.update(fresh)
+        return fresh
 
     def _apply(self, state: State, cand: Candidate, losers: tuple[Loser, ...], resume: Resume) -> State:
         self._tick()
@@ -187,9 +207,35 @@ class _Runner:
             before=render_terms(state.terms),
             after=render_terms(new.terms),
             note=note,
-            losers=tuple(losers),
+            losers=self._new_losers(losers),
             near_misses=tuple(near),
             warnings=tuple(warnings),
             alternatives=alternatives,
         ))
         return new
+
+
+def derive(
+    req: Request,
+    *,
+    resolver: Resolver | None = None,
+    rules: Sequence[Rule] | None = None,
+    disabled: frozenset[str] = frozenset(),
+    reference: Mapping[str, list[str]] | None = None,
+) -> Derivation:
+    """Derive the form a request asks for, with its full step-by-step record."""
+    from panini.rules import ALL_RULES
+
+    panini, pie = req.describe()
+    record = {"key": req.key, "root": req.root.key, "panini": panini, "pie": pie}
+    ref = tuple(reference[req.key]) if reference and req.key in reference else None
+    if (why := availability(req)) is not None:
+        reason, rule_id = why
+        return Derivation(record, Status.UNAVAILABLE, None, (), ref, (), f"{reason} ({rule_id})")
+    state = State((Term.from_upadesha(TermKind.ROOT, req.root.upadesha),), req.intent())
+    try:
+        final, steps, alternatives = run(state, ALL_RULES if rules is None else rules,
+                                         resolver=resolver, disabled=disabled)
+    except (UnresolvedConflict, StepLimitExceeded, OptionalRuleNotSupported) as e:
+        return Derivation(record, Status.ERROR, None, (), ref, (), str(e))
+    return Derivation(record, Status.OK, final_text(final), alternatives, ref, steps, None)

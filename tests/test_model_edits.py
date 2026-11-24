@@ -33,3 +33,12 @@ def test_ekadesha_and_simultaneous_conflict():
 def test_site_overlap():
     assert Site((Span(0, 1, 2),)).overlaps(Site((Span(0, 0, -1),)))
     assert not Site((Span(0, 0, 1),)).overlaps(Site((Span(1, 0, 1),)))
+
+
+def test_substantive_change_marks_term_vikrta_but_marker_deletion_does_not():
+    s = State((Term.from_upadesha(TermKind.TIN, "tip"),), INTENT)
+    s = apply_edit(s, (MarkIt(0, (2,), frozenset("p")),))
+    s = apply_edit(s, (DeleteSounds(0, (2,)),))
+    assert "vikrta" not in s.terms[0].tags
+    s = apply_edit(s, (ReplaceSounds(0, 0, 1, (Sound("d"),)),))
+    assert "vikrta" in s.terms[0].tags

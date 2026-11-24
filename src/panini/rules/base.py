@@ -9,8 +9,8 @@ from enum import Enum
 from functools import cache
 from importlib.resources import files
 
-from panini.edits import Edit
-from panini.model import Site, State
+from panini.edits import VIKRTA, Edit
+from panini.model import Site, State, Term, TermKind
 
 
 class Optionality(Enum):
@@ -84,3 +84,33 @@ class Rule:
     @property
     def gloss(self) -> str:
         return sutra_info(self.id)[1]
+
+
+# -- helpers shared by rule modules ---------------------------------------
+
+PRATYAYA_KINDS = frozenset({TermKind.LA, TermKind.TIN, TermKind.VIKARANA})
+
+
+def is_upadesha(term: Term) -> bool:
+    """Still in its recited form (only markers removed), so the it-rules may read it."""
+    return VIKRTA not in term.tags
+
+
+def is_pratyaya(term: Term) -> bool:
+    return term.kind in PRATYAYA_KINDS
+
+
+def dhatu_index(state: State) -> int | None:
+    for i, t in enumerate(state.terms):
+        if t.kind is TermKind.ROOT:
+            return i
+    return None
+
+
+def unmarked(term: Term) -> list[int]:
+    """Positions of sounds not yet marked as it."""
+    return [k for k, s in enumerate(term.sounds) if not s.it]
+
+
+def word_text(state: State) -> str:
+    return "".join(t.text for t in state.terms)

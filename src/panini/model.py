@@ -21,6 +21,7 @@ class Sound:
     it: bool = False
     nasal: bool = False
     agama: bool = False
+    upos: int | None = None  # position in the recited upadeśa; None for sounds added later
 
 
 class TermKind(Enum):
@@ -60,13 +61,27 @@ class Term:
                 if sounds and sounds[-1].nasal:
                     extra.add("anudattet" if c == "\\" else "svaritet")
             else:
-                sounds.append(Sound(c))
+                sounds.append(Sound(c, upos=len(sounds)))
         clean = upadesha_slp1.replace("\\", "").replace("^", "")
         return cls(kind, clean, tuple(sounds), frozenset(tags) | extra)
 
     @property
     def text(self) -> str:
         return "".join(s.char for s in self.sounds)
+
+    @property
+    def upadesha_len(self) -> int:
+        """Number of sounds in the recited upadeśa."""
+        return sum(1 for c in self.upadesha if c != "~")
+
+    def upadesha_final(self) -> int | None:
+        """Current index of the upadeśa's final sound, if still present."""
+        last = self.upadesha_len - 1
+        return next((k for k, s in enumerate(self.sounds) if s.upos == last), None)
+
+    def upadesha_initial(self) -> int | None:
+        """Current index of the upadeśa's first sound, if still present."""
+        return next((k for k, s in enumerate(self.sounds) if s.upos == 0), None)
 
     def has_marker(self, m: str) -> bool:
         """Own markers, else those of the term this one replaced (1.1.56)."""
