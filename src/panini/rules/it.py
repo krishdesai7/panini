@@ -36,7 +36,7 @@ R_1_3_2 = Rule("1.3.2", _find_132,
                lambda st, site: _mark(site.spans[0].term, (site.spans[0].start,),
                                       st.terms[site.spans[0].term].sounds[site.spans[0].start].char),
                note=lambda st, site: "the nasal vowel "
-               f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)}~ is a marker")
+               f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char + '~')} is a marker")
 
 
 # 1.3.3 hal antyam

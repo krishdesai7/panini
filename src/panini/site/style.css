@@ -69,7 +69,6 @@ td.bad .ref { display: block; font-size: var(--fs-14); color: var(--muted); }
 .derivation .empty { margin: 0; }
 .derivation h2 { font: 400 var(--fs-40)/1.2 var(--serif); margin: 0; letter-spacing: -0.01em; }
 .derivation .desc { margin: var(--quarter-baseline) 0 0; color: var(--muted); }
-.derivation .desc .pan { font: 600 var(--fs-14) var(--caps); letter-spacing: var(--caps-track-small); color: var(--ink-2); }
 .derivation .also { margin: var(--quarter-baseline) 0 0; }
 .derivation .message { margin: var(--baseline) 0; }
 
@@ -111,3 +110,13 @@ ol.steps > li::before { content: counter(step); color: var(--faint); text-align:
   .steps .rule, .steps details, .steps .near, .steps .warn { grid-column: 2; }
 }
 .voice-label { display: none; font: 600 var(--fs-14) var(--caps); letter-spacing: var(--caps-track-small); color: var(--muted); margin: 0 0 0.3rem; }
+
+/* A plain word whose tooltip gives Pāṇini's term (or a sūtra's text). */
+.term {
+  text-decoration: underline dotted var(--link-underline);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.24em;
+  cursor: help;
+}
+.term:focus-visible { outline: 1px dotted var(--link-underline); outline-offset: 2px; }
+.sid[title] { cursor: help; }

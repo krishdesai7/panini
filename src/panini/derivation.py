@@ -25,7 +25,7 @@ class TermView:
     chars: tuple[tuple[str, bool], ...]
 
     def iast(self) -> str:
-        """Markers in capitals (first letter of the sound), nasal ``~`` kept."""
+        """Markers in capitals (first letter of the sound); a nasal vowel keeps its tilde."""
         return "".join(c[:1].upper() + c[1:] if marker else c for c, marker in self.chars)
 
 
@@ -35,7 +35,7 @@ def render_terms(terms: Iterable[Term]) -> tuple[TermView, ...]:
         if not t.sounds:
             continue
         views.append(TermView(tuple(
-            (slp1_to_iast(s.char) + ("~" if s.nasal else ""), s.it) for s in t.sounds
+            (slp1_to_iast(s.char + ("~" if s.nasal else "")), s.it) for s in t.sounds
         )))
     return tuple(views)
 

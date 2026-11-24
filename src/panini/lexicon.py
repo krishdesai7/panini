@@ -45,7 +45,8 @@ class UnknownRoot(LookupError):
 def lookup_root(text: str) -> Root:
     """Find a root by key or IAST upadeśa, ignoring Unicode form, spaces and a trailing hyphen."""
     def fold(s: str) -> str:
-        return unicodedata.normalize("NFC", s).strip().removesuffix("-").replace("~", "").casefold()
+        bare = unicodedata.normalize("NFD", s).replace("\u0303", "").replace("~", "")
+        return unicodedata.normalize("NFC", bare).strip().removesuffix("-").casefold()
 
     norm = fold(text)
     for root in ROOTS.values():

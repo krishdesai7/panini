@@ -6,6 +6,7 @@ import json
 import os
 import subprocess
 import sys
+import tomllib
 from importlib.resources import files
 from pathlib import Path
 
@@ -30,9 +31,20 @@ def site_data() -> dict:
             d = Derivation({"key": req.key, "root": req.root.key, "panini": panini, "pie": pie}, Status.ERROR,
                            None, (), tuple(ref) if ref else None, (), f"{type(e).__name__}: {e}")
         derivations[req.key] = d.to_json()
-    roots = [{"key": r.key, "upadesha_iast": r.upadesha_iast, "meaning": r.meaning, "gana": r.gana, "pada": r.pada}
+    roots = [{"key": r.key, "upadesha_iast": r.upadesha_iast, "meaning": r.meaning, "gana": r.gana,
+              "class_label": GANA_LABELS.get(r.gana, r.gana), "pada": r.pada}
              for r in ROOTS.values()]
-    return {"roots": roots, "derivations": derivations}
+    return {"roots": roots, "derivations": derivations, "sutras": _sutras()}
+
+
+# Plain descriptions of the Dhātupāṭha classes, shown instead of their Sanskrit names.
+GANA_LABELS = {"bhvādi": "class 1 · thematic, full grade"}
+
+
+def _sutras() -> dict[str, dict[str, str]]:
+    """Text and gloss of every sūtra in the data file (toy test rules excluded), for tooltips."""
+    data = tomllib.loads(files("panini.data").joinpath("sutras.toml").read_text(encoding="utf-8"))
+    return {k: {"text": v["text"], "gloss": v["gloss"]} for k, v in data.items() if not k.startswith("9.9.")}
 
 
 def _font_css(style_dir: Path) -> str:

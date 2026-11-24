@@ -54,3 +54,7 @@ def test_lexicon_pada_class_agrees_with_root_markers():
         t = Term.from_upadesha(TermKind.ROOT, root.upadesha)
         derived = "A" if "anudattet" in t.tags else "U" if ("svaritet" in t.tags or root.upadesha.endswith("Y")) else "P"
         assert root.pada == derived, root.key
+
+
+def test_lookup_accepts_tilde_over_vowel():
+    assert lookup_root("paṭhã").key == "paṭh"

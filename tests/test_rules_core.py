@@ -16,7 +16,7 @@ def test_pathati():
 def test_markers_capitalized_once_marked():
     d = derive(parse_request("paṭh", "laṭ", 3, "sg", "active"))
     rendered = [" + ".join(tv.iast() for tv in s.after) for s in d.steps]
-    assert "paṭhA~" in rendered[1]           # after 1.3.2
+    assert "paṭhÃ" in rendered[1]            # after 1.3.2
     assert any("tiP" in r for r in rendered)
 
 def test_tin_selection_note_cites_category_rules():

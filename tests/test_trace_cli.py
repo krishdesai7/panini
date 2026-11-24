@@ -32,3 +32,8 @@ def test_cli_exits_nonzero_when_derivation_errors(monkeypatch, capsys):
         {"root": "paṭh", "panini": "x"}, Status.ERROR, None, (), None, (), "boom"))
     assert main(["derive", "paṭh", "laṭ", "3", "sg"]) == 1
     assert "boom" in capsys.readouterr().out
+
+
+def test_trace_has_no_bare_tildes():
+    out = render_text(derive(parse_request("paṭh", "laṭ", 3, "sg", "active")))
+    assert "~" not in out and "lãṭ" in out

@@ -1,9 +1,11 @@
 /* Prakriyā explorer: renders the embedded derivation data. Derives nothing itself. */
 
-var LAKARAS = [["laṭ", "Present imperfective"], ["laṅ", "Past imperfective"]];
+/* Plain labels on the page; Pāṇini's terms appear as tooltips. */
+var LAKARAS = [["laṭ", "Present imperfective", "laṭ"], ["laṅ", "Past imperfective", "laṅ (past, not of today)"]];
 var VOICES = [["P", "Active", "parasmaipada"], ["Ā", "Middle", "ātmanepada"]];
-var PERSONS = [["3", "prathama"], ["2", "madhyama"], ["1", "uttama"]];
-var NUMBERS = ["sg", "du", "pl"];
+var PERSONS = [["3", "prathama puruṣa"], ["2", "madhyama puruṣa"], ["1", "uttama puruṣa"]];
+var NUMBERS = [["sg", "ekavacana"], ["du", "dvivacana"], ["pl", "bahuvacana"]];
+var PADA_CLASS = { P: ["active", "parasmaipada"], A: ["middle", "ātmanepada"], U: ["active and middle", "ubhayapada"] };
 
 function keyOf(root, lakara, pada, person, number) {
   return [root, lakara, pada, person, number].join("|");
@@ -27,7 +29,28 @@ function parseHash(hash, data) {
   return { root: root, key: Object.prototype.hasOwnProperty.call(data.derivations, key) ? key : null };
 }
 
-if (typeof module !== "undefined") module.exports = { parseHash: parseHash, keyOf: keyOf };
+/* Split text into [segment, sūtraId|null] pairs, marking every known sūtra number. */
+function splitCitations(text, sutras) {
+  var out = [], re = /\b\d+\.\d+\.\d+\b/g, last = 0, m, plain = "";
+  text = String(text);
+  while ((m = re.exec(text))) {
+    if (!Object.prototype.hasOwnProperty.call(sutras, m[0])) continue;
+    plain = text.slice(last, m.index);
+    if (plain) out.push([plain, null]);
+    out.push([m[0], m[0]]);
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) out.push([text.slice(last), null]);
+  return out;
+}
+
+/* Tooltip for a sūtra: number and text, then the gloss on the next line. */
+function sutraTitle(id, sutras) {
+  var s = sutras[id];
+  return s ? id + " " + s.text + "\n" + s.gloss : id;
+}
+
+if (typeof module !== "undefined") module.exports = { parseHash: parseHash, keyOf: keyOf, splitCitations: splitCitations, sutraTitle: sutraTitle };
 
 if (typeof document !== "undefined") (function () {
   var data = JSON.parse(document.getElementById("data").textContent);
@@ -64,6 +87,18 @@ if (typeof document !== "undefined") (function () {
     return span;
   }
 
+  /* A plain word with a dotted underline whose tooltip gives Pāṇini's term. */
+  function term(text, title) { return el("span", { class: "term", title: title, tabindex: "0", text: text }); }
+
+  /* Text with every sūtra number given a tooltip showing the rule. */
+  function cite(text) {
+    var span = el("span", {});
+    splitCitations(text, data.sutras || {}).forEach(function (part) {
+      span.appendChild(part[1] ? term(part[0], sutraTitle(part[1], data.sutras)) : document.createTextNode(part[0]));
+    });
+    return span;
+  }
+
   function rootByKey(k) { return data.roots.filter(function (r) { return r.key === k; })[0]; }
 
   function writeHash() {
@@ -79,9 +114,14 @@ if (typeof document !== "undefined") (function () {
       rootSelect.appendChild(o);
     });
     var r = rootByKey(state.root);
-    var pada = { P: "parasmaipada (active) only", A: "ātmanepada (middle) only", U: "both voices (ubhayapada)" }[r.pada];
-    document.getElementById("root-info").textContent =
-      "Recited as " + r.upadesha_iast + " · “" + r.meaning + "” · " + r.gana + " · " + pada;
+    var pc = PADA_CLASS[r.pada];
+    var info = document.getElementById("root-info");
+    info.innerHTML = "";
+    [term("Recited as", "upadeśa: the root as taught in the Dhātupāṭha, with its markers"), " " + r.upadesha_iast,
+     " · “" + r.meaning + "” · ", term(r.class_label, r.gana + " (the bhū class, first gaṇa of the Dhātupāṭha)"),
+     " · ", term(pc[0], pc[1]), r.pada === "U" ? "" : " only"].forEach(function (c) {
+      info.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    });
   }
 
   function cell(key) {
@@ -103,14 +143,17 @@ if (typeof document !== "undefined") (function () {
   function table(lakara, pada) {
     var probe = data.derivations[keyOf(state.root, lakara, pada, "3", "sg")];
     if (probe.status === "unavailable") {
-      var msg = probe.message || "";
-      var m = msg.match(/^(.*) \((\d+\.\d+\.\d+)\)$/);
-      return el("div", { class: "unavailable" }, m ? [m[1] + " ", el("span", { class: "rule", text: "(" + m[2] + ")" })] : [msg]);
+      var m = (probe.message || "").match(/\((\d+\.\d+\.\d+)\)$/);
+      var pc = PADA_CLASS[rootByKey(state.root).pada];
+      return el("div", { class: "unavailable" }, [state.root + " is ", term(pc[0], pc[1]), " only",
+        m ? el("span", {}, [" (", term(m[1], sutraTitle(m[1], data.sutras || {})), ")"]) : null]);
     }
-    var head = el("tr", {}, [el("th", { scope: "col" }, [""])].concat(NUMBERS.map(function (n) { return el("th", { scope: "col", text: n }); })));
+    var head = el("tr", {}, [el("th", { scope: "col" }, [""])].concat(NUMBERS.map(function (n) {
+      return el("th", { scope: "col" }, [term(n[0], n[1])]);
+    })));
     var rows = PERSONS.map(function (p) {
-      return el("tr", {}, [el("th", { scope: "row" }, [p[0], el("span", { class: "sub", text: p[1] })])]
-        .concat(NUMBERS.map(function (n) { return cell(keyOf(state.root, lakara, pada, p[0], n)); })));
+      return el("tr", {}, [el("th", { scope: "row" }, [term(p[0], p[1])])]
+        .concat(NUMBERS.map(function (n) { return cell(keyOf(state.root, lakara, pada, p[0], n[0])); })));
     });
     return el("table", {}, [el("thead", {}, [head]), el("tbody", {}, rows)]);
   }
@@ -119,12 +162,12 @@ if (typeof document !== "undefined") (function () {
     paradigm.innerHTML = "";
     paradigm.appendChild(el("div", { class: "axis corner" }));
     VOICES.forEach(function (v) {
-      paradigm.appendChild(el("div", { class: "axis col" }, [v[1], el("span", { class: "sub", text: v[2] })]));
+      paradigm.appendChild(el("div", { class: "axis col" }, [term(v[1], v[2])]));
     });
     LAKARAS.forEach(function (l) {
-      paradigm.appendChild(el("div", { class: "axis row" }, [l[1], el("span", { class: "sub", text: l[0] })]));
+      paradigm.appendChild(el("div", { class: "axis row" }, [term(l[1], l[2])]));
       VOICES.forEach(function (v) {
-        paradigm.appendChild(el("div", {}, [el("p", { class: "voice-label", text: v[1] + " · " + v[2] }), table(l[0], v[0])]));
+        paradigm.appendChild(el("div", {}, [el("p", { class: "voice-label" }, [term(v[1], v[2])]), table(l[0], v[0])]));
       });
     });
   }
@@ -132,17 +175,20 @@ if (typeof document !== "undefined") (function () {
   function step(s) {
     var rule = el("div", { class: "rule" });
     s.sutras.forEach(function (su) {
-      rule.appendChild(el("div", {}, [el("span", { class: "sid", text: su.id }), el("span", { class: "stext", text: su.text })]));
+      rule.appendChild(el("div", {}, [el("span", { class: "sid", title: sutraTitle(su.id, data.sutras || {}), text: su.id }),
+                                      el("span", { class: "stext", text: su.text })]));
     });
-    if (s.note) rule.appendChild(el("p", { class: "snote", text: s.note }));
-    s.sutras.forEach(function (su) { if (su.gloss) rule.appendChild(el("p", { class: "gloss", text: su.gloss })); });
+    if (s.note) rule.appendChild(el("p", { class: "snote" }, [cite(s.note)]));
+    s.sutras.forEach(function (su) { if (su.gloss) rule.appendChild(el("p", { class: "gloss" }, [cite(su.gloss)])); });
     var li = el("li", {}, [renderTerms(s.after), rule]);
-    s.near_misses.forEach(function (n) { li.appendChild(el("p", { class: "near", text: "↳ " + n })); });
-    s.warnings.forEach(function (w) { li.appendChild(el("p", { class: "warn", text: w })); });
+    s.near_misses.forEach(function (n) { li.appendChild(el("p", { class: "near" }, ["↳ ", cite(n)])); });
+    s.warnings.forEach(function (w) { li.appendChild(el("p", { class: "warn" }, [cite(w)])); });
     if (s.losers.length) {
       li.appendChild(el("details", {}, [
         el("summary", { text: "competitors" }),
-        el("ul", {}, s.losers.map(function (l) { return el("li", {}, [el("span", { class: "sid", text: l.rule_id }), l.reason]); })),
+        el("ul", {}, s.losers.map(function (l) {
+          return el("li", {}, [el("span", { class: "sid", title: sutraTitle(l.rule_id, data.sutras || {}), text: l.rule_id }), cite(l.reason)]);
+        })),
       ]));
     }
     return li;
@@ -156,10 +202,17 @@ if (typeof document !== "undefined") (function () {
     }
     var d = data.derivations[state.key];
     panel.appendChild(el("h2", { text: d.result || "—" }));
-    panel.appendChild(el("p", { class: "desc" }, [el("span", { class: "pan", text: d.request.root + " · " + d.request.panini }), el("br"), d.request.pie]));
+    var k = state.key.split("|");   // root, lakāra, pada, person, number
+    var lak = LAKARAS.filter(function (l) { return l[0] === k[1]; })[0];
+    var voice = VOICES.filter(function (v) { return v[0] === k[2]; })[0];
+    var person = PERSONS.filter(function (p) { return p[0] === k[3]; })[0];
+    var number = NUMBERS.filter(function (n) { return n[0] === k[4]; })[0];
+    panel.appendChild(el("p", { class: "desc" }, [
+      d.request.root + " · ", term(k[3] + k[4], person[1] + " " + number[1]), " ",
+      term(lak[1].toLowerCase(), lak[2]), " ", term(voice[1].toLowerCase(), voice[2])]));
     if (d.alternatives && d.alternatives.length) panel.appendChild(el("p", { class: "also", text: "Also correct: " + d.alternatives.join(", ") }));
     if (d.status !== "ok") {
-      panel.appendChild(el("p", { class: "message banner-warn", text: d.message || d.status }));
+      panel.appendChild(el("p", { class: "message banner-warn" }, [cite(d.message || d.status)]));
       return;
     }
     panel.appendChild(el("ol", { class: "steps" }, d.steps.map(step)));

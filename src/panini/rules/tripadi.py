@@ -87,7 +87,7 @@ R_8_2_66 = Rule("8.2.66", _find_8266,
                 lambda st, site: (ReplaceSounds(site.spans[0].term, site.spans[0].start, site.spans[0].start + 1,
                                                 (Sound("r"), Sound("u", nasal=True))),),
                 blocks=("8.2.39",), reintroduces_upadesha=True,
-                note=lambda st, site: "s at the end of a word is replaced by ru~ (its nasal u is a marker)")
+                note=lambda st, site: "s at the end of a word is replaced by rũ (its nasal u is a marker)")
 R_8_3_15 = _final_rule("8.3.15", {"r"}, "H", "r at a pause becomes visarga")
 
 

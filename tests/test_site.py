@@ -54,3 +54,32 @@ def test_parse_hash_falls_back_safely(hash_, expected):
               f"console.log(JSON.stringify(parseHash({json.dumps(hash_)}, {json.dumps(data)})))")
     out = subprocess.run(["node", "-e", script], capture_output=True, text=True, check=True).stdout
     assert json.loads(out) == expected
+
+
+def test_site_data_carries_sutra_texts_and_plain_class_labels():
+    d = site_data()
+    assert d["sutras"]["1.3.78"]["text"] == "śeṣāt kartari parasmaipadam"
+    assert "9.9.1" not in d["sutras"]   # toy rules stay out
+    bhu = next(r for r in d["roots"] if r["key"] == "bhū")
+    assert bhu["class_label"] == "class 1 · thematic, full grade"
+    assert bhu["upadesha_iast"] == "bhū" and next(r for r in d["roots"] if r["key"] == "paṭh")["upadesha_iast"] == "paṭhã"
+
+
+def _node(expr: str):
+    script = f"const app = require({json.dumps(str(APP_JS.resolve()))}); console.log(JSON.stringify({expr}))"
+    return json.loads(subprocess.run(["node", "-e", script], capture_output=True, text=True, check=True).stdout)
+
+
+SUTRAS = {"1.3.78": {"text": "śeṣāt kartari parasmaipadam", "gloss": "After all other roots, the parasmaipada endings are used."}}
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_split_citations_marks_known_sutra_numbers():
+    parts = _node(f"app.splitCitations('active only (1.3.78; see 9.9.9)', {json.dumps(SUTRAS)})")
+    assert parts == [["active only (", None], ["1.3.78", "1.3.78"], ["; see 9.9.9)", None]]
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_sutra_title_is_text_then_gloss():
+    assert _node(f"app.sutraTitle('1.3.78', {json.dumps(SUTRAS)})") == (
+        "1.3.78 śeṣāt kartari parasmaipadam\nAfter all other roots, the parasmaipada endings are used.")

@@ -30,7 +30,7 @@ def render_text(d: Derivation, verbosity: int = 0) -> str:
     if d.status is Status.ERROR:
         return head + f"(error: {d.message})"
     lines = [head + (d.result or ""),
-             "    notation: capitals = markers (it), ~ = nasal vowel, + = boundary between elements"]
+             "    notation: capitals = markers (it), ã = nasal vowel, + = boundary between elements"]
     if d.alternatives:
         lines.append(f"    also correct: {', '.join(d.alternatives)}")
     lines.append("")
