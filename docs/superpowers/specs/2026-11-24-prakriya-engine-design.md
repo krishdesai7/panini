@@ -299,12 +299,103 @@ paṭh-, laṭ, 3sg parasmaipada  →  paṭhati
  n  paṭhati
 ```
 
+### Derivation data format
+
+The engine's output for one request is a `Derivation` record. The GUI, the
+text trace and the tests all read it, and it serializes to JSON:
+
+- the request in both vocabularies, and the intent;
+- `status`, one of:
+  - `ok`;
+  - `expected_failure`: known wrong, with an explanation of where the
+    meta-rules break down;
+  - `unavailable`: e.g. edh active, with the reason and governing rule;
+  - `error`: e.g. `UnresolvedConflict` or an optional rule reached, with
+    the message;
+- `result` (final form) and, where a reference form exists, `reference`;
+- `steps`. Each step has:
+  - rule id(s), plus sūtra text and gloss;
+  - before/after as a term list, with per-phoneme marker flags so the page
+    can render markers;
+  - an optional note;
+  - competitors and why they lost;
+  - near-misses;
+  - warnings (e.g. the 6.4.22 detection);
+  - room for slice 2's "alternatives considered".
+
+### GUI
+
+`panini site [--out PATH] [--open]` writes one self-contained HTML file.
+Default `build/panini.html`, gitignored. Data and CSS are embedded. The
+page's JavaScript only renders the embedded data. It never derives
+anything.
+
+Layout (app register of the user's style; 1100px column):
+
+```text
+ PĀṆINI                                                        ◐
+ Prakriyā explorer
+
+ Root  [ paṭh — paṭha~ “to speak clearly” · bhvādi · parasmaipada ▾ ]
+
+            ACTIVE · parasmaipada          MIDDLE · ātmanepada
+ PRESENT    ┌ sg       du        pl ┐     ┌ (greyed: paṭh takes  ┐
+ IMPERF.    │ 3 paṭhati paṭhataḥ … │     │  parasmaipada only;   │
+ laṭ        │ 2 …                  │     │  1.3.78)              │
+            └ 1 …                  ┘     └                       ┘
+ PAST       ┌ 3 apaṭhat …          ┐     ┌ …                     ┐
+ IMPERF.    │ 2 …                  │     │                       │
+ laṅ        └ 1 …                  ┘     └                       ┘
+
+ ────────────────────────────────────────────────────────────────
+ paṭhati          paṭh · laṭ · prathama puruṣa ekavacana · parasmaipada
+                  (3sg present imperfective active)
+
+  1  paṭha~          1.3.1    bhūvādayo dhātavaḥ
+                              ‘paṭha~’ is a root (dhātu)
+  2  paṭhA~          1.3.2    upadeśe ’janunāsika it
+                              the nasal a is a marker
+  …
+     ↳ 7.3.86 does not apply: the penultimate a is not an ik vowel (1.1.3)
+     ▸ competitors (expandable)
+  n  paṭhati
+```
+
+- **Root picker:** a dropdown showing root, upadeśa, meaning, gaṇa and pada
+  class.
+- **Tables:** four 3×3 tables. Rows are present/past imperfective (laṭ/laṅ),
+  columns are active/middle (parasmaipada/ātmanepada), and both
+  vocabularies label each one.
+  - Inside each table, rows are persons 3/2/1 (Pāṇinian order) and columns
+    are sg/du/pl.
+  - Unavailable tables are greyed with the reason and rule.
+  - Cells with `expected_failure` or `error` are visibly marked (oxblood),
+    and their derivation explains why.
+  - A cell whose result differs from the reference shows both forms.
+- **Derivation panel:** below the tables. It shows the selected form and
+  its full description in both vocabularies, then the steps.
+  - Markers render as capitals in a distinct (meaningful) colour, so they
+    stand out from real phonemes. Term boundaries show as `+`.
+  - Near-misses appear inline. Competitors sit in an expandable
+    `<details>` per step, which is the GUI equivalent of `-v`.
+- **URL hash** encodes the selection (e.g. `#paṭh/laṭ/P/3/sg`), so
+  reload, back/forward and bookmarks work.
+- **Light and dark themes** (liquid-glass dark) per the style skill.
+
+Fonts (design call): the style's fonts are licensed copies that live in the
+style skill's `assets/fonts/`. They are **not committed** to this repo. At
+build time, `panini site` embeds them via the skill's `font_faces.py`, from
+a directory given by `PANINI_FONTS_DIR`, defaulting to the skill's location.
+If they're missing, it warns and falls back to the style's font stacks. The
+style's `base.css` is the user's own and may be vendored, trimmed, into the
+package.
+
 ### CLI
 
+- `panini site [--out PATH] [--open]`: build the GUI page (above).
 - `panini derive <root> <lakāra|tense> <person> <number> [<voice>]`: one
-  derivation. Both vocabularies are accepted.
-- `panini paradigm <root> <lakāra|tense> [<voice>]`: a 3×3 table of final
-  forms. `--trace` prints each derivation.
+  derivation as a text trace, for debugging. Both vocabularies are
+  accepted. `-v` / `-vv` as above.
 
 Exact argument syntax and CLI library are the builder's call.
 
@@ -347,6 +438,18 @@ must keep the coverage in the right-hand column.
 - **Meta-rule tests**: blocking (including collective), the no-reapplication
   guard, `UnresolvedConflict` on a constructed non-commuting tie, the
   tripādī being one-pass.
+- **Failures policy (agreed with the user):**
+  - Fixing a missing or wrong `blocks` entry is allowed. Each entry cites
+    the traditional utsarga/apavāda relation it encodes.
+  - Adding a meta-principle Kiparsky rejects (e.g. word-internal
+    antaraṅga), or special-casing one rule's order, is not allowed without
+    asking.
+  - A form that still fails is marked `expected_failure` (pytest xfail)
+    with a written explanation. It doesn't block the slice, and the GUI
+    shows it as such.
+- **GUI:** a smoke test that `panini site` builds and the embedded data
+  covers every lexicon form. Then render the page and check it by eye in
+  both themes (the style skill's checklist).
 - Reference forms: build the table from a standard source. If Vidyut's
   Python bindings install on 3.15, use them as an optional dev-only oracle
   for cross-checking (not a runtime dependency).
@@ -370,4 +473,5 @@ Joshi & Kiparsky examples. Slice 1 must therefore keep:
 Module layout; internal phoneme encoding; data file format for sūtra
 text/glosses; CLI library and argument syntax; exact gloss wording; how
 `Site` and overlap are represented; whether trace rendering is a separate
-module.
+module; HTML templating approach (stdlib string templates are enough);
+fine visual details within the style skill's rules.
