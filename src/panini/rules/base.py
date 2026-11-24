@@ -9,7 +9,7 @@ from enum import Enum
 from functools import cache
 from importlib.resources import files
 
-from panini.edits import VIKRTA, Edit
+from panini.edits import EKADESHA_START, VIKRTA, Edit
 from panini.model import Site, State, Term, TermKind
 
 
@@ -114,3 +114,17 @@ def unmarked(term: Term) -> list[int]:
 
 def word_text(state: State) -> str:
     return "".join(t.text for t in state.terms)
+
+
+def adi(st: State, j: int) -> str | None:
+    """The first sound of term j, counting a single substitute on its left as its
+    beginning (6.1.85 antādivac ca)."""
+    t = st.terms[j]
+    if EKADESHA_START in t.tags:
+        for i in range(j - 1, -1, -1):
+            if st.terms[i].sounds:
+                last = st.terms[i].sounds[-1]
+                if last.ekadesha:
+                    return last.char
+                break
+    return t.adi

@@ -82,6 +82,7 @@ type Edit = tuple[Op, ...]
 
 
 VIKRTA = "vikrta"  # tag: the term's sounds were changed beyond deleting markers
+EKADESHA_START = "ekādeśa-start"  # tag: this term begins with the single substitute stored on its left
 
 
 def _set_term(terms: list[Term], i: int, term: Term) -> None:
@@ -118,8 +119,10 @@ def _apply_op(terms: list[Term], op: Op) -> None:
             _set_term(terms, i, term)
         case Ekadesha(left=l, right=r, sounds=new):
             lt, rt = terms[l], terms[r]
-            _set_term(terms, l, _vikrta(replace(lt, sounds=lt.sounds[:-1] + tuple(new))))
-            _set_term(terms, r, _vikrta(replace(rt, sounds=rt.sounds[1:])))
+            flagged = tuple(replace(s, ekadesha=True) for s in new)
+            _set_term(terms, l, _vikrta(replace(lt, sounds=lt.sounds[:-1] + flagged)))
+            right = _vikrta(replace(rt, sounds=rt.sounds[1:]))
+            _set_term(terms, r, replace(right, tags=right.tags | {EKADESHA_START}))
 
 
 def apply_edit(state: State, edit: Edit) -> State:

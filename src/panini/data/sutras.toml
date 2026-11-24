@@ -148,6 +148,58 @@ gloss = "A root-initial ṣ is replaced by s."
 text = "ṇo naḥ"
 gloss = "A root-initial ṇ is replaced by n."
 
+["6.1.73"]
+text = "che ca"
+gloss = "Before ch, a short vowel gets the augment tuk (t)."
+
+["6.1.78"]
+text = "eco 'yavāyāvaḥ"
+gloss = "Before a vowel, e, o, ai, au are replaced by ay, av, āy, āv."
+
+["6.1.84"]
+text = "ekaḥ pūrvaparayoḥ"
+gloss = "(Heading) A single substitute replaces both the preceding and the following sound:"
+
+["6.1.85"]
+text = "antādivac ca"
+gloss = "That single substitute counts as the end of what precedes and the beginning of what follows."
+
+["6.1.87"]
+text = "ād guṇaḥ"
+gloss = "a or ā and a following vowel are together replaced by guṇa (a, e, o, ar, al)."
+
+["6.1.88"]
+text = "vṛddhir eci"
+gloss = "a or ā and a following e, o, ai, au are together replaced by vṛddhi (ā, ai, au)."
+
+["6.1.97"]
+text = "ato guṇe"
+gloss = "Short a (not at the end of a word) and a following guṇa vowel (a, e, o) are together replaced by the second."
+
+["6.1.101"]
+text = "akaḥ savarṇe dīrghaḥ"
+gloss = "A vowel a, i, u, ṛ, ḷ and a following vowel of the same kind are together replaced by the long vowel."
+
+["7.1.3"]
+text = "jho 'ntaḥ"
+gloss = "The jh of an affix is replaced by ant."
+
+["7.3.77"]
+text = "iṣugamiyamāṃ chaḥ"
+gloss = "Before an affix marked with ś, the final of iṣ, gam and yam is replaced by ch."
+
+["7.3.84"]
+text = "sārvadhātukārdhadhātukayoḥ"
+gloss = "Before a sārvadhātuka or ārdhadhātuka affix, a final ik vowel of the base takes guṇa."
+
+["7.3.86"]
+text = "pugantalaghūpadhasya ca"
+gloss = "Before a sārvadhātuka or ārdhadhātuka affix, a light penultimate ik vowel of the base also takes guṇa."
+
+["7.3.101"]
+text = "ato dīrgho yañi"
+gloss = "Before a sārvadhātuka affix beginning with a yañ consonant (y v r l ñ m ṅ ṇ n jh bh), a base-final short a is lengthened."
+
 # [toy] rules used by tests/test_engine_meta.py
 ["9.9.1"]
 text = "toy"

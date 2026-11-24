@@ -22,6 +22,7 @@ class Sound:
     nasal: bool = False
     agama: bool = False
     upos: int | None = None  # position in the recited upadeśa; None for sounds added later
+    ekadesha: bool = False  # a single substitute for two sounds (6.1.84), stored at the end of the left term
 
 
 class TermKind(Enum):
