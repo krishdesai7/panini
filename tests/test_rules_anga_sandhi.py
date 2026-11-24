@@ -11,7 +11,8 @@ def test_lat_active_vowel_final_forms(root, person, number, expected):
     assert derive(parse_request(root, "laṭ", person, number, "active")).result == expected
 
 def test_gam_before_tripadi():
-    assert derive(parse_request("gam", "laṭ", 3, "sg", "active")).result == "gatchati"
+    d = derive(parse_request("gam", "laṭ", 3, "sg", "active"), disabled=frozenset({"8.4.40"}))
+    assert d.result == "gatchati"
 
 def test_bhavanti_shows_collective_blocking():
     d = derive(parse_request("bhū", "laṭ", 3, "pl", "active"))

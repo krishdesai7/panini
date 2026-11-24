@@ -200,6 +200,42 @@ gloss = "Before a sārvadhātuka or ārdhadhātuka affix, a light penultimate ik
 text = "ato dīrgho yañi"
 gloss = "Before a sārvadhātuka affix beginning with a yañ consonant (y v r l ñ m ṅ ṇ n jh bh), a base-final short a is lengthened."
 
+["8.2.1"]
+text = "pūrvatrāsiddham"
+gloss = "(Heading) From here to the end of the grammar, each rule is treated as not having taken effect (asiddha) with respect to every earlier rule."
+
+["8.2.23"]
+text = "saṃyogāntasya lopaḥ"
+gloss = "The final consonant of a word ending in a consonant cluster is deleted."
+
+["8.2.39"]
+text = "jhalāṃ jaśo 'nte"
+gloss = "At the end of a word, an obstruent (jhal) is replaced by the voiced unaspirated stop (jaś) of its class."
+
+["8.2.66"]
+text = "sasajuṣo ruḥ"
+gloss = "At the end of a word, s (and the final of sajuṣ) is replaced by ru."
+
+["8.3.15"]
+text = "kharavasānayor visarjanīyaḥ"
+gloss = "Before a voiceless consonant (khar) or at a pause, r at the end of a word becomes visarga (ḥ)."
+
+["8.3.24"]
+text = "naś cāpadāntasya jhali"
+gloss = "Before an obstruent, n or m not at the end of a word becomes anusvāra (ṃ)."
+
+["8.4.40"]
+text = "stoḥ ścunā ścuḥ"
+gloss = "s and the dentals (t th d dh n), next to ś or a palatal, become ś and the corresponding palatals."
+
+["8.4.56"]
+text = "vāvasāne"
+gloss = "At a pause, an obstruent is optionally (vā, ‘preferably’ in Kiparsky's reading) replaced by the voiceless unaspirated stop (car)."
+
+["8.4.58"]
+text = "anusvārasya yayi parasavarṇaḥ"
+gloss = "Before a consonant other than a sibilant or h (yay), anusvāra is replaced by a sound of the same class as the following one."
+
 # [toy] rules used by tests/test_engine_meta.py
 ["9.9.1"]
 text = "toy"
