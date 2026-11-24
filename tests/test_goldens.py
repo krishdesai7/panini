@@ -70,3 +70,11 @@ def test_bhavamah_ru_markers_read_inside_tripadi():
 def test_endings_own_markers_do_not_make_lat_behave_like_lan():
     d, o = steps_of("edh", "laṭ", 1, "pl", "middle")   # mahiṅ is itself ṅit
     assert d.result == "edhāmahe" and "6.4.72" not in o
+
+
+def test_guna_before_a_nit_ending_is_prohibited_by_1_1_5_not_merely_deferred():
+    d, o = steps_of("nī", "laṭ", 3, "du")   # tas is ṅit-vat (1.2.4) until śap intervenes
+    assert d.result == "nayataḥ"
+    reasons = {l.reason for s in d.steps for l in s.losers if l.rule_id == "7.3.84"}
+    assert "blocked by 1.1.5" in reasons
+    assert not any("nitya" in r for r in reasons)

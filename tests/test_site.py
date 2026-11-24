@@ -34,7 +34,7 @@ import subprocess
 
 import pytest
 
-APP_JS = Path("src/panini/site/app.js")
+APP_JS = Path(__file__).parent.parent / "src/panini/site/app.js"
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")

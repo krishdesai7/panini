@@ -510,3 +510,22 @@ confirmation.
   1.1.47 (no mit augment in the slice). The font source is the style
   skill's root directory (`PANINI_STYLE_DIR`), because the font script
   lives there. This replaces `PANINI_FONTS_DIR`.
+
+## Amendment during implementation: pending the user's confirmation
+
+- **A6. A result-based commutation check.** Approach B looks one step ahead.
+  When two candidates neither block nor dominate each other, and their
+  immediate results differ, the resolver now finishes both orders, with one
+  level of lookahead and no nesting. If both reach the same final form, it
+  treats them as commuting: the lower-numbered rule goes first, and the trace
+  says "order … is immaterial: both orders give X". If the final forms
+  differ, it raises `UnresolvedConflict` as before. This is needed for
+  exactly one slice-1 case: *naya + iṭ*, where 3.4.79 first and 6.1.87 first
+  both give *naye*. It follows Kiparsky's definition (39), which compares
+  results. Caveats:
+  - equal final strings say nothing about whether the intermediate steps are
+    equally valid;
+  - each such conflict costs two extra sub-derivations.
+
+  The alternative is to restrict the fallback to the listed case, or to drop
+  it and record *naye* as an expected failure until slice 2.

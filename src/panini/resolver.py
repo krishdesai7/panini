@@ -173,8 +173,12 @@ class LocalResolver:
                 if i != j and j not in dominated_by and still_applies(state, x, y) and not still_applies(state, y, x):
                     dominated_by[j] = x
         undominated = [c for k, c in enumerate(remaining) if k not in dominated_by]
-        for k, x in dominated_by.items():
-            losers.append(Loser(remaining[k].rule.id, f"deferred: {x.rule.id} is nitya"))
+
+        def with_nitya_losers(winner: Candidate) -> Choice:
+            # "Deferred because X is nitya" is reported on the step where X applies.
+            extra = [Loser(remaining[k].rule.id, f"deferred: {x.rule.id} is nitya")
+                     for k, x in dominated_by.items() if x is winner]
+            return Choice(winner, tuple(losers + extra))
         if not undominated:  # cyclic domination; treat all as tied
             undominated = remaining
 
@@ -192,7 +196,7 @@ class LocalResolver:
                     conflict = conflict or (c, other, a, b)
                     break
             else:
-                return Choice(c, tuple(losers))
+                return with_nitya_losers(c)
         assert conflict is not None
         c, other, a, b = conflict
         # The immediate states differ. If both orders still lead to the same final form,
@@ -205,7 +209,7 @@ class LocalResolver:
             if fa is not None and fa == fb:
                 losers.append(Loser(other.rule.id, f"order with {c.rule.id} is immaterial: both orders give {fa}; "
                                                    "the lower-numbered rule goes first"))
-                return Choice(c, tuple(losers))
+                return with_nitya_losers(c)
             if fa is not None:
                 a_text, b_text = fa, fb or "?"
                 raise UnresolvedConflict((c.rule.id, other.rule.id), (c.site, other.site), (a_text, b_text))

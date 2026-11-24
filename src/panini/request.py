@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import sys
 import unicodedata
 from dataclasses import dataclass
 from enum import Enum
@@ -140,8 +141,16 @@ def all_requests() -> list[Request]:
     ]
 
 
-def load_reference(path: Path = Path("tests/data/reference_forms.json")) -> dict[str, list[str]]:
-    """Reference forms keyed by Request.key; empty if the fixture is absent."""
+REFERENCE_PATH = Path(__file__).parent / "data" / "reference_forms.json"
+
+
+def load_reference(path: Path = REFERENCE_PATH) -> dict[str, list[str]]:
+    """Reference forms keyed by Request.key (generated from Vidyut by scripts/make_reference.py).
+
+    Missing file: warns on stderr and returns {}, since without it the GUI can't flag
+    forms that disagree with the reference.
+    """
     if not path.exists():
+        print(f"warning: reference forms not found at {path}; mismatches will not be flagged", file=sys.stderr)
         return {}
     return json.loads(path.read_text(encoding="utf-8"))

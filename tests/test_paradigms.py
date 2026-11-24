@@ -1,11 +1,12 @@
 # tests/test_paradigms.py
 import json, pytest
 from pathlib import Path
+from panini.request import REFERENCE_PATH
 from panini.engine import derive
 from panini.derivation import Status
 from panini.request import all_requests, availability
 
-REF = json.loads(Path("tests/data/reference_forms.json").read_text())
+REF = json.loads(REFERENCE_PATH.read_text())
 XFAIL: dict[str, str] = {}   # key -> explanation (mirrors docs/findings.md)
 IN_SCOPE = lambda r: True
 

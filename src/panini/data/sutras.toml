@@ -4,6 +4,10 @@
 text = "iko guṇavṛddhī"
 gloss = "Where guṇa or vṛddhi is prescribed without naming the vowel it replaces, it replaces an ik vowel (i, u, ṛ, ḷ)."
 
+["1.1.5"]
+text = "kṅiti ca"
+gloss = "Guṇa and vṛddhi do not replace an ik vowel before an affix marked with k or ṅ."
+
 ["1.1.46"]
 text = "ādyantau ṭakitau"
 gloss = "An augment marked with ṭ is placed at the beginning of what it is added to; one marked with k, at the end."

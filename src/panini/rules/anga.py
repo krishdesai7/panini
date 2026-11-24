@@ -162,3 +162,30 @@ R_7_2_81 = Rule("7.2.81", _find_7281, lambda st, site: (ReplaceSounds(site.spans
                 note=lambda st, site: "after a base in a, the ā of an ending that counts as ṅit becomes iy")
 
 RULES = (*RULES, R_7_2_81)
+
+
+# 1.1.5 kṅiti ca — a niṣedha: no guṇa/vṛddhi of an ik vowel before an affix marked k or ṅ
+# (or treated as ṅit, 1.2.4). Like 1.3.4 it changes nothing itself and blocks the rules.
+def _is_knit(t) -> bool:
+    return t.has_marker("k") or t.has_marker("N") or t.has_tag("ṅit-vat")
+
+
+def _find_115(st: State) -> list[Site]:
+    out = []
+    for i in _before_sarvadhatuka(st):
+        if not _is_knit(st.terms[i + 1]):
+            continue
+        t = st.terms[i]
+        if t.antya in IK:
+            out.append(Site.at(i, len(t.sounds) - 1))
+        k = _light_upadha(st, i)
+        if k is not None and t.sounds[k].char in IK:
+            out.append(Site.at(i, k))
+    return out
+
+
+R_1_1_5 = Rule("1.1.5", _find_115, lambda st, site: (), blocks=("7.3.84", "7.3.86"),
+               note=lambda st, site: f"no guṇa before {slp1_to_iast(st.terms[site.spans[0].term + 1].text)}, "
+               "which is marked ṅ (or counts as such)")
+
+RULES = (*RULES, R_1_1_5)

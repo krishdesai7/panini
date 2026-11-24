@@ -1,6 +1,7 @@
 # tests/test_request_lexicon.py
 import json, unicodedata, pytest
 from pathlib import Path
+from panini.request import REFERENCE_PATH
 from panini.lexicon import lookup_root, UnknownRoot, ROOTS
 from panini.request import parse_request, availability, all_requests, Purusha
 
@@ -24,6 +25,18 @@ def test_availability():
     assert availability(parse_request("nī", "laṭ", 3, "sg", "middle")) is None
 
 def test_reference_fixture_matches_available_requests():
-    ref = json.loads(Path("tests/data/reference_forms.json").read_text())
+    ref = json.loads(REFERENCE_PATH.read_text())
     avail = [r.key for r in all_requests() if availability(r) is None]
     assert sorted(avail) == sorted(ref) and len(ref) == 162
+
+
+def test_reference_loads_from_any_working_directory(tmp_path, monkeypatch):
+    from panini.request import load_reference
+    monkeypatch.chdir(tmp_path)
+    assert len(load_reference()) == 162
+
+
+def test_missing_reference_warns(tmp_path, capsys):
+    from panini.request import load_reference
+    assert load_reference(tmp_path / "nope.json") == {}
+    assert "warning" in capsys.readouterr().err.lower()

@@ -1,4 +1,4 @@
-"""Generate tests/data/reference_forms.json from Vidyut (dev-only).
+"""Generate src/panini/data/reference_forms.json from Vidyut (dev-only).
 
 Vidyut (Ambuda's Pāṇinian engine) serves as an independent cross-check, not
 ground truth. Run with:  uv run --group dev scripts/make_reference.py
@@ -15,7 +15,7 @@ from panini import request as rq
 from panini.request import all_requests, availability
 
 DATA = Path("build/vidyut-data")
-OUT = Path("tests/data/reference_forms.json")
+OUT = Path("src/panini/data/reference_forms.json")
 
 LAKARA = {rq.Lakara.LAT: Lakara.Lat, rq.Lakara.LAN: Lakara.Lan}
 PURUSHA = {rq.Purusha.PRATHAMA: Purusha.Prathama, rq.Purusha.MADHYAMA: Purusha.Madhyama, rq.Purusha.UTTAMA: Purusha.Uttama}
