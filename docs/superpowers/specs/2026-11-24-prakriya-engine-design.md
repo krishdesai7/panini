@@ -409,7 +409,7 @@ optional rules:
 | ---- | ----------------------- | ---- | -------------------------------------------------------------------- |
 | bhū  | bhū                     | P    | guṇa 7.3.84, ayādi 6.1.78, 7.3.101, 6.1.97, visarga (8.2.66, 8.3.15) |
 | paṭh | paṭha~                  | P    | 1.3.2 marker vowel, 7.3.86 near-miss                                 |
-| gam  | gamḷ                    | P    | 7.3.77 chaḥ, 6.1.73 tuk, 8.4.40 ścutva                               |
+| gam  | gamḷ~                   | P    | 7.3.77 chaḥ, 6.1.73 tuk, 8.4.40 ścutva                               |
 | smṛ  | smṛ                     | P    | ṛ-guṇa with 1.1.51 uraṇ raparaḥ                                      |
 | edh  | edha~ (anudātta marker) | Ā    | ātmanepada endings 3.4.79–80, 7.2.81, āṭ + 6.1.90 in laṅ             |
 | nī   | ṇīñ                     | U    | 6.1.65 ṇo naḥ, ñ-marker → 1.3.72 ubhayapada                          |
@@ -475,3 +475,37 @@ text/glosses; CLI library and argument syntax; exact gloss wording; how
 `Site` and overlap are represented; whether trace rendering is a separate
 module; HTML templating approach (stdlib string templates are enough);
 fine visual details within the style skill's rules.
+
+## Amendments during planning (2026-11-24)
+
+These came up while writing the implementation plan. They need the user's
+confirmation.
+
+- **A1. A minimal form of optional rules.** Every laṅ 3sg form reaches an
+  optional tripādī rule: 8.4.56 *vāvasāne* (abhavat / abhavad). No choice
+  of roots avoids it. Following Kiparsky's reading of the option words
+  (*Pāṇini, Variation, and Orthoepic Diaskeuasis*):
+  - a **vā** rule applies, and the trace notes the alternative form as
+    "also correct";
+  - a **vibhāṣā** rule is skipped, with the same note;
+  - **anyatarasyām** still stops with "optional rule not supported".
+
+  The GUI shows alternatives next to the main form (e.g. "abhavat ·
+  abhavad"). 8.4.46–47 remain unimplemented as decided.
+- **A2. It-marking inside the tripādī.** 8.2.66 *sasajuṣo ruḥ* introduces
+  the upadeśa *ru~*. Its marker *u~* has to be marked and deleted by
+  1.3.2/1.3.9, which are main-body rules. The engine runs the it-rules on
+  newly introduced tripādī material straight away, as recorded steps. This
+  is the one exception to "never return to the main body". Vidyut does the
+  same. It is recorded in `docs/findings.md`.
+- **A3. The *jh* of *jhi/jha* is not marked by 1.3.7 *cuṭū*.** Otherwise
+  7.1.3 *jho 'ntaḥ* would have nothing to act on. The tradition justifies
+  this by *vacanasāmarthya*: 7.1.3 would be pointless otherwise. A local
+  resolver can't express that, so 1.3.7's `find` carries this exclusion,
+  with a note in the trace and an entry in `docs/findings.md`.
+- **A4. Root upadeśas** follow Vidyut's dhātupāṭha, accent marks included.
+  gam is **gamḷ~** (nasal ḷ marker), correcting the table above.
+- **A5. Not implemented:** 8.4.68 *a a* (closed ă; invisible in IAST) and
+  1.1.47 (no mit augment in the slice). The font source is the style
+  skill's root directory (`PANINI_STYLE_DIR`), because the font script
+  lives there. This replaces `PANINI_FONTS_DIR`.
