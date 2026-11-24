@@ -1,0 +1,38 @@
+# panini
+
+A Pāṇinian *prakriyā* engine: watch the Aṣṭādhyāyī derive Sanskrit verb forms
+step by step. Each step cites its sūtra, explains what it did, and records which
+competing rules lost and why.
+
+The rules are declarative. A resolver decides which rule applies next:
+blocking (utsarga/apavāda, including collective blocking), the narrow para
+rule (1.4.2), nitya preference, and a commutation check. After that, the
+tripādī runs once in sūtra order. Where the tradition is divided, the engine
+follows Paul Kiparsky's analysis. The design is in
+`docs/superpowers/specs/2026-11-24-prakriya-engine-design.md`.
+
+Slice 1 covers laṭ (present) and laṅ (imperfect) of seven bhvādi roots (bhū,
+paṭh, gam, smṛ, edh, nī, pac), in both voices where the root allows them.
+
+## Use
+
+```sh
+uv run panini site --open              # build and open the explorer page (build/panini.html)
+uv run panini derive paṭh present 3 sg # one derivation in the terminal
+uv run panini derive bhū laṅ 3 pl -v   # -v adds the competitors each step beat
+```
+
+Either vocabulary works: `present imperfective` or `laṭ`, `3` or `prathama`,
+`sg` or `ekavacana`, `middle` or `ātmanepada`.
+
+## Development
+
+```sh
+uv run pytest
+uv run --group dev scripts/make_reference.py   # regenerate the reference forms (Vidyut)
+```
+
+## Limitations
+
+See `docs/findings.md`. Notable ones: no optional doubling (8.4.46–47), no
+accent, and the 6.4.22 and 6.1.86 asiddha domains are only partly modelled.
