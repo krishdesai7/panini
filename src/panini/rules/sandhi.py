@@ -66,14 +66,14 @@ R_6_1_78 = Rule("6.1.78", _find_6178, _rewrite_6178,
 
 # 6.1.87 ād guṇaḥ
 R_6_1_87 = _sandhi_rule("6.1.87", lambda x, y: x in "aA" and is_vowel(y), lambda x, y: guna(y),
-                        "a and a following vowel are replaced by guṇa")
+                        "a and a following vowel are replaced by {full grade|guṇa}")
 # 6.1.88 vṛddhir eci
 R_6_1_88 = _sandhi_rule("6.1.88", lambda x, y: x in "aA" and y in EC, lambda x, y: vrddhi(y),
-                        "a and a following e/o/ai/au are replaced by vṛddhi", blocks=("6.1.87",))
+                        "a and a following e/o/ai/au are replaced by {lengthened grade|vṛddhi}", blocks=("6.1.87",))
 # 6.1.97 ato guṇe — its domain (short a + a/e/o) lies inside 6.1.101 (a+a) ∪ 6.1.88 (a+e/o)
 # ∪ 6.1.87, so it collectively blocks all three (Kiparsky, Architecture §1.4.2, (23) and (32)).
 R_6_1_97 = _sandhi_rule("6.1.97", lambda x, y: x == "a" and y in "aeo", lambda x, y: y,
-                        "short a and a following guṇa vowel are replaced by the second",
+                        "short a and a following {full-grade|guṇa} vowel are replaced by the second",
                         blocks=("6.1.87", "6.1.88", "6.1.101"))
 # 6.1.101 akaḥ savarṇe dīrghaḥ
 R_6_1_101 = _sandhi_rule("6.1.101", lambda x, y: x in AK and is_vowel(y) and is_savarna(x, y),
@@ -115,6 +115,6 @@ R_6_1_90 = Rule("6.1.90", _find_6190,
                                            _sounds(vrddhi(st.terms[site.spans[1].term].sounds[0].char))),),
                 blocks=("6.1.87", "6.1.88", "6.1.101"),
                 note=lambda st, site: f"the augment ā and {slp1_to_iast(st.terms[site.spans[1].term].sounds[0].char)} "
-                f"→ {slp1_to_iast(vrddhi(st.terms[site.spans[1].term].sounds[0].char))} (vṛddhi)")
+                f"→ {slp1_to_iast(vrddhi(st.terms[site.spans[1].term].sounds[0].char))} ({{lengthened grade|vṛddhi}})")
 
 RULES = (*RULES, R_6_1_90)

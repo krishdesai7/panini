@@ -52,7 +52,7 @@ R_3_4_79 = Rule("3.4.79", _find_3479,
                 lambda st, site: (ReplaceSounds(site.spans[0].term, site.spans[0].start, site.spans[0].end,
                                                 (Sound("e"),)),
                                   AddTags(site.spans[0].term, frozenset({TER_E_DONE}))),
-                note=lambda st, site: "in laṭ (marked ṭ), the last vowel-and-after (ṭi, 1.1.64) of an ātmanepada "
+                note=lambda st, site: "in laṭ (marked ṭ), the last vowel and what follows it (ṭi, 1.1.64) of a {middle|ātmanepada} "
                 f"ending, {slp1_to_iast(''.join(s.char for s in st.terms[site.spans[0].term].sounds[site.spans[0].start:]))}, "
                 "becomes e")
 
@@ -137,7 +137,7 @@ def _find_34100(st: State) -> list[Site]:
 R_3_4_100 = Rule("3.4.100", _find_34100,
                  lambda st, site: (DeleteSounds(site.spans[0].term, (site.spans[0].start,)),),
                  note=lambda st, site: _ending_note(st, site.spans[0].term,
-                                                    "in laṅ (marked ṅ), the final i of a parasmaipada ending is dropped"))
+                                                    "in laṅ (marked ṅ), the final i of an {active|parasmaipada} ending is dropped"))
 
 
 # 3.4.101 tasthasthamipāṃ tāṃtaṃtāmaḥ — apavāda of 3.4.100 for mip

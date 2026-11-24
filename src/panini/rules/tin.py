@@ -18,14 +18,14 @@ TIN = {
                    Coreference.SPEAKER: ("iw", "vahi", "mahiN")},
 }
 _PERSON_REASON = {
-    Coreference.NONE: "neither addressee nor speaker is the agent → prathama (1.4.108 śeṣe prathamaḥ)",
-    Coreference.ADDRESSEE: "the addressee is the agent → madhyama (1.4.105 yuṣmady upapade … madhyamaḥ)",
-    Coreference.SPEAKER: "the speaker is the agent → uttama (1.4.107 asmady uttamaḥ)",
+    Coreference.NONE: "neither addressee nor speaker is the agent → {third person|prathama puruṣa} (1.4.108 śeṣe prathamaḥ)",
+    Coreference.ADDRESSEE: "the addressee is the agent → {second person|madhyama puruṣa} (1.4.105 yuṣmady upapade … madhyamaḥ)",
+    Coreference.SPEAKER: "the speaker is the agent → {first person|uttama puruṣa} (1.4.107 asmady uttamaḥ)",
 }
 _NUMBER_REASON = {
-    Number.ONE: "one agent → ekavacana (1.4.22 dvyekayor dvivacanaikavacane)",
-    Number.TWO: "two agents → dvivacana (1.4.22 dvyekayor dvivacanaikavacane)",
-    Number.MANY: "many agents → bahuvacana (1.4.21 bahuṣu bahuvacanam)",
+    Number.ONE: "one agent → {singular|ekavacana} (1.4.22 dvyekayor dvivacanaikavacane)",
+    Number.TWO: "two agents → {dual|dvivacana} (1.4.22 dvyekayor dvivacanaikavacane)",
+    Number.MANY: "many agents → {plural|bahuvacana} (1.4.21 bahuṣu bahuvacanam)",
 }
 
 
@@ -78,15 +78,15 @@ def _tag_pada(pada: str, rule_id: str):
 
 R_1_3_12 = Rule("1.3.12", _pada_find(lambda st, root: "anudattet" in root.tags or root.has_marker("N")),
                 _tag_pada("ātmanepada", "1.3.12"), blocks=("1.3.78",),
-                note=lambda st, site: "the root's marker vowel is anudātta, so l is classed as taking ātmanepada "
-                "(middle) endings; 3.4.78 will choose from that set")
+                note=lambda st, site: "the root's marker vowel is {unaccented|anudātta}, so l is classed as taking {middle|ātmanepada} "
+                "endings; 3.4.78 will choose from that set")
 R_1_3_72 = Rule("1.3.72", _pada_find(lambda st, root: ("svaritet" in root.tags or root.has_marker("Y"))
                                      and st.intent.fruit_to_agent),
                 _tag_pada("ātmanepada", "1.3.72"), blocks=("1.3.78",),
-                note=lambda st, site: "the root is svarita/ñ-marked and the fruit of the action goes to the agent, so l is classed as "
-                "taking ātmanepada (middle) endings; 3.4.78 will choose from that set")
+                note=lambda st, site: "the root's marker vowel is {falling-pitched|svarita} (or it is marked ñ) and the fruit of the action goes "
+                "to the agent, so l is classed as taking {middle|ātmanepada} endings; 3.4.78 will choose from that set")
 R_1_3_78 = Rule("1.3.78", _pada_find(lambda st, root: True), _tag_pada("parasmaipada", "1.3.78"),
-                note=lambda st, site: "no rule assigns ātmanepada, so l is classed as taking parasmaipada (active) "
+                note=lambda st, site: "no rule assigns the {middle|ātmanepada} voice, so l is classed as taking {active|parasmaipada} "
                 "endings; 3.4.78 will choose from that set")
 
 
@@ -116,7 +116,8 @@ def _note_3478(st: State, site: Site) -> str:
     pada, ending = _chosen(st, la)
     by = next((t.split(":", 1)[1] for t in la.tags if t.startswith("pada-by:")), "?")
     pada_rule = "1.4.99 laḥ parasmaipadam" if pada == "parasmaipada" else "1.4.100 taṅānāv ātmanepadam"
-    return (f"l is replaced by {slp1_to_iast(ending)}: {pada} by {by} ({pada_rule}); "
+    voice = "{active|parasmaipada}" if pada == "parasmaipada" else "{middle|ātmanepada}"
+    return (f"l is replaced by {slp1_to_iast(ending)}: {voice} by {by} ({pada_rule}); "
             f"{_PERSON_REASON[st.intent.coreference]}, the triads named by 1.4.101; "
             f"{_NUMBER_REASON[st.intent.number]}, the numbers named by 1.4.102")
 
@@ -132,7 +133,7 @@ def _find_34113(st: State) -> list[Site]:
 
 
 R_3_4_113 = Rule("3.4.113", _find_34113, lambda st, site: (AddTags(site.spans[0].term, frozenset({"sārvadhātuka"})),),
-                 note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].text)} is sārvadhātuka")
+                 note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].text)} is a {{present-system affix|sārvadhātuka}}")
 
 
 # 3.1.68 kartari śap
@@ -149,7 +150,7 @@ def _find_3168(st: State) -> list[Site]:
 R_3_1_68 = Rule("3.1.68", _find_3168,
                 lambda st, site: (InsertTerm(site.spans[1].term, Term.from_upadesha(TermKind.VIKARANA, "Sap",
                                                                                     frozenset({"pratyaya"}))),),
-                note=lambda st, site: "the stem suffix śap is added before a sārvadhātuka ending (agent voice)")
+                note=lambda st, site: "the {stem suffix|vikaraṇa} śap is added before a {present-system|sārvadhātuka} ending denoting the agent")
 
 
 # 1.2.4 sārvadhātukam apit
@@ -159,8 +160,8 @@ def _find_124(st: State) -> list[Site]:
 
 
 R_1_2_4 = Rule("1.2.4", _find_124, lambda st, site: (AddTags(site.spans[0].term, frozenset({"ṅit-vat"})),),
-               note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].text)} is sārvadhātuka without "
-               "a p marker, so it counts as ṅit")
+               note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].text)} is a "
+               "{present-system affix|sārvadhātuka} without the marker p, so it counts as marked ṅ")
 
 
 # 1.4.13 yasmāt pratyayavidhis tadādi pratyaye 'ṅgam
@@ -172,7 +173,7 @@ def _find_1413(st: State) -> list[Site]:
 
 R_1_4_13 = Rule("1.4.13", _find_1413, lambda st, site: (AddTags(site.spans[0].term, frozenset({"aṅga"})),),
                 assigns="aṅga",
-                note=lambda st, site: "what precedes an affix is its base (aṅga)")
+                note=lambda st, site: "what precedes an affix is its {base|aṅga}")
 
 
 # 1.4.14 suptiṅantaṃ padam
@@ -183,7 +184,7 @@ def _find_1414(st: State) -> list[Site]:
 
 
 R_1_4_14 = Rule("1.4.14", _find_1414, lambda st, site: (AddTags(site.spans[0].term, frozenset({"pada"})),),
-                assigns="pada", note=lambda st, site: "what ends in a verb ending is a word (pada)")
+                assigns="pada", note=lambda st, site: "what ends in a {personal ending|tiṅ} is a {word|pada}")
 
 RULES = (R_3_2_123, R_3_2_111, R_1_3_12, R_1_3_72, R_1_3_78, R_3_4_78, R_3_4_113, R_3_1_68, R_1_2_4,
          R_1_4_13, R_1_4_14)

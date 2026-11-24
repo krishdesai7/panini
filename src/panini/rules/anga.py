@@ -44,7 +44,7 @@ def _note_7384(st: State, site: Site) -> str:
     sp = site.spans[0]
     v = st.terms[sp.term].sounds[sp.start].char
     affix = slp1_to_iast(st.terms[sp.term + 1].text)
-    note = f"final {slp1_to_iast(v)} takes guṇa → {slp1_to_iast(guna(v))} before the sārvadhātuka {affix} (1.1.3)"
+    note = f"final {slp1_to_iast(v)} takes {{full grade|guṇa}} → {slp1_to_iast(guna(v))} before the {{present-system|sārvadhātuka}} affix {affix} (1.1.3)"
     if v in "fFxX":
         note += "; the r/l comes from 1.1.51 uraṇ raparaḥ"
     return note
@@ -77,14 +77,14 @@ def _near_7386(st: State) -> str | None:
         if (k is not None and t.kind is TermKind.ROOT and VIKRTA not in t.tags
                 and t.sounds[k].char not in IK):
             v = slp1_to_iast(st.terms[i].sounds[k].char)
-            return (f"7.3.86 (guṇa of a light penultimate vowel) does not apply: "
-                    f"{v} is not an ik vowel (1.1.3)")
+            return (f"7.3.86 ({{full grade|guṇa}} of a light penultimate vowel) does not apply: "
+                    f"{v} is not one of {{i u ṛ ḷ|ik}} (1.1.3)")
     return None
 
 
 R_7_3_86 = Rule("7.3.86", _find_7386, _rewrite_7384, near_miss=_near_7386,
                 note=lambda st, site: "the light penultimate "
-                f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} takes guṇa")
+                f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} takes {{full grade|guṇa}}")
 
 
 # 7.3.101 ato dīrgho yañi
@@ -97,7 +97,7 @@ R_7_3_101 = Rule("7.3.101", _find_73101,
                  lambda st, site: (ReplaceSounds(site.spans[0].term, site.spans[0].start, site.spans[0].end,
                                                  (Sound("A"),)),),
                  note=lambda st, site: f"a is lengthened before {slp1_to_iast(st.terms[site.spans[0].term + 1].adi)},"
-                 " a yañ consonant beginning a sārvadhātuka affix")
+                 " one of {y v r l ñ m ṅ ṇ n jh bh|yañ}, beginning a {present-system|sārvadhātuka} affix")
 
 
 # 7.1.3 jho 'ntaḥ
@@ -162,7 +162,7 @@ def _find_7281(st: State) -> list[Site]:
 # them apply too, so its domain is properly included in theirs (yena nāprāpte; Kiparsky's (19)).
 R_7_2_81 = Rule("7.2.81", _find_7281, lambda st, site: (ReplaceSounds(site.spans[0].term, 0, 1, _sounds("iy")),),
                 blocks=("6.1.101", "6.1.87"),
-                note=lambda st, site: "after a base in a, the ā of an ending that counts as ṅit becomes iy")
+                note=lambda st, site: "after a {base|aṅga} in a, the ā of an ending that counts as marked ṅ becomes iy")
 
 RULES = (*RULES, R_7_2_81)
 
@@ -188,7 +188,7 @@ def _find_115(st: State) -> list[Site]:
 
 
 R_1_1_5 = Rule("1.1.5", _find_115, lambda st, site: (), blocks=("7.3.84", "7.3.86"),
-               note=lambda st, site: f"no guṇa before {slp1_to_iast(st.terms[site.spans[0].term + 1].text)}, "
+               note=lambda st, site: f"no {{full grade|guṇa}} before {slp1_to_iast(st.terms[site.spans[0].term + 1].text)}, "
                "which is marked ṅ (or counts as such)")
 
 RULES = (*RULES, R_1_1_5)

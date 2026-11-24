@@ -43,3 +43,10 @@ def test_trace_flags_steps_that_leave_the_form_unchanged():
     out = render_text(derive(parse_request("bhū", "laṭ", 3, "sg", "active")))
     line = next(l for l in out.splitlines() if "1.3.78" in l and "śeṣāt" in l)
     assert "form unchanged" in out.splitlines()[out.splitlines().index(line) + 1]
+
+
+def test_trace_prints_modern_terms_and_brackets_panini_s_at_v():
+    d = derive(parse_request("bhū", "laṭ", 3, "sg", "active"))
+    out = render_text(d)
+    assert "{" not in out and "no rule assigns the middle voice" in out
+    assert "no rule assigns the middle (ātmanepada) voice" in render_text(d, verbosity=1)

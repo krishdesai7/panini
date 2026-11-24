@@ -16,7 +16,7 @@ from panini.edits import Edit, InsertSounds, InsertTerm
 from panini.model import Sound, State, Term, TermKind
 from panini.translit import slp1_to_iast
 
-_MARKER_NAMES = {"N": "ṅit", "k": "kit", "p": "pit", "w": "ṭit", "S": "śit", "Y": "ñit"}
+_MARKER_NAMES = {"N": "marked ṅ", "k": "marked k", "p": "marked p", "w": "marked ṭ", "S": "marked ś", "Y": "marked ñ"}
 
 
 def substitute_term(old: Term, kind: TermKind, upadesha: str) -> Term:

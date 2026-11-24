@@ -23,7 +23,7 @@ def _find_131(st: State) -> list[Site]:
 
 
 R_1_3_1 = Rule("1.3.1", _find_131, lambda st, site: (AddTags(site.spans[0].term, frozenset({"dhātu"})),),
-               note=lambda st, site: f"‘{slp1_to_iast(st.terms[site.spans[0].term].upadesha)}’ is a root (dhātu)")
+               note=lambda st, site: f"‘{slp1_to_iast(st.terms[site.spans[0].term].upadesha)}’ is a {{root|dhātu}}")
 
 
 # 1.3.2 upadeśe 'janunāsika it
@@ -36,7 +36,7 @@ R_1_3_2 = Rule("1.3.2", _find_132,
                lambda st, site: _mark(site.spans[0].term, (site.spans[0].start,),
                                       st.terms[site.spans[0].term].sounds[site.spans[0].start].char),
                note=lambda st, site: "the nasal vowel "
-               f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char + '~')} is a marker")
+               f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char + '~')} is a {{marker|it}}")
 
 
 # 1.3.3 hal antyam
@@ -51,7 +51,7 @@ def _find_133(st: State) -> list[Site]:
 
 def _note_final(st: State, site: Site) -> str:
     sp = site.spans[0]
-    return f"final {slp1_to_iast(st.terms[sp.term].sounds[sp.start].char)} is a marker"
+    return f"final {slp1_to_iast(st.terms[sp.term].sounds[sp.start].char)} is a {{marker|it}}"
 
 
 R_1_3_3 = Rule("1.3.3", _find_133,
@@ -73,7 +73,7 @@ def _find_134(st: State) -> list[Site]:
 R_1_3_4 = Rule("1.3.4", _find_134, lambda st, site: (), blocks=("1.3.3",),
                note=lambda st, site: "the final "
                f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)}"
-               " of a verb ending (vibhakti, 1.4.104) is not a marker")
+               " of an {inflectional ending|vibhakti} (1.4.104) is not a {marker|it}")
 
 
 # 1.3.5 ādir ñiṭuḍavaḥ
@@ -93,7 +93,7 @@ R_1_3_5 = Rule("1.3.5", _find_135,
                                       + st.terms[site.spans[0].term].sounds[1].char),
                note=lambda st, site: "initial "
                f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[0].char + st.terms[site.spans[0].term].sounds[1].char)}"
-               " of a root is a marker")
+               " of a root is a {marker|it}")
 
 
 def _initial_unmarked_pratyaya(st: State, letters: frozenset[str]) -> list[tuple[int, str]]:
@@ -119,7 +119,7 @@ R_1_3_7 = Rule("1.3.7", _find_137,
                lambda st, site: _mark(site.spans[0].term, (0,), st.terms[site.spans[0].term].sounds[0].char),
                near_miss=_near_137,
                note=lambda st, site: f"initial {slp1_to_iast(st.terms[site.spans[0].term].sounds[0].char)} "
-               "of an affix is a marker")
+               "of an affix is a {marker|it}")
 
 
 # 1.3.8 laśakvataddhite — the l of a lakāra is not marked (3.4.77 lasya needs it).
@@ -139,7 +139,7 @@ R_1_3_8 = Rule("1.3.8", _find_138,
                lambda st, site: _mark(site.spans[0].term, (0,), st.terms[site.spans[0].term].sounds[0].char),
                near_miss=_near_138,
                note=lambda st, site: f"initial {slp1_to_iast(st.terms[site.spans[0].term].sounds[0].char)} "
-               "of an affix is a marker")
+               "of an affix is a {marker|it}")
 
 
 # 1.3.9 tasya lopaḥ
@@ -150,7 +150,7 @@ def _find_139(st: State) -> list[Site]:
 R_1_3_9 = Rule("1.3.9", _find_139,
                lambda st, site: (DeleteSounds(site.spans[0].term, tuple(
                    k for k, s in enumerate(st.terms[site.spans[0].term].sounds) if s.it)),),
-               note=lambda st, site: "markers are deleted")
+               note=lambda st, site: "{markers|it} are deleted")
 
 
 # 6.1.64 dhātvādeḥ ṣaḥ saḥ / 6.1.65 ṇo naḥ

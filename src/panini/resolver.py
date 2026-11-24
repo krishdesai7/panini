@@ -176,7 +176,7 @@ class LocalResolver:
 
         def with_nitya_losers(winner: Candidate) -> Choice:
             # "Deferred because X is nitya" is reported on the step where X applies.
-            extra = [Loser(remaining[k].rule.id, f"deferred: {x.rule.id} is nitya")
+            extra = [Loser(remaining[k].rule.id, f"deferred: {x.rule.id} {{applies either way|nitya}}")
                      for k, x in dominated_by.items() if x is winner]
             return Choice(winner, tuple(losers + extra))
         if not undominated:  # cyclic domination; treat all as tied

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 from panini.derivation import Derivation, Status, StepRecord
 from panini.rules.base import sutra_info
 
@@ -10,6 +12,14 @@ _UNCHANGED = {
     "category": "(form unchanged: assigns a category later rules use) ",
     "prohibition": "(form unchanged: prevents another rule) ",
 }
+
+
+_TERM = re.compile(r"\{([^{}|]+)\|([^{}]+)\}")
+
+
+def plain(text: str, verbosity: int = 0) -> str:
+    """Render {modern|traditional} markup: the modern word, plus the traditional one at -v."""
+    return _TERM.sub(r"\1 (\2)" if verbosity >= 1 else r"\1", text)
 
 
 def _form(views) -> str:
@@ -34,7 +44,7 @@ def render_text(d: Derivation, verbosity: int = 0) -> str:
     if d.status is Status.UNAVAILABLE:
         return head + f"(no form: {d.message})"
     if d.status is Status.ERROR:
-        return head + f"(error: {d.message})"
+        return head + f"(error: {plain(d.message or '')})"
     lines = [head + (d.result or ""),
              "    notation: capitals = markers (it), ã = nasal vowel, + = boundary between elements"]
     if d.alternatives:
@@ -53,13 +63,13 @@ def _render_step(n: int, s: StepRecord, width: int, verbosity: int) -> list[str]
         out.append(f"{'':>4}  {'(' + _form(s.before) + ')':<{width}}")
     out.append(f"{n:>4}  {_form(s.after):<{width}}{rid:<9}{_text(rid)}")
     if s.note:
-        out.append(f"{'':>4}  {'':<{width}}{'':<9}{_UNCHANGED.get(s.kind, '')}{s.note}")
+        out.append(f"{'':>4}  {'':<{width}}{'':<9}{_UNCHANGED.get(s.kind, '')}{plain(s.note, verbosity)}")
     for nm in s.near_misses:
-        out.append(f"{'':>4}  ↳ {nm}")
+        out.append(f"{'':>4}  ↳ {plain(nm, verbosity)}")
     if verbosity >= 1:
         for l in s.losers:
-            out.append(f"{'':>4}     ✗ {l.rule_id}: {l.reason}")
+            out.append(f"{'':>4}     ✗ {l.rule_id}: {plain(l.reason, verbosity)}")
     if verbosity >= 2:
         for w in s.warnings:
-            out.append(f"{'':>4}     ! {w}")
+            out.append(f"{'':>4}     ! {plain(w, verbosity)}")
     return out

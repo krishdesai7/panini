@@ -44,10 +44,23 @@ function splitCitations(text, sutras) {
   return out;
 }
 
+/* Split "{modern|traditional}" markup into [text, traditional|null] pairs. */
+function splitTerms(text) {
+  var out = [], re = /\{([^{}|]+)\|([^{}]+)\}/g, last = 0, m;
+  text = String(text);
+  while ((m = re.exec(text))) {
+    if (m.index > last) out.push([text.slice(last, m.index), null]);
+    out.push([m[1], m[2]]);
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) out.push([text.slice(last), null]);
+  return out;
+}
+
 /* Tooltip for a sūtra: number and text, then the gloss on the next line. */
 function sutraTitle(id, sutras) {
   var s = sutras[id];
-  return s ? id + " " + s.text + "\n" + s.gloss : id;
+  return s ? id + " " + s.text + "\n" + splitTerms(s.gloss).map(function (p) { return p[0]; }).join("") : id;
 }
 
 /* Where to put a tooltip: just below the word, kept 8px inside the viewport; above it if
@@ -59,7 +72,7 @@ function tipPosition(rect, size, view) {
   return { left: left, top: top };
 }
 
-if (typeof module !== "undefined") module.exports = { parseHash: parseHash, keyOf: keyOf, splitCitations: splitCitations, sutraTitle: sutraTitle, tipPosition: tipPosition };
+if (typeof module !== "undefined") module.exports = { parseHash: parseHash, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, sutraTitle: sutraTitle, tipPosition: tipPosition };
 
 if (typeof document !== "undefined") (function () {
   var data = JSON.parse(document.getElementById("data").textContent);
@@ -99,11 +112,14 @@ if (typeof document !== "undefined") (function () {
   /* A plain word with a dotted underline whose tooltip gives Pāṇini's term. */
   function term(text, tip) { return el("span", { class: "term", "data-tip": tip, tabindex: "0", text: text }); }
 
-  /* Text with every sūtra number given a tooltip showing the rule. */
+  /* Text with {modern|traditional} terms and sūtra numbers given tooltips. */
   function cite(text) {
     var span = el("span", {});
-    splitCitations(text, data.sutras || {}).forEach(function (part) {
-      span.appendChild(part[1] ? term(part[0], sutraTitle(part[1], data.sutras)) : document.createTextNode(part[0]));
+    splitTerms(text).forEach(function (seg) {
+      if (seg[1]) { span.appendChild(term(seg[0], seg[1])); return; }
+      splitCitations(seg[0], data.sutras || {}).forEach(function (part) {
+        span.appendChild(part[1] ? term(part[0], sutraTitle(part[1], data.sutras)) : document.createTextNode(part[0]));
+      });
     });
     return span;
   }

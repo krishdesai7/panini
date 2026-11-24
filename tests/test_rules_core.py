@@ -67,3 +67,21 @@ def test_steps_say_what_kind_of_step_they_are():
 def test_pada_note_names_the_rule_that_uses_it():
     d = derive(parse_request("bhū", "laṭ", 3, "sg", "active"))
     assert "3.4.78" in next(s.note for s in d.steps if "1.3.78" in s.rule_ids)
+
+
+def test_notes_lead_with_modern_terms_and_keep_panini_s_in_markup():
+    d = derive(parse_request("bhū", "laṭ", 3, "sg", "active"))
+    note = next(s.note for s in d.steps if "1.3.78" in s.rule_ids)
+    assert "no rule assigns the {middle|ātmanepada} voice" in note
+    assert "{active|parasmaipada}" in note
+
+
+def test_glosses_use_markup_for_technical_terms():
+    from panini.rules.base import sutra_info
+    assert "{active|parasmaipada}" in sutra_info("1.3.78")[1]
+    assert "{present-system affix|sārvadhātuka}" in sutra_info("3.4.113")[1]
+
+
+def test_ending_choice_note_uses_modern_voice_name():
+    d = derive(parse_request("bhū", "laṭ", 3, "sg", "active"))
+    assert "{active|parasmaipada} by 1.3.78" in next(s.note for s in d.steps if "3.4.78" in s.rule_ids)

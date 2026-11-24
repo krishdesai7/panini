@@ -82,7 +82,7 @@ def test_nitya_preference():
     state, steps, _ = run(S("tadsu"), [x, y])
     assert final_text(state) == "tad"
     assert ids(steps) == ["9.9.7"]
-    assert Loser("9.9.8", "deferred: 9.9.7 is nitya") in steps[0].losers
+    assert Loser("9.9.8", "deferred: 9.9.7 {applies either way|nitya}") in steps[0].losers
 
 
 def test_commuting_tie_lowest_id():

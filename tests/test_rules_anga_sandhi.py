@@ -21,7 +21,7 @@ def test_bhavanti_shows_collective_blocking():
 
 def test_pathati_near_miss():
     d = derive(parse_request("paṭh", "laṭ", 3, "sg", "active"))
-    assert any("7.3.86" in n and "not an ik vowel" in n for s in d.steps for n in s.near_misses)
+    assert any("7.3.86" in n and "is not one of {i u ṛ ḷ|ik}" in n for s in d.steps for n in s.near_misses)
 
 def test_smarati_cites_rapara():
     d = derive(parse_request("smṛ", "laṭ", 3, "sg", "active"))
