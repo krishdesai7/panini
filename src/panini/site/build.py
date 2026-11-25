@@ -57,7 +57,9 @@ MARKER_NOTES: dict[str, str] = {
              "(conditional) and liṅ (optative), take the shorter endings (3.4.99–101); all but liṅ also "
              "take the augment a- (6.4.71)",
     "lãṅ|ã": _CARRIER_L,
-    "paṭhã|ã": "carrier vowel: makes the consonant-final root pronounceable",
+    "paṭhã|ã": "protects the root's final ṭh, which as the last sound taught would itself be a marker "
+               "(1.3.3); it also carries the root's pitch, here neither low nor falling, so the root "
+               "is active (1.3.78)",
     "edhã|ã": "low-pitched (anudātta) marker vowel: the root takes only middle endings (1.3.12)",
     "ḍupacãṣ|ã": "falling-pitched (svarita) marker vowel: the root takes both voices, the middle "
                  "when the action benefits the agent (1.3.72)",

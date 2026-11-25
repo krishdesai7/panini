@@ -152,3 +152,8 @@ def test_glossary_words_get_tooltips_only_as_whole_words():
     g = {"laṅ": "past imperfective"}
     assert _node(f"app.splitGlossary('in laṅ (marked ṅ), not lãṅ or laṅa', {json.dumps(g)})") == [
         ["in ", None], ["laṅ", "past imperfective"], [" (marked ṅ), not lãṅ or laṅa", None]]
+
+
+def test_root_marker_vowel_note_explains_why_it_is_there():
+    note = site_data()["markers"]["paṭhã|ã"]
+    assert "1.3.3" in note and "pitch" in note
