@@ -51,6 +51,7 @@ class StepRecord:
     near_misses: tuple[str, ...]
     warnings: tuple[str, ...]
     alternatives: tuple[str, ...] = ()
+    reads: tuple[tuple[str, str], ...] = ()
     kind: str = "change"  # "change" (the form changes), "category" (assigns a label), "prohibition"
 
     def to_json(self) -> dict:
@@ -77,6 +78,7 @@ class StepRecord:
             "warnings": list(self.warnings),
             "alternatives": list(self.alternatives),
             "kind": self.kind,
+            "reads": [{"id": i, "note": n} for i, n in self.reads],
         }
 
 

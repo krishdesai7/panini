@@ -228,6 +228,7 @@ class _Runner:
             warnings=tuple(warnings),
             alternatives=alternatives,
             kind=_step_kind(edit),
+            reads=rule.reads if rule.section_override is None else (),
         ))
         return new, edit
 

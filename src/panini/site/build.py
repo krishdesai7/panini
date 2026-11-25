@@ -44,11 +44,13 @@ _STRONG = ("p: a strong ending. Endings without p count as ṅ-marked (1.2.4), a
 _CARRIER_L = "carrier vowel: only there to make the l pronounceable"
 _AUGMENT = "ṭ: the augment goes at the beginning of what it is added to (1.1.46)"
 MARKER_NOTES: dict[str, str] = {
-    "lãṭ|ṭ": "primary endings: in the ṭ-tenses (present, the two futures, perfect, subjunctive, "
-             "imperative) the middle endings end in -e (3.4.79)",
+    "lãṭ|ṭ": "primary endings: the ṭ-marked lakāras, laṭ (present), liṭ (perfect), luṭ and lṛṭ "
+             "(futures), leṭ (Vedic subjunctive) and loṭ (imperative), take middle endings in -e (3.4.79; "
+             "the imperative then changes them further)",
     "lãṭ|ã": _CARRIER_L,
-    "lãṅ|ṅ": "secondary endings: the ṅ-tenses (imperfect, aorist, conditional, optative) take the "
-             "shorter endings (3.4.99–101) and, in the past tenses, the augment a- (6.4.71)",
+    "lãṅ|ṅ": "secondary endings: the ṅ-marked lakāras, laṅ (imperfect), luṅ (aorist), lṛṅ "
+             "(conditional) and liṅ (optative), take the shorter endings (3.4.99–101); all but liṅ also "
+             "take the augment a- (6.4.71)",
     "lãṅ|ã": _CARRIER_L,
     "paṭhã|ã": "carrier vowel: makes the consonant-final root pronounceable",
     "edhã|ã": "low-pitched (anudātta) marker vowel: the root takes only middle endings (1.3.12)",

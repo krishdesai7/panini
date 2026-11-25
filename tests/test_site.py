@@ -134,3 +134,9 @@ def test_step_views_carry_the_term_upadesha(tmp_path):
 def test_marker_tip_falls_back_to_a_note_for_the_sound_alone():
     notes = {"*|ũ": "carrier vowel of rũ"}
     assert _node(f"app.markerTip('mas', 'ũ', {json.dumps(notes)})") == "marker (it) · carrier vowel of rũ"
+
+
+def test_lakara_marker_notes_name_lakaras_not_tenses():
+    notes = site_data()["markers"]
+    assert "liṭ (perfect)" in notes["lãṭ|ṭ"] and "tenses" not in notes["lãṭ|ṭ"]
+    assert "laṅ (imperfect)" in notes["lãṅ|ṅ"] and "tenses" not in notes["lãṅ|ṅ"]

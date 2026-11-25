@@ -14,6 +14,10 @@ gloss = "{Full grade|guṇa} and {lengthened grade|vṛddhi} do not replace an i
 text = "ādyantau ṭakitau"
 gloss = "An augment marked with ṭ is placed at the beginning of what it is added to; one marked with k, at the end."
 
+["1.1.49"]
+text = "ṣaṣṭhī sthāneyogā"
+gloss = "A word in the genitive names what is replaced."
+
 ["1.1.50"]
 text = "sthāne 'ntaratamaḥ"
 gloss = "A substitute is the one closest to the original (in place, manner, and so on)."
@@ -22,13 +26,49 @@ gloss = "A substitute is the one closest to the original (in place, manner, and 
 text = "uraṇ raparaḥ"
 gloss = "A vowel that replaces ṛ or ḷ is followed by r (or l)."
 
+["1.1.52"]
+text = "alo 'ntyasya"
+gloss = "A substitute replaces only the last sound of what is named."
+
+["1.1.55"]
+text = "anekālśit sarvasya"
+gloss = "A substitute of more than one sound, or one marked ś, replaces the whole of what is named."
+
 ["1.1.56"]
 text = "sthānivad ādeśo 'nalvidhau"
 gloss = "A substitute is treated like what it replaces, except in operations conditioned by a single sound."
 
+["1.1.60"]
+text = "adarśanaṃ lopaḥ"
+gloss = "Lopa means disappearance."
+
 ["1.1.64"]
 text = "aco 'ntyādi ṭi"
 gloss = "The last vowel and whatever follows it is called ṭi."
+
+["1.1.65"]
+text = "alo 'ntyāt pūrva upadhā"
+gloss = "The sound before the last is called the {penultimate|upadhā}."
+
+["1.1.66"]
+text = "tasminn iti nirdiṣṭe pūrvasya"
+gloss = "When a condition is stated in the locative, the operation applies to what immediately precedes it."
+
+["1.1.67"]
+text = "tasmād ity uttarasya"
+gloss = "When a condition is stated in the ablative, the operation applies to what immediately follows it."
+
+["1.1.69"]
+text = "aṇudit savarṇasya cāpratyayaḥ"
+gloss = "A vowel, semivowel or h, or a sound marked with u, also stands for the sounds of its kind (unless it is being introduced)."
+
+["1.1.71"]
+text = "ādir antyena sahetā"
+gloss = "A sound together with a final marker names all the sounds from it up to that marker (abbreviations such as ac, hal)."
+
+["1.2.1"]
+text = "gāṅkuṭādibhyo 'ñṇin ṅit"
+gloss = "After gāṅ, kuṭ and the like, affixes not marked ñ or ṇ count as marked ṅ."
 
 ["1.2.4"]
 text = "sārvadhātukam apit"
@@ -54,6 +94,10 @@ gloss = "But in an {inflectional ending|vibhakti}, a final t, th, d, dh, n, s or
 text = "ādir ñiṭuḍavaḥ"
 gloss = "In a root as taught, an initial ñi, ṭu or ḍu is a {marker|it}."
 
+["1.3.6"]
+text = "ṣaḥ pratyayasya"
+gloss = "An initial ṣ of an {affix|pratyaya} is a {marker|it}."
+
 ["1.3.7"]
 text = "cuṭū"
 gloss = "In an affix as taught, an initial palatal or retroflex stop is a {marker|it}."
@@ -65,6 +109,10 @@ gloss = "In an affix other than a {secondary nominal suffix|taddhita}, an initia
 ["1.3.9"]
 text = "tasya lopaḥ"
 gloss = "A {marker|it} is deleted."
+
+["1.3.10"]
+text = "yathāsaṅkhyam anudeśaḥ samānām"
+gloss = "When equal numbers of items are paired, they correspond in order."
 
 ["1.3.12"]
 text = "anudāttaṅita ātmanepadam"
@@ -81,6 +129,10 @@ gloss = "After all other roots, the {active|parasmaipada} endings are used to de
 ["1.4.2"]
 text = "vipratiṣedhe paraṃ kāryam"
 gloss = "In a conflict between two rules of equal force, the later one takes effect (Kiparsky: only within the section where each item gets a single technical name, 1.4.1–2.2.38)."
+
+["1.4.10"]
+text = "hrasvaṃ laghu"
+gloss = "A short vowel is called {light|laghu}."
 
 ["1.4.13"]
 text = "yasmāt pratyayavidhis tadādi pratyaye 'ṅgam"
@@ -137,6 +189,10 @@ gloss = "(Heading over books 3–5) What is introduced from here on is an {affix
 ["3.1.2"]
 text = "paraś ca"
 gloss = "(Heading) And it is placed after what it is added to."
+
+["3.1.67"]
+text = "sārvadhātuke yak"
+gloss = "Before a {present-system affix|sārvadhātuka} in the passive or impersonal, the {stem suffix|vikaraṇa} yak is added."
 
 ["3.1.68"]
 text = "kartari śap"
@@ -198,9 +254,21 @@ gloss = "A root-initial ṇ is replaced by n."
 text = "lopo vyor vali"
 gloss = "y and v are deleted before any consonant other than y ({val|val})."
 
+["6.1.71"]
+text = "hrasvasya piti kṛti tuk"
+gloss = "A short vowel gets the augment tuk before a p-marked primary suffix."
+
+["6.1.72"]
+text = "saṃhitāyām"
+gloss = "(Heading) In close contact: the following apply to sounds pronounced together."
+
 ["6.1.73"]
 text = "che ca"
 gloss = "Before ch, a short vowel gets the augment tuk (t)."
+
+["6.1.77"]
+text = "iko yaṇ aci"
+gloss = "Before a vowel, i u ṛ ḷ are replaced by y v r l."
 
 ["6.1.78"]
 text = "eco 'yavāyāvaḥ"
@@ -230,6 +298,14 @@ gloss = "a or ā and a following e, o, ai, au are together replaced by {lengthen
 text = "āṭaś ca"
 gloss = "The augment āṭ and a following vowel are together replaced by {lengthened grade|vṛddhi}."
 
+["6.1.94"]
+text = "eṅi pararūpam"
+gloss = "The a of a preverb and a following e or o of a root are together replaced by the second."
+
+["6.1.96"]
+text = "usy apadāntāt"
+gloss = "An a not at the end of a word and the ending us are together replaced by the second."
+
 ["6.1.97"]
 text = "ato guṇe"
 gloss = "Short a (not at the end of a word) and a following {full-grade|guṇa} vowel (a, e, o) are together replaced by the second."
@@ -237,6 +313,10 @@ gloss = "Short a (not at the end of a word) and a following {full-grade|guṇa} 
 ["6.1.101"]
 text = "akaḥ savarṇe dīrghaḥ"
 gloss = "A vowel a, i, u, ṛ, ḷ and a following vowel of the same kind are together replaced by the long vowel."
+
+["6.4.1"]
+text = "aṅgasya"
+gloss = "(Heading over 6.4.1–7.4.97) The following operations apply to a {base|aṅga}."
 
 ["6.4.22"]
 text = "asiddhavad atrābhāt"
@@ -250,17 +330,33 @@ gloss = "Before luṅ, laṅ and lṛṅ, the base gets the (accented) augment a
 text = "āḍ ajādīnām"
 gloss = "A base beginning with a vowel gets the augment āṭ instead."
 
+["7.1.2"]
+text = "āyaneyīnīyiyaḥ phaḍhakhachaghāṃ pratyayādīnām"
+gloss = "At the start of an affix, ph ḍh kh ch gh are replaced by āyan, ey, īn, īy, iy."
+
 ["7.1.3"]
 text = "jho 'ntaḥ"
 gloss = "The jh of an affix is replaced by ant."
+
+["7.2.80"]
+text = "ato yeyaḥ"
+gloss = "After a base in a, the yā of the optative is replaced by iy."
 
 ["7.2.81"]
 text = "āto ṅitaḥ"
 gloss = "After a base ending in a, the ā of an ending marked with ṅ (or treated as such) is replaced by iy."
 
+["7.3.75"]
+text = "ṣṭhivuklamyācamāṃ śiti"
+gloss = "Before an affix marked ś, the vowel of ṣṭhiv, klam and ā-cam is lengthened."
+
 ["7.3.77"]
 text = "iṣugamiyamāṃ chaḥ"
 gloss = "Before an affix marked with ś, the final of iṣ, gam and yam is replaced by ch."
+
+["7.3.82"]
+text = "mider guṇaḥ"
+gloss = "Before an affix marked ś, the vowel of mid takes {full grade|guṇa}."
 
 ["7.3.84"]
 text = "sārvadhātukārdhadhātukayoḥ"
@@ -273,6 +369,10 @@ gloss = "Before a {present-system|sārvadhātuka} or {non-present|ārdhadhātuka
 ["7.3.101"]
 text = "ato dīrgho yañi"
 gloss = "Before a {present-system affix|sārvadhātuka} beginning with one of {y v r l ñ m ṅ ṇ n jh bh|yañ}, a base-final short a is lengthened."
+
+["8.1.16"]
+text = "padasya"
+gloss = "(Heading to 8.3.55) The following apply to a {word|pada}."
 
 ["8.2.1"]
 text = "pūrvatrāsiddham"
@@ -301,6 +401,10 @@ gloss = "Before an obstruent, n or m not at the end of a word becomes {nasal gli
 ["8.4.40"]
 text = "stoḥ ścunā ścuḥ"
 gloss = "s and the dentals (t th d dh n), next to ś or a palatal, become ś and the corresponding palatals."
+
+["8.4.55"]
+text = "khari ca"
+gloss = "Before a {voiceless consonant|khar}, an {obstruent|jhal} also becomes the {voiceless unaspirated stop|car}."
 
 ["8.4.56"]
 text = "vāvasāne"

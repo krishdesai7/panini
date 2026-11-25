@@ -158,3 +158,4 @@ ol.steps > li::before { content: counter(step); color: var(--faint); text-align:
   transform: translateX(-50%);
 }
 .steps .kind { margin: 0.15rem 0 0; font-size: var(--fs-14); color: var(--muted); }
+.steps .reads { margin: 0.25rem 0 0; font-size: var(--fs-14); color: var(--faint); }

@@ -216,6 +216,16 @@ if (typeof document !== "undefined") (function () {
     }
     if (s.note) rule.appendChild(el("p", { class: "snote" }, [cite(s.note)]));
     s.sutras.forEach(function (su) { if (su.gloss) rule.appendChild(el("p", { class: "gloss" }, [cite(su.gloss)])); });
+    if (s.reads && s.reads.length) {
+      var reads = el("p", { class: "reads" }, ["Read via "]);
+      s.reads.forEach(function (r, i) {
+        if (i) reads.appendChild(document.createTextNode(" · "));
+        reads.appendChild(term(r.id, sutraTitle(r.id, data.sutras || {})));
+        reads.appendChild(document.createTextNode(": "));
+        reads.appendChild(cite(r.note));
+      });
+      rule.appendChild(reads);
+    }
     var li = el("li", {}, [renderTerms(s.after), rule]);
     s.near_misses.forEach(function (n) { li.appendChild(el("p", { class: "near" }, ["↳ ", cite(n)])); });
     s.warnings.forEach(function (w) { li.appendChild(el("p", { class: "warn" }, [cite(w)])); });

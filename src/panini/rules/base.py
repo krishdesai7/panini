@@ -78,6 +78,12 @@ class Rule:
         return (1, 3, 2) <= self.key <= (1, 3, 9)
 
     @property
+    def reads(self) -> tuple[tuple[str, str], ...]:
+        """Conventions and carried-over words this rule's wording relies on (rules/readings.py)."""
+        from panini.rules.readings import READS
+        return READS.get(self.id, ())
+
+    @property
     def text(self) -> str:
         return sutra_info(self.id)[0]
 
