@@ -50,3 +50,10 @@ def test_trace_prints_modern_terms_and_brackets_panini_s_at_v():
     out = render_text(d)
     assert "{" not in out and "no rule assigns the middle voice" in out
     assert "no rule assigns the middle (ātmanepada) voice" in render_text(d, verbosity=1)
+
+
+def test_multiline_notes_stay_aligned_in_the_trace():
+    out = render_text(derive(parse_request("bhū", "laṭ", 3, "sg", "active"))).splitlines()
+    k = next(i for i, l in enumerate(out) if "chosen by:" in l)
+    indent = len(out[k]) - len(out[k].lstrip())
+    assert all(len(l) - len(l.lstrip()) == indent for l in out[k + 1:k + 4])

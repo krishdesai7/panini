@@ -85,3 +85,10 @@ def test_glosses_use_markup_for_technical_terms():
 def test_ending_choice_note_uses_modern_voice_name():
     d = derive(parse_request("bhū", "laṭ", 3, "sg", "active"))
     assert "{active|parasmaipada} by 1.3.78" in next(s.note for s in d.steps if "3.4.78" in s.rule_ids)
+
+
+def test_ending_choice_note_is_one_line_per_category():
+    d = derive(parse_request("bhū", "laṭ", 3, "sg", "active"))
+    lines = next(s.note for s in d.steps if "3.4.78" in s.rule_ids).split("\n")
+    assert lines[0] == "l is replaced by tip, chosen by:"
+    assert [l.split(":")[0] for l in lines[1:]] == ["· voice", "· person", "· number"]

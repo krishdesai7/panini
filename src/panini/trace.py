@@ -63,7 +63,9 @@ def _render_step(n: int, s: StepRecord, width: int, verbosity: int) -> list[str]
         out.append(f"{'':>4}  {'(' + _form(s.before) + ')':<{width}}")
     out.append(f"{n:>4}  {_form(s.after):<{width}}{rid:<9}{_text(rid)}")
     if s.note:
-        out.append(f"{'':>4}  {'':<{width}}{'':<9}{_UNCHANGED.get(s.kind, '')}{plain(s.note, verbosity)}")
+        first, *rest = plain(s.note, verbosity).split("\n")
+        out.append(f"{'':>4}  {'':<{width}}{'':<9}{_UNCHANGED.get(s.kind, '')}{first}")
+        out.extend(f"{'':>4}  {'':<{width}}{'':<9}{line}" for line in rest)
     if verbosity >= 1:
         for src, note in s.reads:
             out.append(f"{'':>4}  {'':<{width}}{'':<9}read via {src}: {plain(note, verbosity)}")

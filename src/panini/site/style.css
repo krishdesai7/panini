@@ -88,7 +88,7 @@ ol.steps > li::before { content: counter(step); color: var(--faint); text-align:
 .steps .rule { min-width: 0; }
 .steps .sid { font: 400 var(--fs-14) var(--mono); color: var(--ink-2); margin-right: 0.6rem; font-variant-ligatures: none; }
 .steps .stext { font: 400 var(--fs-18)/1.4 var(--serif); }
-.steps .snote { margin: 0.15rem 0 0; }
+.steps .snote { margin: 0.15rem 0 0; white-space: pre-line; }
 .steps .gloss { margin: 0.15rem 0 0; font-size: var(--fs-14); color: var(--muted); }
 .steps .near, .steps .warn { grid-column: 2 / -1; margin: 0.3rem 0 0; color: var(--muted); font-size: var(--fs-16); }
 .steps .warn { color: var(--warn-ink); }

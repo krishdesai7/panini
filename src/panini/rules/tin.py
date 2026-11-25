@@ -117,9 +117,12 @@ def _note_3478(st: State, site: Site) -> str:
     by = next((t.split(":", 1)[1] for t in la.tags if t.startswith("pada-by:")), "?")
     pada_rule = "1.4.99 laḥ parasmaipadam" if pada == "parasmaipada" else "1.4.100 taṅānāv ātmanepadam"
     voice = "{active|parasmaipada}" if pada == "parasmaipada" else "{middle|ātmanepada}"
-    return (f"l is replaced by {slp1_to_iast(ending)}: {voice} by {by} ({pada_rule}); "
-            f"{_PERSON_REASON[st.intent.coreference]}, the triads named by 1.4.101; "
-            f"{_NUMBER_REASON[st.intent.number]}, the numbers named by 1.4.102")
+    return "\n".join([
+        f"l is replaced by {slp1_to_iast(ending)}, chosen by:",
+        f"· voice: {voice}, assigned by {by} ({pada_rule})",
+        f"· person: {_PERSON_REASON[st.intent.coreference]}; the persons are named by 1.4.101",
+        f"· number: {_NUMBER_REASON[st.intent.number]}; the numbers are named by 1.4.102",
+    ])
 
 
 R_3_4_78 = Rule("3.4.78", _find_3478, _rewrite_3478, note=_note_3478)
