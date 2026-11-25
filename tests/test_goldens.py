@@ -78,3 +78,11 @@ def test_guna_before_a_nit_ending_is_prohibited_by_1_1_5_not_merely_deferred():
     reasons = {l.reason for s in d.steps for l in s.losers if l.rule_id == "7.3.84"}
     assert "blocked by 1.1.5" in reasons
     assert not any("nitya" in r for r in reasons)
+
+
+def test_optional_rule_note_just_says_preferably():
+    d, o = steps_of("bhū", "laṅ", 3, "sg")
+    note = next(s for s in d.steps if "8.4.56" in s.rule_ids).note
+    assert note.endswith("{preferably|vā}; also correct: abhavad") and "Kiparsky" not in note
+    from panini.rules.base import sutra_info
+    assert "Kiparsky" not in sutra_info("8.4.56")[1] and "{preferably|vā}" in sutra_info("8.4.56")[1]

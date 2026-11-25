@@ -190,11 +190,11 @@ class _Runner:
             case Optionality.VA:
                 new = apply_edit(state, edit)
                 alternatives = self._alternative(state, frozenset({rule.id}), resume)
-                note = _join(note, "optional (vā, ‘preferably’ per Kiparsky): also correct: " + ", ".join(alternatives))
+                note = _join(note, "{preferably|vā}; also correct: " + ", ".join(alternatives))
             case Optionality.VIBHASHA:
                 new = state
                 alternatives = self._alternative(apply_edit(state, edit), frozenset({rule.id}), resume)
-                note = _join(note, "optional (vibhāṣā, ‘preferably not’ per Kiparsky): not applied; also correct: "
+                note = _join(note, "{preferably not|vibhāṣā}, so not applied; also correct: "
                              + ", ".join(alternatives))
             case Optionality.ANYATARASYAM:
                 raise OptionalRuleNotSupported(

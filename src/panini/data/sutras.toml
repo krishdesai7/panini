@@ -408,7 +408,7 @@ gloss = "Before a {voiceless consonant|khar}, an {obstruent|jhal} also becomes t
 
 ["8.4.56"]
 text = "vāvasāne"
-gloss = "At a pause, an obstruent is optionally (vā, ‘preferably’ in Kiparsky's reading) replaced by the {voiceless unaspirated stop|car}."
+gloss = "At a pause, an obstruent is {preferably|vā} replaced by the {voiceless unaspirated stop|car}."
 
 ["8.4.58"]
 text = "anusvārasya yayi parasavarṇaḥ"
