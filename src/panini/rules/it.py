@@ -163,6 +163,8 @@ def _root_initial(old: str):
 
 # The retroflex stops and ṇ that an initial ṣ had caused (8.4.41 ṣṭunā ṣṭuḥ) go back to dental
 # once ṣ itself is gone: nimittāpāye naimittikasyāpy apāyaḥ (see readings.py).
+# Treating every non-initial ṇ of a ṣ-initial root as caused by that ṣ holds for the bhvādi lexicon
+# (the only such root with a later ṇ is ṣaṇa~); other classes would need the cause checked.
 UNDO_RETROFLEX = {"w": "t", "W": "T", "R": "n"}
 
 
@@ -181,14 +183,14 @@ def _rewrite_64(st: State, site: Site):
 
 def _note_64(st: State, site: Site) -> str:
     t = st.terms[site.spans[0].term]
-    base = "a {root|dhātu} that starts with ṣ is taught with ṣ only as a {marker|it}: it is pronounced s"
+    base = "the {root|dhātu} is taught with ṣ ({ṣ-taught|ṣopadeśa}) but pronounced s"
     undone = [f"{slp1_to_iast(t.sounds[k].char)} goes back to {slp1_to_iast(UNDO_RETROFLEX[t.sounds[k].char])}"
               for k in _caused(t)]
-    return f"{base}, and the {' and the '.join(undone)}, which the ṣ had caused" if undone else base
+    return f"{base}; the {' and the '.join(undone)}, which the ṣ had caused" if undone else base
 
 
 R_6_1_64 = Rule("6.1.64", _root_initial("z"), _rewrite_64, note=_note_64)
 R_6_1_65 = Rule("6.1.65", _root_initial("R"), lambda st, site: (ReplaceSounds(site.spans[0].term, 0, 1, (Sound("n"),)),),
-                note=lambda st, site: "root-initial ṇ becomes n")
+                note=lambda st, site: "the {root|dhātu} is taught with ṇ ({ṇ-taught|ṇopadeśa}) but pronounced n")
 
 RULES = (R_1_3_1, R_1_3_2, R_1_3_3, R_1_3_4, R_1_3_5, R_1_3_7, R_1_3_8, R_1_3_9, R_6_1_64, R_6_1_65)

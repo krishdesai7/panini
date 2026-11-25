@@ -62,5 +62,11 @@ def test_retroflex_undone_in_the_same_step_and_cites_the_paribhasha():
     d = form("01.0532")
     steps = [s for s in d.steps if "6.1.64" in s.rule_ids]
     assert len(steps) == 1
-    assert "ṭ goes back to t" in steps[0].note and "{marker|it}" in steps[0].note
+    assert "ṭ goes back to t" in steps[0].note
+    assert "{ṣ-taught|ṣopadeśa}" in steps[0].note and "{marker|it}" not in steps[0].note
     assert any(src == "nimittāpāye naimittikasyāpy apāyaḥ" for src, _ in steps[0].reads)
+
+
+def test_root_initial_n_note_names_the_taught_form():
+    note = next(s.note for s in form("01.1136").steps if "6.1.65" in s.rule_ids)
+    assert "{ṇ-taught|ṇopadeśa}" in note and "{marker|it}" not in note
