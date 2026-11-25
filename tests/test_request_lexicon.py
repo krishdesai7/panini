@@ -52,17 +52,16 @@ def test_availability():
     assert availability(parse_request("edh", "laṭ", 3, "sg", "active"))[1] == "1.3.12"
     assert availability(parse_request("nī", "laṭ", 3, "sg", "middle")) is None
 
-@pytest.mark.xfail(strict=False, reason="fixture regenerated in Task 2")
 def test_reference_fixture_matches_available_requests():
     ref = json.loads(REFERENCE_PATH.read_text())
     avail = [r.key for r in all_requests() if availability(r) is None]
-    assert sorted(avail) == sorted(ref) and len(ref) == 162
+    assert sorted(avail) == sorted(ref)
 
 
 def test_reference_loads_from_any_working_directory(tmp_path, monkeypatch):
     from panini.request import load_reference
     monkeypatch.chdir(tmp_path)
-    assert len(load_reference()) == 162
+    assert len(load_reference()) > 1000
 
 
 def test_missing_reference_warns(tmp_path, capsys):
@@ -78,3 +77,14 @@ def test_lookup_ignores_nasal_sign_and_case(text, key):
 
 def test_lookup_accepts_tilde_over_vowel():
     assert lookup_root("paṭhã").key == "01.0381"
+
+
+def test_out_of_scope_roots_say_why():
+    r = parse_request("01.1092", "laṭ", 3, "sg")             # śru
+    assert availability(r) == ("śru forms a nu-present (śṛṇoti), deferred to the athematic classes", "3.1.74")
+    assert availability(parse_request("01.0461", "laṭ", 3, "sg"))[1] == "3.1.28"   # gup → gopāyati
+
+
+def test_fixture_covers_every_available_request():
+    avail = {r.key for r in all_requests() if availability(r) is None}
+    assert avail == set(json.loads(REFERENCE_PATH.read_text()))

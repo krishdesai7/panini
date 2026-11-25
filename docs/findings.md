@@ -128,3 +128,37 @@ lie outside laṭ/laṅ of these roots (Joshi & Kiparsky's *adhītya*,
   occurs in the slice.
 - **Accent** is out of scope. The only exception is the lexical accent of a
   root's marker vowel, which drives pada (1.3.12, 1.3.72).
+
+# Findings, slice 1.5
+
+## Pada against Vidyut
+
+`scripts/check_pada.py` asks Vidyut which voices it derives for laṭ 3sg of each
+bhvādi root and compares with `Root.pada` (read from the marker vowel). 1147 of
+1156 roots agree. The nine that don't:
+
+- **śad 01.0991** (ours P, Vidyut A): 1.3.60 *śadeḥ śitaḥ* makes it ātmanepada
+  when the stem takes śit. Slice 1.5 Task 7 adds this rule.
+- **sthā 01.1077, vad 01.1164, kram 01.0545** (ours P, Vidyut both): the
+  alternative middle voice is meaning- or prefix-conditioned (1.3.23, 1.3.47,
+  1.3.38–43). Preverbs are out of scope, so the marker-based pada stands.
+- **paṇ 01.0507, pan 01.0508** (Vidyut both / parasmaipada only): 3.1.28 gives
+  these an *-āya-* stem in the praise sense, which is out of scope here. Vidyut
+  returns no middle forms at all for pan, so its fixture entries are empty (see
+  the XFAIL table). Candidates for `OUT_OF_SCOPE`.
+- **ṛti 01.1166** (ours P, Vidyut A): 3.1.29 *ṛter īyaṅ* gives an *-īya-* stem,
+  which is ātmanepada by ṅit. Out of scope; Vidyut's active fixture entries
+  are empty. Candidate for `OUT_OF_SCOPE`.
+- **nāth 01.0007, sasj 01.0229** (Vidyut both): unexplained. Both are marker
+  readings worth a second look before slice 1.5 closes.
+
+## Whole-class sweep (before the new rules)
+
+The slow sweep compares every available request with Vidyut. Before Tasks 3–9
+about a fifth of the 21,708 non-empty reference entries fail, in two groups:
+roots with an *i*-marker that inserts a nasal (7.1.58 *idito num dhātoḥ*,
+*vandate* not *vadate*, 204 roots), and a mixed group (71 roots): initial
+*ṣ*/*ṣṭ* roots (*sṭanati* for *stanati*, 6.1.64 and its ṭu-substitute), 6.4.x vowel lengthening (*ūrdate*),
+*ch* doubling (6.1.73 before *ch*), the *yam*/*sad* stems (7.3.78),
+*kṛp* → *kalpate*, and *vraj* losing its initial *v* (a bug, to be
+investigated).

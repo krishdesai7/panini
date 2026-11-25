@@ -7,6 +7,7 @@ import sys
 import unicodedata
 from dataclasses import dataclass
 from enum import Enum
+from collections.abc import Iterable
 from pathlib import Path
 
 from panini.lexicon import ROOTS, Root, lookup_root
@@ -121,8 +122,33 @@ def parse_request(root: str, tense: str, person: str | int, number: str, voice: 
     )
 
 
+_NU = "deferred to the athematic classes"
+_DESID = "takes a desiderative stem here, which this engine doesn't derive yet"
+
+# Roots of the bhvādi section whose laṭ/laṅ stems need machinery outside this slice:
+# code -> (reason, governing sūtra).
+OUT_OF_SCOPE: dict[str, tuple[str, str]] = {
+    "01.1092": (f"śru forms a nu-present (śṛṇoti), {_NU}", "3.1.74"),
+    "01.0677": (f"dhinv forms a nu-present (dhinoti), {_NU}", "3.1.80"),
+    "01.0682": (f"kṛṇv forms a nu-present (kṛṇoti), {_NU}", "3.1.80"),
+    "01.0461": ("gup takes the suffix -āya- (gopāyati), which this engine doesn't derive yet", "3.1.28"),
+    "01.0462": ("dhūp takes the suffix -āya- (dhūpāyati), which this engine doesn't derive yet", "3.1.28"),
+    "01.0511": ("kam takes the suffix ṇiṅ (kāmayate), which this engine doesn't derive yet", "3.1.30"),
+    "01.0545": ("kram preferably takes -ya- in the middle voice, an option this engine doesn't model yet", "3.1.70"),
+    "01.1125": (f"gup {_DESID} (jugupsate)", "3.1.5"),
+    "01.1126": (f"tij {_DESID} (titikṣate)", "3.1.5"),
+    "01.1127": (f"mān {_DESID} (mīmāṃsate)", "3.1.6"),
+    "01.1128": (f"badh {_DESID} (bībhatsate)", "3.1.6"),
+    "01.1148": (f"kit {_DESID} (cikitsati)", "3.1.5"),
+    "01.1149": (f"dān {_DESID} (dīdāṃsate)", "3.1.6"),
+    "01.1150": (f"śān {_DESID} (śīśāṃsate)", "3.1.6"),
+}
+
+
 def availability(req: Request) -> tuple[str, str] | None:
     """Why a request has no form, as (reason, governing rule), or None if it has one."""
+    if req.root.code in OUT_OF_SCOPE:
+        return OUT_OF_SCOPE[req.root.code]
     if req.root.pada == "P" and req.voice is Voice.MIDDLE:
         return (f"{req.root.name} takes parasmaipada only", "1.3.78")
     if req.root.pada == "A" and req.voice is Voice.ACTIVE:
@@ -130,10 +156,12 @@ def availability(req: Request) -> tuple[str, str] | None:
     return None
 
 
-def all_requests() -> list[Request]:
+def all_requests(codes: Iterable[str] | None = None) -> list[Request]:
+    """Every request for the given root codes (default: the whole lexicon)."""
+    roots = ROOTS.values() if codes is None else [ROOTS[c] for c in codes]
     return [
         Request(root, lakara, purusha, vacana, voice)
-        for root in ROOTS.values()
+        for root in roots
         for lakara in Lakara
         for voice in Voice
         for purusha in Purusha

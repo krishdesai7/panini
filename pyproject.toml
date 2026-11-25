@@ -16,6 +16,8 @@ dev = ["pytest", "vidyut==0.4.*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = ["slow: full-class sweep"]
+addopts = "-m 'not slow'"
 
 [build-system]
 requires = ["uv_build>=0.13.9,<0.14.0"]
