@@ -62,6 +62,10 @@ gloss = "When a condition is stated in the ablative, the operation applies to wh
 text = "aṇudit savarṇasya cāpratyayaḥ"
 gloss = "A vowel, semivowel or h, or a sound marked with u, also stands for the sounds of its kind (unless it is being introduced)."
 
+["1.1.70"]
+text = "taparas tatkālasya"
+gloss = "A vowel followed by the marker t stands only for a vowel of that length."
+
 ["1.1.71"]
 text = "ādir antyena sahetā"
 gloss = "A sound together with a final marker names all the sounds from it up to that marker (abbreviations such as ac, hal)."

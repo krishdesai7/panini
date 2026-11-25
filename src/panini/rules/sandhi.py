@@ -32,9 +32,10 @@ def _site(st: State, l: int, r: int) -> Site:
 
 
 def _sandhi_rule(rule_id: str, cond: Callable[[str, str], bool], result: Callable[[str, str], str],
-                 describe: str, **kw) -> Rule:
+                 describe: str, word_internal: bool = False, **kw) -> Rule:
     def find(st: State) -> list[Site]:
-        return [_site(st, l, r) for l, r, x, y in junctions(st) if cond(x, y)]
+        return [_site(st, l, r) for l, r, x, y in junctions(st) if cond(x, y)
+                and not (word_internal and "pada" in st.terms[l].tags)]
 
     def rewrite(st: State, site: Site):
         l, r = site.spans[0].term, site.spans[1].term
@@ -74,6 +75,7 @@ R_6_1_88 = _sandhi_rule("6.1.88", lambda x, y: x in "aA" and y in EC, lambda x, 
 # ∪ 6.1.87, so it collectively blocks all three (Kiparsky, Architecture §1.4.2, (23) and (32)).
 R_6_1_97 = _sandhi_rule("6.1.97", lambda x, y: x == "a" and y in "aeo", lambda x, y: y,
                         "short a and a following {full-grade|guṇa} vowel are replaced by the second",
+                        word_internal=True,  # apadāntāt (from 6.1.96): not at the end of a word
                         blocks=("6.1.87", "6.1.88", "6.1.101"))
 # 6.1.101 akaḥ savarṇe dīrghaḥ
 R_6_1_101 = _sandhi_rule("6.1.101", lambda x, y: x in AK and is_vowel(y) and is_savarna(x, y),

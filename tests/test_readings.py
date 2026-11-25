@@ -36,3 +36,18 @@ def test_trace_shows_readings_at_v_only():
     d = derive(parse_request("bhū", "laṭ", 3, "sg", "active"))
     assert "read via" not in render_text(d)
     assert "read via 1.1.49" in render_text(d, verbosity=1)
+
+
+def test_tapara_reading_for_short_a_rules():
+    for rid in ("6.1.97", "7.3.101"):
+        assert "1.1.70" in {src for src, _ in READS[rid]}, rid
+
+
+def test_6197_does_not_apply_at_the_end_of_a_word():
+    from panini.model import Coreference, Intent, Number, State, Term, TermKind, Time
+    intent = Intent(Time.PRESENT, Coreference.NONE, Number.ONE, False)
+    left = Term.from_upadesha(TermKind.ROOT, "ca", frozenset({"pada"}))   # a whole word ending in a
+    right = Term.from_upadesha(TermKind.ROOT, "atra")
+    st = State((left, right), intent)
+    assert get_rule("6.1.97").find(st) == []
+    assert get_rule("6.1.101").find(st) != []
