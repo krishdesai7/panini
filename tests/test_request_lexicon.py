@@ -9,7 +9,7 @@ def test_lexicon_loads_whole_section():
     assert len(ROOTS) == 1156 and "01.0933" not in ROOTS   # 1166 rows, 10 placeholders
     assert ROOTS["01.0001"].upadesha == "BU" and ROOTS["01.0001"].meaning == "to be, become"
     assert ROOTS["01.0074"].meaning == "āhvāne rodane ca" and ROOTS["01.0074"].meaning_kind == "traditional"
-    assert citation_name(ROOTS["01.0925"].upadesha)  # odd entry (CadiH): must not crash
+    assert citation_name(ROOTS["01.0925"].upadesha) == "chad"  # CadiH, read as Cada~ by the vendor script
 
 
 @pytest.mark.parametrize("up, name", [("BU", "bhū"), ("paWa~", "paṭh"), ("ga\\mx~", "gam"), ("smf\\", "smṛ"),
