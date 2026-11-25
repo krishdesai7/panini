@@ -124,8 +124,8 @@ lie outside laṭ/laṅ of these roots (Joshi & Kiparsky's *adhītya*,
 - **6.1.86 *ṣatvatukor asiddhaḥ* is not modelled.** The `tuk_or_satva` flag
   exists, but no slice form needs the shadow evaluation: in *gacchati*, tuk
   isn't affected by 6.1.87–110.
-- **1.1.47 *mid aco 'ntyāt paraḥ*** isn't implemented, since no mit augment
-  occurs in the slice.
+- **1.1.47 *mid aco 'ntyāt paraḥ*** wasn't needed in slice 1 (no mit augment
+  occurs); slice 1.5 adds it for num (below).
 - **Accent** is out of scope. The only exception is the lexical accent of a
   root's marker vowel, which drives pada (1.3.12, 1.3.72).
 
@@ -164,3 +164,29 @@ roots with an *i*-marker that inserts a nasal (7.1.58 *idito num dhātoḥ*,
 *ch* doubling (6.1.73 before *ch*), the *yam*/*sad* stems (7.3.78),
 *kṛp* → *kalpate*, and *vraj* losing its initial *v* (a bug, to be
 investigated).
+
+## 7.1.58, 1.1.47 and 6.4.24
+
+- **7.1.58 *idito num dhātoḥ*** gives a root marked with a final *i* the
+  augment num (*kradi~* → *krand-*). It reads the marker the it-rules set
+  (1.3.2) and the upadeśa, because *i~r* (*dṛś*, `df\Si~r`) is the marker
+  *ir*, not *i*: 1.3.2 marks that nasal *i* too, so the marker alone can't
+  tell them apart. The nasal then goes through the tripādī: 8.3.24 makes it
+  anusvāra before an obstruent and 8.4.58 turns that into the nasal of the
+  following stop (*krandati*, *vaṅkate*, *kampate*).
+- **1.1.47** places the augment right after the root's last vowel
+  (`meta.mit_position`). In laṅ of a vowel-initial root (*and* → *āndat*), āṭ
+  and the root's vowel may already have merged (6.1.90), leaving the root
+  with no vowel of its own. The merged vowel counts as the root's first sound
+  (6.1.85), so num goes at the start of what remains.
+- **6.4.24 *aniditāṃ hala upadhāyāḥ kṅiti*** is the contrast: roots *not*
+  marked with *i* lose a penultimate nasal before a kit/ṅit affix, which is
+  why the *i* marker matters. It is not traced in this slice: in laṭ and laṅ
+  the root is always followed by śap, which is neither kit nor ṅit, so the
+  rule can never come close to applying and a near-miss note would mislead.
+  Its text and gloss are in `sutras.toml`.
+- After 7.1.58, 6 of the 196 *i*-marked roots still fail the sweep, for
+  missing sound rules rather than the augment: *stambh* (the ṣṭ-initial bug,
+  Task 4), *ghiṇṇ*, *ghuṇṇ*, *ghṛṇṇ* (n before ṇ needs 8.4.41 *ṣṭunā ṣṭuḥ*:
+  ours *ghinṇate*), and *riṇv*, *raṇv* (n after r needs 8.4.1–2 ṇatva: ours
+  *rinvati*).

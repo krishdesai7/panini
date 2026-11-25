@@ -84,6 +84,8 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
     "7.1.3": ((BASE, "an operation on the {base|aṅga} and its affixes (heading)"),
               ("7.1.2", "pratyayādīnām ‘at the start of an {affix|pratyaya}’ carries over"),
               (GEN, "jhaḥ (genitive): jh is what is replaced")),
+    "7.1.58": ((BASE, "an operation on the {base|aṅga} (heading)"),
+               ("1.1.47", "num, marked m, goes right after the last vowel")),
     "7.3.77": ((BASE, "an operation on the {base|aṅga} (heading)"),
                ("7.3.75", "śiti ‘before an affix marked ś’ carries over"),
                (FINAL, "only the final sound is replaced: the m of gam")),

@@ -14,6 +14,10 @@ gloss = "{Full grade|guṇa} and {lengthened grade|vṛddhi} do not replace an i
 text = "ādyantau ṭakitau"
 gloss = "An augment marked with ṭ is placed at the beginning of what it is added to; one marked with k, at the end."
 
+["1.1.47"]
+text = "mid aco 'ntyāt paraḥ"
+gloss = "An augment marked with m is placed right after the last vowel of what it is added to."
+
 ["1.1.49"]
 text = "ṣaṣṭhī sthāneyogā"
 gloss = "A word in the genitive names what is replaced."
@@ -326,6 +330,12 @@ gloss = "(Heading over 6.4.1–7.4.97) The following operations apply to a {base
 text = "asiddhavad atrābhāt"
 gloss = "From here to 6.4.175 (the {ābhīya|ābhīya} section), a rule is treated as not having taken effect when another rule of the section applies in the same environment."
 
+["6.4.24"]
+text = "aniditāṃ hala upadhāyāḥ kṅiti"
+gloss = "Before an affix marked with k or ṅ, the penultimate nasal of a root ending in a consonant is dropped, unless the root is marked with i."
+# Not traced in slice 1.5: in laṭ and laṅ the root is followed by śap, which is not marked
+# with k or ṅ, so 6.4.24 never applies there (docs/findings.md, "7.1.58 and 6.4.24").
+
 ["6.4.71"]
 text = "luṅlaṅlṛṅkṣv aḍ udāttaḥ"
 gloss = "Before luṅ, laṅ and lṛṅ, the base gets the (accented) augment aṭ."
@@ -341,6 +351,10 @@ gloss = "At the start of an affix, ph ḍh kh ch gh are replaced by āyan, ey, �
 ["7.1.3"]
 text = "jho 'ntaḥ"
 gloss = "The jh of an affix is replaced by ant."
+
+["7.1.58"]
+text = "idito num dhātoḥ"
+gloss = "A root marked with i gets the augment num (n)."
 
 ["7.2.80"]
 text = "ato yeyaḥ"

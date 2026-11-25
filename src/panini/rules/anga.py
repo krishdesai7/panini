@@ -1,9 +1,9 @@
-"""Operations on the base (aṅga): guṇa, lengthening, ch-substitution, tuk, jh → ant."""
+"""Operations on the base (aṅga): guṇa, lengthening, ch-substitution, tuk, num, jh → ant."""
 
 from __future__ import annotations
 
 from panini.edits import VIKRTA, ReplaceSounds
-from panini.meta import augment_in_term_edit
+from panini.meta import augment_in_term_edit, mit_augment_edit, mit_position
 from panini.model import Site, Sound, State, TermKind
 from panini.rules.base import Rule, adi, is_pratyaya
 from panini.sounds import guna, is_hrasva, is_vowel, pratyahara
@@ -192,3 +192,27 @@ R_1_1_5 = Rule("1.1.5", _find_115, lambda st, site: (), blocks=("7.3.84", "7.3.8
                "which is marked ṅ (or counts as such)")
 
 RULES = (*RULES, R_1_1_5)
+
+
+# 7.1.58 idito num dhātoḥ
+def _is_idit(t) -> bool:
+    """A root whose marker is a final i. The it-rules must have marked it (1.3.2); the upadeśa
+    tells i from ir: in i~r (dṛś, df\\Si~r) the nasal i belongs to the marker ir and adds no nasal."""
+    return t.kind is TermKind.ROOT and t.has_marker("i") and t.upadesha.endswith("i~")
+
+
+def _find_7158(st: State) -> list[Site]:
+    out = []
+    for i, t in enumerate(st.terms):
+        if _is_idit(t) and not any(s.agama and s.char == "n" for s in t.sounds) \
+                and (pos := mit_position(st, i)) is not None:
+            out.append(Site.at(i, pos, pos))
+    return out
+
+
+R_7_1_58 = Rule("7.1.58", _find_7158,
+                lambda st, site: mit_augment_edit(st, site.spans[0].term, (Sound("n"),)),
+                note=lambda st, site: "a root marked with i keeps a nasal in every form: the augment num "
+                "(n; markers u, m) goes right after its last vowel, as an augment marked m does (1.1.47)")
+
+RULES = (*RULES, R_7_1_58)

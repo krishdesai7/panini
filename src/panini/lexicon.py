@@ -30,7 +30,8 @@ def citation_name(upadesha_slp1: str) -> str:
     if len(sounds) > 1 and sounds[0][1]:  # an initial nasal vowel (o~, u~) is a marker too
         sounds = sounds[1:]
     nasal_vowels = [k for k, (_, nasal) in enumerate(sounds) if nasal]
-    idit = bool(nasal_vowels) and sounds[nasal_vowels[-1]][0] == "i"
+    # A final i~ marks the root idit; i~r (dṛś, df\Si~r) is the marker ir, which adds no nasal.
+    idit = bool(nasal_vowels) and nasal_vowels[-1] == len(sounds) - 1 and sounds[-1][0] == "i"
     if nasal_vowels:  # the last nasal vowel and whatever follows it are markers
         sounds = sounds[: nasal_vowels[-1]]
     elif len(sounds) > 1 and sounds[-1][0] in "NY":  # ṅ, ñ marker
@@ -41,7 +42,7 @@ def citation_name(upadesha_slp1: str) -> str:
         text = text[:1] + {"w": "t", "W": "T", "R": "n"}.get(text[1:2], text[1:2]) + text[2:]
     elif text.startswith("R"):
         text = "n" + text[1:]
-    if idit and len(text) > 1 and text[-2] not in "nNYRmM":  # kradi~ -> krand, but bundi~r -> bund
+    if idit and len(text) > 1 and text[-2] not in "nNYRmM":  # kradi~ -> krand
         text = text[:-1] + _NASAL_FOR.get(text[-1], "n") + text[-1]
     text = text.replace("nS", "MS").replace("ns", "Ms").replace("nz", "Mz").replace("nh", "Mh")
     return slp1_to_iast(text)

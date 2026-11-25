@@ -8,12 +8,16 @@ current sounds, so the al-vidhi exception holds automatically.
 
 1.1.46 ādyantau ṭakitau: an augment marked ṭ goes at the beginning of what it
 is added to, one marked k at the end.
+
+1.1.47 midaco 'ntyāt paraḥ: an augment marked m goes right after the last
+vowel of what it is added to.
 """
 
 from __future__ import annotations
 
-from panini.edits import Edit, InsertSounds, InsertTerm
+from panini.edits import EKADESHA_START, Edit, InsertSounds, InsertTerm
 from panini.model import Sound, State, Term, TermKind
+from panini.sounds import is_vowel
 from panini.translit import slp1_to_iast
 
 _MARKER_NAMES = {"N": "marked ṅ", "k": "marked k", "p": "marked p", "w": "marked ṭ", "S": "marked ś", "Y": "marked ñ"}
@@ -55,3 +59,29 @@ def augment_in_term_edit(state: State, term: int, after_pos: int, sounds: tuple[
     """Insert a kit augment's sounds right after a sound inside a term (e.g. tuk, 6.1.73)."""
     tagged = tuple(Sound(s.char, agama=True) for s in sounds)
     return (InsertSounds(term, after_pos + 1, tagged),)
+
+
+def mit_position(state: State, term: int) -> int | None:
+    """Where 1.1.47 puts an augment marked m in a term: the index right after its last vowel.
+
+    Vowels marked as it do not count. A single substitute stored at the end of the term on
+    the left counts as this term's first sound too (6.1.85), so a term whose only vowel went
+    into it (ā + andat, laṅ of and) takes the augment at its start.
+    """
+    t = state.terms[term]
+    own = [k for k, s in enumerate(t.sounds) if is_vowel(s.char) and not s.it]
+    if own:
+        return own[-1] + 1
+    left = next((u for u in reversed(state.terms[:term]) if u.sounds), None)
+    if EKADESHA_START in t.tags and left is not None and left.sounds[-1].ekadesha:
+        return 0
+    return None
+
+
+def mit_augment_edit(state: State, term: int, sounds: tuple[Sound, ...]) -> Edit:
+    """Insert a mit augment's sounds right after the last vowel of a term (e.g. num, 7.1.58)."""
+    pos = mit_position(state, term)
+    if pos is None:
+        raise ValueError(f"{state.terms[term].text} has no vowel for a mit augment to follow")
+    tagged = tuple(Sound(s.char, agama=True) for s in sounds)
+    return (InsertSounds(term, pos, tagged),)
