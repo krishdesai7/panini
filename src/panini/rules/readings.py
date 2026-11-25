@@ -79,7 +79,7 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
                ("1.4.10", "laghu ‘light’ = a short vowel not before a consonant cluster")),
     "7.3.101": ((BASE, "an operation on the {base|aṅga} (heading)"),
                 (GEN, "ataḥ (genitive): short a is what is replaced"),
-                (LOC, "yañi (locative): before one of {y v r l ñ m ṅ ṇ n jh bh|yañ}")),
+                (LOC, "yañi (locative): before one of {resonants, jh, and bh|yañ}")),
     "7.1.3": ((BASE, "an operation on the {base|aṅga} and its affixes (heading)"),
               ("7.1.2", "pratyayādīnām ‘at the start of an {affix|pratyaya}’ carries over"),
               (GEN, "jhaḥ (genitive): jh is what is replaced")),

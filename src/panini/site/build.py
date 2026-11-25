@@ -34,7 +34,12 @@ def site_data() -> dict:
     roots = [{"key": r.key, "upadesha_iast": r.upadesha_iast, "meaning": r.meaning, "gana": r.gana,
               "class_label": GANA_LABELS.get(r.gana, r.gana), "pada": r.pada}
              for r in ROOTS.values()]
-    return {"roots": roots, "derivations": derivations, "sutras": _sutras(), "markers": MARKER_NOTES}
+    return {"roots": roots, "derivations": derivations, "sutras": _sutras(), "markers": MARKER_NOTES,
+            "glossary": GLOSSARY}
+
+
+# Names kept in the text but explained on hover wherever they occur as whole words.
+GLOSSARY = {"laṭ": "present imperfective", "laṅ": "past imperfective"}
 
 
 # What each marker in the slice does, keyed "upadeśa|marker" (both IAST). Markers not listed

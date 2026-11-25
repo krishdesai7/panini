@@ -18,3 +18,10 @@ def test_marker_rule_glosses_avoid_jargon():
     t8, g8 = sutra_info("1.3.8")
     assert "row" not in g7 and "row" not in g8
     assert "{secondary nominal suffix|taddhita}" in g8
+
+
+def test_no_bare_jargon_left_in_these_glosses():
+    import re
+    for rid in ("7.3.101", "8.3.24", "8.4.58"):
+        bare = re.sub(r"\{[^}]*\}", "", sutra_info(rid)[1])
+        assert "anusvāra" not in bare and "y v r l ñ m" not in bare, rid

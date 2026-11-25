@@ -98,7 +98,7 @@ def _find_8324(st: State) -> list[Site]:
 
 
 R_8_3_24 = Rule("8.3.24", _find_8324, lambda st, site: _replace(site.spans[0].term, site.spans[0].start, "M"),
-                note=lambda st, site: "n inside a word before an obstruent becomes anusvāra ṃ")
+                note=lambda st, site: "n inside a word before an {obstruent|jhal} becomes the {nasal glide|anusvāra} ṃ")
 
 
 # 8.4.40 stoḥ ścunā ścuḥ
@@ -140,6 +140,6 @@ def _rewrite_8458(st: State, site: Site):
 
 
 R_8_4_58 = Rule("8.4.58", _find_8458, _rewrite_8458,
-                note=lambda st, site: "anusvāra before a stop becomes the nasal of that stop's class")
+                note=lambda st, site: "the {nasal glide|anusvāra} before a stop becomes the nasal of that stop's class")
 
 RULES = (R_8_2_23, R_8_2_39, R_8_2_66, R_8_3_15, R_8_3_24, R_8_4_40, R_8_4_56, R_8_4_58)

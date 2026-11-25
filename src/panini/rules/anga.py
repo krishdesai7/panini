@@ -97,7 +97,7 @@ R_7_3_101 = Rule("7.3.101", _find_73101,
                  lambda st, site: (ReplaceSounds(site.spans[0].term, site.spans[0].start, site.spans[0].end,
                                                  (Sound("A"),)),),
                  note=lambda st, site: f"a is lengthened before {slp1_to_iast(st.terms[site.spans[0].term + 1].adi)},"
-                 " one of {y v r l ñ m ṅ ṇ n jh bh|yañ}, beginning a {present-system|sārvadhātuka} affix")
+                 " one of {resonants, jh, and bh|yañ}, beginning a {present-system|sārvadhātuka} affix")
 
 
 # 7.1.3 jho 'ntaḥ

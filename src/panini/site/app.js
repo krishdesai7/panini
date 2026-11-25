@@ -57,6 +57,22 @@ function splitTerms(text) {
   return out;
 }
 
+/* Split text so that glossary words (whole words only) become [word, explanation] pairs. */
+function splitGlossary(text, glossary) {
+  var words = Object.keys(glossary || {});
+  text = String(text);
+  if (!words.length) return [[text, null]];
+  var re = new RegExp("(?<![\\p{L}\\p{M}])(" + words.join("|") + ")(?![\\p{L}\\p{M}])", "gu");
+  var out = [], last = 0, m;
+  while ((m = re.exec(text))) {
+    if (m.index > last) out.push([text.slice(last, m.index), null]);
+    out.push([m[1], glossary[m[1]]]);
+    last = m.index + m[1].length;
+  }
+  if (last < text.length) out.push([text.slice(last), null]);
+  return out;
+}
+
 /* Tooltip for a marker: what it does, if known, else the generic one. */
 function markerTip(upadesha, ch, notes) {
   var note = notes && (notes[upadesha + "|" + ch] || notes["*|" + ch]);
@@ -78,7 +94,7 @@ function tipPosition(rect, size, view) {
   return { left: left, top: top };
 }
 
-if (typeof module !== "undefined") module.exports = { parseHash: parseHash, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, sutraTitle: sutraTitle, markerTip: markerTip, tipPosition: tipPosition };
+if (typeof module !== "undefined") module.exports = { parseHash: parseHash, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, splitGlossary: splitGlossary, sutraTitle: sutraTitle, markerTip: markerTip, tipPosition: tipPosition };
 
 if (typeof document !== "undefined") (function () {
   var data = JSON.parse(document.getElementById("data").textContent);
@@ -124,7 +140,10 @@ if (typeof document !== "undefined") (function () {
     splitTerms(text).forEach(function (seg) {
       if (seg[1]) { span.appendChild(term(seg[0], seg[1])); return; }
       splitCitations(seg[0], data.sutras || {}).forEach(function (part) {
-        span.appendChild(part[1] ? term(part[0], sutraTitle(part[1], data.sutras)) : document.createTextNode(part[0]));
+        if (part[1]) { span.appendChild(term(part[0], sutraTitle(part[1], data.sutras))); return; }
+        splitGlossary(part[0], data.glossary).forEach(function (g) {
+          span.appendChild(g[1] ? term(g[0], g[1]) : document.createTextNode(g[0]));
+        });
       });
     });
     return span;

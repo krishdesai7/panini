@@ -140,3 +140,15 @@ def test_lakara_marker_notes_name_lakaras_not_tenses():
     notes = site_data()["markers"]
     assert "liṭ (perfect)" in notes["lãṭ|ṭ"] and "tenses" not in notes["lãṭ|ṭ"]
     assert "laṅ (imperfect)" in notes["lãṅ|ṅ"] and "tenses" not in notes["lãṅ|ṅ"]
+
+
+def test_site_data_has_a_glossary_for_lakara_names():
+    g = site_data()["glossary"]
+    assert g["laṭ"] == "present imperfective" and g["laṅ"] == "past imperfective"
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_glossary_words_get_tooltips_only_as_whole_words():
+    g = {"laṅ": "past imperfective"}
+    assert _node(f"app.splitGlossary('in laṅ (marked ṅ), not lãṅ or laṅa', {json.dumps(g)})") == [
+        ["in ", None], ["laṅ", "past imperfective"], [" (marked ṅ), not lãṅ or laṅa", None]]

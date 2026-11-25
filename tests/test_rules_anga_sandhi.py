@@ -36,3 +36,15 @@ def test_7386_near_miss_only_for_the_root_as_recited():
 def test_7377_note_names_the_replaced_sound():
     d = derive(parse_request("gam", "laṭ", 3, "sg", "active"))
     assert "final m of gam" in next(s.note for s in d.steps if "7.3.77" in s.rule_ids)
+
+
+def test_yan_described_as_resonants_jh_and_bh():
+    d = derive(parse_request("bhū", "laṭ", 1, "sg", "active"))
+    note = next(s.note for s in d.steps if "7.3.101" in s.rule_ids)
+    assert "{resonants, jh, and bh|yañ}" in note
+
+
+def test_anusvara_shown_as_nasal_glide():
+    d = derive(parse_request("bhū", "laṭ", 3, "pl", "active"))
+    notes = [s.note for s in d.steps if s.rule_ids[0] in ("8.3.24", "8.4.58")]
+    assert all("{nasal glide|anusvāra}" in n for n in notes) and len(notes) == 2
