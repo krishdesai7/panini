@@ -110,10 +110,16 @@ def test_sasj_palatal_then_voiced():
 # -- 8.4.41 ṣṭunā ṣṭuḥ: the nasal of ghiṇ, ghuṇ, ghṛṇ ----------------------
 
 @pytest.mark.parametrize("code, expected", [
-    ("01.0502", "ghiṇṇate"), ("01.0503", "ghuṇṇate"), ("01.0504", "ghṛṇṇate")])
+    ("01.0502", "ghiṇṇate"), ("01.0503", "ghuṇṇate")])
 def test_nasal_becomes_retroflex_before_retroflex_nasal(code, expected):
     d = form(code, voice="middle")
     assert d.result == expected and "8.4.41" in _rule_ids(d)
+
+
+def test_rvarna_triggers_natva_by_the_varttika():
+    ids = _rule_ids(form("01.0504", voice="middle"))   # ghṛṇ: the num n after ṛ becomes ṇ by 8.4.1.1, so 8.4.41 has nothing left to do
+    d = form("01.0504", voice="middle")
+    assert d.result == "ghṛṇṇate" and "8.4.1.1" in ids and "8.4.1" not in ids and "8.4.41" not in ids
 
 
 # -- 8.4.1-2 raṣābhyāṃ no ṇaḥ samānapade ----------------------------------

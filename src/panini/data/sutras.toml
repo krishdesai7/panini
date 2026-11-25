@@ -444,6 +444,10 @@ gloss = "Before an obstruent, n or m not at the end of a word becomes {nasal gli
 text = "raṣābhyāṃ no ṇaḥ samānapade"
 gloss = "In the same word, n right after r or ṣ becomes ṇ."
 
+["8.4.1.1"]
+text = "ṛvarṇāc ceti vaktavyam"
+gloss = "(Vārttika on 8.4.1) ṛ and ṝ count like r: n after them, in the same word, becomes ṇ."
+
 ["8.4.2"]
 text = "aṭkupvāṅnumvyavāye 'pi"
 gloss = "n becomes ṇ after r or ṣ even when a vowel, h, y, v, r, a velar or labial stop, ā, or the augment n comes between."

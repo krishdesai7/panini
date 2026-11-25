@@ -170,6 +170,7 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
               (GEN, "no (genitive): n is what is replaced"),
               (ABL, "raṣābhyām (ablative): after r or ṣ")),
     "8.4.37": ((WORD, "padasya ‘at the end of a {word|pada}’ (heading)"),),
+    "8.4.1.1": (("8.4.1", "raṣābhyāṃ no ṇaḥ samānapade carries over, with ṛ/ṝ added to r and ṣ"),),
     "8.4.2": (("8.4.1", "raṣābhyāṃ no ṇaḥ samānapade carries over"),),
     "8.4.40": (("1.3.10", "the substitutes match the originals in order: s → ś, t → c, …"),),
     "8.4.41": (("8.4.40", "stoḥ ‘of s and the dentals’ and the {retroflex|ṣṭu} substitute match the originals in order: s → ṣ, t → ṭ, …"),

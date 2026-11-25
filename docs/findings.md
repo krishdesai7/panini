@@ -190,3 +190,7 @@ investigated).
   Task 4), *ghiṇṇ*, *ghuṇṇ*, *ghṛṇṇ* (n before ṇ needs 8.4.41 *ṣṭunā ṣṭuḥ*:
   ours *ghinṇate*), and *riṇv*, *raṇv* (n after r needs 8.4.1–2 ṇatva: ours
   *rinvati*).
+
+## ṇatva after ṛ (8.4.1.1) in ghṛṇṇ
+
+For *ghṛṇ* (`GfRi~\`) our trace cites the vārttika 8.4.1.1 *ṛvarṇāc ca* (ṛ/ṝ trigger ṇatva, as in *nṛṇām*) for the n that num inserts (it follows ṛ); Vidyut cites 8.4.41 alone (the n before ṇ). The form is the same (*ghṛṇṇate*). We cite the vārttika because the tripādī runs once in sūtra order (8.2.1 pūrvatrāsiddham), and 8.4.1.1 precedes 8.4.41, so it fires first and 8.4.41 then has nothing left to change.

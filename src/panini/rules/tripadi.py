@@ -127,35 +127,40 @@ R_8_2_78 = Rule("8.2.78", _find_8278,
 
 
 # 8.4.1 raṣābhyāṃ no ṇaḥ samānapade / 8.4.2 aṭkupvāṅnumvyavāye 'pi: n becomes ṇ after r or ṣ in the
-# same word, even with aṭ (a vowel, h, y, v, r), ku, pu, ā or num between (8.4.2). The n must be
-# (Before an obstruent the n has already become ṃ by 8.3.24, and 8.4.58 restores it later: bharanti.
-# A word-final n is exempt by 8.4.37 padāntasya.)
-RA_SA = frozenset("rz")   # r and ṣ (ṛ is not taken as r here: Vidyut gives ghṛṇṇate via 8.4.41 alone)
+# same word, even with aṭ (a vowel, h, y, v, r), ku, pu, ā or num between (8.4.2). The vārttika
+# ṛvarṇāc ca (8.4.1.1) adds ṛ/ṝ as triggers. Before an obstruent the n has already become ṃ by 8.3.24
+# (8.4.58 restores it later: bharanti); a word-final n is exempt by 8.4.37 padāntasya.
+RA_SA = frozenset("rz")    # r and ṣ
+RVARNA = frozenset("fF")   # ṛ and ṝ (vārttika)
 _BETWEEN = pratyahara("aw") | frozenset("kKgGNpPbBm")   # aṭ, ku, pu (ā is in aṭ; num is handled in _natva_sites)
 
 
-def _natva_sites(st: State, separated: bool) -> list[Site]:
+def _natva_sites(st: State, triggers: frozenset[str], separated: bool | None) -> list[Site]:
+    """n sites after a trigger; separated says whether something stands between (None: either)."""
+    stop = RA_SA | RVARNA
     sounds = [(i, k, s.char, s.agama) for i, t in enumerate(st.terms) for k, s in enumerate(t.sounds)]
     out = []
     for n, (i, k, c, _) in enumerate(sounds):
         if c != "n":
             continue
         m = n - 1
-        while m >= 0 and sounds[m][2] not in RA_SA and (sounds[m][2] in _BETWEEN or (sounds[m][2] == "n" and sounds[m][3])):
+        while m >= 0 and sounds[m][2] not in stop and (sounds[m][2] in _BETWEEN or (sounds[m][2] == "n" and sounds[m][3])):
             m -= 1
-        if m >= 0 and sounds[m][2] in RA_SA and (m < n - 1) == separated:
+        if m >= 0 and sounds[m][2] in triggers and separated in (None, m < n - 1):
             out.append(Site.at(i, k))
     return out
 
 
-def _natva_rule(rule_id: str, separated: bool, how: str) -> Rule:
-    return Rule(rule_id, lambda st: _natva_sites(st, separated),
+def _natva_rule(rule_id: str, triggers: frozenset[str], separated: bool | None, how: str, who: str) -> Rule:
+    return Rule(rule_id, lambda st: _natva_sites(st, triggers, separated),
                 lambda st, site: _replace(site.spans[0].term, site.spans[0].start, "R"),
-                note=lambda st, site: f"n {how} r or ṣ in the same word becomes ṇ")
+                note=lambda st, site: f"n {how} {who} in the same word becomes ṇ")
 
 
-R_8_4_1 = _natva_rule("8.4.1", False, "right after")
-R_8_4_2 = _natva_rule("8.4.2", True, "after (with a vowel, h, y, v, r, a velar or labial stop, or the augment n between)")
+R_8_4_1 = _natva_rule("8.4.1", RA_SA, False, "right after", "r or ṣ")
+R_8_4_2 = _natva_rule("8.4.2", RA_SA, True,
+                      "after (with a vowel, h, y, v, r, a velar or labial stop, or the augment n between)", "r or ṣ")
+R_8_4_1_1 = _natva_rule("8.4.1.1", RVARNA, None, "after", "ṛ or ṝ (a {later addition|vārttika} to 8.4.1: ṛ/ṝ count like r)")
 
 
 # 8.4.37 padāntasya: a word-final n is not made ṇ (a niṣedha: changes nothing, blocks 8.4.1-2)
@@ -164,7 +169,7 @@ def _find_8437(st: State) -> list[Site]:
     return [Site.at(f[0], f[1])] if f and f[2] == "n" else []
 
 
-R_8_4_37 = Rule("8.4.37", _find_8437, lambda st, site: (), blocks=("8.4.1", "8.4.2"),
+R_8_4_37 = Rule("8.4.37", _find_8437, lambda st, site: (), blocks=("8.4.1", "8.4.1.1", "8.4.2"),
                 note=lambda st, site: "word-final n is not changed to ṇ: the rule applies only inside a {word|pada}")
 
 
@@ -252,4 +257,4 @@ def _rewrite_8458(st: State, site: Site):
 R_8_4_58 = Rule("8.4.58", _find_8458, _rewrite_8458,
                 note=lambda st, site: "the {nasal glide|anusvāra} before a stop becomes the nasal of that stop's class")
 
-RULES = (R_8_2_23, R_8_2_39, R_8_2_66, R_8_2_78, R_8_3_15, R_8_3_24, R_8_4_1, R_8_4_2, R_8_4_37, R_8_4_40, R_8_4_41, R_8_4_53, R_8_4_56, R_8_4_58)
+RULES = (R_8_2_23, R_8_2_39, R_8_2_66, R_8_2_78, R_8_3_15, R_8_3_24, R_8_4_1, R_8_4_1_1, R_8_4_2, R_8_4_37, R_8_4_40, R_8_4_41, R_8_4_53, R_8_4_56, R_8_4_58)
