@@ -189,6 +189,9 @@ def test_7_3_78_after_the_augment_merged_the_initial_r():
     assert ids.index("6.1.90") < ids.index("7.3.78")
     losers = [(l.rule_id, l.reason) for s in d.steps for l in s.losers if "6.1.90" in l.reason or l.rule_id in ("6.1.90", "7.3.78")]
     assert not any("blocked by 7.3.78" in r for _, r in losers) and not any(i == "6.1.90" for i, _ in losers)
+    step = next(s for s in d.steps if "7.3.78" in s.rule_ids)
+    assert step.note.startswith("ṛ is replaced by the stem ṛccha")   # the root is named, not blank
+    assert "6.1.90 is applied again" in step.note
 
 
 def test_7_3_78_replaces_guna_of_r_roots():

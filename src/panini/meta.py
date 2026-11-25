@@ -15,7 +15,9 @@ vowel of what it is added to.
 
 from __future__ import annotations
 
-from panini.edits import EKADESHA_START, Edit, InsertSounds, InsertTerm
+from collections.abc import Callable
+
+from panini.edits import EKADESHA_START, Edit, InsertSounds, InsertTerm, ReplaceSounds
 from panini.model import Sound, State, Term, TermKind
 from panini.sounds import is_vowel
 from panini.translit import slp1_to_iast
@@ -85,3 +87,55 @@ def mit_augment_edit(state: State, term: int, sounds: tuple[Sound, ...]) -> Edit
         raise ValueError(f"{state.terms[term].text} has no vowel for a mit augment to follow")
     tagged = tuple(Sound(s.char, agama=True) for s in sounds)
     return (InsertSounds(term, pos, tagged),)
+
+
+def _ekadesha_tail(term: Term) -> int:
+    """How many sounds at the end of a term are one recorded ekādeśa substitute."""
+    k = 0
+    for s in reversed(term.sounds):
+        if not (s.ekadesha and s.ekadesha_rule):
+            break
+        k += 1
+    return k
+
+
+def absorbed_ekadesha(state: State, term: int) -> list[tuple[str, str, str]]:
+    """The ekādeśa substitute that swallowed the first sound of this term, as [(rule, left sound,
+    right sound)]: 6.1.85 antādivat lets such a substitute count as part of this term as well as of
+    the neighbour it is stored with."""
+    if EKADESHA_START in state.terms[term].tags:
+        left = next((u for u in reversed(state.terms[:term]) if u.sounds), None)
+        if left is not None and _ekadesha_tail(left):
+            s = left.sounds[-1]
+            return [(s.ekadesha_rule, *s.ekadesha_inputs)]
+    return []
+
+
+def substitution_edit(state: State, term: int, stem: str,
+                      rule_lookup: Callable[[str], object] | None = None) -> Edit:
+    """Replace a whole term by ``stem`` (a substitution for the sthānin, 1.1.56), taking its place in
+    the ekādeśa that had absorbed its first sound: the substitute is an input of that ekādeśa, so
+    the rule that made it is applied again, to the stem's first sound instead of the old one.
+    E.g. ā + ṛ → ār (6.1.90); ṛ replaced by ṛccha: ā + ṛ → ār again, then ccha.
+
+    Only the start of the term is handled. An ekādeśa at its end (śap's a absorbed into a
+    root's a) never has to be undone: a substitution of the whole term is nitya, so the resolver
+    lets it go first."""
+    if rule_lookup is None:
+        from panini.rules import get_rule
+        rule_lookup = get_rule
+    t = state.terms[term]
+    chars = list(stem)
+    edits: list = []
+    if (absorbed := absorbed_ekadesha(state, term)):
+        rule_id, x, _ = absorbed[0]
+        out = rule_lookup(rule_id).merge(x, chars[0])
+        if out is None:
+            raise ValueError(f"{rule_id} does not apply to {x} + {chars[0]}, so the substitute cannot take its place")
+        left_i = next(i for i in range(term - 1, -1, -1) if state.terms[i].sounds)
+        lt, k = state.terms[left_i], _ekadesha_tail(state.terms[left_i])
+        new = tuple(Sound(c, ekadesha=True, ekadesha_rule=rule_id, ekadesha_inputs=(x, chars[0])) for c in out)
+        edits.append(ReplaceSounds(left_i, len(lt.sounds) - k, len(lt.sounds), new))
+        chars.pop(0)
+    edits.append(ReplaceSounds(term, 0, len(t.sounds), tuple(Sound(c) for c in chars)))
+    return tuple(edits)

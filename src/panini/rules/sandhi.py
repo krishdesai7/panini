@@ -40,14 +40,14 @@ def _sandhi_rule(rule_id: str, cond: Callable[[str, str], bool], result: Callabl
     def rewrite(st: State, site: Site):
         l, r = site.spans[0].term, site.spans[1].term
         x, y = st.terms[l].sounds[-1].char, st.terms[r].sounds[0].char
-        return (Ekadesha(l, r, _sounds(result(x, y))),)
+        return (Ekadesha(l, r, _sounds(result(x, y)), rule_id),)
 
     def note(st: State, site: Site) -> str:
         l, r = site.spans[0].term, site.spans[1].term
         x, y = st.terms[l].sounds[-1].char, st.terms[r].sounds[0].char
         return f"{slp1_to_iast(x)} + {slp1_to_iast(y)} → {slp1_to_iast(result(x, y))} ({describe})"
 
-    return Rule(rule_id, find, rewrite, note=note, **kw)
+    return Rule(rule_id, find, rewrite, note=note, merge=lambda x, y: result(x, y) if cond(x, y) else None, **kw)
 
 
 # 6.1.78 eco 'yavāyāvaḥ (not a single substitute: e → ay etc. before a vowel)
@@ -114,7 +114,8 @@ def _find_6190(st: State) -> list[Site]:
 
 R_6_1_90 = Rule("6.1.90", _find_6190,
                 lambda st, site: (Ekadesha(site.spans[0].term, site.spans[1].term,
-                                           _sounds(vrddhi(st.terms[site.spans[1].term].sounds[0].char))),),
+                                           _sounds(vrddhi(st.terms[site.spans[1].term].sounds[0].char)), "6.1.90"),),
+                merge=lambda x, y: vrddhi(y) if x == "A" and is_vowel(y) else None,
                 blocks=("6.1.87", "6.1.88", "6.1.101"),
                 note=lambda st, site: f"the augment ā and {slp1_to_iast(st.terms[site.spans[1].term].sounds[0].char)} "
                 f"→ {slp1_to_iast(vrddhi(st.terms[site.spans[1].term].sounds[0].char))} ({{lengthened grade|vṛddhi}})")

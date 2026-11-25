@@ -86,12 +86,16 @@ class _Runner:
 
     @property
     def _effective(self) -> tuple[Rule, ...]:
-        """The rules as blockers: a rule that declined to apply (vibhāṣā) blocks nothing, so
-        the general rule it would have overridden applies after all."""
+        """The rules as blockers: a rule that declined to apply (vibhāṣā, a sense condition) blocks
+        nothing at that site, so the general rule it would have overridden applies after all."""
         if not self.declined:
             return self.rules
-        ids = {rid for rid, _ in self.declined}
-        return tuple(replace(r, blocks=()) if r.id in ids else r for r in self.rules)
+        declined = self.declined
+
+        def undeclined(r: Rule):
+            return lambda st: [s for s in r.find(st) if (r.id, self._terms_key(st, s)) not in declined]
+        ids = {rid for rid, _ in declined}
+        return tuple(replace(r, find=undeclined(r)) if r.id in ids else r for r in self.rules)
 
     @staticmethod
     def _terms_key(state: State, site: Site) -> tuple:
@@ -213,7 +217,7 @@ class _Runner:
                 new = apply_edit(state, edit)
                 alternatives = self._alternative(state, frozenset({rule.id}), resume)
                 note = _join(note, "{preferably|vā}; also correct: " + ", ".join(alternatives))
-            case Optionality.VIBHASHA:
+            case Optionality.VIBHASHA | Optionality.SENSE:
                 new = state
                 self.declined.add((rule.id, self._terms_key(state, cand.site)))
                 alternatives = self._alternative(apply_edit(state, edit), frozenset({rule.id}), resume)

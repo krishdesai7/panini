@@ -75,6 +75,7 @@ class Ekadesha:
     left: int
     right: int
     sounds: tuple[Sound, ...]
+    rule: str | None = None  # the rule making it: recorded on the substitute so it can be recomputed
 
 
 type Op = AddTags | MarkIt | DeleteSounds | ReplaceSounds | InsertSounds | InsertTerm | ReplaceTerm | Ekadesha
@@ -117,9 +118,10 @@ def _apply_op(terms: list[Term], op: Op) -> None:
             terms.insert(i, term)
         case ReplaceTerm(index=i, term=term):
             _set_term(terms, i, term)
-        case Ekadesha(left=l, right=r, sounds=new):
+        case Ekadesha(left=l, right=r, sounds=new, rule=rule):
             lt, rt = terms[l], terms[r]
-            flagged = tuple(replace(s, ekadesha=True) for s in new)
+            inputs = (lt.sounds[-1].char, rt.sounds[0].char)
+            flagged = tuple(replace(s, ekadesha=True, ekadesha_rule=rule, ekadesha_inputs=inputs) for s in new)
             _set_term(terms, l, _vikrta(replace(lt, sounds=lt.sounds[:-1] + flagged)))
             right = _vikrta(replace(rt, sounds=rt.sounds[1:]))
             _set_term(terms, r, replace(right, tags=right.tags | {EKADESHA_START}))

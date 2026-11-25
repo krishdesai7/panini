@@ -23,6 +23,8 @@ class Sound:
     agama: bool = False
     upos: int | None = None  # position in the recited upadeśa; None for sounds added later
     ekadesha: bool = False  # a single substitute for two sounds (6.1.84), stored at the end of the left term
+    ekadesha_rule: str | None = None  # the rule that made that substitute ...
+    ekadesha_inputs: tuple[str, str] | None = None  # ... and the two sounds it replaced (left, right)
 
 
 class TermKind(Enum):

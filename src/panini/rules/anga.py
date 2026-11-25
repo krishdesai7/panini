@@ -4,8 +4,9 @@ from __future__ import annotations
 
 from dataclasses import replace
 
-from panini.edits import EKADESHA_START, VIKRTA, AddTags, ReplaceSounds
-from panini.meta import augment_in_term_edit, mit_augment_edit, mit_position
+from panini.edits import VIKRTA, AddTags, ReplaceSounds
+from panini.meta import absorbed_ekadesha, augment_in_term_edit, mit_augment_edit, mit_position, substitution_edit
+from panini.lexicon import citation_name
 from panini.model import Site, Sound, Span, State, Term, TermKind
 from panini.rules.base import Optionality, Rule, adi, is_pratyaya
 from panini.rules.readings import HISTORY
@@ -285,21 +286,21 @@ def _site_7378(st: State, only_optional: bool) -> list[Site]:
 
 def _rewrite_7378(st: State, site: Site):
     sp = site.spans[0]
-    t = st.terms[sp.term]
-    stem = STEMS_7378[t.upadesha]
-    if not t.sounds and EKADESHA_START in t.tags:
-        # The root's initial ṛ was merged into a single substitute with the augment ā (6.1.90).
-        # By 6.1.85 antādivat and 1.1.56 sthānivat that substitute still stands for the root's
-        # first sound, and the stem fcCa begins with that same ṛ: only the rest is written.
-        stem = stem[1:]
-    return (ReplaceSounds(sp.term, 0, sp.end, _sounds(stem)), AddTags(sp.term, frozenset({SUBSTITUTED})))
+    # If the root's first sound has merged into an ekādeśa (ā + ṛ → ār, 6.1.90), the stem takes the
+    # root's place in it and that rule is applied again (meta.substitution_edit).
+    return (*substitution_edit(st, sp.term, STEMS_7378[st.terms[sp.term].upadesha]),
+            AddTags(sp.term, frozenset({SUBSTITUTED})))
 
 
 def _note_7378(st: State, site: Site) -> str:
     t = st.terms[site.spans[0].term]
     new = STEMS_7378[t.upadesha]
-    note = (f"{slp1_to_iast(t.text)} is replaced by the stem {slp1_to_iast(new)} "
-            "before an affix marked ś (śap)")
+    root = citation_name(t.upadesha)
+    note = f"{root} is replaced by the stem {slp1_to_iast(new)} before an affix marked ś (śap)"
+    for rule_id, x, y in absorbed_ekadesha(st, site.spans[0].term):
+        note += (f"; its sound had merged with its neighbour ({slp1_to_iast(x)} + {slp1_to_iast(y)}, {rule_id}), "
+                 "which counts as part of both (6.1.85), so the stem takes its place (1.1.56) and "
+                 f"{rule_id} is applied again to the stem's sound")
     return note
 
 
@@ -310,7 +311,7 @@ def _history_7378(st: State, site: Site):
 # It replaces the whole root, so it overrides the guṇa of 7.3.84/86 (apavāda).
 R_7_3_78 = Rule("7.3.78", lambda st: _site_7378(st, False), _rewrite_7378,
                 blocks=("7.3.84", "7.3.86"), note=_note_7378, history=_history_7378)
-R_7_3_78_OPT = replace(R_7_3_78, find=lambda st: _site_7378(st, True), optional=Optionality.VIBHASHA,
+R_7_3_78_OPT = replace(R_7_3_78, find=lambda st: _site_7378(st, True), optional=Optionality.SENSE,
                        optional_phrase="{only in the sense of running|Kāśikā: vegitāyāṃ gatau}, so not applied here")
 
 RULES = (*RULES, R_7_3_78, R_7_3_78_OPT)

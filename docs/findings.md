@@ -172,16 +172,18 @@ investigated).
   the engine assigns the middle by 1.3.60, blocking 1.3.78.
 - **sṛ 01.1085** has two stems, *sarati* and *dhāvati*. The tradition restricts
   7.3.78's *dhau* to fast motion (Kāśikā *vegitāyāṃ gatau*); the engine cannot
-  know the sense, so the substitution is an optional rule (vibhāṣā: preferably
-  not), giving *sarati* first and *dhāvati* as an alternative, in Vidyut's order.
+  know the sense, so the substitution is an optional rule of its own kind
+  (`Optionality.SENSE`: not applied by default, the alternative noted), giving *sarati* first and *dhāvati* as an alternative, in Vidyut's order.
 - **ṛ 01.1086 laṅ** (9 requests): Vidyut also gives *ārchat* beside *ārcchat*,
   since 8.4.65 *jharo jhari savarṇe* optionally drops one *c* of *rcch*. The
   engine has no 8.4.65 yet, so only *ārcchat* is derived. XFAIL.
 - 7.3.78 replaces the whole root, so it overrides guṇa (7.3.84, 7.3.86).
-  In laṅ of ṛ, 6.1.90 (nitya) merges ā + ṛ first. By 6.1.85 antādivat and 1.1.56
-  sthānivat the substitute still stands for the root's first sound, so 7.3.78
-  still applies afterwards and, since the stem *ṛccha* begins with that same ṛ,
-  writes only the rest (*ār* + *ccha*).
+  In laṅ of ṛ, 6.1.90 (nitya) merges ā + ṛ first. 6.1.85 antādivat makes that
+  substitute part of the root as well, so 7.3.78 still applies, and by 1.1.56
+  sthānivat the stem takes the root's place in the ekādeśa. The engine records
+  on each ekādeśa sound the rule and the two sounds (`Sound.ekadesha_rule`,
+  `ekadesha_inputs`) and `meta.substitution_edit` applies that rule again to the
+  stem's sound: ā + ṛ → ār, then *ccha* (*ārcchat*).
 - Declined optional rules (vibhāṣā, as for sṛ) are recorded per rule and terms
   by the engine: they are not offered again and block nothing, in every branch.
 

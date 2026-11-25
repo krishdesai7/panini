@@ -17,6 +17,7 @@ from panini.rules.readings import Aside
 class Optionality(Enum):
     VA = "vā"                   # preferably (Kiparsky): applies, alternative noted
     VIBHASHA = "vibhāṣā"        # preferably not: skipped, alternative noted
+    SENSE = "sense"             # applies only in a sense the engine can't know: skipped, alternative noted
     ANYATARASYAM = "anyatarasyām"  # equal: not supported in slice 1
 
 
@@ -48,6 +49,7 @@ class Rule:
     note: Callable[[State, Site], str | None] | None = None
     history: Callable[[State, Site], Aside | None] | None = None
     optional: Optionality | None = None
+    merge: Callable[[str, str], str | None] | None = None  # an ekādeśa rule: (left, right) sound -> substitute, None if it doesn't apply
     optional_phrase: str | None = None  # replaces "preferably not, so not applied" for a VIBHASHA rule
     assigns: str | None = None
     tuk_or_satva: bool = False

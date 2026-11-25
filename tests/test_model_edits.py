@@ -42,3 +42,46 @@ def test_substantive_change_marks_term_vikrta_but_marker_deletion_does_not():
     assert "vikrta" not in s.terms[0].tags
     s = apply_edit(s, (ReplaceSounds(0, 0, 1, (Sound("d"),)),))
     assert "vikrta" in s.terms[0].tags
+
+
+# -- substitution inside an ekādeśa (meta.substitution_edit) -----------------
+
+class _ToyMerge:
+    """A toy ekādeśa rule: a+i → e, a+u → o, i+a → y, u+a → v."""
+    TABLE = {"ai": "e", "au": "o", "ia": "y", "ua": "v"}
+    merge = staticmethod(lambda x, y: _ToyMerge.TABLE.get(x + y))
+
+
+def _terms(*texts):
+    from panini.model import Coreference, Intent, Number, State, Term, TermKind, Time
+    ts = tuple(Term.from_upadesha(TermKind.ROOT, t) for t in texts)
+    return State(ts, Intent(Time.PRESENT, Coreference.NONE, Number.ONE, False))
+
+
+def _chars(state):
+    return ["".join(s.char for s in t.sounds) for t in state.terms]
+
+
+def test_substitute_takes_the_place_of_the_root_in_an_ekadesha_at_its_start():
+    from panini.edits import Ekadesha
+    from panini.meta import substitution_edit
+    st = apply_edit(_terms("a", "i"), (Ekadesha(0, 1, (Sound("e"),), "9.9.8"),))
+    assert _chars(st) == ["e", ""]
+    out = apply_edit(st, substitution_edit(st, 1, "ut", lambda rid: _ToyMerge))
+    # the stem does not begin with the sound the ekādeśa absorbed (i): a + u → o, then t
+    assert _chars(out) == ["o", "t"]
+    assert out.terms[0].sounds[-1].ekadesha_inputs == ("a", "u")
+
+
+def test_substitution_without_ekadesha_is_a_plain_replacement():
+    from panini.meta import substitution_edit
+    st = _terms("pi")
+    assert _chars(apply_edit(st, substitution_edit(st, 0, "xyz"))) == ["xyz"]
+
+
+def test_substitute_that_cannot_combine_is_refused():
+    from panini.edits import Ekadesha
+    from panini.meta import substitution_edit
+    st = apply_edit(_terms("a", "i"), (Ekadesha(0, 1, (Sound("e"),), "9.9.8"),))
+    with pytest.raises(ValueError):
+        substitution_edit(st, 1, "ta", lambda rid: _ToyMerge)
