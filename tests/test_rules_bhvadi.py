@@ -1,6 +1,6 @@
 # tests/test_rules_bhvadi.py — rules added for the whole bhvādi class (slice 1.5)
 import pytest
-from panini.derivation import Derivation
+from panini.derivation import Derivation, Status
 from panini.engine import derive
 from panini.request import parse_request
 
@@ -254,3 +254,40 @@ def test_trace_shows_history_at_v_only():
     d = form("01.1074")
     assert "historically" not in render_text(d)
     assert "historically: a reduplicated present, cf. Latin bibit" in render_text(d, verbosity=1)
+
+
+# -- Task 8: bugs from the sweep -------------------------------------------
+
+def test_6166_spares_a_root_initial_v():
+    # vraj, vraṇ: 6.1.66 would delete the v of the upadeśa itself (vacanasāmarthya)
+    assert form("01.0286").result == "vrajati"
+    assert form("01.0519").result == "vraṇati"
+    assert "6.1.66" not in _rule_ids(form("01.0286"))
+
+
+def test_6166_still_deletes_the_y_of_iy():
+    d = form("01.0002", "laṅ", number="du", voice="middle")   # edh: aidh + a + iytām
+    assert d.result == "aidhetām" and "6.1.66" in _rule_ids(d)
+
+
+def test_chad_ih_marker():
+    assert form("01.0925").result == "chadati"
+
+
+# 6.1.73 tuk and 7.3.86 guṇa bleed each other on yuch/uch + śap; neither nitya nor the siddha
+# principle decides (Kiparsky, "Pāṇini is slick", on the same conflict in ṛch). Open: see the
+# Task 8 report and docs/findings.md.
+@pytest.mark.xfail(strict=True, reason="6.1.73 vs 7.3.86 unresolved; awaiting a ruling (findings)")
+@pytest.mark.parametrize("code, expected", [("01.0242", "yucchati"), ("01.0244", "ucchati")])
+def test_tuk_and_guna_resolve(code, expected):
+    d = form(code)
+    assert d.status is Status.OK and d.result == expected
+
+
+@pytest.mark.parametrize("code, tense, voice, expected, rule", [
+    ("01.1144", "laṭ", "active", "daśati", "6.4.25"), ("01.1142", "laṭ", "active", "sajati", "6.4.25"),
+    ("01.1131", "laṭ", "middle", "svajate", "6.4.25"), ("01.1131", "laṅ", "middle", "asvajata", "6.4.25"),
+    ("01.1154", "laṭ", "active", "rajati", "6.4.26"), ("01.1154", "laṭ", "middle", "rajate", "6.4.26")])
+def test_nasal_loss_before_shap(code, tense, voice, expected, rule):
+    d = form(code, tense, voice=voice)
+    assert d.result == expected and rule in _rule_ids(d)

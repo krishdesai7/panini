@@ -151,8 +151,13 @@ bhvādi root and compares with `Root.pada` (read from the marker vowel). 1147 of
   takṣ): Vidyut gives both stems, the engine would give one. These roots are in
   `OUT_OF_SCOPE` until optional rules are modelled. (sṛ 01.1085 also has two
   stems, via 7.3.78; Task 7.)
-- **nāth 01.0007, sasj 01.0229** (Vidyut both): unexplained. Both are marker
-  readings worth a second look before slice 1.5 closes.
+- **nāth 01.0007, sasj 01.0229** (Vidyut both): not marker-reading bugs (Task 8).
+  Vidyut's active of nāth comes from 1.3.78 with no pada rule cited; it follows the
+  vārttika *āśiṣi nāthaḥ* (on 1.3.21), by which nāth is ātmanepada only in the sense
+  of a blessing, which is meaning-conditioned like sthā and vad. Vidyut derives the
+  middle of sasj (`zasja~`, no accent on the marker) with no pada rule at all, so its
+  data treats the root as taking both voices. Our marker readings (nāth A by 1.3.12,
+  sasj P by 1.3.78) stand.
 
 ## Whole-class sweep (before the new rules)
 
@@ -162,8 +167,7 @@ roots with an *i*-marker that inserts a nasal (7.1.58 *idito num dhātoḥ*,
 *vandate* not *vadate*, 204 roots), and a mixed group (71 roots): initial
 *ṣ*/*ṣṭ* roots (*sṭanati* for *stanati*, 6.1.64 and its ṭu-substitute), 6.4.x vowel lengthening (*ūrdate*),
 *ch* doubling (6.1.73 before *ch*), the *yam*/*sad* stems (7.3.78),
-*kṛp* → *kalpate*, and *vraj* losing its initial *v* (a bug, to be
-investigated).
+*kṛp* → *kalpate*, and *vraj* losing its initial *v* (a bug, fixed in Task 8).
 
 ## 7.3.78 and 1.3.60
 
@@ -216,3 +220,36 @@ investigated).
 ## ṇatva after ṛ (8.4.1.1) in ghṛṇṇ
 
 For *ghṛṇ* (`GfRi~\`) our trace cites the vārttika 8.4.1.1 *ṛvarṇāc ca* (ṛ/ṝ trigger ṇatva, as in *nṛṇām*) for the n that num inserts (it follows ṛ); Vidyut cites 8.4.41 alone (the n before ṇ). The form is the same (*ghṛṇṇate*). We cite the vārttika because the tripādī runs once in sūtra order (8.2.1 pūrvatrāsiddham), and 8.4.1.1 precedes 8.4.41, so it fires first and 8.4.41 then has nothing left to change.
+
+## Task 8: bugs from the sweep
+
+- **6.1.66 *lopo vyor vali* spares a root's initial v/y.** The rule deleted any
+  y/v before a consonant other than y, including the v that *vraj* and *vraṇ*
+  begin with (*rajati*). If the rule always deleted that v, teaching these roots
+  with it would be pointless, so by *vacanasāmarthya* it does not apply there.
+  Vidyut 0.4 makes the same exception (`ac_sandhi.rs`, `try_lopo_vyor_vali`:
+  "otherwise roots like vraj would be vyartha"). Like A3 and 1.3.8, the exclusion is
+  written into the rule, with a near-miss note and a reading that cites it. The y of
+  *iy* (7.2.81, *aidhetām*) is still deleted.
+- **`CadiH` 01.0925** is not a recited upadeśa but the root *chad* cited by name,
+  *chadiḥ* (the root plus ik in the nominative, as roots are named by the vārttika
+  *ik-śtipau dhātunirdeśe* on 3.3.108). Vidyut special-cases it as bare *chad*
+  (`dhatu_karya.rs`). `scripts/vendor_dhatupatha.py` now rewrites it as the upadeśa
+  `Cada~` (parasmaipada, not idit): *chadati*. The trace therefore shows a marker
+  vowel ã that the source entry doesn't have.
+- **6.4.25 *daṃśasañjasvañjāṃ śapi* and 6.4.26 *rañjeś ca*** are in: daṃś, sañj,
+  svañj and rañj lose their penultimate nasal before śap (*daśati*, *sajati*,
+  *svajate*, *rajati*). Each is one small rule naming its roots by upadeśa, with
+  *na lopaḥ* (6.4.23) and *upadhāyāḥ* (6.4.24) carried over. 6.4.24 itself is
+  still not traced (śap is not kit or ṅit).
+- **Open: 6.1.73 *che ca* against 7.3.86 for yuch 01.0242 and uch 01.0244.** On
+  *yuch + a + ti* the two bleed each other. Tuk makes the u heavy, so guṇa can't
+  apply. Guṇa makes the vowel long, so 6.1.73 can't apply (6.1.75 would add the
+  same tuk). The resolver raises `UnresolvedConflict` (*yucchati* vs *yocchati*).
+  Kiparsky ("Pāṇini is slick", on the same conflict in *ṛch*) notes that neither
+  the nitya nor the siddha principle decides it. The tradition gets *yucchati* from
+  the antaraṅga paribhāṣā (tuk is conditioned inside the root), which the spec
+  excludes without a ruling. Vidyut gets it by running 6.1.73 at an earlier stage.
+  The standard printed dhātupāṭha writes both roots with the tuk (*yuccha*,
+  *ucchī*), but Vidyut's list doesn't. Awaiting a ruling. Until then these 27
+  requests fail the sweep, and the fast tests are strict xfails.

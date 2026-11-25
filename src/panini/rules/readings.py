@@ -28,7 +28,8 @@ CONTACT = "6.1.72"  # saṃhitāyām (heading)
 SINGLE = "6.1.84"  # ekaḥ pūrvaparayoḥ (heading)
 WORD = "8.1.16"    # padasya (heading)
 NIMITTA = "nimittāpāye naimittikasyāpy apāyaḥ"  # paribhāṣā: when the cause goes, its effect goes too
-PARIBHASHA = frozenset({NIMITTA})  # reading sources that are maxims, not sūtras (no sutras.toml entry)
+SAMARTHYA = "vacanasāmarthya"  # the force of the wording: a reading that would make a recitation pointless is excluded
+PARIBHASHA = frozenset({NIMITTA, SAMARTHYA})  # reading sources that are maxims, not sūtras (no sutras.toml entry)
 SUBST = "1.1.56"   # sthānivad ādeśo 'nalvidhau
 AFFIX = (("3.1.1", "the item introduced is an {affix|pratyaya}"),
          ("3.1.2", "it is placed after what it is added to"),
@@ -83,6 +84,12 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
                ("7.3.82", "guṇaḥ carries over"),
                ("1.1.65", "upadhā = the penultimate sound"),
                ("1.4.10", "laghu ‘light’ = a short vowel not before a consonant cluster")),
+    "6.4.25": ((BASE, "an operation on the {base|aṅga} (heading)"),
+               ("6.4.23", "na lopaḥ ‘n is dropped’ carries over"),
+               ("6.4.24", "upadhāyāḥ ‘in the {penultimate position|upadhā}’ carries over"),
+               (LOC, "śapi (locative): before śap")),
+    "6.4.26": ((BASE, "an operation on the {base|aṅga} (heading)"),
+               ("6.4.25", "śapi ‘before śap’ carries over, with na lopaḥ and upadhāyāḥ")),
     "7.3.101": ((BASE, "an operation on the {base|aṅga} (heading)"),
                 (GEN, "ataḥ (genitive): a is what is replaced"),
                 ("1.1.70", "at, marked by a following t, means short a only"),
@@ -141,7 +148,9 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
                ("6.1.88", "vṛddhiḥ ‘{lengthened grade|vṛddhi}’ carries over"),
                (ABL, "āṭaḥ (ablative): after the augment āṭ")),
     "6.1.66": ((LOC, "vali (locative): before a consonant other than y"),
-               ("1.1.60", "lopa = disappearance")),
+               ("1.1.60", "lopa = disappearance"),
+               (SAMARTHYA, "not the y/v a root begins with as taught: reciting vraj, vraṇ with a v "
+                "the rule always deleted would be pointless (Vidyut makes the same exception)")),
     # -- endings and augments --
     "3.4.79": (("3.4.77", "lasya ‘in place of l’ (heading)"),
                (GEN, "ṭeḥ (genitive): the ṭi is what is replaced"),

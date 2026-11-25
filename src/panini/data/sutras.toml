@@ -342,11 +342,23 @@ gloss = "(Heading over 6.4.1–7.4.97) The following operations apply to a {base
 text = "asiddhavad atrābhāt"
 gloss = "From here to 6.4.175 (the {ābhīya|ābhīya} section), a rule is treated as not having taken effect when another rule of the section applies in the same environment."
 
+["6.4.23"]
+text = "śnān nalopaḥ"
+gloss = "After the stem suffix śna (the na of the seventh class), n is dropped."
+
 ["6.4.24"]
 text = "aniditāṃ hala upadhāyāḥ kṅiti"
 gloss = "Before an affix marked with k or ṅ, the penultimate nasal of a root ending in a consonant is dropped, unless the root is marked with i."
 # Not traced in slice 1.5: in laṭ and laṅ the root is followed by śap, which is not marked
 # with k or ṅ, so 6.4.24 never applies there (docs/findings.md, "7.1.58 and 6.4.24").
+
+["6.4.25"]
+text = "daṃśasañjasvañjāṃ śapi"
+gloss = "Before śap, daṃś, sañj and svañj lose their penultimate nasal."
+
+["6.4.26"]
+text = "rañjeś ca"
+gloss = "Before śap, rañj also loses its penultimate nasal."
 
 ["6.4.71"]
 text = "luṅlaṅlṛṅkṣv aḍ udāttaḥ"

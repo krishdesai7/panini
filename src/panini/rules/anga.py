@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 
-from panini.edits import VIKRTA, AddTags, ReplaceSounds
+from panini.edits import VIKRTA, AddTags, DeleteSounds, ReplaceSounds
 from panini.meta import absorbed_ekadesha, augment_in_term_edit, mit_augment_edit, mit_position, substitution_edit
 from panini.lexicon import citation_name
 from panini.model import Site, Sound, Span, State, Term, TermKind
@@ -315,3 +315,30 @@ R_7_3_78_OPT = replace(R_7_3_78, find=lambda st: _site_7378(st, True), optional=
                        optional_phrase="{only in the sense of running|Kāśikā: vegitāyāṃ gatau}, so not applied here")
 
 RULES = (*RULES, R_7_3_78, R_7_3_78_OPT)
+
+
+# 6.4.25 daṃśasañjasvañjāṃ śapi, 6.4.26 rañjeś ca: these roots lose their penultimate nasal before
+# śap (na lopaḥ from 6.4.23, upadhāyāḥ from 6.4.24), extending 6.4.24's loss before a kit/ṅit affix.
+# The roots are named by their upadeśa, accents removed: da\nSa~, za\nja~, zva\nja~\, ra\nja~^.
+NASAL_LOSS_BEFORE_SHAP = {"6.4.25": ("danSa~", "zanja~", "zvanja~"), "6.4.26": ("ranja~",)}
+
+
+def _nasal_loss(rule_id: str) -> Rule:
+    def find(st: State) -> list[Site]:
+        out = []
+        for i in range(len(st.terms) - 1):
+            t, nxt = st.terms[i], st.terms[i + 1]
+            if (t.kind is TermKind.ROOT and t.upadesha in NASAL_LOSS_BEFORE_SHAP[rule_id]
+                    and nxt.upadesha == "Sap" and t.upadha == "n"):
+                out.append(Site.at(i, len(t.sounds) - 2))
+        return out
+
+    return Rule(rule_id, find, lambda st, site: (DeleteSounds(site.spans[0].term, (site.spans[0].start,)),),
+                note=lambda st, site: f"the penultimate nasal of {citation_name(st.terms[site.spans[0].term].upadesha)} "
+                "is dropped before śap")
+
+
+R_6_4_25 = _nasal_loss("6.4.25")
+R_6_4_26 = _nasal_loss("6.4.26")
+
+RULES = (*RULES, R_6_4_25, R_6_4_26)

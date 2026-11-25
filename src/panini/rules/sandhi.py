@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable, Iterator
 
 from panini.edits import DeleteSounds, Ekadesha, ReplaceSounds
-from panini.model import Site, Sound, Span, State
+from panini.model import Site, Sound, Span, State, TermKind
 from panini.rules.base import Rule
 from panini.sounds import dirgha, guna, is_savarna, is_vowel, pratyahara, vrddhi
 from panini.translit import slp1_to_iast
@@ -85,7 +85,9 @@ R_6_1_101 = _sandhi_rule("6.1.101", lambda x, y: x in AK and is_vowel(y) and is_
 RULES = (R_6_1_78, R_6_1_87, R_6_1_88, R_6_1_97, R_6_1_101)
 
 
-# 6.1.66 lopo vyor vali
+# 6.1.66 lopo vyor vali — not the initial v/y of a root as taught (vacanasāmarthya): reciting
+# vraj, vraṇ with a v that 6.1.66 always deleted would be pointless. Vidyut 0.4 makes the same
+# exception (ac_sandhi.rs, try_lopo_vyor_vali: "otherwise roots like vraj would be vyartha").
 VAL = pratyahara("val")
 
 
@@ -93,13 +95,34 @@ def _word(st: State) -> list[tuple[int, int, str]]:
     return [(i, k, s.char) for i, t in enumerate(st.terms) for k, s in enumerate(t.sounds)]
 
 
-def _find_6166(st: State) -> list[Site]:
+def _root_initial(st: State, i: int, k: int) -> bool:
+    """The sound the root begins with as taught (only markers, such as ṭu, before it)."""
+    t = st.terms[i]
+    return t.kind is TermKind.ROOT and t.sounds[k].upos is not None and all(s.it for s in t.sounds[:k])
+
+
+def _candidates_6166(st: State) -> list[tuple[int, int]]:
     w = _word(st)
-    return [Site.at(i, k) for (i, k, c), (_, _, nxt) in zip(w, w[1:]) if c in "yv" and nxt in VAL]
+    return [(i, k) for (i, k, c), (_, _, nxt) in zip(w, w[1:]) if c in "yv" and nxt in VAL]
+
+
+def _find_6166(st: State) -> list[Site]:
+    return [Site.at(i, k) for i, k in _candidates_6166(st) if not _root_initial(st, i, k)]
+
+
+def _near_6166(st: State) -> str | None:
+    for i, k in _candidates_6166(st):
+        if _root_initial(st, i, k):
+            c = slp1_to_iast(st.terms[i].sounds[k].char)
+            return (f"6.1.66 (y/v before a consonant other than y is deleted) is not applied to the {c} "
+                    f"that begins the root: the root is taught with that {c}, which would be pointless "
+                    "if the rule always deleted it")
+    return None
 
 
 R_6_1_66 = Rule("6.1.66", _find_6166,
                 lambda st, site: (DeleteSounds(site.spans[0].term, (site.spans[0].start,)),),
+                near_miss=_near_6166,
                 note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)}"
                 " before a consonant other than y is deleted")
 
