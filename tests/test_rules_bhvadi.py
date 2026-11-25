@@ -124,10 +124,19 @@ def test_n_after_r_with_vowel_between_is_8_4_2():
     assert form("01.0680").result == "raṇvati"
 
 
-def test_n_before_a_stop_stays_dental():
-    # bhṛ: the n of the ending follows r + a but precedes t, so no ṇ (Vidyut agrees)
+def test_n_before_a_stop_stays_dental_via_anusvara():
+    # bhṛ: 8.3.24 turns the n of the ending into ṃ before the stop, so 8.4.1-2 never see an n; 8.4.58 restores it
     d = form("01.1045", number="pl")
-    assert d.result == "bharanti" and "8.4.1" not in _rule_ids(d) and "8.4.2" not in _rule_ids(d)
+    ids = _rule_ids(d)
+    assert d.result == "bharanti" and "8.4.1" not in ids and "8.4.2" not in ids
+    assert "8.3.24" in ids and "8.4.58" in ids
+
+
+def test_word_final_n_is_exempt_by_8_4_37():
+    d = form("01.1045", "laṅ", number="pl")
+    assert d.result == "abharan"
+    step = next(s for s in d.steps if "8.4.37" in s.rule_ids)
+    assert step.kind == "prohibition" and "8.4.1" not in _rule_ids(d)
 
 
 # -- vārttika on 6.1.64: ṣṭhiv and ṣvaṣk keep their ṣ; 7.3.75 -------------

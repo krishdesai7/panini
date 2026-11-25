@@ -7,7 +7,7 @@ from collections.abc import Iterator
 from panini.edits import DeleteSounds, ReplaceSounds
 from panini.model import Site, Sound, State, TermKind
 from panini.rules.base import Optionality, Rule
-from panini.sounds import VOWELS, pratyahara
+from panini.sounds import pratyahara
 from panini.translit import slp1_to_iast
 
 JHAL = pratyahara("Jal")
@@ -128,17 +128,17 @@ R_8_2_78 = Rule("8.2.78", _find_8278,
 
 # 8.4.1 raṣābhyāṃ no ṇaḥ samānapade / 8.4.2 aṭkupvāṅnumvyavāye 'pi: n becomes ṇ after r or ṣ in the
 # same word, even with aṭ (a vowel, h, y, v, r), ku, pu, ā or num between (8.4.2). The n must be
-# followed by a vowel or n, m, y, v: before any other sound it stays dental (bharanti, bharante).
-RA_SA = frozenset("rzfF")   # r, ṣ, and ṛ/ṝ (taken as r)
+# (Before an obstruent the n has already become ṃ by 8.3.24, and 8.4.58 restores it later: bharanti.
+# A word-final n is exempt by 8.4.37 padāntasya.)
+RA_SA = frozenset("rz")   # r and ṣ (ṛ is not taken as r here: Vidyut gives ghṛṇṇate via 8.4.41 alone)
 _BETWEEN = pratyahara("aw") | frozenset("kKgGNpPbBm")   # aṭ, ku, pu (ā is in aṭ; num is handled in _natva_sites)
-_BEFORE_NASAL = VOWELS | frozenset("nmyv")
 
 
 def _natva_sites(st: State, separated: bool) -> list[Site]:
     sounds = [(i, k, s.char, s.agama) for i, t in enumerate(st.terms) for k, s in enumerate(t.sounds)]
     out = []
     for n, (i, k, c, _) in enumerate(sounds):
-        if c != "n" or n + 1 >= len(sounds) or sounds[n + 1][2] not in _BEFORE_NASAL:
+        if c != "n":
             continue
         m = n - 1
         while m >= 0 and sounds[m][2] not in RA_SA and (sounds[m][2] in _BETWEEN or (sounds[m][2] == "n" and sounds[m][3])):
@@ -156,6 +156,16 @@ def _natva_rule(rule_id: str, separated: bool, how: str) -> Rule:
 
 R_8_4_1 = _natva_rule("8.4.1", False, "right after")
 R_8_4_2 = _natva_rule("8.4.2", True, "after (with a vowel, h, y, v, r, a velar or labial stop, or the augment n between)")
+
+
+# 8.4.37 padāntasya: a word-final n is not made ṇ (a niṣedha: changes nothing, blocks 8.4.1-2)
+def _find_8437(st: State) -> list[Site]:
+    f = _final(st)
+    return [Site.at(f[0], f[1])] if f and f[2] == "n" else []
+
+
+R_8_4_37 = Rule("8.4.37", _find_8437, lambda st, site: (), blocks=("8.4.1", "8.4.2"),
+                note=lambda st, site: "word-final n is not changed to ṇ: the rule applies only inside a {word|pada}")
 
 
 # 8.4.41 ṣṭunā ṣṭuḥ: s and the dentals (t th d dh n) next to ṣ or a retroflex stop become ṣ and
@@ -242,4 +252,4 @@ def _rewrite_8458(st: State, site: Site):
 R_8_4_58 = Rule("8.4.58", _find_8458, _rewrite_8458,
                 note=lambda st, site: "the {nasal glide|anusvāra} before a stop becomes the nasal of that stop's class")
 
-RULES = (R_8_2_23, R_8_2_39, R_8_2_66, R_8_2_78, R_8_3_15, R_8_3_24, R_8_4_1, R_8_4_2, R_8_4_40, R_8_4_41, R_8_4_53, R_8_4_56, R_8_4_58)
+RULES = (R_8_2_23, R_8_2_39, R_8_2_66, R_8_2_78, R_8_3_15, R_8_3_24, R_8_4_1, R_8_4_2, R_8_4_37, R_8_4_40, R_8_4_41, R_8_4_53, R_8_4_56, R_8_4_58)

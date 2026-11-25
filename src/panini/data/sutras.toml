@@ -448,6 +448,10 @@ gloss = "In the same word, n right after r or ṣ becomes ṇ."
 text = "aṭkupvāṅnumvyavāye 'pi"
 gloss = "n becomes ṇ after r or ṣ even when a vowel, h, y, v, r, a velar or labial stop, ā, or the augment n comes between."
 
+["8.4.37"]
+text = "padāntasya"
+gloss = "(Prohibition) A word-final n is not replaced by ṇ."
+
 ["8.4.40"]
 text = "stoḥ ścunā ścuḥ"
 gloss = "s and the dentals (t th d dh n), next to ś or a palatal, become ś and the corresponding palatals."
