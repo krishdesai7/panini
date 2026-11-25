@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from panini.edits import AddTags, DeleteSounds, MarkIt, ReplaceSounds
 from panini.model import Site, Sound, State, TermKind
-from panini.rules.base import Rule, is_pratyaya
+from panini.rules.base import Rule, adi, is_pratyaya
 from panini.sounds import is_vowel, pratyahara
 from panini.translit import slp1_to_iast
 
@@ -153,11 +153,13 @@ R_1_3_9 = Rule("1.3.9", _find_139,
                note=lambda st, site: "{markers|it} are deleted")
 
 
-# 6.1.64 dhātvādeḥ ṣaḥ saḥ / 6.1.65 ṇo naḥ
+# 6.1.64 dhātvādeḥ ṣaḥ saḥ / 6.1.65 ṇo naḥ — about the root's beginning, which includes a single
+# substitute on its left (6.1.85): when a vowel merged into the augment (laṅ of iṣ: a + iṣ → aiṣ),
+# the ṣ that is left is no longer the root's first sound.
 def _root_initial(old: str):
     def find(st: State) -> list[Site]:
         return [Site.at(i, 0) for i, t in enumerate(st.terms)
-                if t.kind is TermKind.ROOT and "dhātu" in t.tags and t.adi == old]
+                if t.kind is TermKind.ROOT and "dhātu" in t.tags and adi(st, i) == old]
     return find
 
 
@@ -189,8 +191,23 @@ def _note_64(st: State, site: Site) -> str:
     return f"{base}; the {' and the '.join(undone)}, which the ṣ had caused" if undone else base
 
 
+# Vārttika on 6.1.64 (Kāśikā: subdhātu-ṣṭhivu-ṣvaṣkatīnāṃ pratiṣedhaḥ): ṣṭhiv and ṣvaṣk keep their ṣ.
+# A niṣedha like 1.3.4: it changes nothing and blocks 6.1.64. Vidyut numbers it 6.1.64.1.
+KEEP_INITIAL_S = ("zWiv", "zvazk")
+
+
+def _find_64_exception(st: State) -> list[Site]:
+    return [Site.at(i, 0) for i, t in enumerate(st.terms)
+            if t.kind is TermKind.ROOT and "dhātu" in t.tags and t.upadesha.startswith(KEEP_INITIAL_S)
+            and adi(st, i) == "z"]
+
+
+R_6_1_64_1 = Rule("6.1.64.1", _find_64_exception, lambda st, site: (), blocks=("6.1.64",),
+                  note=lambda st, site: f"the {{root|dhātu}} {slp1_to_iast(st.terms[site.spans[0].term].text)} "
+                  "keeps its ṣ: it is not replaced by s (a {later addition|vārttika} to 6.1.64)")
+
 R_6_1_64 = Rule("6.1.64", _root_initial("z"), _rewrite_64, note=_note_64)
 R_6_1_65 = Rule("6.1.65", _root_initial("R"), lambda st, site: (ReplaceSounds(site.spans[0].term, 0, 1, (Sound("n"),)),),
                 note=lambda st, site: "the {root|dhātu} is taught with ṇ ({ṇ-taught|ṇopadeśa}) but pronounced n")
 
-RULES = (R_1_3_1, R_1_3_2, R_1_3_3, R_1_3_4, R_1_3_5, R_1_3_7, R_1_3_8, R_1_3_9, R_6_1_64, R_6_1_65)
+RULES = (R_1_3_1, R_1_3_2, R_1_3_3, R_1_3_4, R_1_3_5, R_1_3_7, R_1_3_8, R_1_3_9, R_6_1_64, R_6_1_64_1, R_6_1_65)

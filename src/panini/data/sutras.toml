@@ -254,6 +254,10 @@ gloss = "A {personal ending|tiṅ}, or an affix marked with ś, is called a {pre
 text = "dhātvādeḥ ṣaḥ saḥ"
 gloss = "A root-initial ṣ is replaced by s (and the retroflex sound it had caused goes back to dental)."
 
+["6.1.64.1"]
+text = "subdhātu-ṣṭhivu-ṣvaṣkatīnāṃ pratiṣedhaḥ"
+gloss = "(Vārttika on 6.1.64) The roots ṣṭhiv and ṣvaṣk keep their ṣ: it is not replaced by s."
+
 ["6.1.65"]
 text = "ṇo naḥ"
 gloss = "A root-initial ṇ is replaced by n."
@@ -273,6 +277,10 @@ gloss = "(Heading) In close contact: the following apply to sounds pronounced to
 ["6.1.73"]
 text = "che ca"
 gloss = "Before ch, a short vowel gets the augment tuk (t)."
+
+["6.1.75"]
+text = "dīrghāt"
+gloss = "Before ch, a long vowel gets the augment tuk (t)."
 
 ["6.1.77"]
 text = "iko yaṇ aci"
@@ -432,13 +440,29 @@ gloss = "Before a {voiceless consonant|khar} or at a pause, r at the end of a wo
 text = "naś cāpadāntasya jhali"
 gloss = "Before an obstruent, n or m not at the end of a word becomes {nasal glide|anusvāra} (ṃ)."
 
+["8.4.1"]
+text = "raṣābhyāṃ no ṇaḥ samānapade"
+gloss = "In the same word, n right after r or ṣ becomes ṇ."
+
+["8.4.2"]
+text = "aṭkupvāṅnumvyavāye 'pi"
+gloss = "n becomes ṇ after r or ṣ even when a vowel, h, y, v, r, a velar or labial stop, ā, or the augment n comes between."
+
 ["8.4.40"]
 text = "stoḥ ścunā ścuḥ"
 gloss = "s and the dentals (t th d dh n), next to ś or a palatal, become ś and the corresponding palatals."
 
+["8.4.41"]
+text = "ṣṭunā ṣṭuḥ"
+gloss = "s and the dentals (t th d dh n), next to ṣ or a retroflex stop, become ṣ and the corresponding retroflexes."
+
 ["8.4.55"]
 text = "khari ca"
 gloss = "Before a {voiceless consonant|khar}, an {obstruent|jhal} also becomes the {voiceless unaspirated stop|car}."
+
+["8.4.53"]
+text = "jhalāṃ jaś jhaśi"
+gloss = "An obstruent (jhal) before a voiced stop (jhaś) becomes the voiced unaspirated stop (jaś) of its own place."
 
 ["8.4.56"]
 text = "vāvasāne"

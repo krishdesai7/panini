@@ -7,7 +7,7 @@ from collections.abc import Iterator
 from panini.edits import DeleteSounds, ReplaceSounds
 from panini.model import Site, Sound, State, TermKind
 from panini.rules.base import Optionality, Rule
-from panini.sounds import pratyahara
+from panini.sounds import VOWELS, pratyahara
 from panini.translit import slp1_to_iast
 
 JHAL = pratyahara("Jal")
@@ -126,6 +126,62 @@ R_8_2_78 = Rule("8.2.78", _find_8278,
                 "before an r or v that is the {penultimate sound|upadhā} of the {root|dhātu} and is followed by a consonant")
 
 
+# 8.4.1 raṣābhyāṃ no ṇaḥ samānapade / 8.4.2 aṭkupvāṅnumvyavāye 'pi: n becomes ṇ after r or ṣ in the
+# same word, even with aṭ (a vowel, h, y, v, r), ku, pu, ā or num between (8.4.2). The n must be
+# followed by a vowel or n, m, y, v: before any other sound it stays dental (bharanti, bharante).
+RA_SA = frozenset("rzfF")   # r, ṣ, and ṛ/ṝ (taken as r)
+_BETWEEN = pratyahara("aw") | frozenset("kKgGNpPbBm")   # aṭ, ku, pu (ā is in aṭ; num is handled in _natva_sites)
+_BEFORE_NASAL = VOWELS | frozenset("nmyv")
+
+
+def _natva_sites(st: State, separated: bool) -> list[Site]:
+    sounds = [(i, k, s.char, s.agama) for i, t in enumerate(st.terms) for k, s in enumerate(t.sounds)]
+    out = []
+    for n, (i, k, c, _) in enumerate(sounds):
+        if c != "n" or n + 1 >= len(sounds) or sounds[n + 1][2] not in _BEFORE_NASAL:
+            continue
+        m = n - 1
+        while m >= 0 and sounds[m][2] not in RA_SA and (sounds[m][2] in _BETWEEN or (sounds[m][2] == "n" and sounds[m][3])):
+            m -= 1
+        if m >= 0 and sounds[m][2] in RA_SA and (m < n - 1) == separated:
+            out.append(Site.at(i, k))
+    return out
+
+
+def _natva_rule(rule_id: str, separated: bool, how: str) -> Rule:
+    return Rule(rule_id, lambda st: _natva_sites(st, separated),
+                lambda st, site: _replace(site.spans[0].term, site.spans[0].start, "R"),
+                note=lambda st, site: f"n {how} r or ṣ in the same word becomes ṇ")
+
+
+R_8_4_1 = _natva_rule("8.4.1", False, "right after")
+R_8_4_2 = _natva_rule("8.4.2", True, "after (with a vowel, h, y, v, r, a velar or labial stop, or the augment n between)")
+
+
+# 8.4.41 ṣṭunā ṣṭuḥ: s and the dentals (t th d dh n) next to ṣ or a retroflex stop become ṣ and
+# the matching retroflex. Not modelled: the exceptions 8.4.42-44 (padānta ṭ-class, toḥ ṣi, śāt).
+SHTU = pratyahara("wu") | {"z"}
+_SHTU = {"s": "z", "t": "w", "T": "W", "d": "q", "D": "Q", "n": "R"}
+
+
+def _find_8441(st: State) -> list[Site]:
+    sounds = list(word_sounds(st))
+    out = []
+    for n, (i, k, c) in enumerate(sounds):
+        neighbours = [sounds[m][2] for m in (n - 1, n + 1) if 0 <= m < len(sounds)]
+        if c in _SHTU and any(x in SHTU for x in neighbours):
+            out.append(Site.at(i, k))
+    return out
+
+
+R_8_4_41 = Rule("8.4.41", _find_8441,
+                lambda st, site: _replace(site.spans[0].term, site.spans[0].start,
+                                          _SHTU[st.terms[site.spans[0].term].sounds[site.spans[0].start].char]),
+                note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} "
+                "next to ṣ or a retroflex stop becomes retroflex: "
+                f"{slp1_to_iast(_SHTU[st.terms[site.spans[0].term].sounds[site.spans[0].start].char])}")
+
+
 # 8.4.40 stoḥ ścunā ścuḥ
 def _find_8440(st: State) -> list[Site]:
     sounds = list(word_sounds(st))
@@ -143,6 +199,25 @@ R_8_4_40 = Rule("8.4.40", _find_8440,
                 note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} "
                 "next to a palatal becomes palatal: "
                 f"{slp1_to_iast(_SCU[st.terms[site.spans[0].term].sounds[site.spans[0].start].char])}")
+
+# 8.4.53 jhalāṃ jaś jhaśi: an obstruent or sibilant before a voiced stop becomes the voiced
+# unaspirated stop of its own place (ś → j, ṣ → ḍ, s → d).
+_JAS_53 = {**_JAS, "S": "j", "z": "q"}
+JHAS = pratyahara("JaS")
+
+
+def _find_8453(st: State) -> list[Site]:
+    sounds = list(word_sounds(st))
+    return [Site.at(i, k) for (i, k, c), (_, _, nxt) in zip(sounds, sounds[1:])
+            if c in _JAS_53 and _JAS_53[c] != c and nxt in JHAS]
+
+
+R_8_4_53 = Rule("8.4.53", _find_8453,
+                lambda st, site: _replace(site.spans[0].term, site.spans[0].start,
+                                          _JAS_53[st.terms[site.spans[0].term].sounds[site.spans[0].start].char]),
+                note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} "
+                "before a voiced stop becomes voiced: "
+                f"{slp1_to_iast(_JAS_53[st.terms[site.spans[0].term].sounds[site.spans[0].start].char])}")
 
 R_8_4_56 = _final_rule("8.4.56", JHAL & _CAR.keys(), _CAR, "at a pause an obstruent becomes voiceless", optional=Optionality.VA)
 
@@ -167,4 +242,4 @@ def _rewrite_8458(st: State, site: Site):
 R_8_4_58 = Rule("8.4.58", _find_8458, _rewrite_8458,
                 note=lambda st, site: "the {nasal glide|anusvāra} before a stop becomes the nasal of that stop's class")
 
-RULES = (R_8_2_23, R_8_2_39, R_8_2_66, R_8_2_78, R_8_3_15, R_8_3_24, R_8_4_40, R_8_4_56, R_8_4_58)
+RULES = (R_8_2_23, R_8_2_39, R_8_2_66, R_8_2_78, R_8_3_15, R_8_3_24, R_8_4_1, R_8_4_2, R_8_4_40, R_8_4_41, R_8_4_53, R_8_4_56, R_8_4_58)

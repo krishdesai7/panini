@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from panini.edits import VIKRTA, ReplaceSounds
 from panini.meta import augment_in_term_edit, mit_augment_edit, mit_position
-from panini.model import Site, Sound, State, TermKind
+from panini.model import Site, Sound, Span, State, TermKind
 from panini.rules.base import Rule, adi, is_pratyaya
-from panini.sounds import guna, is_hrasva, is_vowel, pratyahara
+from panini.sounds import dirgha, guna, is_hrasva, is_vowel, pratyahara
 from panini.translit import slp1_to_iast
 
 IK = pratyahara("ik")
@@ -127,23 +127,53 @@ R_7_3_77 = Rule("7.3.77", _find_7377,
                 f"{slp1_to_iast(st.terms[site.spans[0].term].text)} is replaced by ch before an affix marked ś (śap)")
 
 
-# 6.1.73 che ca (tuk after a short vowel before ch)
-def _find_6173(st: State) -> list[Site]:
+# 6.1.73 che ca (tuk after a short vowel before ch) and 6.1.75 dīrghāt (after a long vowel)
+def _tuk_before_ch(st: State, short: bool) -> list[Site]:
+    """Sites of a vowel right before ch, short or long: the vowel's span, then the ch's span.
+    The ch may belong to the next term: 6.1.72 saṃhitāyām makes this a rule about sounds in contact
+    (the augment a of laṅ + ch)."""
+    flat = [(i, k, s.char) for i, t in enumerate(st.terms) for k, s in enumerate(t.sounds)]
+    return [Site((Span(i, k, k + 1), Span(j, m, m + 1))) for (i, k, c), (j, m, nxt) in zip(flat, flat[1:])
+            if is_vowel(c) and is_hrasva(c) == short and nxt == "C"]
+
+
+def _tuk_rule(rule_id: str, short: bool, which: str) -> Rule:
+    # The augment is written right before the ch, in the ch's own term. It follows the vowel either
+    # way (1.1.46); when the vowel ends an earlier term (the augment a), writing it with the ch keeps
+    # 7.1.58 able to place num at the start of the root, ahead of it (6.1.85).
+    return Rule(rule_id, lambda st: _tuk_before_ch(st, short),
+                lambda st, site: augment_in_term_edit(st, site.spans[1].term, site.spans[1].start - 1, (Sound("t"),)),
+                tuk_or_satva=True,
+                note=lambda st, site: f"the augment tuk (t; markers u, k) follows a {which} vowel before ch; "
+                "being kit, it goes at the end of what it is added to (1.1.46)")
+
+
+R_6_1_73 = _tuk_rule("6.1.73", True, "short")
+R_6_1_75 = _tuk_rule("6.1.75", False, "long")
+
+
+# 7.3.75 ṣṭhivuklamyācamāṃ śiti: ṣṭhiv, klam and ācam take a long vowel before an affix marked ś.
+# ācam is cam after the preverb ā, outside this scope (no preverbs), so only ṣṭhiv and klam appear.
+LENGTHENED_BEFORE_SHIT = ("zWiv", "klam")
+
+
+def _find_7375(st: State) -> list[Site]:
     out = []
-    for i, t in enumerate(st.terms):
-        for k in range(len(t.sounds) - 1):
-            if is_vowel(t.sounds[k].char) and is_hrasva(t.sounds[k].char) and t.sounds[k + 1].char == "C":
-                out.append(Site.at(i, k))
+    for i in range(len(st.terms) - 1):
+        t, nxt = st.terms[i], st.terms[i + 1]
+        if t.kind is TermKind.ROOT and t.text in LENGTHENED_BEFORE_SHIT and nxt.has_marker("S"):
+            out.append(Site.at(i, len(t.sounds) - 2))
     return out
 
 
-R_6_1_73 = Rule("6.1.73", _find_6173,
-                lambda st, site: augment_in_term_edit(st, site.spans[0].term, site.spans[0].start, (Sound("t"),)),
-                tuk_or_satva=True,
-                note=lambda st, site: "the augment tuk (t; markers u, k) follows a short vowel before ch; "
-                "being kit, it goes at the end of what it is added to (1.1.46)")
+R_7_3_75 = Rule("7.3.75", _find_7375,
+                lambda st, site: (ReplaceSounds(site.spans[0].term, site.spans[0].start, site.spans[0].end,
+                                                (Sound(dirgha(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)),)),),
+                blocks=("7.3.86",),
+                note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].text)} gets a long vowel "
+                "before an affix marked ś (śap); this takes the place of the {full grade|guṇa} of 7.3.86")
 
-RULES = (R_7_3_84, R_7_3_86, R_7_3_101, R_7_1_3, R_7_3_77, R_6_1_73)
+RULES = (R_7_3_84, R_7_3_86, R_7_3_101, R_7_1_3, R_7_3_77, R_6_1_73, R_6_1_75, R_7_3_75)
 
 
 # 7.2.81 āto ṅitaḥ

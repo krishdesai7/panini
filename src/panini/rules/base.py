@@ -31,7 +31,7 @@ def sutra_info(rule_id: str) -> tuple[str, str]:
 
 
 def sutra_key(rule_id: str) -> tuple[int, int, int]:
-    a, b, c = (int(x) for x in rule_id.split("."))
+    a, b, c, *_ = (int(x) for x in rule_id.split("."))   # a vārttika "6.1.64.1" sorts with its sūtra
     return (a, b, c)
 
 

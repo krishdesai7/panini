@@ -79,3 +79,75 @@ def test_root_initial_n_note_names_the_taught_form():
 def test_vowel_lengthened_before_upadha_r_or_v_and_consonant(code, voice, expected):
     d = form(code, voice=voice)
     assert d.result == expected and "8.2.78" in _rule_ids(d)
+
+
+# -- 6.1.75 dīrghāt: tuk after a long vowel before ch ---------------------
+
+@pytest.mark.parametrize("code, tense, expected", [
+    ("01.0233", "laṭ", "mlecchati"), ("01.0238", "laṭ", "hrīcchati"),   # long e, long ī
+    ("01.0541", "laṅ", "acchamat")])                                     # the augment a before ch (6.1.73)
+def test_tuk_before_ch(code, tense, expected):
+    d = form(code, tense)
+    assert d.result == expected
+
+
+def test_tuk_after_long_vowel_is_6175_not_6173():
+    ids = _rule_ids(form("01.0233"))
+    assert "6.1.75" in ids and "6.1.73" not in ids
+    note = next(s.note for s in form("01.0233").steps if "6.1.75" in s.rule_ids)
+    assert "long vowel" in note and "tuk" in note
+
+
+# -- 8.4.40 + 8.4.53: ṣasj ------------------------------------------------
+
+def test_sasj_palatal_then_voiced():
+    d = form("01.0229")
+    ids = _rule_ids(d)
+    assert d.result == "sajjati"
+    assert ids.index("8.4.40") < ids.index("8.4.53")
+
+
+# -- 8.4.41 ṣṭunā ṣṭuḥ: the nasal of ghiṇ, ghuṇ, ghṛṇ ----------------------
+
+@pytest.mark.parametrize("code, expected", [
+    ("01.0502", "ghiṇṇate"), ("01.0503", "ghuṇṇate"), ("01.0504", "ghṛṇṇate")])
+def test_nasal_becomes_retroflex_before_retroflex_nasal(code, expected):
+    d = form(code, voice="middle")
+    assert d.result == expected and "8.4.41" in _rule_ids(d)
+
+
+# -- 8.4.1-2 raṣābhyāṃ no ṇaḥ samānapade ----------------------------------
+
+def test_n_after_r_with_vowel_between_is_8_4_2():
+    d = form("01.0679")   # riṇv: r i n v
+    assert d.result == "riṇvati" and "8.4.2" in _rule_ids(d)
+    assert form("01.0680").result == "raṇvati"
+
+
+def test_n_before_a_stop_stays_dental():
+    # bhṛ: the n of the ending follows r + a but precedes t, so no ṇ (Vidyut agrees)
+    d = form("01.1045", number="pl")
+    assert d.result == "bharanti" and "8.4.1" not in _rule_ids(d) and "8.4.2" not in _rule_ids(d)
+
+
+# -- vārttika on 6.1.64: ṣṭhiv and ṣvaṣk keep their ṣ; 7.3.75 -------------
+
+def test_svask_keeps_its_s():
+    d = form("01.0105", voice="middle")
+    ids = _rule_ids(d)
+    assert d.result == "ṣvaṣkate" and "6.1.64.1" in ids and "6.1.64" not in ids
+
+
+def test_sthiv_keeps_its_s_and_lengthens_i():
+    d = form("01.0641")
+    ids = _rule_ids(d)
+    assert d.result == "ṣṭhīvati" and "6.1.64.1" in ids and "7.3.75" in ids
+    assert "6.1.64" not in ids and "7.3.86" not in ids
+    step = next(s for s in d.steps if "6.1.64.1" in s.rule_ids)
+    assert step.kind == "prohibition" and "ṣṭhiv" in step.note
+
+
+def test_root_initial_s_and_n_only_when_the_root_still_begins_with_it():
+    # laṅ of iṣ and aṇ: the vowel merged into the augment, so the ṣ / ṇ left over is not the root's start
+    assert form("01.0780", "laṅ").result == "aiṣat"
+    assert form("01.0512", "laṅ").result == "āṇat"
