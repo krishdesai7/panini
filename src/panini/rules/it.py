@@ -161,8 +161,33 @@ def _root_initial(old: str):
     return find
 
 
-R_6_1_64 = Rule("6.1.64", _root_initial("z"), lambda st, site: (ReplaceSounds(site.spans[0].term, 0, 1, (Sound("s"),)),),
-                note=lambda st, site: "root-initial ṣ becomes s")
+# The retroflex stops and ṇ that an initial ṣ had caused (8.4.41 ṣṭunā ṣṭuḥ) go back to dental
+# once ṣ itself is gone: nimittāpāye naimittikasyāpy apāyaḥ (see readings.py).
+UNDO_RETROFLEX = {"w": "t", "W": "T", "R": "n"}
+
+
+def _caused(t) -> list[int]:
+    """Positions of the sounds the initial ṣ had made retroflex: a ṭ/ṭh right after it, and an ṇ anywhere
+    in the root (8.4.1 raṣābhyāṃ no ṇaḥ samānapade: ṇ after ṣ, as in ṣaṇ for san)."""
+    return [k for k, x in enumerate(t.sounds) if k > 0 and x.char in UNDO_RETROFLEX and (k == 1 or x.char == "R")]
+
+
+def _rewrite_64(st: State, site: Site):
+    i = site.spans[0].term
+    return (ReplaceSounds(i, 0, 1, (Sound("s"),)),
+            *(ReplaceSounds(i, k, k + 1, (Sound(UNDO_RETROFLEX[st.terms[i].sounds[k].char]),))
+              for k in _caused(st.terms[i])))
+
+
+def _note_64(st: State, site: Site) -> str:
+    t = st.terms[site.spans[0].term]
+    base = "a {root|dhātu} that starts with ṣ is taught with ṣ only as a {marker|it}: it is pronounced s"
+    undone = [f"{slp1_to_iast(t.sounds[k].char)} goes back to {slp1_to_iast(UNDO_RETROFLEX[t.sounds[k].char])}"
+              for k in _caused(t)]
+    return f"{base}, and the {' and the '.join(undone)}, which the ṣ had caused" if undone else base
+
+
+R_6_1_64 = Rule("6.1.64", _root_initial("z"), _rewrite_64, note=_note_64)
 R_6_1_65 = Rule("6.1.65", _root_initial("R"), lambda st, site: (ReplaceSounds(site.spans[0].term, 0, 1, (Sound("n"),)),),
                 note=lambda st, site: "root-initial ṇ becomes n")
 

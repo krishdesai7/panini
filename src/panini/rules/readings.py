@@ -25,6 +25,8 @@ BASE = "6.4.1"     # aṅgasya (heading)
 CONTACT = "6.1.72"  # saṃhitāyām (heading)
 SINGLE = "6.1.84"  # ekaḥ pūrvaparayoḥ (heading)
 WORD = "8.1.16"    # padasya (heading)
+NIMITTA = "nimittāpāye naimittikasyāpy apāyaḥ"  # paribhāṣā: when the cause goes, its effect goes too
+PARIBHASHA = frozenset({NIMITTA})  # reading sources that are maxims, not sūtras (no sutras.toml entry)
 SUBST = "1.1.56"   # sthānivad ādeśo 'nalvidhau
 AFFIX = (("3.1.1", "the item introduced is an {affix|pratyaya}"),
          ("3.1.2", "it is placed after what it is added to"),
@@ -47,7 +49,8 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
               (CLASS, "ku, marked with u, stands for the velar stops")),
     "1.3.9": (("1.3.2", "tasya ‘of it’ refers back to the {marker|it}"),
               ("1.1.60", "lopa = disappearance")),
-    "6.1.64": ((GEN, "ṣaḥ (genitive): ṣ is what is replaced"),),
+    "6.1.64": ((GEN, "ṣaḥ (genitive): ṣ is what is replaced"),
+               (NIMITTA, "the ṭ, ṭh or ṇ that the ṣ had caused (8.4.41) goes back to t, th or n once the ṣ is gone")),
     "6.1.65": (("6.1.64", "dhātvādeḥ ‘at the start of a root’ carries over"),
                (GEN, "ṇaḥ (genitive): ṇ is what is replaced")),
     # -- tense, voice, ending, stem suffix --

@@ -7,7 +7,7 @@ from panini.engine import derive
 from panini.request import parse_request
 from panini.rules import ALL_RULES, get_rule
 from panini.rules.base import sutra_info
-from panini.rules.readings import READS
+from panini.rules.readings import PARIBHASHA, READS
 from panini.trace import render_text
 
 
@@ -16,7 +16,8 @@ def test_readings_only_annotate_real_rules_and_cite_known_sutras():
     assert set(READS) <= ids
     for rid, items in READS.items():
         for src, note in items:
-            sutra_info(src)            # every cited sūtra has text and gloss
+            if src not in PARIBHASHA:
+                sutra_info(src)        # every cited sūtra has text and gloss
             assert note and src != rid
 
 

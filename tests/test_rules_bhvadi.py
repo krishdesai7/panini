@@ -43,3 +43,24 @@ def test_idit_nasal_after_a_merged_initial_vowel():
 def test_idit_note_uses_house_markup():
     note = next(s.note for s in form("01.0074").steps if "7.1.58" in s.rule_ids)
     assert "{i|idit}" in note and "{augment|āgama}" in note and "markers u, m" not in note
+
+
+# -- 6.1.64-65 root-initial ṣ and ṇ ----------------------------------------
+
+@pytest.mark.parametrize("code, expected", [
+    ("01.0532", "stanati"),   # ṣṭana~: ṭ goes back to t
+    ("01.1136", "namati"),    # ṇama~
+    ("01.0970", "sthalati"),  # ṣṭhala~: ṭh goes back to th
+    ("01.1072", "snāyati"),   # ṣṇai: ṇ goes back to n
+    ("01.0535", "sanati"),    # ṣaṇa~: the ṇ the ṣ caused, not at the start, goes back to n
+    ("01.0451", "stambhate")])
+def test_root_initial_s_and_n(code, expected):
+    assert form(code, voice="middle" if code == "01.0451" else "active").result == expected
+
+
+def test_retroflex_undone_in_the_same_step_and_cites_the_paribhasha():
+    d = form("01.0532")
+    steps = [s for s in d.steps if "6.1.64" in s.rule_ids]
+    assert len(steps) == 1
+    assert "ṭ goes back to t" in steps[0].note and "{marker|it}" in steps[0].note
+    assert any(src == "nimittāpāye naimittikasyāpy apāyaḥ" for src, _ in steps[0].reads)

@@ -13,8 +13,7 @@ _SLOT = lambda code: [r.key for r in all_requests([code]) if availability(r) is 
 # key -> explanation (mirrors docs/findings.md)
 XFAIL: dict[str, str] = {
     **{k: "7.3.78 not yet implemented (Task 7)" for c in FEATURED[7:] if c not in ("01.0991", "01.1077") for k in _SLOT(c)},
-    # sthā (zWA\) also shows the ṣṭ-initial problem (sṭhāti), a separate bug the sweep tracks.
-    **{k: "7.3.78 not yet implemented (Task 7); also the ṣṭ-initial bug (sṭhāti)" for k in _SLOT("01.1077")},
+    **{k: "7.3.78 not yet implemented (Task 7)" for k in _SLOT("01.1077")},
     # Vidyut gives no form: its śad takes ātmanepada via 1.3.60 (Task 7), so active is unavailable once that lands.
     **{k: "no active form once 1.3.60 lands (Task 7)" for k in _SLOT("01.0991")},
 }
