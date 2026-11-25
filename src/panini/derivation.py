@@ -23,6 +23,7 @@ class TermView:
     """One term as displayed: (IAST sound, is_marker) pairs."""
 
     chars: tuple[tuple[str, bool], ...]
+    upadesha: str = ""  # the term as taught, in IAST (lets the page explain its markers)
 
     def iast(self) -> str:
         """Markers in capitals (first letter of the sound); a nasal vowel keeps its tilde."""
@@ -36,7 +37,7 @@ def render_terms(terms: Iterable[Term]) -> tuple[TermView, ...]:
             continue
         views.append(TermView(tuple(
             (slp1_to_iast(s.char + ("~" if s.nasal else "")), s.it) for s in t.sounds
-        )))
+        ), slp1_to_iast(t.upadesha)))
     return tuple(views)
 
 
@@ -56,7 +57,7 @@ class StepRecord:
         from panini.rules.base import sutra_info
 
         def views(vs: tuple[TermView, ...]) -> list[dict]:
-            return [{"iast": v.iast(), "chars": [[c, m] for c, m in v.chars]} for v in vs]
+            return [{"iast": v.iast(), "chars": [[c, m] for c, m in v.chars], "upadesha": v.upadesha} for v in vs]
 
         sutras = []
         for rid in self.rule_ids:

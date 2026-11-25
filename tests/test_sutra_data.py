@@ -11,3 +11,10 @@ CITED = ["1.4.99", "1.4.100", "1.4.101", "1.4.102", "1.4.104", "1.4.105", "1.4.1
 def test_every_rule_and_cited_sutra_has_text_and_gloss(rule_id):
     text, gloss = sutra_info(rule_id)
     assert text and gloss and text != "toy"
+
+
+def test_marker_rule_glosses_avoid_jargon():
+    t7, g7 = sutra_info("1.3.7")
+    t8, g8 = sutra_info("1.3.8")
+    assert "row" not in g7 and "row" not in g8
+    assert "{secondary nominal suffix|taddhita}" in g8

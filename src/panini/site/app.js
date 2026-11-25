@@ -57,6 +57,12 @@ function splitTerms(text) {
   return out;
 }
 
+/* Tooltip for a marker: what it does, if known, else the generic one. */
+function markerTip(upadesha, ch, notes) {
+  var note = notes && (notes[upadesha + "|" + ch] || notes["*|" + ch]);
+  return note ? "marker (it) · " + note : "marker (it): deleted by 1.3.9";
+}
+
 /* Tooltip for a sūtra: number and text, then the gloss on the next line. */
 function sutraTitle(id, sutras) {
   var s = sutras[id];
@@ -72,7 +78,7 @@ function tipPosition(rect, size, view) {
   return { left: left, top: top };
 }
 
-if (typeof module !== "undefined") module.exports = { parseHash: parseHash, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, sutraTitle: sutraTitle, tipPosition: tipPosition };
+if (typeof module !== "undefined") module.exports = { parseHash: parseHash, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, sutraTitle: sutraTitle, markerTip: markerTip, tipPosition: tipPosition };
 
 if (typeof document !== "undefined") (function () {
   var data = JSON.parse(document.getElementById("data").textContent);
@@ -102,7 +108,7 @@ if (typeof document !== "undefined") (function () {
       if (i) span.appendChild(el("span", { class: "plus", text: "+" }));
       v.chars.forEach(function (pair) {
         var c = pair[0], marker = pair[1];
-        if (marker) span.appendChild(el("span", { class: "it", "data-tip": "marker (it): deleted by 1.3.9", text: c.charAt(0).toUpperCase() + c.slice(1) }));
+        if (marker) span.appendChild(el("span", { class: "it", "data-tip": markerTip(v.upadesha, c, data.markers), text: c.charAt(0).toUpperCase() + c.slice(1) }));
         else span.appendChild(document.createTextNode(c));
       });
     });

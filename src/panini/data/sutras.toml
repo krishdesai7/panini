@@ -56,11 +56,11 @@ gloss = "In a root as taught, an initial ñi, ṭu or ḍu is a {marker|it}."
 
 ["1.3.7"]
 text = "cuṭū"
-gloss = "In an affix as taught, an initial palatal (c-row) or retroflex (ṭ-row) stop is a {marker|it}."
+gloss = "In an affix as taught, an initial palatal or retroflex stop is a {marker|it}."
 
 ["1.3.8"]
 text = "laśakvataddhite"
-gloss = "In an affix other than a taddhita, an initial l, ś or velar (k-row) is a {marker|it}."
+gloss = "In an affix other than a {secondary nominal suffix|taddhita}, an initial l, ś or velar stop is a {marker|it}."
 
 ["1.3.9"]
 text = "tasya lopaḥ"

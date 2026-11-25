@@ -34,7 +34,39 @@ def site_data() -> dict:
     roots = [{"key": r.key, "upadesha_iast": r.upadesha_iast, "meaning": r.meaning, "gana": r.gana,
               "class_label": GANA_LABELS.get(r.gana, r.gana), "pada": r.pada}
              for r in ROOTS.values()]
-    return {"roots": roots, "derivations": derivations, "sutras": _sutras()}
+    return {"roots": roots, "derivations": derivations, "sutras": _sutras(), "markers": MARKER_NOTES}
+
+
+# What each marker in the slice does, keyed "upadeśa|marker" (both IAST). Markers not listed
+# get a generic tooltip. Only effects we are confident of are described.
+_STRONG = ("p: a strong ending. Endings without p count as ṅ-marked (1.2.4), and before those "
+           "full grade is blocked (1.1.5)")
+_CARRIER_L = "carrier vowel: only there to make the l pronounceable"
+_AUGMENT = "ṭ: the augment goes at the beginning of what it is added to (1.1.46)"
+MARKER_NOTES: dict[str, str] = {
+    "lãṭ|ṭ": "primary endings: in the ṭ-tenses (present, the two futures, perfect, subjunctive, "
+             "imperative) the middle endings end in -e (3.4.79)",
+    "lãṭ|ã": _CARRIER_L,
+    "lãṅ|ṅ": "secondary endings: the ṅ-tenses (imperfect, aorist, conditional, optative) take the "
+             "shorter endings (3.4.99–101) and, in the past tenses, the augment a- (6.4.71)",
+    "lãṅ|ã": _CARRIER_L,
+    "paṭhã|ã": "carrier vowel: makes the consonant-final root pronounceable",
+    "edhã|ã": "low-pitched (anudātta) marker vowel: the root takes only middle endings (1.3.12)",
+    "ḍupacãṣ|ã": "falling-pitched (svarita) marker vowel: the root takes both voices, the middle "
+                 "when the action benefits the agent (1.3.72)",
+    "ḍupacãṣ|ḍ": "ḍu: the root forms nouns in -trima (3.3.88), e.g. paktrima",
+    "ḍupacãṣ|u": "ḍu: the root forms nouns in -trima (3.3.88), e.g. paktrima",
+    "ḍupacãṣ|ṣ": "ṣ: the root forms feminine action nouns with the suffix aṅ (3.3.104)",
+    "gamḷ̃|ḷ̃": "ḷ: in the active, the root takes the thematic (a-) aorist (3.1.55): agamat",
+    "ṇīñ|ñ": "ñ: the root takes both voices, the middle when the action benefits the agent (1.3.72)",
+    "tip|p": _STRONG, "sip|p": _STRONG, "mip|p": _STRONG,
+    "śap|ś": "ś: makes śap a present-system affix (3.4.113)",
+    "śap|p": "p: śap does not count as ṅ-marked, so the root takes full grade before it (bhū → bho)",
+    "mahiṅ|ṅ": "ṅ: closes the abbreviation tiṅ (tip … mahiṅ), the name for all the personal endings",
+    "aṭ|ṭ": _AUGMENT, "āṭ|ṭ": _AUGMENT,
+    # rũ is written into the ending's own term by 8.2.66, so it is keyed by the sound alone.
+    "*|ũ": "carrier vowel of rũ (8.2.66): only the r remains",
+}
 
 
 # Plain descriptions of the Dhātupāṭha classes, shown instead of their Sanskrit names.

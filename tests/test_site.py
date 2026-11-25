@@ -109,3 +109,28 @@ def test_heading_monogram_draws_the_dot_and_keeps_the_real_name_for_screen_reade
 def test_split_terms_parses_modern_and_traditional_markup():
     assert _node("app.splitTerms('the {middle|ātmanepada} voice (1.3.78)')") == [
         ["the ", None], ["middle", "ātmanepada"], [" voice (1.3.78)", None]]
+
+
+def test_site_data_explains_what_markers_do():
+    notes = site_data()["markers"]
+    assert "primary endings" in notes["lãṭ|ṭ"] and "3.4.79" in notes["lãṭ|ṭ"]
+    assert "secondary endings" in notes["lãṅ|ṅ"]
+    assert "1.3.12" in notes["edhã|ã"]
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_marker_tip_prefers_a_specific_note():
+    notes = {"lãṭ|ṭ": "primary endings"}
+    assert _node(f"app.markerTip('lãṭ', 'ṭ', {json.dumps(notes)})") == "marker (it) · primary endings"
+    assert _node(f"app.markerTip('tip', 'x', {json.dumps(notes)})") == "marker (it): deleted by 1.3.9"
+
+
+def test_step_views_carry_the_term_upadesha(tmp_path):
+    d = site_data()["derivations"]["bhū|laṭ|P|3|sg"]
+    assert any(v.get("upadesha") == "lãṭ" for s in d["steps"] for v in s["after"])
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_marker_tip_falls_back_to_a_note_for_the_sound_alone():
+    notes = {"*|ũ": "carrier vowel of rũ"}
+    assert _node(f"app.markerTip('mas', 'ũ', {json.dumps(notes)})") == "marker (it) · carrier vowel of rũ"
