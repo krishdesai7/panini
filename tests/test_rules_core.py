@@ -84,7 +84,7 @@ def test_glosses_use_markup_for_technical_terms():
 
 def test_ending_choice_note_uses_modern_voice_name():
     d = derive(parse_request("bhū", "laṭ", 3, "sg", "active"))
-    assert "{active|parasmaipada} by 1.3.78" in next(s.note for s in d.steps if "3.4.78" in s.rule_ids)
+    assert "{active|parasmaipada}, assigned by 1.3.78" in next(s.note for s in d.steps if "3.4.78" in s.rule_ids)
 
 
 def test_ending_choice_note_is_one_line_per_category():
