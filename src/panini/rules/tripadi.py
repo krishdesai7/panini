@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Iterator
 
 from panini.edits import DeleteSounds, ReplaceSounds
-from panini.model import Site, Sound, State
+from panini.model import Site, Sound, State, TermKind
 from panini.rules.base import Optionality, Rule
 from panini.sounds import pratyahara
 from panini.translit import slp1_to_iast
@@ -101,6 +101,31 @@ R_8_3_24 = Rule("8.3.24", _find_8324, lambda st, site: _replace(site.spans[0].te
                 note=lambda st, site: "n inside a word before an {obstruent|jhal} becomes the {nasal glide|anusvāra} ṃ")
 
 
+# 8.2.78 upadhāyāṃ ca (with 8.2.76 rvor upadhāyā dīrgha ikaḥ and 8.2.77 hali ca carried over):
+# an ik before an r/v that is the upadhā of a root, when a consonant follows. The earlier
+# 8.2.76 (root ending in r/v, ik as upadhā, at a pause) and 8.2.77 (the same, before a consonant
+# ending) need an r/v-final root with a short ik upadhā; no bhvādi root has one, so they never
+# apply. 8.2.79 na bhakurchurām excludes the roots kur and chur, which are not bhvādi roots.
+_DIRGHA = {"i": "I", "u": "U", "f": "F", "x": "X"}
+
+
+def _find_8278(st: State) -> list[Site]:
+    out = []
+    for n, t in enumerate(st.terms):
+        s = [x.char for x in t.sounds]
+        if t.kind is TermKind.ROOT and len(s) >= 3 and s[-3] in _DIRGHA and s[-2] in "rv" and s[-1] in HAL:
+            out.append(Site.at(n, len(s) - 3))
+    return out
+
+
+R_8_2_78 = Rule("8.2.78", _find_8278,
+                lambda st, site: _replace(site.spans[0].term, site.spans[0].start,
+                                          _DIRGHA[st.terms[site.spans[0].term].sounds[site.spans[0].start].char]),
+                note=lambda st, site: "the {simple vowel|ik} "
+                f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} is lengthened "
+                "before an r or v that is the {penultimate sound|upadhā} of the {root|dhātu} and is followed by a consonant")
+
+
 # 8.4.40 stoḥ ścunā ścuḥ
 def _find_8440(st: State) -> list[Site]:
     sounds = list(word_sounds(st))
@@ -142,4 +167,4 @@ def _rewrite_8458(st: State, site: Site):
 R_8_4_58 = Rule("8.4.58", _find_8458, _rewrite_8458,
                 note=lambda st, site: "the {nasal glide|anusvāra} before a stop becomes the nasal of that stop's class")
 
-RULES = (R_8_2_23, R_8_2_39, R_8_2_66, R_8_3_15, R_8_3_24, R_8_4_40, R_8_4_56, R_8_4_58)
+RULES = (R_8_2_23, R_8_2_39, R_8_2_66, R_8_2_78, R_8_3_15, R_8_3_24, R_8_4_40, R_8_4_56, R_8_4_58)

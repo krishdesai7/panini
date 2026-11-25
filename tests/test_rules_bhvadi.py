@@ -70,3 +70,12 @@ def test_retroflex_undone_in_the_same_step_and_cites_the_paribhasha():
 def test_root_initial_n_note_names_the_taught_form():
     note = next(s.note for s in form("01.1136").steps if "6.1.65" in s.rule_ids)
     assert "{ṇ-taught|ṇopadeśa}" in note and "{marker|it}" not in note
+
+
+# -- 8.2.78 upadhāyāṃ ca ---------------------------------------------------
+
+@pytest.mark.parametrize("code, voice, expected", [
+    ("01.0021", "middle", "kūrdate"), ("01.0239", "active", "hūrchati"), ("01.0650", "active", "ūrvati")])
+def test_vowel_lengthened_before_upadha_r_or_v_and_consonant(code, voice, expected):
+    d = form(code, voice=voice)
+    assert d.result == expected and "8.2.78" in _rule_ids(d)

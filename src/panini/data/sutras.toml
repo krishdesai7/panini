@@ -408,6 +408,22 @@ gloss = "At the end of a word, an {obstruent|jhal} is replaced by the {voiced un
 text = "sasajuṣo ruḥ"
 gloss = "At the end of a word, s (and the final of sajuṣ) is replaced by ru."
 
+["8.2.76"]
+text = "rvor upadhāyā dīrgha ikaḥ"
+gloss = "(Heading) The {simple vowel|ik} (i, u, ṛ, ḷ) that stands in the {penultimate position|upadhā} of a root ending in r or v is lengthened."
+
+["8.2.77"]
+text = "hali ca"
+gloss = "Also before a consonant (hal)."
+
+["8.2.78"]
+text = "upadhāyāṃ ca"
+gloss = "Also when the r or v itself stands in the {penultimate position|upadhā}: the {simple vowel|ik} before it is lengthened."
+
+["8.2.79"]
+text = "na bhakurchurām"
+gloss = "Not for the roots bha, kur and chur."
+
 ["8.3.15"]
 text = "kharavasānayor visarjanīyaḥ"
 gloss = "Before a {voiceless consonant|khar} or at a pause, r at the end of a word becomes {final h|visarga} (ḥ)."
