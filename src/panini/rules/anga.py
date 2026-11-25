@@ -212,7 +212,7 @@ def _find_7158(st: State) -> list[Site]:
 
 R_7_1_58 = Rule("7.1.58", _find_7158,
                 lambda st, site: mit_augment_edit(st, site.spans[0].term, (Sound("n"),)),
-                note=lambda st, site: "a root marked with i keeps a nasal in every form: the augment num "
-                "(n; markers u, m) goes right after its last vowel, as an augment marked m does (1.1.47)")
+                note=lambda st, site: "a root marked with {i|idit} gets a nasal in every form: "
+                "the {augment|āgama} n (num) goes right after its last vowel (1.1.47)")
 
 RULES = (*RULES, R_7_1_58)

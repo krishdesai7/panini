@@ -38,3 +38,8 @@ def test_irit_root_gets_no_nasal():
 def test_idit_nasal_after_a_merged_initial_vowel():
     # laṅ of adi~ (and): ā + a merge (6.1.90); the merged vowel still counts as the root's (6.1.85)
     assert form("01.0064", "laṅ").result == "āndat"
+
+
+def test_idit_note_uses_house_markup():
+    note = next(s.note for s in form("01.0074").steps if "7.1.58" in s.rule_ids)
+    assert "{i|idit}" in note and "{augment|āgama}" in note and "markers u, m" not in note
