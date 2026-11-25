@@ -119,7 +119,7 @@ R_8_4_40 = Rule("8.4.40", _find_8440,
                 "next to a palatal becomes palatal: "
                 f"{slp1_to_iast(_SCU[st.terms[site.spans[0].term].sounds[site.spans[0].start].char])}")
 
-R_8_4_56 = _final_rule("8.4.56", JHAL & _CAR.keys(), _CAR, "at a pause an obstruent may become voiceless", optional=Optionality.VA)
+R_8_4_56 = _final_rule("8.4.56", JHAL & _CAR.keys(), _CAR, "at a pause an obstruent becomes voiceless", optional=Optionality.VA)
 
 
 # 8.4.58 anusvārasya yayi parasavarṇaḥ
