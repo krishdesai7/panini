@@ -222,6 +222,20 @@ if (typeof document !== "undefined") (function () {
     });
   }
 
+  /* A historical aside: the listed words (Latin, Greek) in italics; asterisks stay as written. */
+  function historyLine(s) {
+    var parts = [s.history], italic = s.history_italic || [];
+    italic.forEach(function (w) {
+      parts = parts.reduce(function (acc, p) {
+        if (typeof p !== "string") return acc.concat([p]);
+        var bits = p.split(w);
+        bits.forEach(function (b, i) { if (i) acc.push(el("em", { text: w })); if (b) acc.push(b); });
+        return acc;
+      }, []);
+    });
+    return el("p", { class: "history" }, [el("span", { class: "hlabel", text: "Historically" }), " "].concat(parts));
+  }
+
   function step(s) {
     var rule = el("div", { class: "rule" });
     s.sutras.forEach(function (su) {
@@ -234,6 +248,7 @@ if (typeof document !== "undefined") (function () {
         : "Form unchanged: this rule prevents another rule from applying." }));
     }
     if (s.note) rule.appendChild(el("p", { class: "snote" }, [cite(s.note)]));
+    if (s.history) rule.appendChild(historyLine(s));
     s.sutras.forEach(function (su) { if (su.gloss) rule.appendChild(el("p", { class: "gloss" }, [cite(su.gloss)])); });
     if (s.reads && s.reads.length) {
       var reads = el("p", { class: "reads" }, ["Read via "]);

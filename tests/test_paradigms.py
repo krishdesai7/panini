@@ -12,10 +12,8 @@ _SLOT = lambda code: [r.key for r in all_requests([code]) if availability(r) is 
 
 # key -> explanation (mirrors docs/findings.md)
 XFAIL: dict[str, str] = {
-    **{k: "7.3.78 not yet implemented (Task 7)" for c in FEATURED[7:] if c not in ("01.0991", "01.1077") for k in _SLOT(c)},
-    **{k: "7.3.78 not yet implemented (Task 7)" for k in _SLOT("01.1077")},
-    # Vidyut gives no form: its śad takes ātmanepada via 1.3.60 (Task 7), so active is unavailable once that lands.
-    **{k: "no active form once 1.3.60 lands (Task 7)" for k in _SLOT("01.0991")},
+    # Vidyut also gives ārchat: 8.4.65 jharo jhari savarṇe optionally drops one c of rcch (docs/findings.md).
+    **{k: "8.4.65 optional cluster simplification not modelled (ārchat)" for k in _SLOT("01.1086") if "|laṅ|" in k},
 }
 
 

@@ -126,6 +126,10 @@ gloss = "When equal numbers of items are paired, they correspond in order."
 text = "anudāttaṅita ātmanepadam"
 gloss = "After a root whose marker vowel is {unaccented|anudātta}, or which has the marker ṅ, the {middle|ātmanepada} endings are used."
 
+["1.3.60"]
+text = "śadeḥ śitaḥ"
+gloss = "After śad, the {middle|ātmanepada} endings are used when an affix marked ś follows."
+
 ["1.3.72"]
 text = "svaritañitaḥ kartrabhiprāye kriyāphale"
 gloss = "After a root whose marker vowel is {falling-pitched|svarita}, or which has the marker ñ, the {middle|ātmanepada} endings are used when the fruit of the action goes to the agent."
@@ -379,6 +383,10 @@ gloss = "Before an affix marked ś, the vowel of ṣṭhiv, klam and ā-cam is l
 ["7.3.77"]
 text = "iṣugamiyamāṃ chaḥ"
 gloss = "Before an affix marked with ś, the final of iṣ, gam and yam is replaced by ch."
+
+["7.3.78"]
+text = "pāghrādhmāsthāmnādāṇdṛśyartisartiśadasadāṃ pibajighradhamatiṣṭhamanayacchapaśyarcchadhauśīyasīdāḥ"
+gloss = "Before an affix marked ś, pā, ghrā, dhmā, sthā, mnā, dāṇ, dṛś, ṛ, sṛ, śad and sad are replaced by piba, jighra, dhama, tiṣṭha, mana, yaccha, paśya, ṛccha, dhau, śīya and sīda."
 
 ["7.3.82"]
 text = "mider guṇaḥ"

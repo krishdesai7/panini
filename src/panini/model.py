@@ -61,6 +61,8 @@ class Term:
             elif c in "\\^":
                 if sounds and sounds[-1].nasal:
                     extra.add("anudattet" if c == "\\" else "svaritet")
+                elif sounds and is_vowel(sounds[-1].char):
+                    extra.add("anudatta-vowel" if c == "\\" else "svarita-vowel")
             else:
                 sounds.append(Sound(c, upos=len(sounds)))
         clean = upadesha_slp1.replace("\\", "").replace("^", "")

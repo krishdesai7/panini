@@ -166,3 +166,76 @@ def test_root_initial_s_and_n_only_when_the_root_still_begins_with_it():
     # laṅ of iṣ and aṇ: the vowel merged into the augment, so the ṣ / ṇ left over is not the root's start
     assert form("01.0780", "laṅ").result == "aiṣat"
     assert form("01.0512", "laṅ").result == "āṇat"
+
+
+# -- 7.3.78 substituted present stems, 1.3.60, 7.3.77 by upadeśa -------------
+
+@pytest.mark.parametrize("code, voice, expected", [
+    ("01.1074", "active", "pibati"), ("01.1075", "active", "jighrati"), ("01.1076", "active", "dhamati"),
+    ("01.1077", "active", "tiṣṭhati"), ("01.1078", "active", "manati"), ("01.1079", "active", "yacchati"),
+    ("01.0990", "active", "sīdati"), ("01.0991", "middle", "śīyate"), ("01.1086", "active", "ṛcchati"),
+    ("01.1143", "active", "paśyati")])
+def test_7_3_78_stems(code, voice, expected):
+    d = form(code, voice=voice)
+    assert d.result == expected and "7.3.78" in _rule_ids(d)
+
+
+def test_7_3_78_replaces_guna_of_r_roots():
+    d = form("01.1086")
+    assert "7.3.84" not in _rule_ids(d)
+    assert any(l.rule_id == "7.3.84" for s in d.steps for l in s.losers)
+
+
+def test_7_3_77_only_for_yam_uparame():
+    assert form("01.1031").result == "yacchati" and form("01.0930").result == "yamati"
+    assert form("01.1139").result == "yacchati" and form("01.1137").result == "gacchati"
+    assert "7.3.77" not in _rule_ids(form("01.0930"))
+
+
+def test_sri_dhau_only_as_a_running_option():
+    d = form("01.1085")
+    assert d.result == "sarati" and d.alternatives == ("dhāvati",)
+    step = next(s for s in d.steps if "7.3.78" in s.rule_ids)
+    assert "in the sense of running" in step.note and "preferably not" in step.note
+    assert "7.3.84" in _rule_ids(d)   # the ordinary stem still gets its guṇa, once
+    assert _rule_ids(d).count("7.3.78") == 1
+
+
+def test_sri_laṅ_alternative_order():
+    d = form("01.1085", "laṅ")
+    assert [d.result, *d.alternatives] == ["asarat", "asarad", "adhāvat", "adhāvad"]
+
+
+def test_shad_is_middle_by_1_3_60():
+    from panini.request import availability, parse_request
+    assert availability(parse_request("01.0991", "laṭ", 3, "sg", "active")) == (
+        "śad takes ātmanepada before an affix marked ś, as in laṭ and laṅ", "1.3.60")
+    assert availability(parse_request("01.0991", "laṭ", 3, "sg", "middle")) is None
+    d = form("01.0991", "laṅ", voice="middle")
+    assert d.result == "aśīyata" and "1.3.60" in _rule_ids(d) and "1.3.78" not in _rule_ids(d)
+    assert form("01.0991", voice="active").status.value == "unavailable"
+
+
+def test_history_aside():
+    s = next(s for s in form("01.1074").steps if "7.3.78" in s.rule_ids)
+    assert "Latin bibit" in s.history and s.history_italic == ("bibit",)
+    assert s.to_json()["history"] == s.history and s.to_json()["history_italic"] == ["bibit"]
+
+
+def test_history_asides_for_each_root():
+    got = {c: next(s for s in form(c, voice=v).steps if s.rule_ids[0] in ("7.3.78", "7.3.77")).history
+           for c, v in [("01.1075", "active"), ("01.1077", "active"), ("01.0990", "active"), ("01.1143", "active"),
+                        ("01.1079", "active"), ("01.1086", "active"), ("01.1137", "active"),
+                        ("01.1076", "active"), ("01.1078", "active"), ("01.0991", "middle")]}
+    assert got["01.1075"] == "a reduplicated present"
+    assert "Greek hístēmi" in got["01.1077"] and "(*si-sd-)" in got["01.0990"]
+    assert "spaś ‘see’" in got["01.1143"] and "yam ‘hold out’" in got["01.1079"]
+    assert got["01.1086"] == "a present in *-sḱe-" and got["01.1137"].endswith("Greek báskō")
+    assert got["01.1076"] is None and got["01.1078"] is None and got["01.0991"] is None
+
+
+def test_trace_shows_history_at_v_only():
+    from panini.trace import render_text
+    d = form("01.1074")
+    assert "historically" not in render_text(d)
+    assert "historically: a reduplicated present, cf. Latin bibit" in render_text(d, verbosity=1)

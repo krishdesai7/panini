@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
-from panini.edits import VIKRTA, ReplaceSounds
+from dataclasses import replace
+
+from panini.edits import VIKRTA, AddTags, ReplaceSounds
 from panini.meta import augment_in_term_edit, mit_augment_edit, mit_position
-from panini.model import Site, Sound, Span, State, TermKind
-from panini.rules.base import Rule, adi, is_pratyaya
+from panini.model import Site, Sound, Span, State, Term, TermKind
+from panini.rules.base import Optionality, Rule, adi, is_pratyaya, is_upadesha
+from panini.rules.readings import HISTORY
 from panini.sounds import dirgha, guna, is_hrasva, is_vowel, pratyahara
 from panini.translit import slp1_to_iast
 
@@ -18,13 +21,19 @@ def _sounds(text: str) -> tuple[Sound, ...]:
     return tuple(Sound(c) for c in text)
 
 
+def _following(st: State, i: int) -> int | None:
+    """Index of the next term with sounds after term i."""
+    return next((k for k in range(i + 1, len(st.terms)) if st.terms[k].sounds), None)
+
+
 def _before_sarvadhatuka(st: State) -> list[int]:
-    """Indices i whose term is an aṅga directly before a sārvadhātuka affix."""
+    """Indices i whose term is an aṅga directly before a sārvadhātuka affix. A term emptied by
+    a single substitute (śap's a merged into the stem's a, 6.1.97) is not in the way."""
     out = []
     for i in range(len(st.terms) - 1):
-        j = i + 1
-        if "aṅga" in st.terms[i].tags and is_pratyaya(st.terms[j]) and "sārvadhātuka" in st.terms[j].tags \
-                and st.terms[i].sounds:
+        j = _following(st, i)
+        if j is not None and "aṅga" in st.terms[i].tags and is_pratyaya(st.terms[j]) \
+                and "sārvadhātuka" in st.terms[j].tags and st.terms[i].sounds:
             out.append(i)
     return out
 
@@ -43,7 +52,7 @@ def _rewrite_7384(st: State, site: Site):
 def _note_7384(st: State, site: Site) -> str:
     sp = site.spans[0]
     v = st.terms[sp.term].sounds[sp.start].char
-    affix = slp1_to_iast(st.terms[sp.term + 1].text)
+    affix = slp1_to_iast(st.terms[_following(st, sp.term)].text)
     note = f"final {slp1_to_iast(v)} takes {{full grade|guṇa}} → {slp1_to_iast(guna(v))} before the {{present-system|sārvadhātuka}} affix {affix} (1.1.3)"
     if v in "fFxX":
         note += "; the r/l comes from 1.1.51 uraṇ raparaḥ"
@@ -90,13 +99,13 @@ R_7_3_86 = Rule("7.3.86", _find_7386, _rewrite_7384, near_miss=_near_7386,
 # 7.3.101 ato dīrgho yañi
 def _find_73101(st: State) -> list[Site]:
     return [Site.at(i, len(st.terms[i].sounds) - 1) for i in _before_sarvadhatuka(st)
-            if st.terms[i].antya == "a" and adi(st, i + 1) in YAN_]
+            if st.terms[i].antya == "a" and adi(st, _following(st, i)) in YAN_]
 
 
 R_7_3_101 = Rule("7.3.101", _find_73101,
                  lambda st, site: (ReplaceSounds(site.spans[0].term, site.spans[0].start, site.spans[0].end,
                                                  (Sound("A"),)),),
-                 note=lambda st, site: f"a is lengthened before {slp1_to_iast(st.terms[site.spans[0].term + 1].adi)},"
+                 note=lambda st, site: f"a is lengthened before {slp1_to_iast(st.terms[_following(st, site.spans[0].term)].adi)},"
                  " one of {resonants, jh, and bh|yañ}, beginning a {present-system|sārvadhātuka} affix")
 
 
@@ -110,12 +119,17 @@ R_7_1_3 = Rule("7.1.3", _find_713, lambda st, site: (ReplaceSounds(site.spans[0]
                note=lambda st, site: "jh of the ending is replaced by ant")
 
 
-# 7.3.77 iṣugamiyamāṃ chaḥ
+# 7.3.77 iṣugamiyamāṃ chaḥ. The roots are named by their upadeśa: yam is the one marked with an
+# accent on its vowel (ya\ma~, 'to stop'); yama~ ('to serve food') is not meant.
+def _takes_ch(t: Term) -> bool:
+    return t.upadesha in ("izu~", "gamx~") or (t.upadesha == "yama~" and t.has_tag("anudatta-vowel"))
+
+
 def _find_7377(st: State) -> list[Site]:
     out = []
     for i in range(len(st.terms) - 1):
         t, nxt = st.terms[i], st.terms[i + 1]
-        if t.kind is TermKind.ROOT and t.text in ("iz", "gam", "yam") and nxt.has_marker("S"):
+        if t.kind is TermKind.ROOT and _takes_ch(t) and nxt.has_marker("S"):
             out.append(Site.at(i, len(t.sounds) - 1))
     return out
 
@@ -124,7 +138,8 @@ R_7_3_77 = Rule("7.3.77", _find_7377,
                 lambda st, site: (ReplaceSounds(site.spans[0].term, site.spans[0].start, site.spans[0].end,
                                                 (Sound("C"),)),),
                 note=lambda st, site: f"the final {slp1_to_iast(st.terms[site.spans[0].term].antya or '')} of "
-                f"{slp1_to_iast(st.terms[site.spans[0].term].text)} is replaced by ch before an affix marked ś (śap)")
+                f"{slp1_to_iast(st.terms[site.spans[0].term].text)} is replaced by ch before an affix marked ś (śap)",
+                history=lambda st, site: HISTORY.get(st.terms[site.spans[0].term].upadesha))
 
 
 # 6.1.73 che ca (tuk after a short vowel before ch) and 6.1.75 dīrghāt (after a long vowel)
@@ -206,7 +221,7 @@ def _is_knit(t) -> bool:
 def _find_115(st: State) -> list[Site]:
     out = []
     for i in _before_sarvadhatuka(st):
-        if not _is_knit(st.terms[i + 1]):
+        if not _is_knit(st.terms[_following(st, i)]):
             continue
         t = st.terms[i]
         if t.antya in IK:
@@ -218,7 +233,7 @@ def _find_115(st: State) -> list[Site]:
 
 
 R_1_1_5 = Rule("1.1.5", _find_115, lambda st, site: (), blocks=("7.3.84", "7.3.86"),
-               note=lambda st, site: f"no {{full grade|guṇa}} before {slp1_to_iast(st.terms[site.spans[0].term + 1].text)}, "
+               note=lambda st, site: f"no {{full grade|guṇa}} before {slp1_to_iast(st.terms[_following(st, site.spans[0].term)].text)}, "
                "which is marked ṅ (or counts as such)")
 
 RULES = (*RULES, R_1_1_5)
@@ -246,3 +261,55 @@ R_7_1_58 = Rule("7.1.58", _find_7158,
                 "the {augment|āgama} n (num) goes right after its last vowel (1.1.47)")
 
 RULES = (*RULES, R_7_1_58)
+
+
+# 7.3.78 pāghrādhmāsthāmnādāṇdṛśyartisartiśadasadāṃ pibajighradhamatiṣṭhamanayacchapaśyarcchadhauśīyasīdāḥ:
+# before an affix marked ś the whole root is replaced by a present stem, listed by upadeśa.
+STEMS_7378 = {"pA": "piba", "GrA": "jiGra", "DmA": "Dama", "zWA": "tizWa", "mnA": "mana", "dAR": "yacCa",
+              "dfSi~r": "paSya", "f": "fcCa", "sf": "DO", "Sadx~": "SIya", "zadx~": "sIda"}
+SUBSTITUTED = "stem-substituted"   # tag: the whole root has been replaced (7.3.78)
+# sṛ becomes dhau only in the sense of running (Kāśikā: vegitāyāṃ gatau); the engine can't know
+# the sense, so this one is optional and the ordinary stem sarati comes first.
+OPTIONAL_7378 = frozenset({"sf"})
+
+
+def _site_7378(st: State, only_optional: bool) -> list[Site]:
+    out = []
+    for i in range(len(st.terms) - 1):
+        t, nxt = st.terms[i], st.terms[i + 1]
+        # A root that declined the optional stem is still in its recited form (is_upadesha) until
+        # another rule changes it; from then on 7.3.78 is no longer asked.
+        if (t.kind is TermKind.ROOT and t.upadesha in STEMS_7378 and SUBSTITUTED not in t.tags
+                and (t.upadesha in OPTIONAL_7378) is only_optional and nxt.has_marker("S")
+                and (not only_optional or is_upadesha(t))):
+            out.append(Site.at(i, 0, len(t.sounds)))
+    return out
+
+
+def _rewrite_7378(st: State, site: Site):
+    sp = site.spans[0]
+    return (ReplaceSounds(sp.term, 0, sp.end, _sounds(STEMS_7378[st.terms[sp.term].upadesha])),
+            AddTags(sp.term, frozenset({SUBSTITUTED})))
+
+
+def _note_7378(st: State, site: Site) -> str:
+    t = st.terms[site.spans[0].term]
+    new = STEMS_7378[t.upadesha]
+    note = (f"{slp1_to_iast(t.text)} is replaced by the stem {slp1_to_iast(new)} "
+            "before an affix marked ś (śap)")
+    if t.upadesha in OPTIONAL_7378:
+        note += ", in the sense of running (vegitāyāṃ gatau)"
+    return note
+
+
+def _history_7378(st: State, site: Site):
+    return HISTORY.get(st.terms[site.spans[0].term].upadesha)
+
+
+# It replaces the whole root, so it overrides the guṇa of 7.3.84/86 and goes before the ekādeśa
+# of 6.1.90, which would otherwise absorb the initial ṛ of the root that is about to be replaced.
+R_7_3_78 = Rule("7.3.78", lambda st: _site_7378(st, False), _rewrite_7378,
+                blocks=("7.3.84", "7.3.86", "6.1.90"), note=_note_7378, history=_history_7378)
+R_7_3_78_OPT = replace(R_7_3_78, find=lambda st: _site_7378(st, True), optional=Optionality.VIBHASHA)
+
+RULES = (*RULES, R_7_3_78, R_7_3_78_OPT)

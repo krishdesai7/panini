@@ -53,6 +53,8 @@ class StepRecord:
     alternatives: tuple[str, ...] = ()
     reads: tuple[tuple[str, str], ...] = ()
     kind: str = "change"  # "change" (the form changes), "category" (assigns a label), "prohibition"
+    history: str | None = None  # a historical aside about the step (not part of Pāṇini's account)
+    history_italic: tuple[str, ...] = ()  # words of the aside to set in italics (Latin, Greek)
 
     def to_json(self) -> dict:
         from panini.rules.base import sutra_info
@@ -79,6 +81,8 @@ class StepRecord:
             "alternatives": list(self.alternatives),
             "kind": self.kind,
             "reads": [{"id": i, "note": n} for i, n in self.reads],
+            "history": self.history,
+            "history_italic": list(self.history_italic),
         }
 
 

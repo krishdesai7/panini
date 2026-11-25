@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from dataclasses import replace
 from typing import Literal
 
 from collections.abc import Mapping
@@ -75,12 +76,21 @@ class _Runner:
         self.tripadi = tuple(sorted((r for r in self.rules if r.in_tripadi), key=lambda r: r.key))
         self.steps: list[StepRecord] = []
         self.alternatives: list[str] = []
+        self.declined: set[str] = set()  # optional rules (vibhāṣā) that chose not to apply
         self.applied: set[tuple] = set()
         self.near_seen: set[str] = set()
         self.abhiya: list[str] = []
         self.losers_seen: set[Loser] = set()
         self.count = 0
         self.nested = False  # lookahead runners don't look ahead again
+
+    @property
+    def _effective(self) -> tuple[Rule, ...]:
+        """The rules as blockers: a rule that declined to apply (vibhāṣā) blocks nothing, so
+        the general rule it would have overridden applies after all."""
+        if not self.declined:
+            return self.rules
+        return tuple(replace(r, blocks=()) if r.id in self.declined else r for r in self.rules)
 
     # -- bookkeeping -------------------------------------------------------
 
@@ -119,7 +129,7 @@ class _Runner:
             cands = [c for c in cands if self._guard_key(state, c) not in self.applied]
             if not cands:
                 return state
-            choice = self.resolver.choose(state, cands, self.rules, finish=self._finish if not self.nested else None)
+            choice = self.resolver.choose(state, cands, self._effective, finish=self._finish if not self.nested else None)
             if choice is None:
                 return state
             state, edit = self._apply(state, choice.winner, choice.losers, resume)
@@ -138,7 +148,7 @@ class _Runner:
                     key = self._guard_key(state, cand)
                     if key in self.applied:
                         continue
-                    if blocked_by(state, cand, self.rules):
+                    if blocked_by(state, cand, self._effective):
                         self.applied.add(key)
                         continue
                     free.append(cand)
@@ -157,6 +167,7 @@ class _Runner:
         """Final form reached from ``state`` (a lookahead for the resolver's conflict check)."""
         sub = _Runner(self.all_rules, self.resolver, self.max_steps, self.disabled)
         sub.applied, sub.count, sub.nested = set(self.applied), self.count, True
+        sub.declined = set(self.declined)
         final, _, _ = sub.run(state)
         return final_text(final)
 
@@ -193,6 +204,7 @@ class _Runner:
                 note = _join(note, "{preferably|vā}; also correct: " + ", ".join(alternatives))
             case Optionality.VIBHASHA:
                 new = state
+                self.declined.add(rule.id)
                 alternatives = self._alternative(apply_edit(state, edit), frozenset({rule.id}), resume)
                 note = _join(note, "{preferably not|vibhāṣā}, so not applied; also correct: "
                              + ", ".join(alternatives))
@@ -217,7 +229,9 @@ class _Runner:
                     self.near_seen.add(msg)
                     near.append(msg)
 
-        self.alternatives.extend(alternatives)
+        aside = rule.history(state, cand.site) if rule.history else None
+        # A later choice varies fastest, so its alternatives come before those of an earlier one.
+        self.alternatives[:0] = alternatives
         self.steps.append(StepRecord(
             rule_ids=(rule.id,),
             before=render_terms(state.terms),
@@ -229,6 +243,8 @@ class _Runner:
             alternatives=alternatives,
             kind=_step_kind(edit),
             reads=rule.reads if rule.section_override is None else (),
+            history=aside.text if aside else None,
+            history_italic=aside.italic if aside else (),
         ))
         return new, edit
 

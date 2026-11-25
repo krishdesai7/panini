@@ -155,10 +155,32 @@ OUT_OF_SCOPE: dict[str, tuple[str, str]] = {
 }
 
 
+# Roots whose voice a sūtra fixes beyond what their markers say: sūtra -> (voice, root codes).
+VOICE_BY_SUTRA: dict[str, tuple[Voice, tuple[str, ...]]] = {
+    "1.3.60": (Voice.MIDDLE, ("01.0991",)),  # śad takes ātmanepada before an affix marked ś
+}
+
+
+def voice_set_by(root: Root) -> tuple[str, Voice] | None:
+    """(sūtra, voice) if one of VOICE_BY_SUTRA fixes this root's voice."""
+    return next(((rule, voice) for rule, (voice, codes) in VOICE_BY_SUTRA.items() if root.code in codes), None)
+
+
+def effective_pada(root: Root) -> str:
+    """Root.pada, corrected by VOICE_BY_SUTRA."""
+    fixed = voice_set_by(root)
+    return root.pada if fixed is None else ("A" if fixed[1] is Voice.MIDDLE else "P")
+
+
 def availability(req: Request) -> tuple[str, str] | None:
     """Why a request has no form, as (reason, governing rule), or None if it has one."""
     if req.root.code in OUT_OF_SCOPE:
         return OUT_OF_SCOPE[req.root.code]
+    if (fixed := voice_set_by(req.root)) is not None:
+        rule, voice = fixed
+        if req.voice is not voice:
+            return (f"{req.root.name} takes ātmanepada before an affix marked ś, as in laṭ and laṅ", rule)
+        return None
     if req.root.pada == "P" and req.voice is Voice.MIDDLE:
         return (f"{req.root.name} takes parasmaipada only", "1.3.78")
     if req.root.pada == "A" and req.voice is Voice.ACTIVE:

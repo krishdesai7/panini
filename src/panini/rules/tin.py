@@ -90,6 +90,23 @@ R_1_3_78 = Rule("1.3.78", _pada_find(lambda st, root: True), _tag_pada("parasmai
                 "endings; 3.4.78 will choose from that set")
 
 
+# 1.3.60 śadeḥ śitaḥ: śad takes ātmanepada before an affix marked ś. Both lakāras here take śap,
+# so the la is known to be followed by a ś-affix before 3.1.68 adds it.
+SHIT_LAKARAS = ("la~w", "la~N")
+
+
+def _find_1360(st: State) -> list[Site]:
+    la, d = _la_index(st), dhatu_index(st)
+    if la is None or d is None or any(st.terms[la].has_tag(p) for p in PADA_TAGS):
+        return []
+    return [Site.term(la)] if st.terms[d].upadesha == "Sadx~" and st.terms[la].upadesha in SHIT_LAKARAS else []
+
+
+R_1_3_60 = Rule("1.3.60", _find_1360, _tag_pada("ātmanepada", "1.3.60"), blocks=("1.3.78",),
+                note=lambda st, site: "śad takes {middle|ātmanepada} endings before an affix marked ś (śap follows), "
+                "so l is classed as taking them; 3.4.78 will choose from that set")
+
+
 # 3.4.78: l is replaced by the ending the intent selects.
 def _find_3478(st: State) -> list[Site]:
     la = _la_index(st)
@@ -189,5 +206,5 @@ def _find_1414(st: State) -> list[Site]:
 R_1_4_14 = Rule("1.4.14", _find_1414, lambda st, site: (AddTags(site.spans[0].term, frozenset({"pada"})),),
                 assigns="pada", note=lambda st, site: "what ends in a {personal ending|tiṅ} is a {word|pada}")
 
-RULES = (R_3_2_123, R_3_2_111, R_1_3_12, R_1_3_72, R_1_3_78, R_3_4_78, R_3_4_113, R_3_1_68, R_1_2_4,
+RULES = (R_3_2_123, R_3_2_111, R_1_3_12, R_1_3_60, R_1_3_72, R_1_3_78, R_3_4_78, R_3_4_113, R_3_1_68, R_1_2_4,
          R_1_4_13, R_1_4_14)

@@ -165,6 +165,22 @@ roots with an *i*-marker that inserts a nasal (7.1.58 *idito num dhātoḥ*,
 *kṛp* → *kalpate*, and *vraj* losing its initial *v* (a bug, to be
 investigated).
 
+## 7.3.78 and 1.3.60
+
+- **śad 01.0991** is ātmanepada only: 1.3.60 *śadeḥ śitaḥ* applies before the
+  ś-affix śap, so `availability` rules out the active (reason cites 1.3.60) and
+  the engine assigns the middle by 1.3.60, blocking 1.3.78.
+- **sṛ 01.1085** has two stems, *sarati* and *dhāvati*. The tradition restricts
+  7.3.78's *dhau* to fast motion (Kāśikā *vegitāyāṃ gatau*); the engine cannot
+  know the sense, so the substitution is an optional rule (vibhāṣā: preferably
+  not), giving *sarati* first and *dhāvati* as an alternative, in Vidyut's order.
+- **ṛ 01.1086 laṅ** (9 requests): Vidyut also gives *ārchat* beside *ārcchat*,
+  since 8.4.65 *jharo jhari savarṇe* optionally drops one *c* of *rcch*. The
+  engine has no 8.4.65 yet, so only *ārcchat* is derived. XFAIL.
+- 7.3.78 replaces the whole root, so it overrides guṇa (7.3.84, 7.3.86) and goes
+  before 6.1.90 (āṭ with an initial ṛ), which would otherwise merge into the
+  root's first sound before the substitution.
+
 ## 7.1.58, 1.1.47 and 6.4.24
 
 - **7.1.58 *idito num dhātoḥ*** gives a root marked with a final *i* the

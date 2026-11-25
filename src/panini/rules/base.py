@@ -11,6 +11,7 @@ from importlib.resources import files
 
 from panini.edits import EKADESHA_START, VIKRTA, Edit
 from panini.model import Site, State, Term, TermKind
+from panini.rules.readings import Aside
 
 
 class Optionality(Enum):
@@ -45,6 +46,7 @@ class Rule:
     blocks: tuple[str, ...] = ()
     near_miss: Callable[[State], str | None] | None = None
     note: Callable[[State, Site], str | None] | None = None
+    history: Callable[[State, Site], Aside | None] | None = None
     optional: Optionality | None = None
     assigns: str | None = None
     tuk_or_satva: bool = False

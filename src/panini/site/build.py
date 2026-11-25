@@ -13,7 +13,7 @@ from pathlib import Path
 from panini.derivation import Derivation, Status
 from panini.engine import derive
 from panini.lexicon import FEATURED, ROOTS
-from panini.request import all_requests, load_reference
+from panini.request import all_requests, effective_pada, load_reference
 
 # Until the explorer is reworked for the whole section, it shows only the slice-1 seven.
 SITE_ROOTS = FEATURED[:7]
@@ -37,7 +37,7 @@ def site_data() -> dict:
                            None, (), tuple(ref) if ref else None, (), f"{type(e).__name__}: {e}")
         derivations[req.key] = d.to_json()
     roots = [{"key": r.key, "name": r.name, "upadesha_iast": r.upadesha_iast, "meaning": r.meaning, "gana": r.gana,
-              "class_label": GANA_LABELS.get(r.gana, r.gana), "pada": r.pada}
+              "class_label": GANA_LABELS.get(r.gana, r.gana), "pada": effective_pada(r)}
              for r in map(ROOTS.__getitem__, SITE_ROOTS)]
     return {"roots": roots, "derivations": derivations, "sutras": _sutras(), "markers": MARKER_NOTES,
             "glossary": GLOSSARY}

@@ -69,6 +69,8 @@ def _render_step(n: int, s: StepRecord, width: int, verbosity: int) -> list[str]
     if verbosity >= 1:
         for src, note in s.reads:
             out.append(f"{'':>4}  {'':<{width}}{'':<9}read via {src}: {plain(note, verbosity)}")
+    if verbosity >= 1 and s.history:
+        out.append(f"{'':>4}  {'':<{width}}{'':<9}historically: {s.history}")
     for nm in s.near_misses:
         out.append(f"{'':>4}  ↳ {plain(nm, verbosity)}")
     if verbosity >= 1:

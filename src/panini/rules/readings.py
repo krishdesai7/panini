@@ -13,6 +13,8 @@ Carried-over words are cited only where the source is well established.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 GEN = "1.1.49"     # ṣaṣṭhī sthāneyogā
 LOC = "1.1.66"     # tasminn iti nirdiṣṭe pūrvasya
 ABL = "1.1.67"     # tasmād ity uttarasya
@@ -90,6 +92,12 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
               (GEN, "jhaḥ (genitive): jh is what is replaced")),
     "7.1.58": ((BASE, "an operation on the {base|aṅga} (heading)"),
                ("1.1.47", "num, marked m, goes right after the last vowel")),
+    "1.3.60": ((ABL, "śitaḥ: the endings follow a root before an affix marked ś"),
+               ("1.3.12", "ātmanepadam carries over")),
+    "7.3.78": ((BASE, "an operation on the {base|aṅga} (heading)"),
+               ("7.3.75", "śiti ‘before an affix marked ś’ carries over"),
+               (GEN, "the genitive list: each root is what is replaced by its stem, in order (1.3.10)"),
+               (WHOLE, "a replacement of several sounds takes the place of the whole root")),
     "7.3.77": ((BASE, "an operation on the {base|aṅga} (heading)"),
                ("7.3.75", "śiti ‘before an affix marked ś’ carries over"),
                (FINAL, "only the final sound is replaced: the m of gam")),
@@ -180,4 +188,30 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
     "8.4.56": (("8.4.55", "jhalāṃ car ‘an {obstruent|jhal} becomes {voiceless unaspirated|car}’ carries over"),),
     "8.4.58": ((LOC, "yayi (locative): before such a consonant"),
                (NEAR, "the nasal of the following sound's class")),
+}
+
+
+@dataclass(frozen=True)
+class Aside:
+    """A historical remark about a step: outside Pāṇini's account, shown beside it.
+    ``italic`` lists the words (Latin, Greek) the page sets in italics. An asterisk marks a
+    reconstructed form and is shown as it stands."""
+
+    text: str
+    italic: tuple[str, ...] = ()
+
+
+REDUPLICATED = "a reduplicated present"
+SK_PRESENT = "a present in *-sḱe-"
+
+# Historical asides for the substituted present stems (7.3.77, 7.3.78), keyed by upadeśa.
+HISTORY: dict[str, Aside] = {
+    "pA": Aside(f"{REDUPLICATED}, cf. Latin bibit", ("bibit",)),
+    "GrA": Aside(REDUPLICATED),
+    "zWA": Aside(f"{REDUPLICATED}, cf. Latin sistit, Greek hístēmi", ("sistit", "hístēmi")),
+    "zadx~": Aside("a reduplicated present (*si-sd-), cf. Latin sīdit", ("sīdit",)),
+    "dfSi~r": Aside("a different root, spaś ‘see’, cf. Latin speciō", ("speciō",)),
+    "dAR": Aside("a different root, yam ‘hold out’"),
+    "f": Aside(SK_PRESENT),
+    "gamx~": Aside(f"{SK_PRESENT}, cf. Greek báskō", ("báskō",)),
 }
