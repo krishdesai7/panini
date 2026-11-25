@@ -71,7 +71,7 @@ class Request:
 
     @property
     def key(self) -> str:
-        return f"{self.root.key}|{self.lakara.iast}|{self.pada_letter}|{self.purusha.value}|{self.vacana.value}"
+        return f"{self.root.code}|{self.lakara.iast}|{self.pada_letter}|{self.purusha.value}|{self.vacana.value}"
 
     def describe(self) -> tuple[str, str]:
         panini = (f"{self.lakara.iast} · {_PURUSHA_NAME[self.purusha]} puruṣa {_VACANA_NAME[self.vacana]}"
@@ -124,9 +124,9 @@ def parse_request(root: str, tense: str, person: str | int, number: str, voice: 
 def availability(req: Request) -> tuple[str, str] | None:
     """Why a request has no form, as (reason, governing rule), or None if it has one."""
     if req.root.pada == "P" and req.voice is Voice.MIDDLE:
-        return (f"{req.root.key} takes parasmaipada only", "1.3.78")
+        return (f"{req.root.name} takes parasmaipada only", "1.3.78")
     if req.root.pada == "A" and req.voice is Voice.ACTIVE:
-        return (f"{req.root.key} takes ātmanepada only: its marker vowel is anudātta", "1.3.12")
+        return (f"{req.root.name} takes ātmanepada only: its marker vowel is anudātta", "1.3.12")
     return None
 
 

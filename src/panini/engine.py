@@ -245,7 +245,7 @@ def derive(
     from panini.rules import ALL_RULES
 
     panini, pie = req.describe()
-    record = {"key": req.key, "root": req.root.key, "panini": panini, "pie": pie}
+    record = {"key": req.key, "root": req.root.name, "panini": panini, "pie": pie}
     ref = tuple(reference[req.key]) if reference and req.key in reference else None
     if (why := availability(req)) is not None:
         reason, rule_id = why

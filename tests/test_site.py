@@ -7,14 +7,14 @@ from panini.derivation import Status
 def test_site_data_covers_everything():
     d = site_data()
     assert len(d["roots"]) == 7 and len(d["derivations"]) == 252
-    assert d["derivations"]["edh|laṭ|P|3|sg"]["status"] == "unavailable"
+    assert d["derivations"]["01.0002|laṭ|P|3|sg"]["status"] == "unavailable"
 
 def test_build_without_fonts(tmp_path, capsys):
     out = build_site(tmp_path / "p.html", style_dir=tmp_path / "nope")
     html = out.read_text()
     assert "warning" in capsys.readouterr().err.lower()
     data = json.loads(re.search(r'<script type="application/json" id="data">(.*?)</script>', html, re.S).group(1))
-    assert data["derivations"]["paṭh|laṭ|P|3|sg"]["result"] == "paṭhati"
+    assert data["derivations"]["01.0381|laṭ|P|3|sg"]["result"] == "paṭhati"
     urls = set(re.findall(r"https?://[^\s\"')]+", html)) - {"http://www.w3.org/2000/svg"}  # SVG namespace, not a fetch
     assert not urls
 
@@ -22,11 +22,11 @@ def test_one_failing_derivation_does_not_abort(monkeypatch, tmp_path):
     import panini.site.build as b
     real = b.derive
     def flaky(req, **kw):
-        if req.key == "gam|laṭ|P|3|sg":
+        if req.key == "01.1137|laṭ|P|3|sg":
             raise RuntimeError("boom")
         return real(req, **kw)
     monkeypatch.setattr(b, "derive", flaky)
-    assert site_data()["derivations"]["gam|laṭ|P|3|sg"]["status"] == "error"
+    assert site_data()["derivations"]["01.1137|laṭ|P|3|sg"]["status"] == "error"
 
 
 import shutil
@@ -60,9 +60,9 @@ def test_site_data_carries_sutra_texts_and_plain_class_labels():
     d = site_data()
     assert d["sutras"]["1.3.78"]["text"] == "śeṣāt kartari parasmaipadam"
     assert "9.9.1" not in d["sutras"]   # toy rules stay out
-    bhu = next(r for r in d["roots"] if r["key"] == "bhū")
+    bhu = next(r for r in d["roots"] if r["key"] == "01.0001")
     assert bhu["class_label"] == "class 1 · thematic, full grade"
-    assert bhu["upadesha_iast"] == "bhū" and next(r for r in d["roots"] if r["key"] == "paṭh")["upadesha_iast"] == "paṭhã"
+    assert bhu["upadesha_iast"] == "bhū" and next(r for r in d["roots"] if r["key"] == "01.0381")["upadesha_iast"] == "paṭhã"
 
 
 def _node(expr: str):
@@ -126,7 +126,7 @@ def test_marker_tip_prefers_a_specific_note():
 
 
 def test_step_views_carry_the_term_upadesha(tmp_path):
-    d = site_data()["derivations"]["bhū|laṭ|P|3|sg"]
+    d = site_data()["derivations"]["01.0001|laṭ|P|3|sg"]
     assert any(v.get("upadesha") == "lãṭ" for s in d["steps"] for v in s["after"])
 
 

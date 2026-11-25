@@ -12,8 +12,11 @@ from pathlib import Path
 
 from panini.derivation import Derivation, Status
 from panini.engine import derive
-from panini.lexicon import ROOTS
+from panini.lexicon import FEATURED, ROOTS
 from panini.request import all_requests, load_reference
+
+# Until the explorer is reworked for the whole section, it shows only the slice-1 seven.
+SITE_ROOTS = FEATURED[:7]
 
 DEFAULT_STYLE_DIR = Path.home() / ".local/state/claude/skills/krish-frontend-style"
 
@@ -23,17 +26,19 @@ def site_data() -> dict:
     reference = load_reference()
     derivations: dict[str, dict] = {}
     for req in all_requests():
+        if req.root.code not in SITE_ROOTS:
+            continue
         try:
             d = derive(req, reference=reference)
         except Exception as e:  # one broken derivation must not take the page down
             panini, pie = req.describe()
             ref = reference.get(req.key)
-            d = Derivation({"key": req.key, "root": req.root.key, "panini": panini, "pie": pie}, Status.ERROR,
+            d = Derivation({"key": req.key, "root": req.root.name, "panini": panini, "pie": pie}, Status.ERROR,
                            None, (), tuple(ref) if ref else None, (), f"{type(e).__name__}: {e}")
         derivations[req.key] = d.to_json()
-    roots = [{"key": r.key, "upadesha_iast": r.upadesha_iast, "meaning": r.meaning, "gana": r.gana,
+    roots = [{"key": r.key, "name": r.name, "upadesha_iast": r.upadesha_iast, "meaning": r.meaning, "gana": r.gana,
               "class_label": GANA_LABELS.get(r.gana, r.gana), "pada": r.pada}
-             for r in ROOTS.values()]
+             for r in map(ROOTS.__getitem__, SITE_ROOTS)]
     return {"roots": roots, "derivations": derivations, "sutras": _sutras(), "markers": MARKER_NOTES,
             "glossary": GLOSSARY}
 
