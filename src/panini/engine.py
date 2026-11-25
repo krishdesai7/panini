@@ -76,7 +76,7 @@ class _Runner:
         self.tripadi = tuple(sorted((r for r in self.rules if r.in_tripadi), key=lambda r: r.key))
         self.steps: list[StepRecord] = []
         self.alternatives: list[str] = []
-        self.declined: set[str] = set()  # optional rules (vibhāṣā) that chose not to apply
+        self.declined: set[tuple[str, tuple]] = set()  # (rule id, terms) where an optional rule chose not to apply
         self.applied: set[tuple] = set()
         self.near_seen: set[str] = set()
         self.abhiya: list[str] = []
@@ -90,7 +90,16 @@ class _Runner:
         the general rule it would have overridden applies after all."""
         if not self.declined:
             return self.rules
-        return tuple(replace(r, blocks=()) if r.id in self.declined else r for r in self.rules)
+        ids = {rid for rid, _ in self.declined}
+        return tuple(replace(r, blocks=()) if r.id in ids else r for r in self.rules)
+
+    @staticmethod
+    def _terms_key(state: State, site: Site) -> tuple:
+        return tuple((state.terms[sp.term].kind, state.terms[sp.term].upadesha) for sp in site.spans
+                     if sp.term < len(state.terms))
+
+    def _was_declined(self, state: State, cand: Candidate) -> bool:
+        return (cand.rule.id, self._terms_key(state, cand.site)) in self.declined
 
     # -- bookkeeping -------------------------------------------------------
 
@@ -126,7 +135,8 @@ class _Runner:
     def _main(self, state: State, rules: Sequence[Rule], resume: Resume) -> State:
         while True:
             cands = [Candidate(r, s) for r in rules for s in r.find(state)]
-            cands = [c for c in cands if self._guard_key(state, c) not in self.applied]
+            cands = [c for c in cands if self._guard_key(state, c) not in self.applied
+                     and not self._was_declined(state, c)]
             if not cands:
                 return state
             choice = self.resolver.choose(state, cands, self._effective, finish=self._finish if not self.nested else None)
@@ -174,6 +184,7 @@ class _Runner:
     def _alternative(self, state: State, extra_disabled: frozenset[str], resume: Resume) -> tuple[str, ...]:
         alt = _Runner(self.all_rules, self.resolver, self.max_steps, self.disabled | extra_disabled)
         alt.applied = set(self.applied)
+        alt.declined = set(self.declined)
         alt.count = self.count
         if resume[0] == "main":
             final, _, alts = alt.run(state)
@@ -204,10 +215,10 @@ class _Runner:
                 note = _join(note, "{preferably|vā}; also correct: " + ", ".join(alternatives))
             case Optionality.VIBHASHA:
                 new = state
-                self.declined.add(rule.id)
+                self.declined.add((rule.id, self._terms_key(state, cand.site)))
                 alternatives = self._alternative(apply_edit(state, edit), frozenset({rule.id}), resume)
-                note = _join(note, "{preferably not|vibhāṣā}, so not applied; also correct: "
-                             + ", ".join(alternatives))
+                note = _join(note, (rule.optional_phrase or "{preferably not|vibhāṣā}, so not applied")
+                             + "; also correct: " + ", ".join(alternatives))
             case Optionality.ANYATARASYAM:
                 raise OptionalRuleNotSupported(
                     f"{rule.id} is optional (anyatarasyām, an equal choice); optional rules of this kind "

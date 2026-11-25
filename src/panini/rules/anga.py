@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from dataclasses import replace
 
-from panini.edits import VIKRTA, AddTags, ReplaceSounds
+from panini.edits import EKADESHA_START, VIKRTA, AddTags, ReplaceSounds
 from panini.meta import augment_in_term_edit, mit_augment_edit, mit_position
 from panini.model import Site, Sound, Span, State, Term, TermKind
-from panini.rules.base import Optionality, Rule, adi, is_pratyaya, is_upadesha
+from panini.rules.base import Optionality, Rule, adi, is_pratyaya
 from panini.rules.readings import HISTORY
 from panini.sounds import dirgha, guna, is_hrasva, is_vowel, pratyahara
 from panini.translit import slp1_to_iast
@@ -277,19 +277,22 @@ def _site_7378(st: State, only_optional: bool) -> list[Site]:
     out = []
     for i in range(len(st.terms) - 1):
         t, nxt = st.terms[i], st.terms[i + 1]
-        # A root that declined the optional stem is still in its recited form (is_upadesha) until
-        # another rule changes it; from then on 7.3.78 is no longer asked.
         if (t.kind is TermKind.ROOT and t.upadesha in STEMS_7378 and SUBSTITUTED not in t.tags
-                and (t.upadesha in OPTIONAL_7378) is only_optional and nxt.has_marker("S")
-                and (not only_optional or is_upadesha(t))):
+                and (t.upadesha in OPTIONAL_7378) is only_optional and nxt.has_marker("S")):
             out.append(Site.at(i, 0, len(t.sounds)))
     return out
 
 
 def _rewrite_7378(st: State, site: Site):
     sp = site.spans[0]
-    return (ReplaceSounds(sp.term, 0, sp.end, _sounds(STEMS_7378[st.terms[sp.term].upadesha])),
-            AddTags(sp.term, frozenset({SUBSTITUTED})))
+    t = st.terms[sp.term]
+    stem = STEMS_7378[t.upadesha]
+    if not t.sounds and EKADESHA_START in t.tags:
+        # The root's initial ṛ was merged into a single substitute with the augment ā (6.1.90).
+        # By 6.1.85 antādivat and 1.1.56 sthānivat that substitute still stands for the root's
+        # first sound, and the stem fcCa begins with that same ṛ: only the rest is written.
+        stem = stem[1:]
+    return (ReplaceSounds(sp.term, 0, sp.end, _sounds(stem)), AddTags(sp.term, frozenset({SUBSTITUTED})))
 
 
 def _note_7378(st: State, site: Site) -> str:
@@ -297,8 +300,6 @@ def _note_7378(st: State, site: Site) -> str:
     new = STEMS_7378[t.upadesha]
     note = (f"{slp1_to_iast(t.text)} is replaced by the stem {slp1_to_iast(new)} "
             "before an affix marked ś (śap)")
-    if t.upadesha in OPTIONAL_7378:
-        note += ", in the sense of running (vegitāyāṃ gatau)"
     return note
 
 
@@ -306,10 +307,10 @@ def _history_7378(st: State, site: Site):
     return HISTORY.get(st.terms[site.spans[0].term].upadesha)
 
 
-# It replaces the whole root, so it overrides the guṇa of 7.3.84/86 and goes before the ekādeśa
-# of 6.1.90, which would otherwise absorb the initial ṛ of the root that is about to be replaced.
+# It replaces the whole root, so it overrides the guṇa of 7.3.84/86 (apavāda).
 R_7_3_78 = Rule("7.3.78", lambda st: _site_7378(st, False), _rewrite_7378,
-                blocks=("7.3.84", "7.3.86", "6.1.90"), note=_note_7378, history=_history_7378)
-R_7_3_78_OPT = replace(R_7_3_78, find=lambda st: _site_7378(st, True), optional=Optionality.VIBHASHA)
+                blocks=("7.3.84", "7.3.86"), note=_note_7378, history=_history_7378)
+R_7_3_78_OPT = replace(R_7_3_78, find=lambda st: _site_7378(st, True), optional=Optionality.VIBHASHA,
+                       optional_phrase="{only in the sense of running|Kāśikā: vegitāyāṃ gatau}, so not applied here")
 
 RULES = (*RULES, R_7_3_78, R_7_3_78_OPT)

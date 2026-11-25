@@ -48,6 +48,7 @@ class Rule:
     note: Callable[[State, Site], str | None] | None = None
     history: Callable[[State, Site], Aside | None] | None = None
     optional: Optionality | None = None
+    optional_phrase: str | None = None  # replaces "preferably not, so not applied" for a VIBHASHA rule
     assigns: str | None = None
     tuk_or_satva: bool = False
     reintroduces_upadesha: bool = False

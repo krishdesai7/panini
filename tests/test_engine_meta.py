@@ -154,3 +154,22 @@ def test_orders_converging_on_the_same_final_form_are_not_a_conflict():
     state, steps, _ = run(S("a"), [a, b, c])
     assert final_text(state) == "e"
     assert any("both orders give e" in l.reason for s in steps for l in s.losers)
+
+
+def test_declined_optional_rule_stops_blocking_in_later_alternative_branches():
+    # 9.9.1 (vibhāṣā) declines b → u; it must then stop blocking 9.9.3 (b → y) everywhere,
+    # including in the branch spawned afterwards by the optional 9.9.2 (a → o).
+    opt = replace_rule("9.9.1", "b", "u", blocks=("9.9.3",), optional=Optionality.VIBHASHA)
+    va = replace_rule("9.9.2", "a", "o", optional=Optionality.VA)
+    general = replace_rule("9.9.3", "b", "y")
+    state, steps, alts = run(S("ab"), [general, opt, va])
+    assert final_text(state) == "oy"
+    assert "ay" in alts   # the branch without 9.9.2 still reaches the general rule
+    assert ids(steps).count("9.9.1") == 1   # declined once, never offered again
+
+
+def test_optional_rule_supplies_its_own_phrase():
+    opt = replace_rule("9.9.5", "b", "u", optional=Optionality.VIBHASHA, optional_phrase="only in sense Z, so not applied here")
+    _, steps, _ = run(S("ab"), [opt])
+    assert "only in sense Z, so not applied here; also correct: au" in steps[0].note
+    assert "vibhāṣā" not in steps[0].note

@@ -180,6 +180,17 @@ def test_7_3_78_stems(code, voice, expected):
     assert d.result == expected and "7.3.78" in _rule_ids(d)
 
 
+def test_7_3_78_after_the_augment_merged_the_initial_r():
+    # laṅ of ṛ: 6.1.90 (nitya) merges ā + ṛ first; by 6.1.85/1.1.56 the substitute still stands for
+    # the root's first sound, so 7.3.78 then writes only the rest of ṛccha. Nothing is "blocked".
+    d = form("01.1086", "laṅ")
+    assert d.result == "ārcchat"
+    ids = _rule_ids(d)
+    assert ids.index("6.1.90") < ids.index("7.3.78")
+    losers = [(l.rule_id, l.reason) for s in d.steps for l in s.losers if "6.1.90" in l.reason or l.rule_id in ("6.1.90", "7.3.78")]
+    assert not any("blocked by 7.3.78" in r for _, r in losers) and not any(i == "6.1.90" for i, _ in losers)
+
+
 def test_7_3_78_replaces_guna_of_r_roots():
     d = form("01.1086")
     assert "7.3.84" not in _rule_ids(d)
@@ -196,7 +207,8 @@ def test_sri_dhau_only_as_a_running_option():
     d = form("01.1085")
     assert d.result == "sarati" and d.alternatives == ("dhāvati",)
     step = next(s for s in d.steps if "7.3.78" in s.rule_ids)
-    assert "in the sense of running" in step.note and "preferably not" in step.note
+    assert "{only in the sense of running|Kāśikā: vegitāyāṃ gatau}, so not applied here; also correct: dhāvati" in step.note
+    assert "vibhāṣā" not in step.note and "preferably" not in step.note
     assert "7.3.84" in _rule_ids(d)   # the ordinary stem still gets its guṇa, once
     assert _rule_ids(d).count("7.3.78") == 1
 
