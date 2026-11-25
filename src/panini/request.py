@@ -5,9 +5,9 @@ from __future__ import annotations
 import json
 import sys
 import unicodedata
+from collections.abc import Iterable
 from dataclasses import dataclass
 from enum import Enum
-from collections.abc import Iterable
 from pathlib import Path
 
 from panini.lexicon import ROOTS, Root, lookup_root
@@ -123,6 +123,7 @@ def parse_request(root: str, tense: str, person: str | int, number: str, voice: 
 
 
 _NU = "deferred to the athematic classes"
+_TWO = "the engine would show only one, so it waits for optional rules"
 _DESID = "takes a desiderative stem here, which this engine doesn't derive yet"
 
 # Roots of the bhvādi section whose laṭ/laṅ stems need machinery outside this slice:
@@ -135,6 +136,15 @@ OUT_OF_SCOPE: dict[str, tuple[str, str]] = {
     "01.0462": ("dhūp takes the suffix -āya- (dhūpāyati), which this engine doesn't derive yet", "3.1.28"),
     "01.0511": ("kam takes the suffix ṇiṅ (kāmayate), which this engine doesn't derive yet", "3.1.30"),
     "01.0545": ("kram preferably takes -ya- in the middle voice, an option this engine doesn't model yet", "3.1.70"),
+    "01.0507": ("paṇ takes the suffix -āya- (paṇāyati), which this engine doesn't derive yet", "3.1.28"),
+    "01.0508": ("pan takes the suffix -āya- (panāyati), which this engine doesn't derive yet", "3.1.28"),
+    "01.1166": ("ṛti takes the suffix -īya- (ṛtīyate), which this engine doesn't derive yet", "3.1.29"),
+    "01.0742": (f"akṣ has two present stems, akṣṇoti and akṣati; {_TWO}", "3.1.75"),
+    "01.0743": (f"takṣ has two present stems, takṣṇoti and takṣati; {_TWO}", "3.1.75"),
+    "01.0958": (f"bhrāś has two present stems, bhrāśyate and bhrāśate; {_TWO}", "3.1.70"),
+    "01.0959": (f"bhlāś has two present stems, bhlāśyate and bhlāśate; {_TWO}", "3.1.70"),
+    "01.0985": (f"bhram has two present stems, bhramyati and bhramati; {_TWO}", "3.1.70"),
+    "01.1033": (f"laṣ has two present stems, laṣyati and laṣati; {_TWO}", "3.1.70"),
     "01.1125": (f"gup {_DESID} (jugupsate)", "3.1.5"),
     "01.1126": (f"tij {_DESID} (titikṣate)", "3.1.5"),
     "01.1127": (f"mān {_DESID} (mīmāṃsate)", "3.1.6"),

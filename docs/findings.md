@@ -143,12 +143,14 @@ bhvādi root and compares with `Root.pada` (read from the marker vowel). 1147 of
   alternative middle voice is meaning- or prefix-conditioned (1.3.23, 1.3.47,
   1.3.38–43). Preverbs are out of scope, so the marker-based pada stands.
 - **paṇ 01.0507, pan 01.0508** (Vidyut both / parasmaipada only): 3.1.28 gives
-  these an *-āya-* stem in the praise sense, which is out of scope here. Vidyut
-  returns no middle forms at all for pan, so its fixture entries are empty (see
-  the XFAIL table). Candidates for `OUT_OF_SCOPE`.
+  these an *-āya-* stem in the praise sense, which is out of scope here. They
+  are now in `OUT_OF_SCOPE`.
 - **ṛti 01.1166** (ours P, Vidyut A): 3.1.29 *ṛter īyaṅ* gives an *-īya-* stem,
-  which is ātmanepada by ṅit. Out of scope; Vidyut's active fixture entries
-  are empty. Candidate for `OUT_OF_SCOPE`.
+  which is ātmanepada by ṅit. Now in `OUT_OF_SCOPE`.
+- **Two present stems** (3.1.70 for bhram, bhrāś, bhlāś, laṣ; 3.1.75 for akṣ,
+  takṣ): Vidyut gives both stems, the engine would give one. These roots are in
+  `OUT_OF_SCOPE` until optional rules are modelled. (sṛ 01.1085 also has two
+  stems, via 7.3.78; Task 7.)
 - **nāth 01.0007, sasj 01.0229** (Vidyut both): unexplained. Both are marker
   readings worth a second look before slice 1.5 closes.
 
