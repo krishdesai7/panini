@@ -166,6 +166,26 @@ def test_nitya_operation_survives_on_the_same_vowel_whatever_its_result() -> Non
     assert ids(steps) == ["9.9.10"]
 
 
+def test_a_blocked_sibling_does_not_carry_the_operation() -> None:
+    # As in the bU test, but after Y a niṣedha blocks G2: the operation no longer survives Y,
+    # so nothing decides between G1 and Y.
+    g1 = replace_rule("9.9.10", "U", "o", operation="g")
+    y = Rule(
+        "9.9.11",
+        lambda st: [Site.at(0, 1)] if st.terms[0].text == "bU" else [],
+        lambda st, site: (ReplaceSounds(0, 1, 2, (Sound("u"), Sound("v"))),),
+    )
+    g2 = replace_rule("9.9.12", "u", "o", only_at=1, operation="g")
+    nisedha = Rule(
+        "9.9.13",
+        lambda st: [Site.at(0, 1)] if "v" in st.terms[0].text else [],
+        lambda st, site: (),
+        blocks=("9.9.12",),
+    )
+    with pytest.raises(UnresolvedConflict):
+        run(S("bU"), [g1, y, g2, nisedha])
+
+
 def test_sibling_rules_without_a_shared_operation_still_conflict() -> None:
     g1 = replace_rule("9.9.10", "U", "o")
     y = Rule(

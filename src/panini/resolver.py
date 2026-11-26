@@ -11,7 +11,8 @@ LocalResolver implements the restricted siddha principle, the slice-1 design:
    An operation shared by sibling rules (``Rule.operation``, e.g. guṇa by 7.3.84
    or 7.3.86) survives Y if a sibling still acts on the same sound after Y, whatever
    its result (bhū: guṇa over uvaṅ 6.4.77; tṝ: guṇa over 7.1.100; the user's
-   rulings, slice 1.6). This is looser than the traditional śabdāntaraprāpti caveat;
+   rulings, slice 1.6). This is looser than the traditional śabdāntaraprāpti caveat,
+   which counts a rule applying to a changed form against nitya (docs/findings.md);
 4. ties: the lowest-numbered candidate that commutes with all the others goes
    first (an arbitrary order with an identical result); if none commutes with
    all the others, raise UnresolvedConflict. The resolver never guesses.
@@ -220,13 +221,24 @@ def surviving_rule(
     siblings = (
         r for r in rules if r.operation == x.rule.operation and r.id != x.rule.id
     )
-    return next((r.id for r in siblings if _acts_on(s2, r, want)), None)
+    return next((r.id for r in siblings if _acts_on(s2, r, want, rules)), None)
 
 
-def _acts_on(state: State, rule: Rule, targets: tuple[tuple[object, int], ...]) -> bool:
-    """Does ``rule`` apply somewhere in ``state`` acting on exactly these sounds?"""
+def _acts_on(
+    state: State,
+    rule: Rule,
+    targets: tuple[tuple[object, int], ...],
+    rules: Sequence[Rule],
+) -> bool:
+    """Does ``rule`` apply, unblocked, somewhere in ``state`` acting on exactly these sounds?
+
+    Sounds are matched by (term, position) in the state after the other rule. That is safe
+    when the other rule changes the length of the term before the target (no match, so the
+    conflict surfaces as UnresolvedConflict); it could match a different sound only if the
+    other rule shifted another vowel into the same place, which no current rule does."""
     return any(
         _targets(state, rule.rewrite(state, site)) == targets
+        and blocked_by(state, Candidate(rule, site), rules) is None
         for site in rule.find(state)
     )
 
