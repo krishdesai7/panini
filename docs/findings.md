@@ -432,8 +432,8 @@ guṇa (both carry _guṇaḥ_ from 7.3.82; `Rule.operation`). In the nitya chec
 operation survives the other rule if one of its rules still acts on the same sound
 afterwards, whatever its result (`resolver.surviving_rule`). So guṇa is nitya over uvaṅ
 and over 7.1.100: _bhavati_, _tarati_. In tudādi, 1.1.5 blocks guṇa, so 6.4.77 and
-7.1.100 apply: _dhuvati_, _kirati_. The trace says so: "6.4.77: deferred: 7.3.84 applies
-either way: after 6.4.77, 7.3.86 still applies to the same sound".
+7.1.100 apply: _dhuvati_, _kirati_. The trace says so: "6.4.77: deferred: full grade applies either way (nitya): after 6.4.77, 7.3.86 still applies
+at the same place".
 
 This reads nitya more loosely than the tradition's _śabdāntaraprāpti_ caveat, which
 says a rule that applies to a changed form afterwards (_bhuv_, _tir_) is not nitya. The
@@ -457,8 +457,18 @@ derivation search (extended siddha) comes in.
   version added num twice (_\*ārṇmphat_).
 - **6.1.108 merges inside the root** (one sound replacing both, 6.1.84), not with the
   cross-term ekādeśa edit.
-- **Names now shared across classes** (_uch_, _uñch_, _nud_) need a list code. _kṛ_
+- **Names now shared across classes** (_uch_, _uñch_, _nud_, _śad_, _sad_, and others) need
+  a list code. A featured root breaks a tie only within one class, since the traces differ
+  (śap vs śa). _kṛ_
   resolves to tudādi _kṝ_ through the diacritic-free fallback; revisit when a class with
   _kṛ_ arrives.
 - **Vidyut cites a code 2542 on _vid_** (06.0168), which is not a sūtra number (not looked into). It gives
   _vindati_ twice; the reference keeps one.
+- **6.4.24 now shows as a deferred competitor in bhvādi traces** (about 620 forms, e.g.
+  _manth_ laṭ 3pl): "6.4.24: deferred: 3.1.68 applies either way (nitya)". Before śap is
+  added, the root stands right before an ending that 1.2.4 makes count as marked ṅ, so 6.4.24
+  is briefly a candidate. The line is true under the nitya check, and the same thing already
+  happens with 1.1.5 on _bhū + tas_. Keeping it out would mean special-casing the rule, so it
+  stays. Slice 1.5's worry that a 6.4.24 note "would mislead" was about a near-miss note;
+  this is a resolver loser line. 6.4.77 and 7.1.100 show as deferred competitors in bhvādi
+  for the same reason (585 and 54 forms).

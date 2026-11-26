@@ -231,3 +231,16 @@ def test_trmphadi_nasal_once_after_a_merged_initial_vowel() -> None:
     d = form("06.0041", "laṅ")
     assert d.result == "ārmphat"
     assert _rule_ids(d).count("7.1.59.1") == 1
+
+
+def test_bhu_trace_says_full_grade_applies_either_way() -> None:
+    d = form("01.0001")
+    reasons = [
+        loser.reason for s in d.steps for loser in s.losers if loser.rule_id == "6.4.77"
+    ]
+    assert reasons == [
+        (
+            "deferred: {full grade|guṇa} {applies either way|nitya}: after 6.4.77, "
+            "7.3.86 still applies at the same place"
+        )
+    ]

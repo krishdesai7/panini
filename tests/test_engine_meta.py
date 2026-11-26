@@ -135,8 +135,8 @@ def test_nitya_counts_one_operation_across_sibling_rules() -> None:
     assert (
         Loser(
             "9.9.11",
-            "deferred: 9.9.10 {applies either way|nitya}: after 9.9.11, "
-            "9.9.12 still applies to the same sound",
+            "deferred: g {applies either way|nitya}: after 9.9.11, "
+            "9.9.12 still applies at the same place",
         )
         in steps[0].losers
     )

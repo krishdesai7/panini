@@ -260,7 +260,8 @@ def lookup_root(text: str) -> Root:
     """Find a root by code, name or IAST upadeśa, ignoring Unicode form, spaces and a trailing hyphen.
 
     A spelling with its diacritics is matched first; failing that, one without them (sanj, stha).
-    A name shared by several roots resolves to the featured one if exactly one is featured."""
+    A name shared by several roots of one class resolves to the featured one if exactly one is
+    featured; a name shared across classes always needs a code."""
     if text.strip() in ROOTS:
         return ROOTS[text.strip()]
     found: list[Root] = []
@@ -281,8 +282,10 @@ def lookup_root(text: str) -> Root:
     if not found:
         raise UnknownRoot(text, tuple(r.name for r in (ROOTS[c] for c in FEATURED)))
     if len(found) > 1:
+        # The featured root breaks a tie only within one class: a name shared across classes
+        # (śad, sad in bhvādi and tudādi) needs a code, since the traces differ (śap vs śa).
         featured = [r for r in found if r.code in FEATURED]
-        if len(featured) != 1:
+        if len(featured) != 1 or len({r.gana for r in found}) > 1:
             raise AmbiguousRoot(text, tuple(r.code for r in found))
         return featured[0]
     return found[0]

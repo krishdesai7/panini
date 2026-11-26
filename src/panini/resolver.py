@@ -184,6 +184,10 @@ def still_applies(
     return _matching_site(s2, x, sig) is not None
 
 
+# How a shared operation (Rule.operation) is named in trace notes, modern term first.
+OPERATION_LABELS = {"guṇa": "{full grade|guṇa}"}
+
+
 def _targets(state: State, edit: Edit) -> tuple[tuple[object, int], ...]:
     """Where a substitution edit acts: (term, start position) per ReplaceSounds. Only the place
     counts, not what it replaces or what it puts there: after ū → uv the u is still the vowel that
@@ -392,11 +396,11 @@ def _with_nitya_losers(
         Loser(
             remaining[k].rule.id,
             f"deferred: {x.rule.id} {{applies either way|nitya}}"
-            + (
-                ""
-                if by == x.rule.id
-                else f": after {remaining[k].rule.id}, {by} still applies to the same sound"
-            ),
+            if by == x.rule.id
+            # The operation, not x itself, survives: name it and the sibling that carries it.
+            else f"deferred: {OPERATION_LABELS.get(x.rule.operation or '', x.rule.operation)} "
+            f"{{applies either way|nitya}}: after {remaining[k].rule.id}, {by} still applies "
+            "at the same place",
         )
         for k, (x, by) in dominated_by.items()
         if x is winner and remaining[k].rule.id != winner.rule.id

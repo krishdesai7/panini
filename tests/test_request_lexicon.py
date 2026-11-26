@@ -192,7 +192,7 @@ def test_cch_reading_applies_to_bhvadi_only() -> None:
     assert ROOTS["06.0016"].upadesha == "fCa~"
 
 
-@pytest.mark.parametrize("name", ["uch", "uchī", "uñch", "nud"])
+@pytest.mark.parametrize("name", ["uch", "uchī", "uñch", "nud", "śad", "sad"])
 def test_names_shared_across_classes_are_ambiguous(name) -> None:
     with pytest.raises(AmbiguousRoot):
         lookup_root(name)
