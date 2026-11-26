@@ -189,8 +189,10 @@ R_6_1_75 = _tuk_rule("6.1.75", False, "long")
 
 
 # 7.3.75 ṣṭhivuklamyācamāṃ śiti: ṣṭhiv, klam and ācam take a long vowel before an affix marked ś.
-# ācam is cam after the preverb ā, outside this scope (no preverbs), so only ṣṭhiv and klam appear.
-LENGTHENED_BEFORE_SHIT = ("zWiv", "klam")
+# ācam is cam after the preverb ā, outside this scope (no preverbs). klam (klamu~) is a divādi root:
+# it belongs to a later slice, where the note must say what 7.3.75 displaces there instead of guṇa.
+# Only ṣṭhiv is in the bhvādi list.
+LENGTHENED_BEFORE_SHIT = ("zWiv",)
 
 
 def _find_7375(st: State) -> list[Site]:

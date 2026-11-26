@@ -126,6 +126,7 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
                ("6.1.73", "che ‘before ch’ carries over"),
                ("1.1.46", "tuk, marked k, goes at the end of what it is added to: the long vowel, right before the ch")),
     "7.3.75": ((BASE, "an operation on the {base|aṅga} (heading)"),
+               ("7.3.74", "dīrghaḥ ‘a long vowel’ carries over"),
                (LOC, "śiti (locative): before an affix marked ś")),
     "7.2.81": ((BASE, "an operation on the {base|aṅga} (heading)"),
                ("7.2.80", "ataḥ ‘after a’ and iy carry over"),
@@ -158,7 +159,7 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
     "6.1.66": ((LOC, "vali (locative): before a consonant other than y"),
                ("1.1.60", "lopa = disappearance"),
                (SAMARTHYA, "not the y/v a root begins with as taught: reciting vraj, vraṇ with a v "
-                "the rule always deleted would be pointless (Vidyut makes the same exception)")),
+                "the rule always deleted would be pointless")),
     # -- endings and augments --
     "3.4.79": (("3.4.77", "lasya ‘in place of l’ (heading)"),
                (GEN, "ṭeḥ (genitive): the ṭi is what is replaced"),

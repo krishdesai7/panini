@@ -193,7 +193,7 @@ R_8_4_37 = Rule("8.4.37", _find_8437, lambda st, site: (), blocks=("8.4.1", "8.4
 
 
 # 8.4.41 ṣṭunā ṣṭuḥ: s and the dentals (t th d dh n) next to ṣ or a retroflex stop become ṣ and
-# the matching retroflex. Not modelled: the exceptions 8.4.42-44 (padānta ṭ-class, toḥ ṣi, śāt).
+# the matching retroflex. Not modelled: its exceptions 8.4.42-43 (padānta ṭ-class, toḥ ṣi).
 SHTU = pratyahara("wu") | {"z"}
 _SHTU = {"s": "z", "t": "w", "T": "W", "d": "q", "D": "Q", "n": "R"}
 
@@ -216,7 +216,7 @@ R_8_4_41 = Rule("8.4.41", _find_8441,
                 f"{slp1_to_iast(_SHTU[st.terms[site.spans[0].term].sounds[site.spans[0].start].char])}")
 
 
-# 8.4.40 stoḥ ścunā ścuḥ
+# 8.4.40 stoḥ ścunā ścuḥ. Not modelled: its exception 8.4.44 śāt (no change after ś).
 def _find_8440(st: State) -> list[Site]:
     sounds = list(word_sounds(st))
     out = []
@@ -235,7 +235,9 @@ R_8_4_40 = Rule("8.4.40", _find_8440,
                 f"{slp1_to_iast(_SCU[st.terms[site.spans[0].term].sounds[site.spans[0].start].char])}")
 
 # 8.4.53 jhalāṃ jaś jhaśi: an obstruent or sibilant before a voiced stop becomes the voiced
-# unaspirated stop of its own place (ś → j, ṣ → ḍ, s → d).
+# unaspirated stop of its own place. The table has the stops and ś → j, ṣ → ḍ (sajj: s has
+# already become ś by 8.4.40). s → d and h are left out: no bhvādi form in laṭ or laṅ puts them
+# before a voiced stop.
 _JAS_53 = {**_JAS, "S": "j", "z": "q"}
 JHAS = pratyahara("JaS")
 

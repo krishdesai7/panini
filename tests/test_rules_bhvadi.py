@@ -130,8 +130,8 @@ def test_nasal_becomes_retroflex_before_retroflex_nasal(code, expected):
 
 
 def test_rvarna_triggers_natva_by_the_varttika():
-    ids = _rule_ids(form("01.0504", voice="middle"))   # ghṛṇ: the num n after ṛ becomes ṇ by 8.4.1.1, so 8.4.41 has nothing left to do
-    d = form("01.0504", voice="middle")
+    d = form("01.0504", voice="middle")   # ghṛṇ: the num n after ṛ becomes ṇ by 8.4.1.1, so 8.4.41 has nothing left to do
+    ids = _rule_ids(d)
     assert d.result == "ghṛṇṇate" and "8.4.1.1" in ids and "8.4.1" not in ids and "8.4.41" not in ids
 
 

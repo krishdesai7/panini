@@ -125,6 +125,9 @@ lie outside laṭ/laṅ of these roots (Joshi & Kiparsky's *adhītya*,
 - **No 8.4.46–47 doubling** (*aco rahābhyāṃ dve*, *anaci ca*). Forms are
   given undoubled.
 - **No 8.4.68 *a a*** (closed ă). It is invisible in IAST.
+- **No exceptions to 8.4.40–41.** 8.4.42 *na padāntāṭ ṭor anām* and 8.4.43
+  *toḥ ṣi* (which limit 8.4.41) and 8.4.44 *śāt* (which limits 8.4.40) are not
+  modelled; no bhvādi form in laṭ or laṅ needs them.
 - **6.4.22 *asiddhavat* is detected, not modelled.** When two ābhīya rules
   apply in one derivation, the step carries a warning.
 - **6.1.86 *ṣatvatukor asiddhaḥ* is not modelled.** The `tuk_or_satva` flag
@@ -158,13 +161,14 @@ bhvādi root and compares with `Root.pada` (read from the marker vowel). 1147 of
   `OUT_OF_SCOPE` until optional rules are modelled. (sṛ 01.1085 also has two
   stems, via 7.3.78; Task 7.)
 - **nāth 01.0007, sasj 01.0229** (Vidyut both): not marker-reading bugs (Task 8).
-  Vidyut also derives an active of nāth, by the default 1.3.78, against the root's
-  anudātta marker; it follows the vārttika *āśiṣi nāthaḥ* (on 1.3.21), by which nāth is
-  ātmanepada only in the sense of a blessing, which is meaning-conditioned like sthā and
-  vad. Our middle-only nāth is therefore a narrowing: it gives the blessing sense's voice
-  in every sense. Vidyut derives the middle of sasj (`zasja~`, no accent on the
-  marker) with no pada rule at all, so its data treats the root as taking both voices. Our marker readings (nāth A by 1.3.12,
-  sasj P by 1.3.78) stand.
+  Vidyut also derives an active of nāth, by the default 1.3.78, although the root's
+  marker vowel is anudātta. Vidyut follows the vārttika *āśiṣi nāthaḥ* (on 1.3.21),
+  by which nāth is ātmanepada only in the sense of a blessing, a meaning-conditioned
+  rule like those for sthā and vad. Our middle-only nāth is therefore a narrowing:
+  it gives every sense the voice of the blessing sense. Vidyut also derives the
+  middle of sasj (`zasja~`, no accent on the marker) without any pada rule, so its
+  data treats that root as taking both voices. Our marker readings (nāth middle by
+  1.3.12, sasj active by 1.3.78) stand.
 
 ## Whole-class sweep (before the new rules)
 
@@ -316,7 +320,10 @@ For *ghṛṇ* (`GfRi~\`) our trace cites the vārttika 8.4.1.1 *ṛvarṇāc ce
 - **Citation names** now quote a taught nasal at the place of the consonant after it,
   as the tripādī would pronounce it: *sañj*, *svañj*, *rañj*, *añc*, *tump*,
   *śrambh* (ṃ before a sibilant or h, as in *daṃś*; n before a dental). A name is only
-  a display label: lookup by name now needs the ñ/m spelling, or the upadeśa.
+  a display label. Lookup (CLI and explorer) drops every diacritic, so plain spellings
+  work (*sanj*, *dams*, *stha*), though a spelling with its diacritics is tried first
+  in the CLI, so *pat* stays *pat*, not *paṭ*. The nasal must be the one the name now
+  uses: *tunp*-style spellings no longer resolve (the upadeśa *tunpa* still does).
 
 ## Where slice 1.5 ends
 

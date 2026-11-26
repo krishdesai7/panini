@@ -360,14 +360,6 @@ gloss = "Before śap, daṃś, sañj and svañj lose their penultimate nasal."
 text = "rañjeś ca"
 gloss = "Before śap, rañj also loses its penultimate nasal."
 
-["6.4.77"]
-text = "aci śnudhātubhruvāṃ yvor iyaṅuvaṅau"
-gloss = "Before a vowel, the i/u of śnu, of a root and of bhrū is replaced by iy/uv."
-
-["6.4.89"]
-text = "ūd upadhāyā gohaḥ"
-gloss = "Before an affix beginning with a vowel, the penultimate vowel of goh (guh in its {full grade|guṇa}) is replaced by ū."
-
 ["6.4.71"]
 text = "luṅlaṅlṛṅkṣv aḍ udāttaḥ"
 gloss = "Before luṅ, laṅ and lṛṅ, the base gets the (accented) augment aṭ."
@@ -375,6 +367,14 @@ gloss = "Before luṅ, laṅ and lṛṅ, the base gets the (accented) augment a
 ["6.4.72"]
 text = "āḍ ajādīnām"
 gloss = "A base beginning with a vowel gets the augment āṭ instead."
+
+["6.4.77"]
+text = "aci śnudhātubhruvāṃ yvor iyaṅuvaṅau"
+gloss = "Before a vowel, the i/u of śnu, of a root and of bhrū is replaced by iy/uv."
+
+["6.4.89"]
+text = "ūd upadhāyā gohaḥ"
+gloss = "Before an affix beginning with a vowel, the penultimate vowel of goh (guh in its {full grade|guṇa}) is replaced by ū."
 
 ["7.1.2"]
 text = "āyaneyīnīyiyaḥ phaḍhakhachaghāṃ pratyayādīnām"
@@ -399,6 +399,10 @@ gloss = "After a base in a, the yā of the optative is replaced by iy."
 ["7.2.81"]
 text = "āto ṅitaḥ"
 gloss = "After a base ending in a, the ā of an ending marked with ṅ (or treated as such) is replaced by iy."
+
+["7.3.74"]
+text = "śamām aṣṭānāṃ dīrghaḥ śyani"
+gloss = "Before the {stem suffix|vikaraṇa} śyan, the vowel of the eight roots beginning with śam is lengthened."
 
 ["7.3.75"]
 text = "ṣṭhivuklamyācamāṃ śiti"
@@ -486,7 +490,7 @@ gloss = "(Vārttika on 8.4.1) ṛ and ṝ count like r: n after them, in the sam
 
 ["8.4.2"]
 text = "aṭkupvāṅnumvyavāye 'pi"
-gloss = "n becomes ṇ after r or ṣ even when a vowel, h, y, v, r, a velar or labial stop, ā, or the augment n comes between."
+gloss = "n becomes ṇ after r or ṣ even when a vowel, h, y, v, r, a velar or labial stop, the preverb ā (āṅ), or the augment n (num) comes between."
 
 ["8.4.37"]
 text = "padāntasya"
@@ -500,13 +504,13 @@ gloss = "s and the dentals (t th d dh n), next to ś or a palatal, become ś and
 text = "ṣṭunā ṣṭuḥ"
 gloss = "s and the dentals (t th d dh n), next to ṣ or a retroflex stop, become ṣ and the corresponding retroflexes."
 
-["8.4.55"]
-text = "khari ca"
-gloss = "Before a {voiceless consonant|khar}, an {obstruent|jhal} also becomes the {voiceless unaspirated stop|car}."
-
 ["8.4.53"]
 text = "jhalāṃ jaś jhaśi"
 gloss = "An obstruent (jhal) before a voiced stop (jhaś) becomes the voiced unaspirated stop (jaś) of its own place."
+
+["8.4.55"]
+text = "khari ca"
+gloss = "Before a {voiceless consonant|khar}, an {obstruent|jhal} also becomes the {voiceless unaspirated stop|car}."
 
 ["8.4.56"]
 text = "vāvasāne"
@@ -552,4 +556,3 @@ gloss = "toy"
 ["9.9.9"]
 text = "toy"
 gloss = "toy"
-
