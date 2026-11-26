@@ -2,13 +2,17 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Iterator
+import itertools
+from typing import TYPE_CHECKING
 
 from panini.edits import DeleteSounds, Ekadesha, ReplaceSounds
 from panini.model import Site, Sound, Span, State, TermKind
 from panini.rules.base import Rule
 from panini.sounds import dirgha, guna, is_savarna, is_vowel, pratyahara, vrddhi
 from panini.translit import slp1_to_iast
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
 
 EC = pratyahara("ec")
 AK = pratyahara("ak")
@@ -22,7 +26,7 @@ def _sounds(text: str) -> tuple[Sound, ...]:
 def junctions(st: State) -> Iterator[tuple[int, int, str, str]]:
     """(left term, right term, left final, right initial) for adjacent non-empty terms."""
     nonempty = [i for i, t in enumerate(st.terms) if t.sounds]
-    for a, b in zip(nonempty, nonempty[1:]):
+    for a, b in itertools.pairwise(nonempty):
         yield a, b, st.terms[a].sounds[-1].char, st.terms[b].sounds[0].char
 
 
@@ -149,7 +153,7 @@ def _root_initial(st: State, i: int, k: int) -> bool:
 def _candidates_6166(st: State) -> list[tuple[int, int]]:
     w = _word(st)
     return [
-        (i, k) for (i, k, c), (_, _, nxt) in zip(w, w[1:]) if c in "yv" and nxt in VAL
+        (i, k) for (i, k, c), (_, _, nxt) in itertools.pairwise(w) if c in "yv" and nxt in VAL
     ]
 
 

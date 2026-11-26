@@ -3,15 +3,15 @@
 from __future__ import annotations
 
 import tomllib
-from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum
 from functools import cache
 from importlib.resources import files
+lazy from collections.abc import Callable
 
 from panini.edits import EKADESHA_START, VIKRTA, Edit
 from panini.model import Site, State, Term, TermKind
-from panini.rules.readings import Aside
+lazy from panini.rules.readings import Aside
 
 
 class Optionality(Enum):

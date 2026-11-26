@@ -15,7 +15,7 @@ vowel of what it is added to.
 
 from __future__ import annotations
 
-from collections.abc import Callable
+lazy from collections.abc import Callable
 
 from panini.edits import EKADESHA_START, Edit, InsertSounds, InsertTerm, ReplaceSounds
 from panini.model import Sound, State, Term, TermKind

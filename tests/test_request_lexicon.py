@@ -8,7 +8,8 @@ from panini.request import REFERENCE_PATH, all_requests, availability, parse_req
 
 
 def test_lexicon_loads_whole_section() -> None:
-    assert len(ROOTS) == 1156 and "01.0933" not in ROOTS  # 1166 rows, 10 placeholders
+    assert len(ROOTS) == 1156
+    assert "01.0933" not in ROOTS
     assert ROOTS["01.0001"].upadesha == "BU"
     assert ROOTS["01.0001"].meaning == "to be, become"
     assert ROOTS["01.0074"].meaning == "āhvāne rodane ca"
@@ -19,7 +20,7 @@ def test_lexicon_loads_whole_section() -> None:
 
 
 @pytest.mark.parametrize(
-    "up, name",
+    ("up", "name"),
     [
         ("BU", "bhū"),
         ("paWa~", "paṭh"),
@@ -122,7 +123,7 @@ def test_missing_reference_warns(tmp_path, capsys) -> None:
 
 
 @pytest.mark.parametrize(
-    "text,key",
+    ("text", "key"),
     [
         ("gamḷ", "01.1137"),
         ("paṭha", "01.0381"),

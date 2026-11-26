@@ -5,7 +5,7 @@ from panini.request import parse_request
 
 
 @pytest.mark.parametrize(
-    "root,person,number,expected",
+    ("root", "person", "number", "expected"),
     [
         ("bhū", 3, "sg", "bhavati"),
         ("bhū", 3, "pl", "bhavanti"),

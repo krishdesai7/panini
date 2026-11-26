@@ -5,10 +5,10 @@ from __future__ import annotations
 import json
 import sys
 import unicodedata
-from collections.abc import Iterable
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
+lazy from collections.abc import Iterable
 
 from panini.lexicon import ROOTS, Root, lookup_root, middle_voice_reason
 from panini.model import Coreference, Intent, Number, Term, TermKind, Time
@@ -208,9 +208,11 @@ OUT_OF_SCOPE: dict[str, tuple[str, str]] = {
     # Kṣīrataraṅgiṇī I.415: "jabha jṛbhi gātravināme. jabhate"; Vidyut's jabhati (active) is attested
     # nowhere, so there is no reference to derive against (docs/findings.md).
     "01.0150": (
-        "this jabh is Kṣīrasvāmin's reading (jabha) of jabhī, 01.0453. He conjugates it jabhate: "
-        "middle voice, and without the nasal that 7.1.61 adds before a vowel. The sūtra as worded "
-        "doesn't give that form, so the entry is left out",
+        (
+            "this jabh is Kṣīrasvāmin's reading (jabha) of jabhī, 01.0453. He conjugates it jabhate: "
+            "middle voice, and without the nasal that 7.1.61 adds before a vowel. The sūtra as worded "
+            "doesn't give that form, so the entry is left out"
+        ),
         "7.1.61",
     ),
 }

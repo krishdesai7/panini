@@ -7,10 +7,10 @@ import os
 import subprocess
 import sys
 import tomllib
-from collections.abc import Iterable
 from functools import lru_cache
 from importlib.resources import files
 from pathlib import Path
+lazy from collections.abc import Iterable
 
 from panini.cache import DerivationCache
 from panini.derivation import Derivation, Status

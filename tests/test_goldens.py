@@ -3,9 +3,9 @@
 The reference order is the traditional derivation; Vidyut's step order stands in for it.
 """
 
-from panini.derivation import Derivation
 from panini.engine import derive
 from panini.request import parse_request
+lazy from panini.derivation import Derivation
 
 
 def steps_of(
@@ -54,7 +54,7 @@ def test_abhavam() -> None:
 
 
 def test_abhavat_optional_devoicing() -> None:
-    d, o = steps_of("bhū", "laṅ", 3, "sg")
+    d, _o = steps_of("bhū", "laṅ", 3, "sg")
     assert d.result == "abhavat"
     assert d.alternatives == ("abhavad",)
     assert next(s for s in d.steps if "8.4.56" in s.rule_ids).alternatives == (
@@ -84,7 +84,7 @@ def test_endings_own_markers_do_not_make_lat_behave_like_lan() -> None:
 
 
 def test_guna_before_a_nit_ending_is_prohibited_by_1_1_5_not_merely_deferred() -> None:
-    d, o = steps_of("nī", "laṭ", 3, "du")  # tas is ṅit-vat (1.2.4) until śap intervenes
+    d, _o = steps_of("nī", "laṭ", 3, "du")  # tas is ṅit-vat (1.2.4) until śap intervenes
     assert d.result == "nayataḥ"
     reasons = {l.reason for s in d.steps for l in s.losers if l.rule_id == "7.3.84"}
     assert "blocked by 1.1.5" in reasons
@@ -92,7 +92,7 @@ def test_guna_before_a_nit_ending_is_prohibited_by_1_1_5_not_merely_deferred() -
 
 
 def test_optional_rule_note_just_says_preferably() -> None:
-    d, o = steps_of("bhū", "laṅ", 3, "sg")
+    d, _o = steps_of("bhū", "laṅ", 3, "sg")
     note = next(s for s in d.steps if "8.4.56" in s.rule_ids).note
     assert note.endswith("{preferably|vā}; also correct: abhavad")
     assert "Kiparsky" not in note

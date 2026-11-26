@@ -23,7 +23,7 @@ _NASAL_FOR = {
 
 
 def citation_name(upadesha_slp1: str) -> str:
-    """The root as it is usually quoted (IAST), e.g. ``ga\\mx~`` -> gam, ``kradi~`` -> krand.
+    r"""The root as it is usually quoted (IAST), e.g. ``ga\\mx~`` -> gam, ``kradi~`` -> krand.
 
     Only a display label, so it uses plain string logic rather than the it-rules.
     """
@@ -66,7 +66,7 @@ def citation_name(upadesha_slp1: str) -> str:
     # śranbh -> śrambh), or as ṃ before a sibilant or h (daṃś); before a dental it stays n.
     text = "".join(
         _NASAL_FOR.get(nxt, c) if c == "n" else c
-        for c, nxt in zip(text, text[1:] + " ")
+        for c, nxt in zip(text, text[1:] + " ", strict=False)
     )
     return slp1_to_iast(text)
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
+lazy from collections.abc import Callable
 
 from panini.edits import AddTags, InsertTerm, ReplaceTerm
 from panini.lexicon import middle_voice_markers, middle_voice_reason
@@ -188,7 +188,7 @@ def _chosen(st: State, la: Term) -> tuple[str, str]:
 def _rewrite_3478(st: State, site: Site) -> tuple[ReplaceTerm, AddTags]:
     i = site.spans[0].term
     la = st.terms[i]
-    pada, ending = _chosen(st, la)
+    _pada, ending = _chosen(st, la)
     new = substitute_term(la, TermKind.TIN, ending)
     return (ReplaceTerm(i, new), AddTags(i, frozenset({"tiṅ", "vibhakti", "pratyaya"})))
 

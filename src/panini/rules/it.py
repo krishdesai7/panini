@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
+lazy from collections.abc import Callable
 
 from panini.edits import AddTags, DeleteSounds, MarkIt, ReplaceSounds
 from panini.model import Site, Sound, State, Term, TermKind

@@ -1,7 +1,7 @@
 """All implemented rules, assembled from the rule modules."""
 
 from panini.rules import anga, endings, it, sandhi, tin, tripadi
-from panini.rules.base import Rule
+lazy from panini.rules.base import Rule
 
 ALL_RULES: tuple[Rule, ...] = (
     *it.RULES,

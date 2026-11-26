@@ -1,13 +1,15 @@
 # tests/test_site.py
 import json
 import re
+import shutil
+import subprocess
 import threading
 from pathlib import Path
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
+import pytest
 from panini.cache import DerivationCache
-from panini.derivation import Derivation
 from panini.lexicon import FEATURED, ROOTS
 from panini.site.build import (
     build_site,
@@ -17,6 +19,7 @@ from panini.site.build import (
     site_data,
 )
 from panini.site.serve import make_server
+lazy from panini.derivation import Derivation
 
 
 def test_site_data_covers_everything() -> None:
@@ -132,17 +135,12 @@ def test_one_failing_derivation_does_not_abort(monkeypatch, tmp_path) -> None:
         root_derivations.cache_clear()
 
 
-import shutil
-import subprocess
-
-import pytest
-
 APP_JS = Path(__file__).parent.parent / "src/panini/site/app.js"
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
 @pytest.mark.parametrize(
-    "hash_, expected",
+    ("hash_", "expected"),
     [
         ("#paṭh/laṭ/P/3/sg", {"root": "paṭh", "key": "paṭh|laṭ|P|3|sg"}),
         (
@@ -338,7 +336,7 @@ def all_roots_data():
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
 @pytest.mark.parametrize(
-    "q, first",
+    ("q", "first"),
     [
         ("krand", "01.0074"),
         ("KRAND-", "01.0074"),
@@ -371,7 +369,7 @@ def test_fold_strips_every_combining_mark() -> None:
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
 @pytest.mark.parametrize(
-    "hash_, expected",
+    ("hash_", "expected"),
     [
         ("#paṭh/laṭ/P/3/sg", {"root": "01.0381", "key": "01.0381|laṭ|P|3|sg"}),
         ("#01.0074", {"root": "01.0074", "key": None}),

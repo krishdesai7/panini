@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
+lazy from collections.abc import Callable
 
 from panini.edits import VIKRTA, AddTags, DeleteSounds, ReplaceSounds, ReplaceTerm
 from panini.meta import augment_edit, sthanivat_note, substitute_term

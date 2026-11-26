@@ -185,7 +185,7 @@ def test_commuting_candidate_applies_before_an_open_conflict() -> None:
         lambda st, site: (),
         blocks=("9.9.5",),
     )
-    state, steps, _ = run(S("ab"), [a, b, c, d])
+    state, _steps, _ = run(S("ab"), [a, b, c, d])
     assert final_text(state) == "ip"
 
 

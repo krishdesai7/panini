@@ -9,7 +9,10 @@ from panini.request import REFERENCE_PATH, all_requests, availability
 
 REF = json.loads(REFERENCE_PATH.read_text())
 
-_SLOT = lambda code: [r.key for r in all_requests([code]) if availability(r) is None]
+
+def _SLOT(code):
+    return [r.key for r in all_requests([code]) if availability(r) is None]
+
 
 # key -> explanation (mirrors docs/findings.md)
 XFAIL: dict[str, str] = {

@@ -54,7 +54,7 @@ class Term:
     def from_upadesha(
         cls, kind: TermKind, upadesha_slp1: str, tags: frozenset[str] = frozenset()
     ) -> Term:
-        """Parse a recited form. ``~`` nasalizes the preceding vowel.
+        r"""Parse a recited form. ``~`` nasalizes the preceding vowel.
 
         Accent marks (``\\`` anudātta, ``^`` svarita) are not sounds. On a nasal
         marker vowel they are recorded as the tags ``anudattet``/``svaritet``,

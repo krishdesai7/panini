@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterator
+import itertools
+lazy from collections.abc import Iterator
 
 from panini.edits import DeleteSounds, ReplaceSounds
 from panini.model import Site, Sound, State, TermKind
@@ -158,7 +159,7 @@ def _find_8324(st: State) -> list[Site]:
     sounds = list(word_sounds(st))
     return [
         Site.at(i, k)
-        for (i, k, c), (_, _, nxt) in zip(sounds, sounds[1:])
+        for (i, k, c), (_, _, nxt) in itertools.pairwise(sounds)
         if c in "nm" and nxt in JHAL
     ]
 
@@ -364,7 +365,7 @@ def _find_8453(st: State) -> list[Site]:
     sounds = list(word_sounds(st))
     return [
         Site.at(i, k)
-        for (i, k, c), (_, _, nxt) in zip(sounds, sounds[1:])
+        for (i, k, c), (_, _, nxt) in itertools.pairwise(sounds)
         if c in _JAS_53 and _JAS_53[c] != c and nxt in JHAS
     ]
 
@@ -404,7 +405,7 @@ def _find_8458(st: State) -> list[Site]:
     sounds = list(word_sounds(st))
     return [
         Site.at(i, k)
-        for (i, k, c), (_, _, nxt) in zip(sounds, sounds[1:])
+        for (i, k, c), (_, _, nxt) in itertools.pairwise(sounds)
         if c == "M" and nxt in YAY and _nasal_of(nxt)
     ]
 

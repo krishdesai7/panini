@@ -72,7 +72,7 @@ _IAST_KEYS = sorted(_IAST_TO_SLP1, key=len, reverse=True)
 
 NASAL = "\u0303"  # combining tilde: a nasal vowel (anunāsika), written ~ in SLP1
 # A vowel in NFD: a i u e o (optionally with macron), or ṛ ṝ ḷ ḹ (r/l + dot below), then a tilde.
-_NASAL_VOWEL = re.compile("([aiueoAIUEO]\u0304?|[rlRL]\u0323\u0304?)\u0303")
+_NASAL_VOWEL = re.compile(r"([aiueoAIUEO]\u0304?|[rlRL]\u0323\u0304?)\u0303")
 
 
 def iast_to_slp1(text: str) -> str:

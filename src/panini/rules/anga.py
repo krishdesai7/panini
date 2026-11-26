@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import itertools
 from dataclasses import replace
 
 from panini.edits import VIKRTA, AddTags, DeleteSounds, ReplaceSounds
@@ -249,7 +250,7 @@ def _tuk_before_ch(st: State, short: bool) -> list[Site]:
     ]
     return [
         Site((Span(i, k, k + 1), Span(j, m, m + 1)))
-        for (i, k, c), (j, m, nxt) in zip(flat, flat[1:])
+        for (i, k, c), (j, m, nxt) in itertools.pairwise(flat)
         if is_vowel(c) and is_hrasva(c) == short and nxt == "C"
     ]
 
@@ -337,7 +338,7 @@ RULES = (
 def _find_7281(st: State) -> list[Site]:
     out = []
     nonempty = [i for i, t in enumerate(st.terms) if t.sounds]
-    for a, j in zip(nonempty, nonempty[1:]):
+    for a, j in itertools.pairwise(nonempty):
         t = st.terms[j]
         if (
             t.kind is TermKind.TIN
@@ -400,7 +401,7 @@ RULES = (*RULES, R_1_1_5)
 
 # 7.1.58 idito num dhātoḥ
 def _is_idit(t: Term) -> bool:
-    """A root whose marker is a final i. The it-rules must have marked it (1.3.2); the upadeśa
+    r"""A root whose marker is a final i. The it-rules must have marked it (1.3.2); the upadeśa
     tells i from ir: in i~r (dṛś, df\\Si~r) the nasal i belongs to the marker ir and adds no nasal."""
     return t.kind is TermKind.ROOT and t.has_marker("i") and t.upadesha.endswith("i~")
 

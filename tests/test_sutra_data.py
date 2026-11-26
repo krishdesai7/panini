@@ -35,8 +35,8 @@ def test_every_rule_and_cited_sutra_has_text_and_gloss(rule_id) -> None:
 
 
 def test_marker_rule_glosses_avoid_jargon() -> None:
-    t7, g7 = sutra_info("1.3.7")
-    t8, g8 = sutra_info("1.3.8")
+    _t7, g7 = sutra_info("1.3.7")
+    _t8, g8 = sutra_info("1.3.8")
     assert "row" not in g7
     assert "row" not in g8
     assert "{secondary nominal suffix|taddhita}" in g8

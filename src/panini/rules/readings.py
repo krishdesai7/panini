@@ -284,8 +284,8 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
         ("1.1.60", "lopa = disappearance"),
         (
             SAMARTHYA,
-            "not the y/v a root begins with as taught: reciting vraj, vraṇ with a v "
-            "the rule always deleted would be pointless",
+            ("not the y/v a root begins with as taught: reciting vraj, vraṇ with a v "
+            "the rule always deleted would be pointless"),
         ),
     ),
     # -- endings and augments --

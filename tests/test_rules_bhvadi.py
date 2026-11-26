@@ -24,7 +24,7 @@ def _rule_ids(d: Derivation) -> list[str]:
 
 
 @pytest.mark.parametrize(
-    "code, tense, voice, expected",
+    ("code", "tense", "voice", "expected"),
     [
         ("01.0074", "laṭ", "active", "krandati"),
         ("01.0074", "laṅ", "active", "akrandat"),
@@ -67,7 +67,7 @@ def test_idit_note_uses_house_markup() -> None:
 
 
 @pytest.mark.parametrize(
-    "code, expected",
+    ("code", "expected"),
     [
         ("01.0532", "stanati"),  # ṣṭana~: ṭ goes back to t
         ("01.1136", "namati"),  # ṇama~
@@ -106,7 +106,7 @@ def test_root_initial_n_note_names_the_taught_form() -> None:
 
 
 @pytest.mark.parametrize(
-    "code, voice, expected",
+    ("code", "voice", "expected"),
     [
         ("01.0021", "middle", "kūrdate"),
         ("01.0239", "active", "hūrchati"),
@@ -125,7 +125,7 @@ def test_vowel_lengthened_before_upadha_r_or_v_and_consonant(
 
 
 @pytest.mark.parametrize(
-    "code, tense, expected",
+    ("code", "tense", "expected"),
     [
         ("01.0233", "laṭ", "mlecchati"),
         ("01.0238", "laṭ", "hrīcchati"),  # long e, long ī
@@ -145,7 +145,7 @@ def test_tuk_is_written_with_the_vowel_it_follows() -> None:
 
 
 @pytest.mark.parametrize(
-    "code, expected", [("01.0237", "āñchat"), ("01.0243", "auñchat")]
+    ("code", "expected"), [("01.0237", "āñchat"), ("01.0243", "auñchat")]
 )
 def test_num_still_goes_after_a_merged_vowel_when_tuk_could_follow_it(
     code, expected
@@ -177,7 +177,7 @@ def test_sasj_palatal_then_voiced() -> None:
 
 
 @pytest.mark.parametrize(
-    "code, expected", [("01.0502", "ghiṇṇate"), ("01.0503", "ghuṇṇate")]
+    ("code", "expected"), [("01.0502", "ghiṇṇate"), ("01.0503", "ghuṇṇate")]
 )
 def test_nasal_becomes_retroflex_before_retroflex_nasal(code, expected) -> None:
     d = form(code, voice="middle")
@@ -259,7 +259,7 @@ def test_root_initial_s_and_n_only_when_the_root_still_begins_with_it() -> None:
 
 
 @pytest.mark.parametrize(
-    "code, voice, expected",
+    ("code", "voice", "expected"),
     [
         ("01.1074", "active", "pibati"),
         ("01.1075", "active", "jighrati"),
@@ -422,7 +422,7 @@ def test_chad_ih_marker() -> None:
 # guṇa bleed each other and no meta-rule decides (docs/findings.md). With the cch stored, neither
 # rule applies and the full grade can't happen.
 @pytest.mark.parametrize(
-    "code, tense, expected",
+    ("code", "tense", "expected"),
     [
         ("01.0242", "laṭ", "yucchati"),
         ("01.0242", "laṅ", "ayucchat"),
@@ -437,7 +437,7 @@ def test_stored_cch_roots(code, tense, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "text, code",
+    ("text", "code"),
     [
         ("yuch", "01.0242"),
         ("yucch", "01.0242"),
@@ -452,7 +452,7 @@ def test_stored_cch_roots_found_by_taught_spelling(text, code) -> None:
 
 
 @pytest.mark.parametrize(
-    "code, tense, voice, expected, rule",
+    ("code", "tense", "voice", "expected", "rule"),
     [
         ("01.1144", "laṭ", "active", "daśati", "6.4.25"),
         ("01.1142", "laṭ", "active", "sajati", "6.4.25"),
@@ -472,7 +472,7 @@ def test_nasal_loss_before_shap(code, tense, voice, expected, rule) -> None:
 
 
 @pytest.mark.parametrize(
-    "tense, number, expected",
+    ("tense", "number", "expected"),
     [("laṭ", "pl", "gāte"), ("laṅ", "pl", "agāta"), ("laṭ", "sg", "gāte")],
 )
 def test_jh_becomes_at_after_a_base_not_in_short_a(tense, number, expected) -> None:
@@ -500,7 +500,7 @@ def test_jh_becomes_ant_after_short_a() -> None:
 
 
 @pytest.mark.parametrize(
-    "tense, voice, expected",
+    ("tense", "voice", "expected"),
     [
         ("laṭ", "active", "gūhati"),
         ("laṅ", "middle", "agūhata"),
@@ -519,7 +519,7 @@ def test_guh_takes_long_u_after_guna(tense, voice, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    "code, tense, expected",
+    ("code", "tense", "expected"),
     [
         ("01.0866", "laṭ", "kalpate"),
         ("01.0875", "laṭ", "kalpate"),
@@ -540,7 +540,7 @@ def test_krap_is_not_krp() -> None:
 
 # 7.1.61 radhijabhor aci: jabh gets num before śap's vowel. 01.0150 jaBa~ is Kṣīrasvāmin's reading
 # of the same root and is out of scope (docs/findings.md).
-@pytest.mark.parametrize("tense, expected", [("laṭ", "jambhate"), ("laṅ", "ajambhata")])
+@pytest.mark.parametrize(("tense", "expected"), [("laṭ", "jambhate"), ("laṅ", "ajambhata")])
 def test_jabh_takes_nasal_before_a_vowel(tense, expected) -> None:
     d = form("01.0453", tense, voice="middle")
     assert d.result == expected
@@ -556,7 +556,7 @@ def test_jabha_variant_is_out_of_scope() -> None:
 
 
 @pytest.mark.parametrize(
-    "code, says, not_says",
+    ("code", "says", "not_says"),
     [("01.0002", "anudātta", "marked ṅ"), ("01.1099", "marked ṅ", "anudātta")],
 )
 def test_1312_note_names_the_marker(code, says, not_says) -> None:
