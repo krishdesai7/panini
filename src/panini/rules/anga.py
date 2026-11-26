@@ -387,11 +387,20 @@ R_1_1_5 = Rule(
     _find_115,
     lambda st, site: (),
     blocks=("7.3.84", "7.3.86"),
-    note=lambda st, site: (
-        f"no {{full grade|guṇa}} before {slp1_to_iast(st.terms[_next_term(st, site.spans[0].term)].text)}, "
-        "which is marked ṅ (or counts as such)"
-    ),
+    note=lambda st, site: _note_115(st, site),
 )
+
+
+def _note_115(st: State, site: Site) -> str:
+    """Names the vowel protected: one root can need 1.1.5 more than once (mṛ → mri → mriy)."""
+    sp = site.spans[0]
+    t = st.terms[sp.term]
+    where = "final" if sp.start == len(t.sounds) - 1 else "penultimate"
+    affix = slp1_to_iast(st.terms[_next_term(st, sp.term)].text)
+    return (
+        f"the {where} {slp1_to_iast(t.sounds[sp.start].char)} gets no {{full grade|guṇa}} "
+        f"before {affix}, which is marked ṅ (or counts as such)"
+    )
 
 
 # 7.1.58 idito num dhātoḥ
