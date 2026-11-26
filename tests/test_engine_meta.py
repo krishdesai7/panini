@@ -136,10 +136,34 @@ def test_nitya_counts_one_operation_across_sibling_rules() -> None:
         Loser(
             "9.9.11",
             "deferred: 9.9.10 {applies either way|nitya}: after 9.9.11, "
-            "9.9.12 makes the same change",
+            "9.9.12 still applies to the same sound",
         )
         in steps[0].losers
     )
+
+
+def test_nitya_operation_survives_on_the_same_vowel_whatever_its_result() -> None:
+    # tF: G1 (final F -> ar) and Y (final F -> ir) bleed each other; after Y the sibling G2 still
+    # applies to the same vowel (i -> e), with a different result. The operation survives Y, so
+    # G1 is nitya (tṝ: guṇa over 7.1.100, tarati; the user's ruling, slice 1.6).
+    def g1_rewrite(_st, site):
+        return (ReplaceSounds(0, 1, 2, (Sound("a"), Sound("r"))),)
+
+    g1 = Rule(
+        "9.9.10",
+        lambda st: [Site.at(0, 1)] if st.terms[0].text == "tF" else [],
+        g1_rewrite,
+        operation="g",
+    )
+    y = Rule(
+        "9.9.11",
+        lambda st: [Site.at(0, 1)] if st.terms[0].text == "tF" else [],
+        lambda st, site: (ReplaceSounds(0, 1, 2, (Sound("i"), Sound("r"))),),
+    )
+    g2 = replace_rule("9.9.12", "i", "e", only_at=1, operation="g")
+    state, steps, _ = run(S("tF"), [g1, y, g2])
+    assert final_text(state) == "tar"
+    assert ids(steps) == ["9.9.10"]
 
 
 def test_sibling_rules_without_a_shared_operation_still_conflict() -> None:

@@ -27,12 +27,20 @@ XFAIL: dict[str, str] = {
 }
 
 
+# Roots whose forms match Vidyut's but in another order (docs/findings.md). gṝ: 8.2.21 aci vibhāṣā
+# is "preferably not" (Kiparsky), so girati comes first; Vidyut lists gilati first.
+ORDER_DIFFERS = frozenset({"06.0146"})
+
+
 def _check(req, request) -> None:
     if req.key in XFAIL:
         request.applymarker(pytest.mark.xfail(reason=XFAIL[req.key], strict=True))
     d = derive(req)
     assert d.status is Status.OK, d.message
-    assert [d.result, *d.alternatives] == REF[req.key]
+    got, want = [d.result, *d.alternatives], REF[req.key]
+    if req.root.code in ORDER_DIFFERS:
+        got, want = sorted(got), sorted(want)
+    assert got == want
 
 
 FAST = [r for r in all_requests(FEATURED) if availability(r) is None]

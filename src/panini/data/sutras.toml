@@ -428,6 +428,10 @@ gloss = "(Vārttika on 7.1.59) The roots of the tṛmph group also get num befor
 text = "radhijabhor aci"
 gloss = "Before an affix beginning with a vowel, radh and jabh get the augment num (n)."
 
+["7.1.100"]
+text = "ṝta id dhātoḥ"
+gloss = "A root's final ṝ is replaced by i (followed by r, 1.1.51)."
+
 ["7.2.80"]
 text = "ato yeyaḥ"
 gloss = "After a base in a, the yā of the optative is replaced by iy."
@@ -487,6 +491,14 @@ gloss = "(Heading) From here to the end of the grammar, each rule is treated as 
 ["8.2.18"]
 text = "kṛpo ro laḥ"
 gloss = "In the root kṛp, r (also the r heard in ṛ) is replaced by l."
+
+["8.2.20"]
+text = "gro yaṅi"
+gloss = "Before the intensive suffix yaṅ, the r of gṝ becomes l."
+
+["8.2.21"]
+text = "aci vibhāṣā"
+gloss = "Before a vowel, the r of gṝ preferably does not become l (it may)."
 
 ["8.2.23"]
 text = "saṃyogāntasya lopaḥ"

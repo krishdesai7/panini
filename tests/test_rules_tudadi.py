@@ -198,3 +198,29 @@ def test_samprasarana(code, expected) -> None:
 
 def test_prach_also_shows_6173() -> None:
     assert "6.1.73" in _rule_ids(form("06.0149"))
+
+
+# -- 7.1.100 ṝta id dhātoḥ, 8.2.21 aci vibhāṣā, 8.2.79 na bhakurchurām ---------
+
+
+def test_kirati() -> None:
+    d = form("06.0145")
+    assert d.result == "kirati"
+    step = next(s for s in d.steps if "7.1.100" in s.rule_ids)
+    assert "1.1.51" in step.note
+
+
+def test_gr_optional_l() -> None:
+    # vibhāṣā: preferably not (Kiparsky), so girati comes first; Vidyut lists gilati first
+    d = form("06.0146")
+    assert [d.result, *d.alternatives] == ["girati", "gilati"]
+    step = next(s for s in d.steps if "8.2.21" in s.rule_ids)
+    assert "gilati" in step.note
+
+
+def test_chur_not_lengthened() -> None:
+    # Vidyut cites 8.2.79 na bhakurchurām here, but in churati the r is followed by a vowel, so
+    # 8.2.76–78 never apply and 8.2.79 has nothing to block (docs/findings.md, slice 1.6).
+    d = form("06.0099")
+    assert d.result == "churati"
+    assert "8.2.78" not in _rule_ids(d)

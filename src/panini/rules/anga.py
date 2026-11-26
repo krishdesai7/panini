@@ -838,6 +838,32 @@ R_6_1_108 = Rule(
 )
 
 
+# 7.1.100 ṝta id dhātoḥ: a root's final ṝ is replaced by i, which takes an r after it (1.1.51 uraṇ
+# raparaḥ): kṝ → kir, gṝ → gir. Where full grade applies (bhvādi tṝ, tarati) the two compete.
+def _find_71100(st: State) -> list[Site]:
+    out: list[Site] = []
+    for i in range(len(st.terms) - 1):
+        t = st.terms[i]
+        if t.kind is TermKind.ROOT and t.antya == "F" and is_pratyaya(st.terms[i + 1]):
+            k = len(t.sounds) - 1
+            out.append(Site.at(i, k, k + 1))
+    return out
+
+
+R_7_1_100 = Rule(
+    "7.1.100",
+    _find_71100,
+    lambda st, site: (
+        ReplaceSounds(
+            site.spans[0].term, site.spans[0].start, site.spans[0].end, _sounds("ir")
+        ),
+    ),
+    note=lambda st, site: (
+        "the root's final ṝ is replaced by i, which is followed by r because it replaces ṛ (1.1.51)"
+    ),
+)
+
+
 # 6.4.89 ūd upadhāyā gohaḥ: the penultimate vowel of goha becomes ū before a vowel-initial affix
 # (aci, carried over from 6.4.77). goha is guh in its full grade, so the rule follows guṇa (7.3.86)
 # and reaches only forms where guṇa applied.
@@ -897,5 +923,6 @@ RULES = (
     R_7_4_28,
     R_6_1_16,
     R_6_1_108,
+    R_7_1_100,
     R_6_4_89,
 )

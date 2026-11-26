@@ -177,6 +177,36 @@ R_8_3_24 = Rule(
 )
 
 
+# 8.2.21 aci vibhāṣā (with graḥ from 8.2.20 gro yaṅi): the r of gṝ (gir after 7.1.100) may become l
+# before a vowel. Vibhāṣā: preferably not (Kiparsky), so girati first and gilati as the
+# alternative; Vidyut lists gilati first (docs/findings.md, slice 1.6).
+VOWELS = frozenset("aAiIuUfFxXeEoO")
+
+
+def _find_8221(st: State) -> list[Site]:
+    out: list[Site] = []
+    for n in range(len(st.terms) - 1):
+        t, nxt = st.terms[n], st.terms[n + 1]
+        if (
+            t.kind is TermKind.ROOT
+            and t.upadesha == "gF"
+            and t.antya == "r"
+            and nxt.sounds
+            and nxt.sounds[0].char in VOWELS
+        ):
+            out.append(Site.at(n, len(t.sounds) - 1))
+    return out
+
+
+R_8_2_21 = Rule(
+    "8.2.21",
+    _find_8221,
+    lambda st, site: _replace(site.spans[0].term, site.spans[0].start, "l"),
+    optional=Optionality.VIBHASHA,
+    note=lambda st, site: "the r of gṝ may become l before a vowel",
+)
+
+
 # 8.2.78 upadhāyāṃ ca (with 8.2.76 rvor upadhāyā dīrgha ikaḥ and 8.2.77 hali ca carried over):
 # an ik before an r/v that is the upadhā of a root, when a consonant follows. The earlier
 # 8.2.76 (root ending in r/v, ik as upadhā, at a pause) and 8.2.77 (the same, before a consonant
@@ -437,6 +467,7 @@ R_8_4_58 = Rule(
 
 RULES = (
     R_8_2_18,
+    R_8_2_21,
     R_8_2_23,
     R_8_2_39,
     R_8_2_66,

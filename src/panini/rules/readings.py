@@ -175,6 +175,15 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
         ("6.1.84", "ekaḥ pūrvaparayoḥ ‘one sound for both’ (heading)"),
         ("1.1.45", "samprasāraṇa = the vowel that replaced a semivowel"),
     ),
+    "7.1.100": (
+        (BASE, "an operation on the {base|aṅga} (heading)"),
+        (GEN, "ṝtaḥ (genitive): ṝ is what is replaced"),
+        ("1.1.51", "a vowel replacing ṛ/ṝ is followed by r"),
+    ),
+    "8.2.21": (
+        ("8.2.20", "graḥ ‘of gṝ’ and the r → l change (from 8.2.18) carry over"),
+        (LOC, "aci (locative): before a vowel"),
+    ),
     "6.4.89": (
         (BASE, "an operation on the {base|aṅga} (heading)"),
         ("6.4.77", "aci ‘before a vowel’ carries over"),

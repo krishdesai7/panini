@@ -9,8 +9,9 @@ LocalResolver implements the restricted siddha principle, the slice-1 design:
 3. nitya: prefer X if X still makes the same change after Y applies, but
    Y no longer does after X (śabdāntaraprāpti: a changed effect doesn't count).
    An operation shared by sibling rules (``Rule.operation``, e.g. guṇa by 7.3.84
-   or 7.3.86) survives Y if a sibling gives the same substitute on the same term
-   after Y (bhū: guṇa is nitya over uvaṅ 6.4.77; the user's ruling, slice 1.6);
+   or 7.3.86) survives Y if a sibling still acts on the same sound after Y, whatever
+   its result (bhū: guṇa over uvaṅ 6.4.77; tṝ: guṇa over 7.1.100; the user's
+   rulings, slice 1.6). This is looser than the traditional śabdāntaraprāpti caveat;
 4. ties: the lowest-numbered candidate that commutes with all the others goes
    first (an arbitrary order with an identical result); if none commutes with
    all the others, raise UnresolvedConflict. The resolver never guesses.
@@ -183,11 +184,12 @@ def still_applies(
     return _matching_site(s2, x, sig) is not None
 
 
-def _substitutes(state: State, edit: Edit) -> tuple[tuple[object, ...], ...]:
-    """What a substitution edit puts where: (term, new sounds) per ReplaceSounds, ignoring what it
-    replaces (the operand may itself have been changed by the other rule: ū → uv, then u → o)."""
+def _targets(state: State, edit: Edit) -> tuple[tuple[object, int], ...]:
+    """Where a substitution edit acts: (term, start position) per ReplaceSounds. Only the place
+    counts, not what it replaces or what it puts there: after ū → uv the u is still the vowel that
+    takes guṇa (bhū), and after ṝ → ir the i is (tṝ, where guṇa then gives e, not ar)."""
     return tuple(
-        (_term_key(state, op.term), tuple(snd.char for snd in op.sounds))
+        (_term_key(state, op.term), op.start)
         for op in edit
         if isinstance(op, ReplaceSounds)
     )
@@ -200,13 +202,14 @@ def surviving_rule(
     settle: Settle,
     rules: Sequence[Rule],
 ) -> str | None:
-    """The rule that still makes x's change once ``after`` has applied: x itself (same edit), or a
-    sibling sharing x's operation that puts the same substitute on the same term. None if none."""
+    """The rule that still carries out x's operation once ``after`` has applied: x itself (the same
+    edit), or a sibling sharing x's operation that acts on the same sound of the same term,
+    whatever its result (the user's ruling, slice 1.6). None if neither does."""
     if still_applies(state, x, after, settle):
         return x.rule.id
     if x.rule.operation is None:
         return None
-    want = _substitutes(state, x.rule.rewrite(state, x.site))
+    want = _targets(state, x.rule.rewrite(state, x.site))
     if not want:
         return None
     s2 = settle(state, after.rule.rewrite(state, after.site))
@@ -214,7 +217,7 @@ def surviving_rule(
         if r.operation != x.rule.operation or r.id == x.rule.id:
             continue
         for site in r.find(s2):
-            if _substitutes(s2, r.rewrite(s2, site)) == want:
+            if _targets(s2, r.rewrite(s2, site)) == want:
                 return r.id
     return None
 
@@ -387,7 +390,7 @@ def _with_nitya_losers(
             + (
                 ""
                 if by == x.rule.id
-                else f": after {remaining[k].rule.id}, {by} makes the same change"
+                else f": after {remaining[k].rule.id}, {by} still applies to the same sound"
             ),
         )
         for k, (x, by) in dominated_by.items()
