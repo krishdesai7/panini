@@ -161,3 +161,50 @@ ol.steps > li::before { content: counter(step); color: var(--faint); text-align:
 }
 .steps .kind { margin: 0.15rem 0 0; font-size: var(--fs-14); color: var(--muted); }
 .steps .reads { margin: 0.25rem 0 0; font-size: var(--fs-14); color: var(--faint); }
+
+/* Root search box: a combobox in the picker pill, results in a glass card below it. */
+.picker .combo { position: relative; display: inline-block; max-width: 100%; }
+.picker input { font: 400 var(--fs-16) var(--serif); color: var(--ink); padding: 0.45rem 0.8rem 0.45rem 0.2rem; width: 17rem; max-width: 60vw; outline: none; }
+.picker .pill:focus-within { border-color: var(--link-underline); }
+.root-list {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  top: calc(100% + 6px);
+  width: min(34rem, calc(100vw - 2rem));
+  max-height: 20rem;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0.3rem;
+  list-style: none;
+  background: var(--control-strong);
+  -webkit-backdrop-filter: var(--control-blur);
+  backdrop-filter: var(--control-blur);
+  border: 1px solid var(--control-edge);
+  border-radius: var(--radius);
+  box-shadow: var(--control-shadow);
+}
+.root-list[hidden] { display: none; }
+.root-list li {
+  display: grid;
+  grid-template-columns: 5.5rem 6rem minmax(0, 1fr) auto;
+  gap: 0.2rem 0.6rem;
+  align-items: baseline;
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.root-list li:hover, .root-list li[aria-selected="true"] { background: var(--hover); box-shadow: inset 2px 0 0 var(--accent); }
+.root-list .rname { font-weight: 600; }
+.root-list .rup, .root-list .rvoice { font-size: var(--fs-14); color: var(--muted); }
+.root-list .gloss { font-size: var(--fs-14); color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.root-list li.out { color: var(--faint); cursor: help; }
+.root-list li.out .gloss, .root-list li.out .rup { color: var(--faint); }
+.root-list li.none { display: block; color: var(--faint); cursor: default; }
+.root-info .rname { font-weight: 600; color: var(--ink); }
+.loadmsg { color: var(--muted); font-style: italic; margin: var(--baseline) 0; grid-column: 1 / -1; }
+.loadmsg .retry { font: 400 var(--fs-16) var(--serif); font-style: normal; color: var(--link); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline dotted; }
+@media (max-width: 767px) {
+  .root-list li { grid-template-columns: 4.5rem minmax(0, 1fr); }
+  .root-list .rup, .root-list .rvoice { display: none; }
+}

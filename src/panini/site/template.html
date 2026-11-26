@@ -30,7 +30,10 @@
   </header>
 
   <div class="picker">
-    <span class="pill"><label for="root">Root</label><select id="root"></select></span>
+    <div class="combo">
+      <span class="pill"><label for="root">Root</label><input id="root" type="search" role="combobox" aria-expanded="false" aria-controls="root-list" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="search by name, code or meaning"></span>
+      <ul id="root-list" class="root-list" role="listbox" aria-label="Matching roots" hidden></ul>
+    </div>
     <p class="root-info" id="root-info"></p>
   </div>
 

@@ -11,8 +11,36 @@ function keyOf(root, lakara, pada, person, number) {
   return [root, lakara, pada, person, number].join("|");
 }
 
-/* Parse "#root/laṭ/P/3/sg" (or just "#root"). Anything invalid falls back to the
-   first root and no selection. Pure: no DOM access. */
+/* Search key: no combining marks (dot-below, macron, tilde, ...), no "~", no trailing "-", lowercase. */
+function fold(s) {
+  return String(s == null ? "" : s).normalize("NFD").replace(/\p{M}/gu, "").replace(/~/g, "").replace(/-+$/, "").toLowerCase();
+}
+
+/* Roots matching `query`, best first: exact name, name prefix, code prefix, then substring of name,
+   upadeśa or meaning. Within a group featured roots come first, then list order. */
+function searchRoots(query, roots, featured, limit) {
+  var q = fold(String(query == null ? "" : query).trim());
+  var feat = {};
+  (featured || []).forEach(function (c) { feat[c] = true; });
+  var hits = [];
+  roots.forEach(function (r, i) {
+    var name = fold(r.name), group = 4;
+    if (!q) group = 0;
+    else if (name === q) group = 0;
+    else if (name.indexOf(q) === 0) group = 1;
+    else if (r.key.indexOf(q) === 0) group = 2;
+    else if (name.indexOf(q) >= 0 || fold(r.upadesha_iast).indexOf(q) >= 0 || fold(r.meaning).indexOf(q) >= 0) group = 3;
+    else return;
+    hits.push({ r: r, group: group, feat: feat[r.key] ? 0 : 1, i: i });
+  });
+  hits.sort(function (x, y) { return x.group - y.group || x.feat - y.feat || x.i - y.i; });
+  return hits.slice(0, limit || 50).map(function (h) { return h.r; });
+}
+
+/* Parse "#<code>/laṭ/P/3/sg" (or just "#<code>"); old links may name the root instead, which
+   counts if the name is unique or one of the matches is featured. Anything invalid falls back to
+   the first root and no selection. On a server page whose root isn't loaded yet, a well-formed
+   key is kept (the caller checks it once the forms arrive). Pure: no DOM access. */
 function parseHash(hash, data) {
   var first = data.roots.length ? data.roots[0].key : null;
   var fallback = { root: first, key: null };
@@ -23,9 +51,22 @@ function parseHash(hash, data) {
   text = text.normalize("NFC");
   var parts = text.split("/");
   var root = parts[0];
-  if (!data.roots.some(function (r) { return r.key === root; })) return fallback;
+  if (!data.roots.some(function (r) { return r.key === root; })) {
+    var named = data.roots.filter(function (r) { return r.name && r.name.normalize("NFC") === root; });
+    var feat = named.filter(function (r) { return (data.featured || []).indexOf(r.key) >= 0; });
+    if (named.length === 1) root = named[0].key;
+    else if (feat.length) root = feat[0].key;
+    else return fallback;
+  }
   if (parts.length < 5) return { root: root, key: null };
   var key = keyOf(root, parts[1], parts[2], parts[3], parts[4]);
+  var prefix = root + "|";
+  var loaded = Object.keys(data.derivations).some(function (k) { return k.indexOf(prefix) === 0; });
+  if (!loaded && data.source === "server") {
+    var ok = LAKARAS.some(function (l) { return l[0] === parts[1]; }) && VOICES.some(function (v) { return v[0] === parts[2]; })
+      && PERSONS.some(function (p) { return p[0] === parts[3]; }) && NUMBERS.some(function (n) { return n[0] === parts[4]; });
+    return { root: root, key: ok ? key : null };
+  }
   return { root: root, key: Object.prototype.hasOwnProperty.call(data.derivations, key) ? key : null };
 }
 
@@ -94,14 +135,15 @@ function tipPosition(rect, size, view) {
   return { left: left, top: top };
 }
 
-if (typeof module !== "undefined") module.exports = { parseHash: parseHash, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, splitGlossary: splitGlossary, sutraTitle: sutraTitle, markerTip: markerTip, tipPosition: tipPosition };
+if (typeof module !== "undefined") module.exports = { parseHash: parseHash, fold: fold, searchRoots: searchRoots, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, splitGlossary: splitGlossary, sutraTitle: sutraTitle, markerTip: markerTip, tipPosition: tipPosition };
 
 if (typeof document !== "undefined") (function () {
   var data = JSON.parse(document.getElementById("data").textContent);
-  var rootSelect = document.getElementById("root");
+  var rootInput = document.getElementById("root");
+  var rootList = document.getElementById("root-list");
   var paradigm = document.getElementById("paradigm");
   var panel = document.getElementById("derivation");
-  var state = parseHash(location.hash, data);
+  var state = { root: null, key: null };
 
   function el(tag, attrs, children) {
     var node = document.createElement(tag);
@@ -156,23 +198,98 @@ if (typeof document !== "undefined") (function () {
     history.replaceState(null, "", "#" + encodeURIComponent(h).replace(/%2F/g, "/"));
   }
 
-  function renderPicker() {
-    rootSelect.innerHTML = "";
-    data.roots.forEach(function (r) {
-      var o = el("option", { value: r.key, text: r.key + " — " + r.meaning });
-      if (r.key === state.root) o.selected = true;
-      rootSelect.appendChild(o);
+  /* The root search box: a combobox over data.roots. */
+  var matches = [], active = -1;
+  function openList(on) {
+    rootList.hidden = !on;
+    rootInput.setAttribute("aria-expanded", on ? "true" : "false");
+    if (!on) { active = -1; rootInput.removeAttribute("aria-activedescendant"); }
+  }
+  function pickRoot(key) {
+    openList(false);
+    hideTip(null);
+    rootInput.blur();
+    state = { root: key, key: null };
+    writeHash();
+    ensureForms(key);
+    render();
+  }
+  function setActive(i) {
+    active = i;
+    Array.prototype.forEach.call(rootList.children, function (li, j) {
+      li.setAttribute("aria-selected", j === i ? "true" : "false");
+      if (j === i) { rootInput.setAttribute("aria-activedescendant", li.id); li.scrollIntoView({ block: "nearest" }); }
     });
+  }
+  function showMatches(query) {
+    matches = searchRoots(query, data.roots, data.featured, 50);
+    rootList.innerHTML = "";
+    matches.forEach(function (r, i) {
+      var attrs = { role: "option", id: "root-opt-" + i, "aria-selected": "false" };
+      if (r.unavailable) { attrs["aria-disabled"] = "true"; attrs["data-tip"] = r.unavailable; attrs.class = "out"; }
+      var gloss = el("span", { class: "gloss" }, [r.meaning_kind === "traditional" ? el("em", { text: r.meaning }) : r.meaning]);
+      var li = el("li", attrs, [el("span", { class: "rname", text: r.name }), el("span", { class: "rup", text: r.upadesha_iast }), gloss,
+                                el("span", { class: "rvoice", text: PADA_CLASS[r.pada][0] })]);
+      li.addEventListener("mousedown", function (e) { e.preventDefault(); });
+      li.addEventListener("click", function () { pickRoot(r.key); });
+      rootList.appendChild(li);
+    });
+    if (!matches.length) rootList.appendChild(el("li", { class: "none", role: "presentation", text: "No root matches." }));
+    openList(true);
+    if (matches.length && query) setActive(0);
+  }
+  rootInput.addEventListener("focus", function () { rootInput.select(); showMatches(""); });
+  rootInput.addEventListener("input", function () { showMatches(rootInput.value); });
+  rootInput.addEventListener("blur", function () { openList(false); rootInput.value = rootByKey(state.root).name; });
+  rootInput.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      if (rootList.hidden) showMatches(rootInput.value === rootByKey(state.root).name ? "" : rootInput.value);
+      if (matches.length) setActive((active + (e.key === "ArrowDown" ? 1 : matches.length - 1)) % matches.length);
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      var pick = matches[active < 0 ? 0 : active];
+      if (!rootList.hidden && pick) pickRoot(pick.key);
+    } else if (e.key === "Escape") {
+      openList(false); rootInput.value = rootByKey(state.root).name; rootInput.select();
+    }
+  });
+
+  function renderPicker() {
     var r = rootByKey(state.root);
+    if (document.activeElement !== rootInput) rootInput.value = r.name;
     var pc = PADA_CLASS[r.pada];
     var info = document.getElementById("root-info");
     info.innerHTML = "";
-    [term("Recited as", "upadeśa: the root as taught in the Dhātupāṭha, with its markers"), " " + r.upadesha_iast,
-     " · “" + r.meaning + "” · ", term(r.class_label, r.gana + " (the bhū class, first gaṇa of the Dhātupāṭha)"),
+    var gloss = r.meaning_kind === "traditional"
+      ? el("em", { class: "term", "data-tip": "traditional gloss from the root list", tabindex: "0", text: r.meaning })
+      : document.createTextNode(r.meaning);
+    [el("strong", { class: "rname", text: r.name }), " · ",
+     term("Recited as", "upadeśa: the root as taught in the Dhātupāṭha, with its markers"), " " + r.upadesha_iast,
+     " · “", gloss, "” · ", term(r.class_label, r.gana + " (the bhū class, first gaṇa of the Dhātupāṭha)"),
      " · ", term(pc[0], pc[1]), r.pada === "U" ? "" : " only"].forEach(function (c) {
       info.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
     });
   }
+
+  /* Forms of the selected root: already here (static page, or fetched before), else fetched from the server. */
+  var loading = null, loadError = null;
+  function hasForms(code) { return Object.prototype.hasOwnProperty.call(data.derivations, keyOf(code, "laṭ", "P", "3", "sg")); }
+  function ensureForms(code) {
+    loadError = null;
+    if (hasForms(code) || data.source !== "server") { loading = null; return; }
+    loading = code;
+    fetch("/api/root/" + encodeURIComponent(code))
+      .then(function (res) { if (!res.ok) throw new Error("HTTP " + res.status); return res.json(); })
+      .then(function (body) {
+        Object.keys(body.derivations).forEach(function (k) { data.derivations[k] = body.derivations[k]; });
+        if (loading === code) { loading = null; if (state.key && !data.derivations[state.key]) state.key = null; render(); }
+      })
+      .catch(function (e) {
+        if (loading === code) { loading = null; loadError = "Couldn’t load " + rootByKey(code).name + " (" + e.message + ")."; render(); }
+      });
+  }
+  function retry() { ensureForms(state.root); render(); }
 
   function cell(key) {
     var d = data.derivations[key];
@@ -195,7 +312,7 @@ if (typeof document !== "undefined") (function () {
     if (probe.status === "unavailable") {
       var m = (probe.message || "").match(/\((\d+\.\d+\.\d+)\)$/);
       var pc = PADA_CLASS[rootByKey(state.root).pada];
-      return el("div", { class: "unavailable" }, [state.root + " is ", term(pc[0], pc[1]), " only",
+      return el("div", { class: "unavailable" }, [rootByKey(state.root).name + " is ", term(pc[0], pc[1]), " only",
         m ? el("span", {}, [" (", term(m[1], sutraTitle(m[1], data.sutras || {})), ")"]) : null]);
     }
     var head = el("tr", {}, [el("th", { scope: "col" }, [""])].concat(NUMBERS.map(function (n) {
@@ -298,10 +415,26 @@ if (typeof document !== "undefined") (function () {
     panel.appendChild(el("ol", { class: "steps" }, d.steps.map(step)));
   }
 
-  function render() { renderPicker(); renderParadigm(); renderDerivation(); }
+  function render() {
+    renderPicker();
+    if (!hasForms(state.root) && data.source === "server") {
+      paradigm.innerHTML = "";
+      panel.innerHTML = "";
+      if (loadError) {
+        var btn = el("button", { class: "retry", type: "button", text: "Retry" });
+        btn.addEventListener("click", retry);
+        paradigm.appendChild(el("p", { class: "note loadmsg", role: "alert" }, [loadError + " ", btn]));
+      } else {
+        paradigm.appendChild(el("p", { class: "note loadmsg", text: "deriving…" }));
+      }
+      return;
+    }
+    renderParadigm();
+    renderDerivation();
+  }
 
-  rootSelect.addEventListener("change", function () { state = { root: rootSelect.value, key: null }; writeHash(); render(); });
-  window.addEventListener("hashchange", function () { state = parseHash(location.hash, data); render(); });
+  function applyHash() { state = parseHash(location.hash, data); ensureForms(state.root); render(); }
+  window.addEventListener("hashchange", applyHash);
   document.getElementById("theme").addEventListener("click", function () {
     var next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;
@@ -340,5 +473,5 @@ if (typeof document !== "undefined") (function () {
   });
   window.addEventListener("scroll", function () { hideTip(null); }, { passive: true });
 
-  render();
+  applyHash();
 })();

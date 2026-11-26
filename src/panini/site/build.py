@@ -53,7 +53,7 @@ def site_data(codes: Iterable[str] | None, *, embed_all_roots: bool) -> dict:
     roots = list(entries.values()) if embed_all_roots else [entries[c] for c in codes]
     derivations = {k: v for code in codes for k, v in root_derivations(code).items()}
     return {"roots": roots, "derivations": derivations, "sutras": _sutras(), "markers": MARKER_NOTES,
-            "glossary": GLOSSARY}
+            "glossary": GLOSSARY, "featured": list(FEATURED)}
 
 
 # Names kept in the text but explained on hover wherever they occur as whole words.

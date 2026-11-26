@@ -202,3 +202,45 @@ def test_glossary_words_get_tooltips_only_as_whole_words():
 def test_root_marker_vowel_note_explains_why_it_is_there():
     note = site_data(FEATURED, embed_all_roots=False)["markers"]["paṭhã|ã"]
     assert "1.3.3" in note and "pitch" in note
+
+
+@pytest.fixture(scope="module")
+def all_roots_data():
+    d = site_data([], embed_all_roots=True)
+    return {"roots": d["roots"], "featured": d["featured"], "derivations": {}, "source": "server"}
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+@pytest.mark.parametrize("q, first", [("krand", "01.0074"), ("KRAND-", "01.0074"), ("01.0074", "01.0074"),
+                                      ("stha", "01.1077"), ("sthā", "01.1077"), ("smṛ", "01.0919"), ("āhvāne", "01.0073")])
+def test_search_roots(q, first, all_roots_data):
+    d = all_roots_data
+    hits = _node(f"app.searchRoots({json.dumps(q)}, {json.dumps(d['roots'])}, {json.dumps(d['featured'])})")
+    assert hits and hits[0]["key"] == first
+    if q == "āhvāne":   # the meaning is shared by kand, krand, kruś...: list order, none featured
+        assert "01.0074" in [h["key"] for h in hits]
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_fold_strips_every_combining_mark():
+    assert _node("app.fold('Daṃś-')") == "dams"
+    assert _node("app.fold('sthā')") == "stha"
+    assert _node("app.fold('gamḷ̃')") == "gaml"
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+@pytest.mark.parametrize("hash_, expected", [
+    ("#paṭh/laṭ/P/3/sg", {"root": "01.0381", "key": "01.0381|laṭ|P|3|sg"}),
+    ("#01.0074", {"root": "01.0074", "key": None}),
+    ("#99.9999", {"root": "01.0001", "key": None}),
+])
+def test_parse_hash_codes_and_old_names(hash_, expected, all_roots_data):
+    d = {**all_roots_data, "source": "static",
+         "derivations": {"01.0381|laṭ|P|3|sg": {}, "01.0001|laṭ|P|3|sg": {}}}
+    assert _node(f"app.parseHash({json.dumps(hash_)}, {json.dumps(d)})") == expected
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_parse_hash_keeps_a_wellformed_key_on_a_server_page_before_the_forms_arrive(all_roots_data):
+    got = _node(f"app.parseHash('#01.0074/laṭ/P/3/sg', {json.dumps(all_roots_data)})")
+    assert got == {"root": "01.0074", "key": "01.0074|laṭ|P|3|sg"}
