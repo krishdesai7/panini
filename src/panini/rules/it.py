@@ -65,7 +65,7 @@ R_1_3_2 = Rule(
 
 # 1.3.3 hal antyam
 def _find_133(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for i, t in enumerate(st.terms):
         k = t.upadesha_final()
         if k is not None and t.sounds[k].char in HAL and not t.sounds[k].it:
@@ -92,7 +92,7 @@ R_1_3_3 = Rule(
 
 # 1.3.4 na vibhaktau tusmāḥ (a niṣedha: blocks 1.3.3, changes nothing itself)
 def _find_134(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for i, t in enumerate(st.terms):
         k = t.upadesha_final()
         if (
@@ -120,7 +120,7 @@ R_1_3_4 = Rule(
 
 # 1.3.5 ādir ñiṭuḍavaḥ
 def _find_135(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for i, t in enumerate(st.terms):
         if (
             t.kind is TermKind.ROOT

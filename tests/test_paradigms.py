@@ -10,7 +10,7 @@ from panini.request import REFERENCE_PATH, all_requests, availability
 REF = json.loads(REFERENCE_PATH.read_text())
 
 
-def _SLOT(code):
+def _SLOT(code: str) -> list[str]:
     return [r.key for r in all_requests([code]) if availability(r) is None]
 
 

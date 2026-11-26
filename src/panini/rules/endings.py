@@ -46,7 +46,7 @@ def _in_tit_lakara(t: Term) -> bool:
 
 # 3.4.79 ṭita ātmanepadānāṃ ṭer e
 def _find_3479(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for i, t in enumerate(st.terms):
         if (
             t.kind is TermKind.TIN

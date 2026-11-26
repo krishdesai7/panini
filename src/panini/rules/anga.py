@@ -37,7 +37,7 @@ def _following(st: State, i: int) -> int | None:
 def _before_sarvadhatuka(st: State) -> list[int]:
     """Indices i whose term is an aṅga directly before a sārvadhātuka affix. A term emptied by
     a single substitute (śap's a merged into the stem's a, 6.1.97) is not in the way."""
-    out = []
+    out: list[int] = []
     for i in range(len(st.terms) - 1):
         j = _following(st, i)
         if (
@@ -94,7 +94,7 @@ def _light_upadha(st: State, i: int) -> int | None:
 
 
 def _find_7386(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for i in _before_sarvadhatuka(st):
         k = _light_upadha(st, i)
         if k is not None and st.terms[i].sounds[k].char in IK:
@@ -216,7 +216,7 @@ def _takes_ch(t: Term) -> bool:
 
 
 def _find_7377(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for i in range(len(st.terms) - 1):
         t, nxt = st.terms[i], st.terms[i + 1]
         if t.kind is TermKind.ROOT and _takes_ch(t) and nxt.has_marker("S"):
@@ -285,7 +285,7 @@ LENGTHENED_BEFORE_SHIT = ("zWiv",)
 
 
 def _find_7375(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for i in range(len(st.terms) - 1):
         t, nxt = st.terms[i], st.terms[i + 1]
         if (
@@ -336,7 +336,7 @@ RULES = (
 
 # 7.2.81 āto ṅitaḥ
 def _find_7281(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     nonempty = [i for i, t in enumerate(st.terms) if t.sounds]
     for a, j in itertools.pairwise(nonempty):
         t = st.terms[j]
@@ -372,7 +372,7 @@ def _is_knit(t) -> bool:
 
 
 def _find_115(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for i in _before_sarvadhatuka(st):
         if not _is_knit(st.terms[_following(st, i)]):
             continue
@@ -407,7 +407,7 @@ def _is_idit(t: Term) -> bool:
 
 
 def _find_7158(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for i, t in enumerate(st.terms):
         if (
             _is_idit(t)
@@ -445,7 +445,7 @@ def _bare(t: Term) -> str:
 
 
 def _find_7161(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for i, t in enumerate(st.terms):
         j = _following(st, i)
         if (
@@ -497,7 +497,7 @@ OPTIONAL_7378 = frozenset({"sf"})
 
 
 def _site_7378(st: State, only_optional: bool) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for i in range(len(st.terms) - 1):
         t, nxt = st.terms[i], st.terms[i + 1]
         if (
@@ -569,7 +569,7 @@ NASAL_LOSS_BEFORE_SHAP = {
 
 def _nasal_loss(rule_id: str) -> Rule:
     def find(st: State) -> list[Site]:
-        out = []
+        out: list[Site] = []
         for i in range(len(st.terms) - 1):
             t, nxt = st.terms[i], st.terms[i + 1]
             if (
@@ -602,7 +602,7 @@ RULES = (*RULES, R_6_4_25, R_6_4_26)
 # (aci, carried over from 6.4.77). goha is guh in its full grade, so the rule follows guṇa (7.3.86)
 # and reaches only forms where guṇa applied.
 def _find_6489(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for i, t in enumerate(st.terms):
         j = _following(st, i)
         if (

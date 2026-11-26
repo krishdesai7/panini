@@ -59,7 +59,7 @@ def render_text(d: Derivation, verbosity: int = 0) -> str:
 
 def _render_step(n: int, s: StepRecord, width: int, verbosity: int) -> list[str]:
     rid = s.rule_ids[0]
-    out = []
+    out: list[str] = []
     if verbosity >= 2:
         out.append(f"{'':>4}  {'(' + _form(s.before) + ')':<{width}}")
     out.append(f"{n:>4}  {_form(s.after):<{width}}{rid:<9}{_text(rid)}")

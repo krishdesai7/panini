@@ -16,8 +16,8 @@ YAY = frozenset("yvrlYmNRnJBGQDjbgqdKPCWTcwtkp")  # yay: y … the y of Śiva s�
 HAL = pratyahara("hal")
 CU = pratyahara("cu")
 STU = frozenset("stTdDn")
-_JAS = {}  # jhal → jaś (voiced unaspirated stop of the same place), 8.2.39
-_CAR = {}  # jhal → car (voiceless unaspirated), 8.4.56
+_JAS: dict[LiteralString, str] = {}  # jhal → jaś (voiced unaspirated stop of the same place), 8.2.39
+_CAR: dict[LiteralString, str] = {}  # jhal → car (voiceless unaspirated), 8.4.56
 for varga in ("kKgGN", "cCjJY", "wWqQR", "tTdDn", "pPbBm"):
     for c in varga[:4]:
         _JAS[c], _CAR[c] = varga[2], varga[0]
@@ -183,7 +183,7 @@ _DIRGHA = {"i": "I", "u": "U", "f": "F", "x": "X"}
 
 
 def _find_8278(st: State) -> list[Site]:
-    out = []
+    out: list[Site] = []
     for n, t in enumerate(st.terms):
         s = [x.char for x in t.sounds]
         if (
@@ -234,7 +234,7 @@ def _natva_sites(
         for i, t in enumerate(st.terms)
         for k, s in enumerate(t.sounds)
     ]
-    out = []
+    out: list[Site] = []
     for n, (i, k, c, _) in enumerate(sounds):
         if c != "n":
             continue
@@ -303,7 +303,7 @@ _SHTU = {"s": "z", "t": "w", "T": "W", "d": "q", "D": "Q", "n": "R"}
 
 def _find_8441(st: State) -> list[Site]:
     sounds = list(word_sounds(st))
-    out = []
+    out: list[Site] = []
     for n, (i, k, c) in enumerate(sounds):
         neighbours = [sounds[m][2] for m in (n - 1, n + 1) if 0 <= m < len(sounds)]
         if c in _SHTU and any(x in SHTU for x in neighbours):
@@ -330,7 +330,7 @@ R_8_4_41 = Rule(
 # 8.4.40 stoḥ ścunā ścuḥ. Not modelled: its exception 8.4.44 śāt (no change after ś).
 def _find_8440(st: State) -> list[Site]:
     sounds = list(word_sounds(st))
-    out = []
+    out: list[Site] = []
     for n, (i, k, c) in enumerate(sounds):
         neighbours = [sounds[m][2] for m in (n - 1, n + 1) if 0 <= m < len(sounds)]
         if c in STU and any(x in CU or x == "S" for x in neighbours):

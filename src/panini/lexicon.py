@@ -176,7 +176,7 @@ def _load() -> dict[str, Root]:
         .joinpath("dhatupatha_bhvadi.tsv")
         .read_text(encoding="utf-8")
     )
-    roots = {}
+    roots: dict[str, Root] = {}
     for line in text.splitlines()[1:]:
         code, upadesha, artha = line.split("\t")
         if code in ENGLISH:
