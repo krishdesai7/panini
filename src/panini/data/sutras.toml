@@ -210,6 +210,10 @@ gloss = "Before a {present-system affix|sārvadhātuka} in the passive or impers
 text = "kartari śap"
 gloss = "When a {present-system affix|sārvadhātuka} denoting the agent follows, the {stem suffix|vikaraṇa} śap is added to the root (as an affix, 3.1.1, placed after it, 3.1.2, after a root, 3.1.91)."
 
+["3.1.77"]
+text = "tudādibhyaḥ śaḥ"
+gloss = "After the roots of the tud class the {stem suffix|vikaraṇa} śa is added instead of śap (3.1.68), before a {present-system affix|sārvadhātuka} denoting the agent."
+
 ["3.1.91"]
 text = "dhātoḥ"
 gloss = "(Heading over the rest of book 3) The affixes introduced from here on are added after a root."

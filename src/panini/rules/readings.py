@@ -116,6 +116,14 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
             "sārvadhātuke ‘before a {present-system affix|sārvadhātuka}’ carries over",
         ),
     ),
+    "3.1.77": (
+        *AFFIX,
+        (
+            "3.1.67",
+            "sārvadhātuke ‘before a {present-system affix|sārvadhātuka}’ carries over",
+        ),
+        ("3.1.68", "kartari ‘denoting the agent’ carries over; śa replaces its śap"),
+    ),
     "1.2.4": (("1.2.1", "ṅit ‘counts as marked ṅ’ carries over"),),
     "1.4.13": (),
     "1.4.14": (
@@ -411,6 +419,12 @@ class Aside:
 
 REDUPLICATED = "a reduplicated present"
 SK_PRESENT = "a present in *-sḱe-"
+
+# The tud class as a whole (3.1.77).
+TUDADI_ASIDE = Aside(
+    "the Indo-European *tudé- type, accented on the thematic vowel "
+    "(accent is not shown yet)"
+)
 
 # Historical asides for the substituted present stems (7.3.77, 7.3.78), keyed by upadeśa.
 HISTORY: dict[str, Aside] = {

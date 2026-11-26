@@ -20,7 +20,8 @@ XFAIL: dict[str, str] = {
     # Vidyut also gives ārchat: 8.4.65 jharo jhari savarṇe optionally drops one c of rcch (docs/findings.md).
     **{
         k: "8.4.65 optional cluster simplification not modelled (ārchat)"
-        for k in _slots("01.1086")
+        for code in ("01.1086", "06.0016")  # bhvādi ṛ (ṛcchati), tudādi ṛch
+        for k in _slots(code)
         if "|laṅ|" in k
     },
 }
