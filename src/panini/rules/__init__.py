@@ -3,7 +3,14 @@
 from panini.rules import anga, endings, it, sandhi, tin, tripadi
 from panini.rules.base import Rule
 
-ALL_RULES: tuple[Rule, ...] = (*it.RULES, *tin.RULES, *endings.RULES, *anga.RULES, *sandhi.RULES, *tripadi.RULES)
+ALL_RULES: tuple[Rule, ...] = (
+    *it.RULES,
+    *tin.RULES,
+    *endings.RULES,
+    *anga.RULES,
+    *sandhi.RULES,
+    *tripadi.RULES,
+)
 
 _BY_ID = {r.id: r for r in ALL_RULES}
 

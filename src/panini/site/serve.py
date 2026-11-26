@@ -23,9 +23,13 @@ def _handler(page: bytes) -> type[BaseHTTPRequestHandler]:
                 self.wfile.write(body)
 
         def _json(self, status: int, obj: dict) -> None:
-            self._send(status, json.dumps(obj, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
+            self._send(
+                status,
+                json.dumps(obj, ensure_ascii=False).encode("utf-8"),
+                "application/json; charset=utf-8",
+            )
 
-        def do_GET(self) -> None:  # noqa: N802
+        def do_GET(self) -> None:
             path = urlsplit(self.path).path
             if path == "/":
                 self._send(200, page, "text/html; charset=utf-8")
@@ -38,8 +42,8 @@ def _handler(page: bytes) -> type[BaseHTTPRequestHandler]:
             else:
                 self._json(404, {"error": "not found"})
 
-        def do_HEAD(self) -> None:  # noqa: N802
-            self.do_GET()   # same status and headers; _send leaves out the body
+        def do_HEAD(self) -> None:
+            self.do_GET()  # same status and headers; _send leaves out the body
 
         def log_message(self, format: str, *args) -> None:
             pass
@@ -47,9 +51,13 @@ def _handler(page: bytes) -> type[BaseHTTPRequestHandler]:
     return Handler
 
 
-def make_server(host: str = "127.0.0.1", port: int = 0, style_dir: Path | None = None) -> ThreadingHTTPServer:
+def make_server(
+    host: str = "127.0.0.1", port: int = 0, style_dir: Path | None = None
+) -> ThreadingHTTPServer:
     """A server bound to `host:port` (port 0: any free one). The page is built once, here."""
     if style_dir is None:
         style_dir = Path(os.environ.get("PANINI_STYLE_DIR", DEFAULT_STYLE_DIR))
     data = {**site_data([], embed_all_roots=True), "source": "server"}
-    return ThreadingHTTPServer((host, port), _handler(page_html(data, style_dir).encode("utf-8")))
+    return ThreadingHTTPServer(
+        (host, port), _handler(page_html(data, style_dir).encode("utf-8"))
+    )

@@ -46,14 +46,22 @@ def main(argv: list[str] | None = None) -> int:
     )
     s.add_argument("--out", type=Path, default=Path("build/panini.html"))
     s.add_argument("--open", action="store_true", help="open the page in a browser")
-    s.add_argument("--no-cache", action="store_true", help="derive everything; don't read or write the cache")
+    s.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="derive everything; don't read or write the cache",
+    )
 
     v: argparse.ArgumentParser = sub.add_parser(
         "serve", help="serve the explorer locally, deriving one root at a time"
     )
     v.add_argument("--port", type=int, default=8000)
     v.add_argument("--open", action="store_true", help="open the page in a browser")
-    v.add_argument("--no-cache", action="store_true", help="derive everything; don't read or write the cache")
+    v.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="derive everything; don't read or write the cache",
+    )
 
     args: argparse.Namespace = parser.parse_args(argv)
     try:

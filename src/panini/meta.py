@@ -22,7 +22,14 @@ from panini.model import Sound, State, Term, TermKind
 from panini.sounds import is_vowel
 from panini.translit import slp1_to_iast
 
-_MARKER_NAMES = {"N": "marked ṅ", "k": "marked k", "p": "marked p", "w": "marked ṭ", "S": "marked ś", "Y": "marked ñ"}
+_MARKER_NAMES = {
+    "N": "marked ṅ",
+    "k": "marked k",
+    "p": "marked p",
+    "w": "marked ṭ",
+    "S": "marked ś",
+    "Y": "marked ñ",
+}
 
 
 def substitute_term(old: Term, kind: TermKind, upadesha: str) -> Term:
@@ -35,7 +42,9 @@ def sthanivat_note(term: Term) -> str | None:
     """Describe what a substitute inherits, e.g. 'ti counts as ṅit via 1.1.56 (it replaced l)'."""
     if term.replaced is None:
         return None
-    inherited = sorted(_MARKER_NAMES[m] for m in term.replaced.markers if m in _MARKER_NAMES)
+    inherited = sorted(
+        _MARKER_NAMES[m] for m in term.replaced.markers if m in _MARKER_NAMES
+    )
     old = slp1_to_iast(term.replaced.text or term.replaced.upadesha[:1])
     new = slp1_to_iast(term.text)
     if inherited:
@@ -57,7 +66,9 @@ def augment_edit(state: State, target: int, augment: Term) -> Edit:
     raise ValueError(f"augment {augment.upadesha} is neither ṭit nor kit")
 
 
-def augment_in_term_edit(state: State, term: int, after_pos: int, sounds: tuple[Sound, ...]) -> Edit:
+def augment_in_term_edit(
+    state: State, term: int, after_pos: int, sounds: tuple[Sound, ...]
+) -> Edit:
     """Insert a kit augment's sounds right after a sound inside a term (e.g. tuk, 6.1.73)."""
     tagged = tuple(Sound(s.char, agama=True) for s in sounds)
     return (InsertSounds(term, after_pos + 1, tagged),)
@@ -77,7 +88,11 @@ def mit_position(state: State, term: int) -> int | None:
     if own:
         return own[-1] + 1
     left = next((u for u in reversed(state.terms[:term]) if u.sounds), None)
-    tail = next((s for s in reversed(left.sounds) if not s.agama), None) if left is not None else None
+    tail = (
+        next((s for s in reversed(left.sounds) if not s.agama), None)
+        if left is not None
+        else None
+    )
     if EKADESHA_START in t.tags and tail is not None and tail.ekadesha:
         return 0
     return None
@@ -87,7 +102,9 @@ def mit_augment_edit(state: State, term: int, sounds: tuple[Sound, ...]) -> Edit
     """Insert a mit augment's sounds right after the last vowel of a term (e.g. num, 7.1.58)."""
     pos = mit_position(state, term)
     if pos is None:
-        raise ValueError(f"{state.terms[term].text} has no vowel for a mit augment to follow")
+        raise ValueError(
+            f"{state.terms[term].text} has no vowel for a mit augment to follow"
+        )
     tagged = tuple(Sound(s.char, agama=True) for s in sounds)
     return (InsertSounds(term, pos, tagged),)
 
@@ -114,8 +131,12 @@ def absorbed_ekadesha(state: State, term: int) -> list[tuple[str, str, str]]:
     return []
 
 
-def substitution_edit(state: State, term: int, stem: str,
-                      rule_lookup: Callable[[str], object] | None = None) -> Edit:
+def substitution_edit(
+    state: State,
+    term: int,
+    stem: str,
+    rule_lookup: Callable[[str], object] | None = None,
+) -> Edit:
     """Replace a whole term by ``stem`` (a substitution for the sthānin, 1.1.56), taking its place in
     the ekādeśa that had absorbed its first sound: the substitute is an input of that ekādeśa, so
     the rule that made it is applied again, to the stem's first sound instead of the old one.
@@ -126,18 +147,26 @@ def substitution_edit(state: State, term: int, stem: str,
     lets it go first."""
     if rule_lookup is None:
         from panini.rules import get_rule
+
         rule_lookup = get_rule
     t = state.terms[term]
     chars = list(stem)
     edits: list = []
-    if (absorbed := absorbed_ekadesha(state, term)):
+    if absorbed := absorbed_ekadesha(state, term):
         rule_id, x, _ = absorbed[0]
         out = rule_lookup(rule_id).merge(x, chars[0])
         if out is None:
-            raise ValueError(f"{rule_id} does not apply to {x} + {chars[0]}, so the substitute cannot take its place")
+            raise ValueError(
+                f"{rule_id} does not apply to {x} + {chars[0]}, so the substitute cannot take its place"
+            )
         left_i = next(i for i in range(term - 1, -1, -1) if state.terms[i].sounds)
         lt, k = state.terms[left_i], _ekadesha_tail(state.terms[left_i])
-        new = tuple(Sound(c, ekadesha=True, ekadesha_rule=rule_id, ekadesha_inputs=(x, chars[0])) for c in out)
+        new = tuple(
+            Sound(
+                c, ekadesha=True, ekadesha_rule=rule_id, ekadesha_inputs=(x, chars[0])
+            )
+            for c in out
+        )
         edits.append(ReplaceSounds(left_i, len(lt.sounds) - k, len(lt.sounds), new))
         chars.pop(0)
     edits.append(ReplaceSounds(term, 0, len(t.sounds), tuple(Sound(c) for c in chars)))

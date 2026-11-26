@@ -1,8 +1,5 @@
 """Every step can show how its rule is read: interpretive conventions and carried-over words."""
 
-import pytest
-
-from panini.derivation import Status
 from panini.engine import derive
 from panini.request import parse_request
 from panini.rules import ALL_RULES, get_rule
@@ -17,8 +14,9 @@ def test_readings_only_annotate_real_rules_and_cite_known_sutras() -> None:
     for rid, items in READS.items():
         for src, note in items:
             if src not in PARIBHASHA:
-                sutra_info(src)        # every cited sūtra has text and gloss
-            assert note and src != rid
+                sutra_info(src)  # every cited sūtra has text and gloss
+            assert note
+            assert src != rid
 
 
 def test_most_rules_have_a_reading() -> None:
@@ -46,8 +44,11 @@ def test_tapara_reading_for_short_a_rules() -> None:
 
 def test_6197_does_not_apply_at_the_end_of_a_word() -> None:
     from panini.model import Coreference, Intent, Number, State, Term, TermKind, Time
+
     intent = Intent(Time.PRESENT, Coreference.NONE, Number.ONE, False)
-    left = Term.from_upadesha(TermKind.ROOT, "ca", frozenset({"pada"}))   # a whole word ending in a
+    left = Term.from_upadesha(
+        TermKind.ROOT, "ca", frozenset({"pada"})
+    )  # a whole word ending in a
     right = Term.from_upadesha(TermKind.ROOT, "atra")
     st = State((left, right), intent)
     assert get_rule("6.1.97").find(st) == []

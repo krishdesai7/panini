@@ -21,10 +21,14 @@ class Sound:
     it: bool = False
     nasal: bool = False
     agama: bool = False
-    upos: int | None = None  # position in the recited upadeśa; None for sounds added later
+    upos: int | None = (
+        None  # position in the recited upadeśa; None for sounds added later
+    )
     ekadesha: bool = False  # a single substitute for two sounds (6.1.84), stored at the end of the left term
     ekadesha_rule: str | None = None  # the rule that made that substitute ...
-    ekadesha_inputs: tuple[str, str] | None = None  # ... and the two sounds it replaced (left, right)
+    ekadesha_inputs: tuple[str, str] | None = (
+        None  # ... and the two sounds it replaced (left, right)
+    )
 
 
 class TermKind(Enum):
@@ -47,7 +51,9 @@ class Term:
     replaced: Term | None = None
 
     @classmethod
-    def from_upadesha(cls, kind: TermKind, upadesha_slp1: str, tags: frozenset[str] = frozenset()) -> Term:
+    def from_upadesha(
+        cls, kind: TermKind, upadesha_slp1: str, tags: frozenset[str] = frozenset()
+    ) -> Term:
         """Parse a recited form. ``~`` nasalizes the preceding vowel.
 
         Accent marks (``\\`` anudātta, ``^`` svarita) are not sounds. On a nasal

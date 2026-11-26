@@ -66,8 +66,10 @@ class DerivationCache:
         if not self.enabled:
             return None
         try:
-            data = json.loads((self._dir() / f"{code}.json").read_text(encoding="utf-8"))
-        except (OSError, ValueError):
+            data = json.loads(
+                (self._dir() / f"{code}.json").read_text(encoding="utf-8")
+            )
+        except OSError, ValueError:
             return None
         return data if isinstance(data, dict) else None
 
@@ -81,7 +83,7 @@ class DerivationCache:
             # Write then rename, so a reader on another server thread never sees half a file.
             tmp = here / f".{code}.{os.getpid()}.{threading.get_ident()}.tmp"
             tmp.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
-            os.replace(tmp, here / f"{code}.json")
+            Path(tmp).replace(here / f"{code}.json")
         except OSError:
             pass
 

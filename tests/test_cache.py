@@ -3,10 +3,9 @@
 import json
 
 import pytest
-
-import panini.cache as cache
-import panini.site.build as build
+from panini import cache
 from panini.cache import DerivationCache, fingerprint_of
+from panini.site import build
 
 
 @pytest.fixture
@@ -53,7 +52,9 @@ def test_a_failed_write_is_ignored(tmp_path, monkeypatch):
     monkeypatch.setattr(cache, "fingerprint", lambda: "fp1")
     blocker = tmp_path / "file"
     blocker.write_text("not a folder")
-    DerivationCache(blocker).put("01.0001", {"k": 1})   # can't mkdir under a file: no exception
+    DerivationCache(blocker).put(
+        "01.0001", {"k": 1}
+    )  # can't mkdir under a file: no exception
 
 
 def test_default_root_follows_the_environment(tmp_path, monkeypatch):
@@ -91,10 +92,16 @@ def test_site_reads_a_cached_root_without_deriving(tmp_path, monkeypatch):
     try:
         first = build.root_derivations("01.0242")
         assert first["01.0242|laṭ|P|3|sg"]["result"] == "yucchati"
-        assert json.loads(next((tmp_path / "derivations").glob("*/01.0242.json")).read_text()) == first
+        assert (
+            json.loads(
+                next((tmp_path / "derivations").glob("*/01.0242.json")).read_text()
+            )
+            == first
+        )
 
         def no_engine(*_args, **_kwargs):
             raise AssertionError("derived although the root was cached")
+
         monkeypatch.setattr(build, "derive", no_engine)
         build.root_derivations.cache_clear()
         assert build.root_derivations("01.0242") == first
@@ -110,10 +117,13 @@ def test_a_root_with_a_crashed_derivation_is_not_cached(tmp_path, monkeypatch):
         if req.key == "01.0242|laṭ|P|3|sg":
             raise RuntimeError("boom")
         return real(req, **kw)
+
     monkeypatch.setattr(build, "derive", flaky)
     build.root_derivations.cache_clear()
     try:
-        assert build.root_derivations("01.0242")["01.0242|laṭ|P|3|sg"]["status"] == "error"
+        assert (
+            build.root_derivations("01.0242")["01.0242|laṭ|P|3|sg"]["status"] == "error"
+        )
         assert not list(tmp_path.rglob("01.0242.json"))
     finally:
         build.root_derivations.cache_clear()

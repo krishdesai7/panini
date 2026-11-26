@@ -5,8 +5,20 @@ from functools import cache
 # The fourteen Śiva sūtras (māheśvara sūtras). The last letter of each is the
 # it marker that closes it; pratyāhāras are named by a first sound plus a marker.
 SHIVA_SUTRAS: tuple[str, ...] = (
-    "aiuR", "fxk", "eoN", "EOc", "hyvrw", "lR", "YmNRnm",
-    "JBY", "GQDz", "jbgqdS", "KPCWTcwtv", "kpy", "Szsr", "hl",
+    "aiuR",
+    "fxk",
+    "eoN",
+    "EOc",
+    "hyvrw",
+    "lR",
+    "YmNRnm",
+    "JBY",
+    "GQDz",
+    "jbgqdS",
+    "KPCWTcwtv",
+    "kpy",
+    "Szsr",
+    "hl",
 )
 
 SHORT_VOWELS = frozenset("aiufx")
@@ -17,16 +29,45 @@ VOWELS = frozenset("aAiIuUfFxXeEoO")
 # Stop classes (varga): sounds in one varga share place and internal effort,
 # so they are savarṇa with each other (1.1.9).
 VARGAS: tuple[frozenset[str], ...] = (
-    frozenset("kKgGN"), frozenset("cCjJY"), frozenset("wWqQR"),
-    frozenset("tTdDn"), frozenset("pPbBm"),
+    frozenset("kKgGN"),
+    frozenset("cCjJY"),
+    frozenset("wWqQR"),
+    frozenset("tTdDn"),
+    frozenset("pPbBm"),
 )
 
-_GUNA = {"a": "a", "A": "a", "i": "e", "I": "e", "u": "o", "U": "o",
-         "f": "ar", "F": "ar", "x": "al", "X": "al",
-         "e": "e", "E": "e", "o": "o", "O": "o"}  # nearest guṇa (1.1.50) for 6.1.87 with a following ec
-_VRDDHI = {"a": "A", "A": "A", "i": "E", "I": "E", "u": "O", "U": "O",
-           "f": "Ar", "F": "Ar", "x": "Al", "X": "Al",
-           "e": "E", "E": "E", "o": "O", "O": "O"}
+_GUNA = {
+    "a": "a",
+    "A": "a",
+    "i": "e",
+    "I": "e",
+    "u": "o",
+    "U": "o",
+    "f": "ar",
+    "F": "ar",
+    "x": "al",
+    "X": "al",
+    "e": "e",
+    "E": "e",
+    "o": "o",
+    "O": "o",
+}  # nearest guṇa (1.1.50) for 6.1.87 with a following ec
+_VRDDHI = {
+    "a": "A",
+    "A": "A",
+    "i": "E",
+    "I": "E",
+    "u": "O",
+    "U": "O",
+    "f": "Ar",
+    "F": "Ar",
+    "x": "Al",
+    "X": "Al",
+    "e": "E",
+    "E": "E",
+    "o": "O",
+    "O": "O",
+}
 
 
 @cache

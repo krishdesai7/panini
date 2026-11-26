@@ -2,12 +2,10 @@
 
 from __future__ import annotations
 
-from panini.derivation import TermView
 import re
 
-from panini.derivation import Derivation, Status, StepRecord
+from panini.derivation import Derivation, Status, StepRecord, TermView
 from panini.rules.base import sutra_info
-
 
 _UNCHANGED = {
     "category": "(form unchanged: assigns a category later rules use) ",
@@ -46,8 +44,10 @@ def render_text(d: Derivation, verbosity: int = 0) -> str:
         return head + f"(no form: {d.message})"
     if d.status is Status.ERROR:
         return head + f"(error: {plain(d.message or '')})"
-    lines = [head + (d.result or ""),
-             "    notation: capitals = markers (it), ã = nasal vowel, + = boundary between elements"]
+    lines = [
+        head + (d.result or ""),
+        "    notation: capitals = markers (it), ã = nasal vowel, + = boundary between elements",
+    ]
     if d.alternatives:
         lines.append(f"    also correct: {', '.join(d.alternatives)}")
     lines.append("")
@@ -69,7 +69,9 @@ def _render_step(n: int, s: StepRecord, width: int, verbosity: int) -> list[str]
         out.extend(f"{'':>4}  {'':<{width}}{'':<9}{line}" for line in rest)
     if verbosity >= 1:
         for src, note in s.reads:
-            out.append(f"{'':>4}  {'':<{width}}{'':<9}read via {src}: {plain(note, verbosity)}")
+            out.append(
+                f"{'':>4}  {'':<{width}}{'':<9}read via {src}: {plain(note, verbosity)}"
+            )
     if verbosity >= 1 and s.history:
         out.append(f"{'':>4}  {'':<{width}}{'':<9}historically: {s.history}")
     for nm in s.near_misses:
