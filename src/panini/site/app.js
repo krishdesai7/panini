@@ -72,7 +72,7 @@ function parseHash(hash, data) {
 
 /* Split text into [segment, sūtraId|null] pairs, marking every known sūtra number. */
 function splitCitations(text, sutras) {
-  var out = [], re = /\b\d+\.\d+\.\d+\b/g, last = 0, m, plain = "";
+  var out = [], re = /\b\d+\.\d+\.\d+(?:\.\d+)?\b/g, last = 0, m, plain = "";
   text = String(text);
   while ((m = re.exec(text))) {
     if (!Object.prototype.hasOwnProperty.call(sutras, m[0])) continue;
@@ -158,6 +158,8 @@ if (typeof document !== "undefined") (function () {
   var paradigm = document.getElementById("paradigm");
   var panel = document.getElementById("derivation");
   var state = { root: null, key: null };
+  var pendingStep = null;
+  var rulePages = data.rule_pages || {};
 
   function el(tag, attrs, children) {
     var node = document.createElement(tag);
@@ -190,13 +192,26 @@ if (typeof document !== "undefined") (function () {
   /* A plain word with a dotted underline whose tooltip gives Pāṇini's term. */
   function term(text, tip) { return el("span", { class: "term", "data-tip": tip, tabindex: "0", text: text }); }
 
-  /* Text with {modern|traditional} terms and sūtra numbers given tooltips. */
+  function citationLink(id, children, css) {
+    if (!Object.prototype.hasOwnProperty.call(rulePages, id)) return null;
+    return el("a", { href: rulePages[id], class: css || "rule-citation",
+                     "data-tip": sutraTitle(id, data.sutras || {}) }, children);
+  }
+
+  function sutraCitation(id, css) {
+    var link = citationLink(id, [id], css);
+    if (link) return link;
+    var tip = sutraTitle(id, data.sutras || {});
+    return css ? el("span", { class: css, "data-tip": tip, tabindex: "0", text: id }) : term(id, tip);
+  }
+
+  /* Text with {modern|traditional} terms and links or tooltips for sūtras. */
   function cite(text) {
     var span = el("span", {});
     splitTerms(text).forEach(function (seg) {
       if (seg[1]) { span.appendChild(term(seg[0], seg[1])); return; }
       splitCitations(seg[0], data.sutras || {}).forEach(function (part) {
-        if (part[1]) { span.appendChild(term(part[0], sutraTitle(part[1], data.sutras))); return; }
+        if (part[1]) { span.appendChild(sutraCitation(part[1])); return; }
         splitGlossary(part[0], data.glossary).forEach(function (g) {
           span.appendChild(g[1] ? term(g[0], g[1]) : document.createTextNode(g[0]));
         });
@@ -223,6 +238,7 @@ if (typeof document !== "undefined") (function () {
     openList(false);
     hideTip(null);
     rootInput.blur();
+    pendingStep = null;
     state = { root: key, key: null };
     writeHash();
     ensureForms(key);
@@ -319,7 +335,7 @@ if (typeof document !== "undefined") (function () {
     if (key === state.key) td.classList.add("selected");
     var btn = el("button", { class: "form", type: "button" }, [ok ? d.result : d.status === "error" ? "error" : "?"]);
     if (d.alternatives && d.alternatives.length) btn.appendChild(el("span", { class: "alt", text: "· " + d.alternatives.join(" · ") }));
-    btn.addEventListener("click", function () { state.key = key; writeHash(); render(); panel.scrollIntoView({ behavior: "smooth", block: "start" }); });
+    btn.addEventListener("click", function () { pendingStep = null; state.key = key; writeHash(); render(); panel.scrollIntoView({ behavior: "smooth", block: "start" }); });
     td.appendChild(btn);
     if (bad && refs.length) td.appendChild(el("span", { class: "ref", text: "expected " + refs.join(" / ") }));
     return td;
@@ -331,7 +347,7 @@ if (typeof document !== "undefined") (function () {
       var m = (probe.message || "").match(/\((\d+\.\d+\.\d+)\)$/);
       var pc = PADA_CLASS[rootByKey(state.root).pada];
       return el("div", { class: "unavailable" }, [rootByKey(state.root).name + " is ", term(pc[0], pc[1]), " only",
-        m ? el("span", {}, [" (", term(m[1], sutraTitle(m[1], data.sutras || {})), ")"]) : null]);
+        m ? el("span", {}, [" (", sutraCitation(m[1]), ")"]) : null]);
     }
     var head = el("tr", {}, [el("th", { scope: "col" }, [""])].concat(NUMBERS.map(function (n) {
       return el("th", { scope: "col" }, [term(n[0], n[1])]);
@@ -374,8 +390,9 @@ if (typeof document !== "undefined") (function () {
   function step(s) {
     var rule = el("div", { class: "rule" });
     s.sutras.forEach(function (su) {
-      rule.appendChild(el("div", {}, [el("span", { class: "sid", "data-tip": sutraTitle(su.id, data.sutras || {}), tabindex: "0", text: su.id }),
-                                      el("span", { class: "stext", text: su.text })]));
+      var name = el("span", { class: "stext", text: su.text });
+      var link = citationLink(su.id, [el("span", { class: "sid", text: su.id }), " ", name]);
+      rule.appendChild(el("div", {}, link ? [link] : [sutraCitation(su.id, "sid"), name]));
     });
     if (s.kind === "category" || s.kind === "prohibition") {
       rule.appendChild(el("p", { class: "kind", text: s.kind === "category"
@@ -389,7 +406,7 @@ if (typeof document !== "undefined") (function () {
       var reads = el("p", { class: "reads" }, ["Read via "]);
       s.reads.forEach(function (r, i) {
         if (i) reads.appendChild(document.createTextNode(" · "));
-        reads.appendChild(term(r.id, sutraTitle(r.id, data.sutras || {})));
+        reads.appendChild(sutraCitation(r.id));
         reads.appendChild(document.createTextNode(": "));
         reads.appendChild(cite(r.note));
       });
@@ -402,7 +419,7 @@ if (typeof document !== "undefined") (function () {
       li.appendChild(el("details", {}, [
         el("summary", { text: "competitors" }),
         el("ul", {}, s.losers.map(function (l) {
-          return el("li", {}, [el("span", { class: "sid", "data-tip": sutraTitle(l.rule_id, data.sutras || {}), tabindex: "0", text: l.rule_id }), cite(l.reason)]);
+          return el("li", {}, [sutraCitation(l.rule_id, "sid"), cite(l.reason)]);
         })),
       ]));
     }
@@ -430,7 +447,20 @@ if (typeof document !== "undefined") (function () {
       panel.appendChild(el("p", { class: "message banner-warn" }, [cite(d.message || d.status)]));
       return;
     }
-    panel.appendChild(el("ol", { class: "steps" }, d.steps.map(step)));
+    panel.appendChild(el("ol", { class: "steps" }, d.steps.map(function (record, i) {
+      var item = step(record);
+      item.id = "step-" + (i + 1);
+      return item;
+    })));
+    if (pendingStep) {
+      var target = document.getElementById("step-" + pendingStep);
+      pendingStep = null;
+      if (target) {
+        target.tabIndex = -1;
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({ block: "start" });
+      }
+    }
   }
 
   /* An out-of-scope root: its reason, once, in place of the four tables. */
@@ -439,7 +469,7 @@ if (typeof document !== "undefined") (function () {
     panel.innerHTML = "";
     var rule = notice[1];
     paradigm.appendChild(el("div", { class: "unavailable whole" }, [notice[0],
-      rule ? el("span", {}, [" (", term(rule, sutraTitle(rule, data.sutras || {})), ")"]) : null]));
+      rule ? el("span", {}, [" (", sutraCitation(rule), ")"]) : null]));
   }
 
   function render() {
@@ -462,17 +492,14 @@ if (typeof document !== "undefined") (function () {
     renderDerivation();
   }
 
-  function applyHash() { state = parseHash(location.hash, data); ensureForms(state.root); render(); }
+  function applyHash() {
+    state = parseHash(location.hash, data);
+    var parts = location.hash.split("/");
+    pendingStep = state.key && parts.length === 6 && /^[1-9]\d*$/.test(parts[5]) ? parts[5] : null;
+    ensureForms(state.root);
+    render();
+  }
   window.addEventListener("hashchange", applyHash);
-  document.getElementById("theme").addEventListener("click", function () {
-    var next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = next;
-    try { localStorage.setItem("theme", next); } catch (e) {}
-  });
-  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (e) {
-    var saved; try { saved = localStorage.getItem("theme"); } catch (err) {}
-    if (!saved) document.documentElement.dataset.theme = e.matches ? "dark" : "light";
-  });
 
   /* One shared tooltip, shown at once on hover or keyboard focus (native title tooltips
      carry a browser delay the page cannot change). */

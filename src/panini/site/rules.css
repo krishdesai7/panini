@@ -1,0 +1,50 @@
+.rule-page { margin-bottom: var(--quadruple-baseline); }
+.rule-page .top { padding-bottom: var(--baseline); border-bottom: 1px solid var(--line); }
+.rule-page main { padding-top: var(--one-and-half-baseline); }
+.rule-page h1 {
+  font: 400 clamp(var(--fs-32), 5vw, var(--fs-40))/1.2 var(--serif);
+  margin: var(--quarter-baseline) 0 var(--half-baseline);
+  overflow-wrap: anywhere;
+}
+.rule-meta, .rule-number { font: 400 var(--fs-14) var(--mono); color: var(--muted); }
+.rule-meta, .rule-gloss { margin: 0; }
+.rule-gloss { font-size: var(--fs-20); }
+.rule-page section { margin-top: var(--one-and-half-baseline); }
+.rule-page h2 {
+  font: 400 var(--fs-25)/1.3 var(--serif);
+  margin: 0 0 var(--half-baseline);
+}
+.rule-explanation { border-top: 1px solid var(--line); padding-top: var(--half-baseline); }
+.rule-index, .rule-references { list-style: none; padding: 0; }
+.rule-index li {
+  display: grid;
+  grid-template-columns: 5.5em minmax(0, 1fr);
+  gap: 0 0.75rem;
+  border-top: 1px solid var(--line);
+  padding: var(--half-baseline) 0;
+}
+.rule-index .rule-gloss { grid-column: 2; font-size: var(--fs-16); color: var(--muted); }
+.rule-index .rule-name { font-size: var(--fs-20); overflow-wrap: anywhere; }
+.rule-references li + li { margin-top: var(--quarter-baseline); }
+.rule-example { margin: var(--half-baseline) 0; }
+.rule-example h3 { font: 400 var(--fs-25)/1.25 var(--serif); margin: 0; }
+.rule-request, .rule-scope { color: var(--muted); font-size: var(--fs-16); }
+.rule-request { margin: 0; }
+.rule-change {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15em 0.6em;
+  align-items: baseline;
+  margin: var(--half-baseline) 0 var(--quarter-baseline);
+  font-size: var(--fs-20);
+}
+.rule-change .arrow { color: var(--muted); }
+.rule-step { margin: 0; color: var(--muted); font-size: var(--fs-14); }
+.rule-example p:last-child { margin-bottom: 0; }
+.rule-example .trace-link { font-size: var(--fs-16); }
+.rule-page abbr[title] { text-decoration: underline dotted var(--link-underline); text-underline-offset: 0.24em; }
+@media (max-width: 480px) {
+  .rule-index li { grid-template-columns: minmax(0, 1fr); }
+  .rule-index .rule-gloss { grid-column: 1; }
+  .rule-example { padding-inline: 0.85rem; }
+}

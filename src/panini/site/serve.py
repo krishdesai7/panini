@@ -3,16 +3,26 @@
 from __future__ import annotations
 
 import json
-import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 from panini.lexicon import ROOTS
-from panini.site.build import DEFAULT_STYLE_DIR, page_html, root_derivations, site_data
+from panini.rule_catalog import build_catalog
+from panini.site.build import page_html, root_derivations, rule_assets, site_data, stylesheet
+from panini.site.rules import INDEX_PAGE, RULES_DIR, rule_links
 
 
-def _handler(page: bytes) -> type[BaseHTTPRequestHandler]:
+_RULE_CONTENT_TYPES = {
+    ".html": "text/html; charset=utf-8",
+    ".css": "text/css; charset=utf-8",
+    ".js": "text/javascript; charset=utf-8",
+}
+
+
+def _handler(
+    page: bytes, rules: dict[str, tuple[bytes, str]]
+) -> type[BaseHTTPRequestHandler]:
     class Handler(BaseHTTPRequestHandler):
         def _send(self, status: int, body: bytes, content_type: str) -> None:
             self.send_response(status)
@@ -29,6 +39,10 @@ def _handler(page: bytes) -> type[BaseHTTPRequestHandler]:
             path = urlsplit(self.path).path
             if path == "/":
                 self._send(200, page, "text/html; charset=utf-8")
+            elif path == f"/{RULES_DIR}/":
+                self._send(200, *rules[f"/{RULES_DIR}/{INDEX_PAGE}"])
+            elif path in rules:
+                self._send(200, *rules[path])
             elif path.startswith("/api/root/"):
                 code = unquote(path.removeprefix("/api/root/"))
                 if code in ROOTS:
@@ -48,8 +62,14 @@ def _handler(page: bytes) -> type[BaseHTTPRequestHandler]:
 
 
 def make_server(host: str = "127.0.0.1", port: int = 0, style_dir: Path | None = None) -> ThreadingHTTPServer:
-    """A server bound to `host:port` (port 0: any free one). The page is built once, here."""
-    if style_dir is None:
-        style_dir = Path(os.environ.get("PANINI_STYLE_DIR", DEFAULT_STYLE_DIR))
-    data = {**site_data([], embed_all_roots=True), "source": "server"}
-    return ThreadingHTTPServer((host, port), _handler(page_html(data, style_dir).encode("utf-8")))
+    """Serve the explorer and rule pages on `host:port` (port 0: any free port)."""
+    catalog = build_catalog()
+    css = stylesheet(style_dir)
+    data = {**site_data([], embed_all_roots=True), "source": "server",
+            "rule_pages": rule_links(catalog)}
+    rules = {
+        f"/{RULES_DIR}/{name}": (content.encode("utf-8"), _RULE_CONTENT_TYPES[Path(name).suffix])
+        for name, content in rule_assets(catalog, "../", set(ROOTS), css).items()
+    }
+    page = page_html(data, style_dir, css=css).encode("utf-8")
+    return ThreadingHTTPServer((host, port), _handler(page, rules))

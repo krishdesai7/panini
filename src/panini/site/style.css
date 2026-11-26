@@ -14,6 +14,12 @@ body { font: 400 var(--fs-18)/1.55 var(--serif); color: var(--ink); margin: 0; }
 }
 .top > div { flex: 1; min-width: 0; }
 .top h1 { font: 300 var(--fs-40)/1.2 var(--sans); margin: 0.2rem 0 0; text-wrap: balance; }
+.site-nav { display: flex; gap: 1rem; margin-top: var(--half-baseline); font-size: var(--fs-16); }
+.site-nav [aria-current="page"] { color: var(--ink); text-decoration: none; font-weight: 600; }
+.steps li:focus { outline: 1px solid var(--accent); outline-offset: 0.25rem; }
+.steps li[id] { scroll-margin-top: var(--baseline); }
+.steps .rule-citation .sid { color: inherit; }
+a.rule-citation[data-tip] { cursor: pointer; }
 
 .picker { margin: var(--one-and-half-baseline) 0 var(--baseline); }
 .picker label { font: 600 var(--fs-14) var(--caps); letter-spacing: var(--caps-track-small); color: var(--muted); }

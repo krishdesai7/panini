@@ -6,16 +6,9 @@
 <meta name="color-scheme" content="light dark">
 <title>Prakriyā explorer · Pāṇini</title>
 <script>
-  (function () {
-    var t; try { t = localStorage.getItem('theme'); } catch (e) {}
-    var dark = t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-    document.documentElement.dataset.dark = 'glass';
-  })();
+/*THEME_JS*/
 </script>
 <style>
-/*FONTS*/
-/*BASE_CSS*/
 /*PAGE_CSS*/
 </style>
 </head>
@@ -25,6 +18,10 @@
     <div>
       <div class="eyebrow" aria-label="Pāṇini">Pā<span class="dot-below" aria-hidden="true">n</span>ini</div>
       <h1>Prakriyā explorer</h1>
+      <nav class="site-nav" aria-label="Explorer">
+        <span aria-current="page">Verbs</span>
+        <a href="rules/index.html">Rules</a>
+      </nav>
     </div>
     <button class="theme-toggle" id="theme" type="button" aria-label="Toggle light and dark theme">◐</button>
   </header>

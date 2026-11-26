@@ -45,6 +45,15 @@ def test_api_root_and_404() -> None:
         page = urlopen(base + "/").read().decode()
         data = json.loads(re.search(r'<script type="application/json" id="data">(.*?)</script>', page, re.S).group(1))
         assert data["source"] == "server" and len(data["roots"]) == len(ROOTS) and data["derivations"] == {}
+        assert data["rule_pages"]["7.3.84"] == "rules/7.3.84.html"
+        index = urlopen(base + "/rules/").read().decode()
+        assert 'href="1.1.1.html"' in index
+        article = urlopen(base + "/rules/1.1.1.html").read().decode()
+        assert 'href="../#01.1086/la%E1%B9%85/P/3/sg/23"' in article
+        assert urlopen(base + "/rules/style.css").headers.get_content_type() == "text/css"
+        with pytest.raises(HTTPError) as e:
+            urlopen(base + "/rules/1.1.3.html")
+        assert e.value.code == 404
     finally:
         srv.shutdown()
         srv.server_close()
@@ -62,6 +71,17 @@ def test_build_without_fonts(tmp_path, capsys) -> None:
     assert data["derivations"]["01.0381|laṭ|P|3|sg"]["result"] == "paṭhati"
     urls = set(re.findall(r"https?://[^\s\"')]+", html)) - {"http://www.w3.org/2000/svg"}  # SVG namespace, not a fetch
     assert not urls
+    assert 'href="rules/index.html"' in html
+    index = (tmp_path / "rules" / "index.html").read_text()
+    assert 'href="7.3.84.html"' in index
+    article = (tmp_path / "rules" / "7.3.84.html").read_text()
+    assert 'href="../p.html#01.0001/la%E1%B9%AD/P/3/sg/19"' in article
+    assert '<span>bhū + a + ti</span>' in article
+    assert '<span>bho + a + ti</span>' in article
+    assert 'href="1.1.2.html"' in article
+    assert 'href="1.1.3.html"' not in article
+    assert (tmp_path / "rules" / "style.css").is_file()
+    assert (tmp_path / "rules" / "theme.js").is_file()
 
 def test_one_failing_derivation_does_not_abort(monkeypatch, tmp_path) -> None:
     import panini.site.build as b
@@ -91,6 +111,7 @@ APP_JS = Path(__file__).parent.parent / "src/panini/site/app.js"
 @pytest.mark.parametrize("hash_, expected", [
     ("#paṭh/laṭ/P/3/sg", {"root": "paṭh", "key": "paṭh|laṭ|P|3|sg"}),
     ("#pa%E1%B9%ADh/la%E1%B9%AD/P/3/sg", {"root": "paṭh", "key": "paṭh|laṭ|P|3|sg"}),
+    ("#pa%E1%B9%ADh/la%E1%B9%AD/P/3/sg/19", {"root": "paṭh", "key": "paṭh|laṭ|P|3|sg"}),
     ("#edh", {"root": "edh", "key": None}),
     ("#xyz/laṭ/P/9/sg", {"root": "bhū", "key": None}),
     ("#bhū/laṭ/P/9/sg", {"root": "bhū", "key": None}),

@@ -31,9 +31,8 @@ distinguishes three sources of information:
   several times and you want a specific occurrence.
 
 Run `uv run panini rules` for the full catalogue or
-`uv run panini rules 1.1.1` for one article. Both emit JSON. A future renderer
-can use the keys in the full export's `rules` map to decide which sūtra
-citations have article destinations. It can use an example's request key to
-link back to its verb derivation when that root is available. The static verb
-build contains only featured roots, so it may show an example's extracted step
-without a link to the full trace.
+`uv run panini rules 1.1.1` for one article. Both emit JSON. The explorer
+uses the catalogue to render `rules/index.html` and one HTML page per
+article. Worked examples link back to the verb trace at the selected step
+when the root is available. In the static build, an example for a root
+outside the featured set still shows its before and after forms.
