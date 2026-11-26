@@ -174,14 +174,14 @@ def _tuk_before_ch(st: State, short: bool) -> list[Site]:
 
 
 def _tuk_rule(rule_id: str, short: bool, which: str) -> Rule:
-    # The augment is written right before the ch, in the ch's own term. It follows the vowel either
-    # way (1.1.46); when the vowel ends an earlier term (the augment a), writing it with the ch keeps
-    # 7.1.58 able to place num at the start of the root, ahead of it (6.1.85).
+    # tuk is added to the vowel (6.1.71 hrasvasya, genitive) and, being kit, goes at its end (1.1.46):
+    # it is written right after the vowel, in the vowel's term. When that vowel is the augment a/ā
+    # (laṅ), the t ends the augment's term; meta.mit_position skips it when it looks for a merged vowel.
     return Rule(rule_id, lambda st: _tuk_before_ch(st, short),
-                lambda st, site: augment_in_term_edit(st, site.spans[1].term, site.spans[1].start - 1, (Sound("t"),)),
+                lambda st, site: augment_in_term_edit(st, site.spans[0].term, site.spans[0].start, (Sound("t"),)),
                 tuk_or_satva=True,
-                note=lambda st, site: f"the augment tuk (t; markers u, k) follows a {which} vowel before ch; "
-                "being kit, it goes at the end of what it is added to (1.1.46)")
+                note=lambda st, site: f"the augment tuk (t; markers u, k) is added to a {which} vowel before ch; "
+                "being kit, it goes at the end of that vowel (1.1.46)")
 
 
 R_6_1_73 = _tuk_rule("6.1.73", True, "short")

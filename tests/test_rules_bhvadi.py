@@ -91,6 +91,19 @@ def test_tuk_before_ch(code, tense, expected):
     assert d.result == expected
 
 
+def test_tuk_is_written_with_the_vowel_it_follows():
+    # 6.1.71 hrasvasya tuk / 1.1.46: tuk goes at the end of the vowel, so in laṅ of cham it ends the
+    # augment a's term (a t + cham), not the start of the root's
+    step = next(s for s in form("01.0541", "laṅ").steps if "6.1.73" in s.rule_ids)
+    assert [v.iast() for v in step.after][:2] == ["at", "cham"]
+
+
+@pytest.mark.parametrize("code, expected", [("01.0237", "āñchat"), ("01.0243", "auñchat")])
+def test_num_still_goes_after_a_merged_vowel_when_tuk_could_follow_it(code, expected):
+    # 7.1.58 vs 6.1.75 on ā + ch: mit_position skips an augment sound, so num stays nitya and wins
+    assert form(code, "laṅ").result == expected
+
+
 def test_tuk_after_long_vowel_is_6175_not_6173():
     ids = _rule_ids(form("01.0233"))
     assert "6.1.75" in ids and "6.1.73" not in ids

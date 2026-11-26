@@ -75,7 +75,9 @@ derivations. None of them is a rule-specific ordering.
   would lengthen the a (*bhavānti*).
 - **1.1.46 *ādyantau ṭakitau*** places aṭ/āṭ (ṭit, at the beginning) and tuk
   (kit, at the end). It reads the marker from the augment's upadeśa, because
-  the augment is placed as taught.
+  the augment is placed as taught. tuk is added to the vowel before ch
+  (6.1.71 *hrasvasya*), so its t is written at the end of that vowel, in the
+  vowel's term: in laṅ of *cham* it ends the augment's term (*at + cham*).
 
 ## Engine exceptions (vacanasāmarthya)
 
@@ -209,7 +211,10 @@ roots with an *i*-marker that inserts a nasal (7.1.58 *idito num dhātoḥ*,
   (`meta.mit_position`). In laṅ of a vowel-initial root (*and* → *āndat*), āṭ
   and the root's vowel may already have merged (6.1.90), leaving the root
   with no vowel of its own. The merged vowel counts as the root's first sound
-  (6.1.85), so num goes at the start of what remains.
+  (6.1.85), so num goes at the start of what remains. An augment's sound
+  written after the merged vowel (tuk, *ā t + ch*) is passed over when looking
+  for it, so num still applies after tuk; it is therefore nitya and wins
+  (*āñchat*, *auñchat*).
 - **6.4.24 *aniditāṃ hala upadhāyāḥ kṅiti*** is the contrast: roots *not*
   marked with *i* lose a penultimate nasal before a kit/ṅit affix, which is
   why the *i* marker matters. It is not traced in this slice: in laṭ and laṅ

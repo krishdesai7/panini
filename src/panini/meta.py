@@ -68,14 +68,17 @@ def mit_position(state: State, term: int) -> int | None:
 
     Vowels marked as it do not count. A single substitute stored at the end of the term on
     the left counts as this term's first sound too (6.1.85), so a term whose only vowel went
-    into it (ā + andat, laṅ of and) takes the augment at its start.
+    into it (ā + andat, laṅ of and) takes the augment at its start. An augment's sounds written
+    after that substitute (tuk, 6.1.75: ā t + ch) belong to neither term's own sounds, so they
+    are passed over when looking for it.
     """
     t = state.terms[term]
     own = [k for k, s in enumerate(t.sounds) if is_vowel(s.char) and not s.it]
     if own:
         return own[-1] + 1
     left = next((u for u in reversed(state.terms[:term]) if u.sounds), None)
-    if EKADESHA_START in t.tags and left is not None and left.sounds[-1].ekadesha:
+    tail = next((s for s in reversed(left.sounds) if not s.agama), None) if left is not None else None
+    if EKADESHA_START in t.tags and tail is not None and tail.ekadesha:
         return 0
     return None
 
