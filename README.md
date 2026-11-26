@@ -21,6 +21,7 @@ in `docs/findings.md`, each awaiting a ruling or a rule not yet modelled.
 
 ```sh
 uv run panini site --open              # build and open the explorer page (build/panini.html)
+uv run panini serve --open             # serve every root locally, deriving one root at a time
 uv run panini derive paṭh present 3 sg # one derivation in the terminal
 uv run panini derive bhū laṅ 3 pl -v   # -v adds the competitors each step beat
 ```

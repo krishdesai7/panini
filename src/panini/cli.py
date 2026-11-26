@@ -25,10 +25,16 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--out", type=Path, default=Path("build/panini.html"))
     s.add_argument("--open", action="store_true", help="open the page in a browser")
 
+    v = sub.add_parser("serve", help="serve the explorer locally, deriving one root at a time")
+    v.add_argument("--port", type=int, default=8000)
+    v.add_argument("--open", action="store_true", help="open the page in a browser")
+
     args = parser.parse_args(argv)
     try:
         if args.command == "derive":
             return _derive(args)
+        if args.command == "serve":
+            return _serve(args)
         return _site(args)
     except (UnknownRoot, ValueError) as e:
         print(f"panini: {e}", file=sys.stderr)
@@ -56,4 +62,26 @@ def _site(args: argparse.Namespace) -> int:
     if args.open:
         import webbrowser
         webbrowser.open(out.resolve().as_uri())
+    return 0
+
+
+def _serve(args: argparse.Namespace) -> int:
+    from panini.site.serve import make_server
+
+    try:
+        server = make_server(port=args.port)
+    except OSError as e:
+        print(f"panini: cannot bind port {args.port}: {e}", file=sys.stderr)
+        return 2
+    url = f"http://127.0.0.1:{server.server_address[1]}/"
+    print(f"serving {url} (Ctrl-C to stop)")
+    if args.open:
+        import webbrowser
+        webbrowser.open(url)
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        server.server_close()
     return 0

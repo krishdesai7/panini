@@ -1,13 +1,54 @@
 # tests/test_site.py
-import json, re
+import json, re, threading
 from pathlib import Path
-from panini.site.build import build_site, site_data
+from urllib.error import HTTPError
+from urllib.request import urlopen
+from panini.lexicon import FEATURED, ROOTS
+from panini.site.build import build_site, page_html, root_derivations, root_entries, site_data
+from panini.site.serve import make_server
 from panini.derivation import Status
 
 def test_site_data_covers_everything():
-    d = site_data()
-    assert len(d["roots"]) == 7 and len(d["derivations"]) == 252
+    d = site_data(FEATURED, embed_all_roots=False)
+    assert len(d["roots"]) == len(FEATURED) and len(d["derivations"]) == len(FEATURED) * 36
     assert d["derivations"]["01.0002|laṭ|P|3|sg"]["status"] == "unavailable"
+
+
+def test_static_site_embeds_featured_only():
+    d = site_data(FEATURED, embed_all_roots=False)
+    assert [r["key"] for r in d["roots"]] == list(FEATURED) and "01.0074|laṭ|P|3|sg" not in d["derivations"]
+
+
+def test_root_entries_cover_every_root_and_say_why_one_is_unavailable():
+    entries = {e["key"]: e for e in root_entries()}
+    assert len(entries) == len(ROOTS)
+    assert entries["01.1092"]["unavailable"] and entries["01.0001"]["unavailable"] is None
+    assert entries["01.0991"]["pada"] == "A"   # śad, by 1.3.60
+    assert {"name", "upadesha_iast", "meaning", "meaning_kind", "gana", "class_label"} <= set(entries["01.0001"])
+
+
+def test_api_root_and_404():
+    srv = make_server(port=0, style_dir=Path("/nonexistent"))
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{srv.server_address[1]}"
+    try:
+        d = json.load(urlopen(base + "/api/root/01.0074"))["derivations"]
+        assert d["01.0074|laṭ|P|3|sg"]["result"] == "krandati"
+        assert json.load(urlopen(base + "/api/root/01.1092"))["derivations"]["01.1092|laṭ|P|3|sg"]["status"] == "unavailable"
+        with pytest.raises(HTTPError) as e:
+            urlopen(base + "/api/root/99.9999")
+        assert e.value.code == 404 and "error" in json.load(e.value)
+        page = urlopen(base + "/").read().decode()
+        data = json.loads(re.search(r'<script type="application/json" id="data">(.*?)</script>', page, re.S).group(1))
+        assert data["source"] == "server" and len(data["roots"]) == len(ROOTS) and data["derivations"] == {}
+    finally:
+        srv.shutdown()
+        srv.server_close()
+
+
+def test_page_html_has_no_external_urls():
+    html = page_html({**site_data([], embed_all_roots=True), "source": "server"}, Path("/nonexistent"))
+    assert not set(re.findall(r"https?://[^\s\"')]+", html)) - {"http://www.w3.org/2000/svg"}
 
 def test_build_without_fonts(tmp_path, capsys):
     out = build_site(tmp_path / "p.html", style_dir=tmp_path / "nope")
@@ -26,7 +67,11 @@ def test_one_failing_derivation_does_not_abort(monkeypatch, tmp_path):
             raise RuntimeError("boom")
         return real(req, **kw)
     monkeypatch.setattr(b, "derive", flaky)
-    assert site_data()["derivations"]["01.1137|laṭ|P|3|sg"]["status"] == "error"
+    root_derivations.cache_clear()
+    try:
+        assert root_derivations("01.1137")["01.1137|laṭ|P|3|sg"]["status"] == "error"
+    finally:
+        root_derivations.cache_clear()
 
 
 import shutil
@@ -57,7 +102,7 @@ def test_parse_hash_falls_back_safely(hash_, expected):
 
 
 def test_site_data_carries_sutra_texts_and_plain_class_labels():
-    d = site_data()
+    d = site_data(FEATURED, embed_all_roots=False)
     assert d["sutras"]["1.3.78"]["text"] == "śeṣāt kartari parasmaipadam"
     assert "9.9.1" not in d["sutras"]   # toy rules stay out
     bhu = next(r for r in d["roots"] if r["key"] == "01.0001")
@@ -112,7 +157,7 @@ def test_split_terms_parses_modern_and_traditional_markup():
 
 
 def test_site_data_explains_what_markers_do():
-    notes = site_data()["markers"]
+    notes = site_data(FEATURED, embed_all_roots=False)["markers"]
     assert "primary endings" in notes["lãṭ|ṭ"] and "3.4.79" in notes["lãṭ|ṭ"]
     assert "secondary endings" in notes["lãṅ|ṅ"]
     assert "1.3.12" in notes["edhã|ã"]
@@ -126,7 +171,7 @@ def test_marker_tip_prefers_a_specific_note():
 
 
 def test_step_views_carry_the_term_upadesha(tmp_path):
-    d = site_data()["derivations"]["01.0001|laṭ|P|3|sg"]
+    d = site_data(FEATURED, embed_all_roots=False)["derivations"]["01.0001|laṭ|P|3|sg"]
     assert any(v.get("upadesha") == "lãṭ" for s in d["steps"] for v in s["after"])
 
 
@@ -137,13 +182,13 @@ def test_marker_tip_falls_back_to_a_note_for_the_sound_alone():
 
 
 def test_lakara_marker_notes_name_lakaras_not_tenses():
-    notes = site_data()["markers"]
+    notes = site_data(FEATURED, embed_all_roots=False)["markers"]
     assert "liṭ (perfect)" in notes["lãṭ|ṭ"] and "tenses" not in notes["lãṭ|ṭ"]
     assert "laṅ (imperfect)" in notes["lãṅ|ṅ"] and "tenses" not in notes["lãṅ|ṅ"]
 
 
 def test_site_data_has_a_glossary_for_lakara_names():
-    g = site_data()["glossary"]
+    g = site_data(FEATURED, embed_all_roots=False)["glossary"]
     assert g["laṭ"] == "present imperfective" and g["laṅ"] == "past imperfective"
 
 
@@ -155,5 +200,5 @@ def test_glossary_words_get_tooltips_only_as_whole_words():
 
 
 def test_root_marker_vowel_note_explains_why_it_is_there():
-    note = site_data()["markers"]["paṭhã|ã"]
+    note = site_data(FEATURED, embed_all_roots=False)["markers"]["paṭhã|ã"]
     assert "1.3.3" in note and "pitch" in note

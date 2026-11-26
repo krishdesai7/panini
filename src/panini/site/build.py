@@ -1,4 +1,4 @@
-"""Build the self-contained HTML explorer: every form and derivation baked in, no server."""
+"""Site data and the explorer page: baked in whole for the static build, per root for the server."""
 
 from __future__ import annotations
 
@@ -7,27 +7,33 @@ import os
 import subprocess
 import sys
 import tomllib
+from collections.abc import Iterable
+from functools import lru_cache
 from importlib.resources import files
 from pathlib import Path
 
 from panini.derivation import Derivation, Status
 from panini.engine import derive
 from panini.lexicon import FEATURED, ROOTS
-from panini.request import all_requests, effective_pada, load_reference
-
-# Until the explorer is reworked for the whole section, it shows only the slice-1 seven.
-SITE_ROOTS = FEATURED[:7]
+from panini.request import OUT_OF_SCOPE, all_requests, effective_pada, load_reference
 
 DEFAULT_STYLE_DIR = Path.home() / ".local/state/claude/skills/krish-frontend-style"
 
 
-def site_data() -> dict:
-    """All roots and all 252 requests (unavailable ones included) as plain JSON data."""
+def root_entries() -> list[dict]:
+    """One entry per root: what the picker and the heading need."""
+    return [{"key": r.key, "name": r.name, "upadesha_iast": r.upadesha_iast, "meaning": r.meaning,
+             "meaning_kind": r.meaning_kind, "gana": r.gana, "class_label": GANA_LABELS.get(r.gana, r.gana),
+             "pada": effective_pada(r), "unavailable": OUT_OF_SCOPE[r.code][0] if r.code in OUT_OF_SCOPE else None}
+            for r in ROOTS.values()]
+
+
+@lru_cache(maxsize=None)
+def root_derivations(code: str) -> dict[str, dict]:
+    """Every request of one root (unavailable ones included): request key -> Derivation.to_json()."""
     reference = load_reference()
-    derivations: dict[str, dict] = {}
-    for req in all_requests():
-        if req.root.code not in SITE_ROOTS:
-            continue
+    out: dict[str, dict] = {}
+    for req in all_requests([code]):
         try:
             d = derive(req, reference=reference)
         except Exception as e:  # one broken derivation must not take the page down
@@ -35,10 +41,17 @@ def site_data() -> dict:
             ref = reference.get(req.key)
             d = Derivation({"key": req.key, "root": req.root.name, "panini": panini, "pie": pie}, Status.ERROR,
                            None, (), tuple(ref) if ref else None, (), f"{type(e).__name__}: {e}")
-        derivations[req.key] = d.to_json()
-    roots = [{"key": r.key, "name": r.name, "upadesha_iast": r.upadesha_iast, "meaning": r.meaning, "gana": r.gana,
-              "class_label": GANA_LABELS.get(r.gana, r.gana), "pada": effective_pada(r)}
-             for r in map(ROOTS.__getitem__, SITE_ROOTS)]
+        out[req.key] = d.to_json()
+    return out
+
+
+def site_data(codes: Iterable[str] | None, *, embed_all_roots: bool) -> dict:
+    """Page data. Derivations are embedded for `codes` (None: every root); the root list covers
+    every root if `embed_all_roots`, else just `codes`."""
+    codes = list(ROOTS) if codes is None else list(codes)
+    entries = {e["key"]: e for e in root_entries()}
+    roots = list(entries.values()) if embed_all_roots else [entries[c] for c in codes]
+    derivations = {k: v for code in codes for k, v in root_derivations(code).items()}
     return {"roots": roots, "derivations": derivations, "sutras": _sutras(), "markers": MARKER_NOTES,
             "glossary": GLOSSARY}
 
@@ -113,16 +126,21 @@ def _asset(name: str) -> str:
     return files("panini.site").joinpath(name).read_text(encoding="utf-8")
 
 
-def build_site(out: Path, style_dir: Path | None = None) -> Path:
+def page_html(data: dict, style_dir: Path | None) -> str:
+    """The explorer page with `data` and (if `style_dir` has them) the fonts embedded."""
     if style_dir is None:
         style_dir = Path(os.environ.get("PANINI_STYLE_DIR", DEFAULT_STYLE_DIR))
-    data = json.dumps(site_data(), ensure_ascii=False).replace("</", "<\\/")
-    html = (_asset("template.html")
+    return (_asset("template.html")
             .replace("/*FONTS*/", _font_css(style_dir))
             .replace("/*BASE_CSS*/", _asset("base.css"))
             .replace("/*PAGE_CSS*/", _asset("style.css"))
-            .replace("/*DATA*/", data)
+            .replace("/*DATA*/", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
             .replace("/*APP_JS*/", _asset("app.js")))
+
+
+def build_site(out: Path, style_dir: Path | None = None) -> Path:
+    """Write the static explorer: the featured roots only, every form baked in."""
+    html = page_html({**site_data(FEATURED, embed_all_roots=False), "source": "static"}, style_dir)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding="utf-8")
     return out
