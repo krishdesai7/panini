@@ -168,7 +168,10 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
         ("1.1.53", "riṅ is marked ṅ, so it replaces only the last sound"),
     ),
     "6.1.16": (
-        ("6.1.15", "kiti ‘before an affix marked k’ carries over; ṅiti ca adds marked ṅ"),
+        (
+            "6.1.15",
+            "kiti ‘before an affix marked k’ carries over; ṅiti ca adds marked ṅ",
+        ),
         ("1.1.45", "samprasāraṇa = a semivowel replaced by its vowel"),
     ),
     "6.1.108": (

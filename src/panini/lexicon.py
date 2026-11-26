@@ -148,9 +148,15 @@ ENGLISH = {
     "01.0002": "to grow, prosper",
     "01.1049": "to lead",
     "01.1151": "to cook",
+    "06.0001": "to strike, push",
+    "06.0003": "to point, show",
+    "06.0166": "to release",
+    "06.0149": "to ask",
+    "06.0145": "to scatter",
+    "06.0139": "to die",
 }
 
-# The slice-1 seven, then the 7.3.78 roots.
+# The slice-1 seven, then the 7.3.78 roots, then six tudādi roots (slice 1.6).
 FEATURED: tuple[str, ...] = (
     "01.0001",
     "01.0381",
@@ -169,6 +175,12 @@ FEATURED: tuple[str, ...] = (
     "01.0991",
     "01.1086",
     "01.1143",
+    "06.0001",
+    "06.0003",
+    "06.0166",
+    "06.0149",
+    "06.0145",
+    "06.0139",
 )
 
 # The upadeśas as the dhātupāṭha teaches them, for roots stored in another spelling
@@ -182,7 +194,10 @@ TAUGHT_AS: dict[str, tuple[str, ...]] = {
 # The sections of the root list in scope: list-code prefix -> gaṇa, and the vendored file of each
 # (scripts/vendor_dhatupatha.py).
 GANAS: dict[str, str] = {"01": "bhvādi", "06": "tudādi"}
-SECTION_FILES: dict[str, str] = {"01": "dhatupatha_bhvadi.tsv", "06": "dhatupatha_tudadi.tsv"}
+SECTION_FILES: dict[str, str] = {
+    "01": "dhatupatha_bhvadi.tsv",
+    "06": "dhatupatha_tudadi.tsv",
+}
 
 
 def _load() -> dict[str, Root]:

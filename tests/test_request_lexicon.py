@@ -212,10 +212,19 @@ def test_vich_is_out_of_scope() -> None:
 
 def test_tudadi_shad_takes_middle_endings_by_1360() -> None:
     active = parse_request("06.0164", "laṭ", 3, "sg", "active")
-    assert availability(active) is not None
-    assert availability(active)[1] == "1.3.60"
+    got = availability(active)
+    assert got is not None
+    assert got[1] == "1.3.60"
     from panini.engine import derive
 
     d = derive(parse_request("06.0164", "laṭ", 3, "sg", "middle"))
     step = next(s for s in d.steps if "1.3.60" in s.rule_ids)
     assert "śa follows" in step.note
+
+
+def test_trut_has_two_present_stems() -> None:
+    req = parse_request("06.0102", "laṭ", 3, "sg", "active")
+    got = availability(req)
+    assert got is not None
+    assert got[1] == "3.1.70"
+    assert "truṭyati" in got[0]

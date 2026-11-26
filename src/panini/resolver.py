@@ -213,13 +213,18 @@ def surviving_rule(
     if not want:
         return None
     s2 = settle(state, after.rule.rewrite(state, after.site))
-    for r in rules:
-        if r.operation != x.rule.operation or r.id == x.rule.id:
-            continue
-        for site in r.find(s2):
-            if _targets(s2, r.rewrite(s2, site)) == want:
-                return r.id
-    return None
+    siblings = (
+        r for r in rules if r.operation == x.rule.operation and r.id != x.rule.id
+    )
+    return next((r.id for r in siblings if _acts_on(s2, r, want)), None)
+
+
+def _acts_on(state: State, rule: Rule, targets: tuple[tuple[object, int], ...]) -> bool:
+    """Does ``rule`` apply somewhere in ``state`` acting on exactly these sounds?"""
+    return any(
+        _targets(state, rule.rewrite(state, site)) == targets
+        for site in rule.find(state)
+    )
 
 
 def then(

@@ -180,6 +180,7 @@ OUT_OF_SCOPE: dict[str, tuple[str, str]] = {
         "pan takes the suffix -āya- (panāyati), which this engine doesn't derive yet",
         "3.1.28",
     ),
+    "06.0102": (f"truṭ has two present stems, truṭyati and truṭati; {_TWO}", "3.1.70"),
     "06.0159": (
         "vich takes the suffix -āya- (vicchāyati), which this engine doesn't derive yet",
         "3.1.28",

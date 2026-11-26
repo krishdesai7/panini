@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import itertools
 from dataclasses import replace
+lazy from collections.abc import Callable
 
 from panini.edits import VIKRTA, AddTags, DeleteSounds, ReplaceSounds
 from panini.lexicon import citation_name
@@ -91,9 +92,7 @@ def _note_7384(st: State, site: Site) -> str:
 
 
 # 7.3.84 and 7.3.86 are one operation, guṇa (both carry guṇaḥ from 7.3.82), for the nitya check.
-R_7_3_84 = Rule(
-    "7.3.84", _find_7384, _rewrite_7384, note=_note_7384, operation="guṇa"
-)
+R_7_3_84 = Rule("7.3.84", _find_7384, _rewrite_7384, note=_note_7384, operation="guṇa")
 
 
 # 7.3.86 pugantalaghūpadhasya ca (guṇa of a light penultimate ik)
@@ -625,9 +624,21 @@ R_6_4_24 = Rule(
 # śa and the vārttika restores it, so the vārttika applies only to a root that no longer has a
 # nasal before its final consonant (its purpose is to undo 6.4.24; adding num beside the taught n
 # would give a double nasal no one recites).
-MUCADI = frozenset({"mucx~", "lupx~", "vidx~", "lipa~", "zica~", "kftI~", "Kida~", "piSa~"})
+MUCADI = frozenset(
+    {"mucx~", "lupx~", "vidx~", "lipa~", "zica~", "kftI~", "Kida~", "piSa~"}
+)
 TRMPHADI = frozenset(
-    {"tfnPa~", "tunpa~", "tunPa~", "dfnPa~", "fnPa~", "gunPa~", "unBa~", "SunBa~", "tfnhU~"}
+    {
+        "tfnPa~",
+        "tunpa~",
+        "tunPa~",
+        "dfnPa~",
+        "fnPa~",
+        "gunPa~",
+        "unBa~",
+        "SunBa~",
+        "tfnhU~",
+    }
 )
 
 
@@ -644,7 +655,7 @@ def _num_before_sha(group: frozenset[str]):
                 t.kind is TermKind.ROOT
                 and _bare_upadesha(t) in group
                 and nxt.upadesha == "Sa"
-                and not any(s.char == "n" for s in t.sounds[1:-1] if not s.it)
+                and not any(s.char == "n" for s in t.sounds if not s.it)
                 and (pos := mit_position(st, i)) is not None
             ):
                 out.append(Site.at(i, pos, pos))
@@ -654,15 +665,19 @@ def _num_before_sha(group: frozenset[str]):
 
 
 NASAL_INFIX = Aside(
-    "historically a nasal-infix present, cf. Latin rumpit and the rudh class", ("rumpit",)
+    "historically a nasal-infix present, cf. Latin rumpit and the rudh class",
+    ("rumpit",),
 )
 
 
-def _note_num(which: str):
-    return lambda st, site: (
-        f"{citation_name(st.terms[site.spans[0].term].upadesha)}, one of the {which} group, gets the "
-        "{augment|āgama} n (num) before śa; it goes right after the last vowel (1.1.47)"
-    )
+def _note_num(which: str) -> Callable[[State, Site], str]:
+    def note(st: State, site: Site) -> str:
+        return (
+            f"{citation_name(st.terms[site.spans[0].term].upadesha)}, one of the {which} group, "
+            "gets the {augment|āgama} n (num) before śa; it goes right after the last vowel (1.1.47)"
+        )
+
+    return note
 
 
 R_7_1_59 = Rule(
@@ -702,6 +717,10 @@ def _find_6477(st: State) -> list[Site]:
     return out
 
 
+def _vowel_at(st: State, site: Site) -> str:
+    return st.terms[site.spans[0].term].sounds[site.spans[0].start].char
+
+
 R_6_4_77 = Rule(
     "6.4.77",
     _find_6477,
@@ -710,12 +729,12 @@ R_6_4_77 = Rule(
             site.spans[0].term,
             site.spans[0].start,
             site.spans[0].end,
-            _sounds(IYAN_UVAN[st.terms[site.spans[0].term].antya]),
+            _sounds(IYAN_UVAN[_vowel_at(st, site)]),
         ),
     ),
     note=lambda st, site: (
-        f"before a vowel the root's final {slp1_to_iast(st.terms[site.spans[0].term].antya)} becomes "
-        f"{slp1_to_iast(IYAN_UVAN[st.terms[site.spans[0].term].antya])} "
+        f"before a vowel the root's final {slp1_to_iast(_vowel_at(st, site))} becomes "
+        f"{slp1_to_iast(IYAN_UVAN[_vowel_at(st, site)])} "
         "(iyaṅ/uvaṅ, marked ṅ, so only the last sound is replaced, 1.1.53)"
     ),
 )
@@ -790,7 +809,9 @@ R_6_1_16 = Rule(
             site.spans[0].term,
             site.spans[0].start,
             site.spans[0].end,
-            _sounds(VOWEL_OF[st.terms[site.spans[0].term].sounds[site.spans[0].start].char]),
+            _sounds(
+                VOWEL_OF[st.terms[site.spans[0].term].sounds[site.spans[0].start].char]
+            ),
         ),
         AddTags(site.spans[0].term, frozenset({SAMPRASARANA})),
     ),

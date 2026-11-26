@@ -146,7 +146,7 @@ def test_nitya_operation_survives_on_the_same_vowel_whatever_its_result() -> Non
     # tF: G1 (final F -> ar) and Y (final F -> ir) bleed each other; after Y the sibling G2 still
     # applies to the same vowel (i -> e), with a different result. The operation survives Y, so
     # G1 is nitya (tṝ: guṇa over 7.1.100, tarati; the user's ruling, slice 1.6).
-    def g1_rewrite(_st, site):
+    def g1_rewrite(_st, _site):
         return (ReplaceSounds(0, 1, 2, (Sound("a"), Sound("r"))),)
 
     g1 = Rule(

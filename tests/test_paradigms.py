@@ -37,6 +37,7 @@ def _check(req, request) -> None:
         request.applymarker(pytest.mark.xfail(reason=XFAIL[req.key], strict=True))
     d = derive(req)
     assert d.status is Status.OK, d.message
+    assert d.result is not None
     got, want = [d.result, *d.alternatives], REF[req.key]
     if req.root.code in ORDER_DIFFERS:
         got, want = sorted(got), sorted(want)

@@ -438,4 +438,5 @@ def test_app_uses_the_class_tip_from_the_data() -> None:
     from panini.site import build
 
     js = (Path(build.__file__).parent / "app.js").read_text()
-    assert "r.class_tip" in js and "the bhū class" not in js
+    assert "r.class_tip" in js
+    assert "the bhū class" not in js

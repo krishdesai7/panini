@@ -11,12 +11,13 @@ tripādī runs once in sūtra order. Where the tradition is divided, the engine
 follows Paul Kiparsky's analysis. The design is in
 `docs/superpowers/specs/2026-11-24-prakriya-engine-design.md`.
 
-It covers laṭ (present) and laṅ (imperfect) of the whole bhvādi class, in both
-voices where the root allows them: 1,132 of the 1,156 roots (the other 24 need
-present stems or suffixes the engine doesn't derive yet, or are a variant reading
-the sources conjugate against the sūtra). 21,555 of 21,564 forms match the
-reference (Vidyut 0.4). The 9 that don't need a rule not yet modelled (8.4.65),
-documented in `docs/findings.md`.
+It covers laṭ (present) and laṅ (imperfect) of the whole bhvādi class (class 1,
+thematic, full grade) and the whole tudādi class (class 6, thematic, zero grade), in
+both voices where the root allows them: 1,132 of the 1,156 bhvādi roots and 172 of the
+174 tudādi roots. The others need present stems or suffixes the engine doesn't derive
+yet, or are a variant reading the sources conjugate against the sūtra. 24,858 of 24,876
+forms match the reference (Vidyut 0.4). The 18 that don't need a rule not yet modelled
+(8.4.65), documented in `docs/findings.md`.
 
 ## Use
 

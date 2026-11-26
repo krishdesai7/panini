@@ -1,9 +1,9 @@
 # tests/test_rules_tudadi.py — rules added for the tudādi class (slice 1.6)
 import pytest
 
-from panini.derivation import Derivation
 from panini.engine import derive
 from panini.request import availability, parse_request
+lazy from panini.derivation import Derivation
 
 
 def form(
@@ -224,3 +224,10 @@ def test_chur_not_lengthened() -> None:
     d = form("06.0099")
     assert d.result == "churati"
     assert "8.2.78" not in _rule_ids(d)
+
+
+def test_trmphadi_nasal_once_after_a_merged_initial_vowel() -> None:
+    # laṅ of ṛmph: ā + ṛ merge (6.1.90) and the root term is left as ph; num still goes in once
+    d = form("06.0041", "laṅ")
+    assert d.result == "ārmphat"
+    assert _rule_ids(d).count("7.1.59.1") == 1
