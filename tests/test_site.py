@@ -244,3 +244,21 @@ def test_parse_hash_codes_and_old_names(hash_, expected, all_roots_data):
 def test_parse_hash_keeps_a_wellformed_key_on_a_server_page_before_the_forms_arrive(all_roots_data):
     got = _node(f"app.parseHash('#01.0074/laṭ/P/3/sg', {json.dumps(all_roots_data)})")
     assert got == {"root": "01.0074", "key": "01.0074|laṭ|P|3|sg"}
+
+
+def test_out_of_scope_root_entry_names_its_sutra():
+    entries = {e["key"]: e for e in root_entries()}
+    assert entries["01.1092"]["unavailable_rule"] == "3.1.74" and entries["01.0001"]["unavailable_rule"] is None
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_out_of_scope_root_gets_its_own_reason_not_a_voice_restriction():
+    sru = next(e for e in root_entries() if e["key"] == "01.1092")
+    bhu = next(e for e in root_entries() if e["key"] == "01.0001")
+    assert _node(f"app.rootNotice({json.dumps(sru)})") == [sru["unavailable"], "3.1.74"]
+    assert _node(f"app.rootNotice({json.dumps(bhu)})") is None
+
+
+def test_out_of_scope_roots_stay_selectable():
+    # the learner can pick śru to read why it has no forms; nothing marks it disabled
+    assert "aria-disabled" not in APP_JS.read_text()

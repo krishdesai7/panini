@@ -121,6 +121,12 @@ function markerTip(upadesha, ch, notes) {
 }
 
 /* Tooltip for a sūtra: number and text, then the gloss on the next line. */
+/* Why a root has no forms at all (outside this engine's scope), as [reason, sūtra], or null.
+   Such a root gets this one notice instead of its paradigm tables. */
+function rootNotice(root) {
+  return root && root.unavailable ? [root.unavailable, root.unavailable_rule || null] : null;
+}
+
 function sutraTitle(id, sutras) {
   var s = sutras[id];
   return s ? id + " " + s.text + "\n" + splitTerms(s.gloss).map(function (p) { return p[0]; }).join("") : id;
@@ -135,7 +141,7 @@ function tipPosition(rect, size, view) {
   return { left: left, top: top };
 }
 
-if (typeof module !== "undefined") module.exports = { parseHash: parseHash, fold: fold, searchRoots: searchRoots, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, splitGlossary: splitGlossary, sutraTitle: sutraTitle, markerTip: markerTip, tipPosition: tipPosition };
+if (typeof module !== "undefined") module.exports = { rootNotice: rootNotice, parseHash: parseHash, fold: fold, searchRoots: searchRoots, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, splitGlossary: splitGlossary, sutraTitle: sutraTitle, markerTip: markerTip, tipPosition: tipPosition };
 
 if (typeof document !== "undefined") (function () {
   var data = JSON.parse(document.getElementById("data").textContent);
@@ -226,7 +232,7 @@ if (typeof document !== "undefined") (function () {
     rootList.innerHTML = "";
     matches.forEach(function (r, i) {
       var attrs = { role: "option", id: "root-opt-" + i, "aria-selected": "false" };
-      if (r.unavailable) { attrs["aria-disabled"] = "true"; attrs["data-tip"] = r.unavailable; attrs.class = "out"; }
+      if (r.unavailable) { attrs["data-tip"] = r.unavailable; attrs.class = "out"; }
       var gloss = el("span", { class: "gloss" }, [r.meaning_kind === "traditional" ? el("em", { text: r.meaning }) : r.meaning]);
       var li = el("li", attrs, [el("span", { class: "rname", text: r.name }), el("span", { class: "rup", text: r.upadesha_iast }), gloss,
                                 el("span", { class: "rvoice", text: PADA_CLASS[r.pada][0] })]);
@@ -277,7 +283,7 @@ if (typeof document !== "undefined") (function () {
   function hasForms(code) { return Object.prototype.hasOwnProperty.call(data.derivations, keyOf(code, "laṭ", "P", "3", "sg")); }
   function ensureForms(code) {
     loadError = null;
-    if (hasForms(code) || data.source !== "server") { loading = null; return; }
+    if (hasForms(code) || data.source !== "server" || rootNotice(rootByKey(code))) { loading = null; return; }
     loading = code;
     fetch("/api/root/" + encodeURIComponent(code))
       .then(function (res) { if (!res.ok) throw new Error("HTTP " + res.status); return res.json(); })
@@ -415,8 +421,19 @@ if (typeof document !== "undefined") (function () {
     panel.appendChild(el("ol", { class: "steps" }, d.steps.map(step)));
   }
 
+  /* An out-of-scope root: its reason, once, in place of the four tables. */
+  function renderNotice(notice) {
+    paradigm.innerHTML = "";
+    panel.innerHTML = "";
+    var rule = notice[1];
+    paradigm.appendChild(el("div", { class: "unavailable whole" }, [notice[0],
+      rule ? el("span", {}, [" (", term(rule, sutraTitle(rule, data.sutras || {})), ")"]) : null]));
+  }
+
   function render() {
     renderPicker();
+    var notice = rootNotice(rootByKey(state.root));
+    if (notice) { renderNotice(notice); return; }
     if (!hasForms(state.root) && data.source === "server") {
       paradigm.innerHTML = "";
       panel.innerHTML = "";

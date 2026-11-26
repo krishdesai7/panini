@@ -24,7 +24,8 @@ def root_entries() -> list[dict]:
     """One entry per root: what the picker and the heading need."""
     return [{"key": r.key, "name": r.name, "upadesha_iast": r.upadesha_iast, "meaning": r.meaning,
              "meaning_kind": r.meaning_kind, "gana": r.gana, "class_label": GANA_LABELS.get(r.gana, r.gana),
-             "pada": effective_pada(r), "unavailable": OUT_OF_SCOPE[r.code][0] if r.code in OUT_OF_SCOPE else None}
+             "pada": effective_pada(r), "unavailable": OUT_OF_SCOPE[r.code][0] if r.code in OUT_OF_SCOPE else None,
+             "unavailable_rule": OUT_OF_SCOPE[r.code][1] if r.code in OUT_OF_SCOPE else None}
             for r in ROOTS.values()]
 
 
