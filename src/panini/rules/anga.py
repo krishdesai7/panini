@@ -90,7 +90,10 @@ def _note_7384(st: State, site: Site) -> str:
     return note
 
 
-R_7_3_84 = Rule("7.3.84", _find_7384, _rewrite_7384, note=_note_7384)
+# 7.3.84 and 7.3.86 are one operation, guṇa (both carry guṇaḥ from 7.3.82), for the nitya check.
+R_7_3_84 = Rule(
+    "7.3.84", _find_7384, _rewrite_7384, note=_note_7384, operation="guṇa"
+)
 
 
 # 7.3.86 pugantalaghūpadhasya ca (guṇa of a light penultimate ik)
@@ -133,6 +136,7 @@ R_7_3_86 = Rule(
     _find_7386,
     _rewrite_7384,
     near_miss=_near_7386,
+    operation="guṇa",
     note=lambda st, site: (
         "the light penultimate "
         f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} takes {{full grade|guṇa}}"
@@ -676,6 +680,74 @@ R_7_1_59_1 = Rule(
 )
 
 
+# 6.4.77 aci śnudhātubhruvāṃ yvor iyaṅuvaṅau: the final i/ī of a root becomes iy, u/ū becomes uv,
+# before an affix beginning with a vowel. Iyaṅ and uvaṅ are marked ṅ, so they replace only the
+# last sound (1.1.53). The śnu and bhrū parts of the sūtra are not reached in this slice.
+IYAN_UVAN = {"i": "iy", "I": "iy", "u": "uv", "U": "uv"}
+
+
+def _find_6477(st: State) -> list[Site]:
+    out: list[Site] = []
+    for i, t in enumerate(st.terms):
+        j = _following(st, i)
+        if (
+            t.kind is TermKind.ROOT
+            and t.antya in IYAN_UVAN
+            and j is not None
+            and is_pratyaya(st.terms[j])
+            and is_vowel(adi(st, j) or "")
+        ):
+            k = len(t.sounds) - 1
+            out.append(Site.at(i, k, k + 1))
+    return out
+
+
+R_6_4_77 = Rule(
+    "6.4.77",
+    _find_6477,
+    lambda st, site: (
+        ReplaceSounds(
+            site.spans[0].term,
+            site.spans[0].start,
+            site.spans[0].end,
+            _sounds(IYAN_UVAN[st.terms[site.spans[0].term].antya]),
+        ),
+    ),
+    note=lambda st, site: (
+        f"before a vowel the root's final {slp1_to_iast(st.terms[site.spans[0].term].antya)} becomes "
+        f"{slp1_to_iast(IYAN_UVAN[st.terms[site.spans[0].term].antya])} "
+        "(iyaṅ/uvaṅ, marked ṅ, so only the last sound is replaced, 1.1.53)"
+    ),
+)
+
+
+# 7.4.28 riṅ śayagliṅkṣu: a root's final ṛ becomes ri before śa (and before yak and the
+# benedictive liṅ, not reached here). Riṅ is marked ṅ, so it replaces only the last sound (1.1.53).
+def _find_7428(st: State) -> list[Site]:
+    out: list[Site] = []
+    for i in range(len(st.terms) - 1):
+        t, nxt = st.terms[i], st.terms[i + 1]
+        if t.kind is TermKind.ROOT and t.antya == "f" and nxt.upadesha == "Sa":
+            k = len(t.sounds) - 1
+            out.append(Site.at(i, k, k + 1))
+    return out
+
+
+R_7_4_28 = Rule(
+    "7.4.28",
+    _find_7428,
+    lambda st, site: (
+        ReplaceSounds(
+            site.spans[0].term, site.spans[0].start, site.spans[0].end, _sounds("ri")
+        ),
+    ),
+    note=lambda st, site: (
+        "the root's final ṛ becomes ri before śa (riṅ, marked ṅ, so only the last sound is "
+        "replaced, 1.1.53)"
+    ),
+)
+
+
 # 6.4.89 ūd upadhāyā gohaḥ: the penultimate vowel of goha becomes ū before a vowel-initial affix
 # (aci, carried over from 6.4.77). goha is guh in its full grade, so the rule follows guṇa (7.3.86)
 # and reaches only forms where guṇa applied.
@@ -731,5 +803,7 @@ RULES = (
     R_6_4_24,
     R_7_1_59,
     R_7_1_59_1,
+    R_6_4_77,
+    R_7_4_28,
     R_6_4_89,
 )

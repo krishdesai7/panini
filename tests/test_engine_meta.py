@@ -117,6 +117,43 @@ def test_nitya_preference() -> None:
     )
 
 
+def test_nitya_counts_one_operation_across_sibling_rules() -> None:
+    # bU: G1 (final U -> o) and Y (final U -> uv) bleed each other as rules, but after Y the
+    # sibling G2 (penultimate u -> o, the same operation) makes the same change on the same
+    # term. So the operation survives Y and Y does not survive it: G1 is nitya (bhū: guṇa
+    # 7.3.84/7.3.86 over uvaṅ 6.4.77).
+    g1 = replace_rule("9.9.10", "U", "o", operation="g")
+    y = Rule(
+        "9.9.11",
+        lambda st: [Site.at(0, 1)] if st.terms[0].text == "bU" else [],
+        lambda st, site: (ReplaceSounds(0, 1, 2, (Sound("u"), Sound("v"))),),
+    )
+    g2 = replace_rule("9.9.12", "u", "o", only_at=1, operation="g")
+    state, steps, _ = run(S("bU"), [g1, y, g2])
+    assert final_text(state) == "bo"
+    assert ids(steps) == ["9.9.10"]
+    assert (
+        Loser(
+            "9.9.11",
+            "deferred: 9.9.10 {applies either way|nitya}: after 9.9.11, "
+            "9.9.12 makes the same change",
+        )
+        in steps[0].losers
+    )
+
+
+def test_sibling_rules_without_a_shared_operation_still_conflict() -> None:
+    g1 = replace_rule("9.9.10", "U", "o")
+    y = Rule(
+        "9.9.11",
+        lambda st: [Site.at(0, 1)] if st.terms[0].text == "bU" else [],
+        lambda st, site: (ReplaceSounds(0, 1, 2, (Sound("u"), Sound("v"))),),
+    )
+    g2 = replace_rule("9.9.12", "u", "o", only_at=1)
+    with pytest.raises(UnresolvedConflict):
+        run(S("bU"), [g1, y, g2])
+
+
 def test_commuting_tie_lowest_id() -> None:
     a = replace_rule("9.9.2", "a", "i")
     b = replace_rule("9.9.9", "b", "p")

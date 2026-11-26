@@ -156,6 +156,17 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
         (BASE, "an operation on the {base|aṅga} (heading)"),
         ("6.4.25", "śapi ‘before śap’ carries over, with na lopaḥ and upadhāyāḥ"),
     ),
+    "6.4.77": (
+        (BASE, "an operation on the {base|aṅga} (heading)"),
+        (LOC, "aci (locative): before a vowel"),
+        ("1.1.53", "iyaṅ and uvaṅ are marked ṅ, so they replace only the last sound"),
+    ),
+    "7.4.28": (
+        (BASE, "an operation on the {base|aṅga} (heading)"),
+        ("7.4.27", "ṛtaḥ ‘of ṛ’ and akṛtsārvadhātukayoḥ carry over"),
+        (LOC, "śa…ṣu (locative): before śa, yak or liṅ"),
+        ("1.1.53", "riṅ is marked ṅ, so it replaces only the last sound"),
+    ),
     "6.4.89": (
         (BASE, "an operation on the {base|aṅga} (heading)"),
         ("6.4.77", "aci ‘before a vowel’ carries over"),

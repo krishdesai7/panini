@@ -34,6 +34,10 @@ gloss = "A vowel that replaces ṛ or ḷ is followed by r (or l)."
 text = "alo 'ntyasya"
 gloss = "A substitute replaces only the last sound of what is named."
 
+["1.1.53"]
+text = "ṅic ca"
+gloss = "A substitute marked with ṅ, even one of more than one sound, replaces only the last sound."
+
 ["1.1.55"]
 text = "anekālśit sarvasya"
 gloss = "A substitute of more than one sound, or one marked ś, replaces the whole of what is named."
@@ -447,6 +451,14 @@ gloss = "Before a {present-system|sārvadhātuka} or {non-present|ārdhadhātuka
 ["7.3.101"]
 text = "ato dīrgho yañi"
 gloss = "Before a {present-system affix|sārvadhātuka} beginning with one of {resonants, jh, and bh|yañ}, a base-final short a is lengthened."
+
+["7.4.27"]
+text = "rīṅ ṛtaḥ"
+gloss = "Before yak and a {suffix|pratyaya} beginning with y that is neither a kṛt suffix nor a {present-system affix|sārvadhātuka} (akṛtsārvadhātukayoḥ, from 7.4.25), a base-final ṛ is replaced by rī (rīṅ)."
+
+["7.4.28"]
+text = "riṅ śayagliṅkṣu"
+gloss = "Before śa, yak and the benedictive liṅ, a root's final ṛ is replaced by ri (riṅ)."
 
 ["8.1.16"]
 text = "padasya"

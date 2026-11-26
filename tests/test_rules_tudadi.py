@@ -132,3 +132,46 @@ def test_bhvadi_nasal_kept_before_shap() -> None:
     d = form("01.0435", voice="middle")
     assert d.result == "kampate"
     assert "6.4.24" not in _rule_ids(d)
+
+
+# -- 6.4.77 iyaṅ/uvaṅ, 7.4.28 riṅ -------------------------------------------
+
+
+@pytest.mark.parametrize(
+    ("code", "person", "voice", "expected"),
+    [
+        ("06.0133", 3, "active", "dhuvati"),
+        ("06.0132", 3, "active", "nuvati"),
+        ("06.0143", 3, "active", "kṣiyati"),
+        ("06.0143", 1, "active", "kṣiyāmi"),
+        ("06.0137", 3, "middle", "kuvate"),
+    ],
+)
+def test_iyan_uvan(code, person, voice, expected) -> None:
+    d = form(code, person=person, voice=voice)
+    assert d.result == expected
+    assert "6.4.77" in _rule_ids(d)
+
+
+@pytest.mark.parametrize(
+    ("code", "expected"),
+    [
+        ("06.0139", "mriyate"),
+        ("06.0147", "driyate"),
+        ("06.0148", "dhriyate"),
+        ("06.0138", "priyate"),
+    ],
+)
+def test_rin_then_iyan(code, expected) -> None:
+    d = form(code, voice="middle")
+    ids = _rule_ids(d)
+    assert d.result == expected
+    assert ids.index("7.4.28") < ids.index("6.4.77")
+
+
+def test_mr_has_no_active() -> None:
+    assert availability(parse_request("06.0139", "laṭ", 3, "sg", "active")) is not None
+
+
+def test_bhvadi_u_root_unaffected() -> None:
+    assert "6.4.77" not in _rule_ids(form("01.0001"))
