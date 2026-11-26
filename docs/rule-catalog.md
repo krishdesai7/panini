@@ -11,7 +11,8 @@ how to read it, a worked example, and where to read further. The export
 distinguishes three sources of information:
 
 - **Text and editorial notes.** Write the explanation in plain English and
-  use the existing `{plain term|Sanskrit term}` markup. Cite an edition or
+  use `{plain term|Sanskrit term}` for a tooltip and `[[Sanskrit text]]` for
+  IAST in running prose, including forms without diacritics. Cite an edition or
   commentary using a bibliography key, locator, and role (`text`, `commentary`,
   or `analysis`). Follow Kiparsky where his work addresses a question of
   interpretation, and cite the particular passage. In the explanation,

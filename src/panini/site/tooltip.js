@@ -26,7 +26,17 @@ function installTooltips() {
     if (target === trigger) return;
     hide();
     trigger = target;
-    tip.textContent = target.getAttribute("data-tip");
+    var text = target.getAttribute("data-tip");
+    var kind = target.getAttribute("data-tip-kind");
+    var sutra = kind === "sutra" && text.match(/^(\d+(?:\.\d+)+ )([^\n]+)([\s\S]*)$/);
+    if (kind === "iast" || sutra) {
+      var label = document.createElement("span");
+      label.lang = "sa-Latn";
+      label.textContent = sutra ? sutra[2] : text;
+      tip.replaceChildren(sutra ? sutra[1] : "", label, sutra ? sutra[3] : "");
+    } else {
+      tip.textContent = text;
+    }
     tip.hidden = false;
     var pos = tipPosition(target.getBoundingClientRect(), tip.getBoundingClientRect(),
                           { width: window.innerWidth, height: window.innerHeight });

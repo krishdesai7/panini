@@ -6,6 +6,17 @@
 
 body { font: 400 var(--fs-18)/1.55 var(--serif); color: var(--ink); margin: 0; }
 
+:root {
+  --iast: "Monaspace Xenon", var(--serif);
+  --iast-scale: 0.92;
+}
+[lang="sa-Latn"] {
+  font-family: var(--iast);
+  font-size: calc(var(--iast-scale) * 1em);
+  font-feature-settings: normal;
+  font-variant-ligatures: no-common-ligatures;
+}
+
 .top {
   display: flex;
   align-items: flex-start;
@@ -23,7 +34,7 @@ a.rule-citation[data-tip] { cursor: pointer; }
 
 .picker { margin: var(--one-and-half-baseline) 0 var(--baseline); }
 .picker label { font: 600 var(--fs-14) var(--caps); letter-spacing: var(--caps-track-small); color: var(--muted); }
-.picker select { font: 400 var(--fs-16) var(--sans); padding: 0.45rem 2rem 0.45rem 0.4rem; color: var(--ink); }
+.picker select { font: 400 var(--fs-16) var(--serif); padding: 0.45rem 2rem 0.45rem 0.4rem; color: var(--ink); }
 .root-info { margin: var(--half-baseline) 0 0; color: var(--muted); }
 
 /* The 2 × 2 grid of paradigm tables: tense rows × voice columns. */
@@ -94,7 +105,7 @@ ol.steps > li::before { content: counter(step); color: var(--faint); text-align:
 .it { color: var(--accent); }
 .steps .rule { min-width: 0; }
 .steps .sid { font: 400 var(--fs-14) var(--mono); color: var(--ink-2); margin-right: 0.6rem; font-variant-ligatures: none; }
-.steps .stext { font: 400 var(--fs-18)/1.4 var(--serif); }
+.steps .stext { overflow-wrap: anywhere; }
 .steps .snote { margin: 0.15rem 0 0; white-space: pre-line; }
 .steps .history { margin: 0.15rem 0 0; font-size: var(--fs-14); color: var(--muted); }
 .steps .history .hlabel { font: 600 var(--fs-14) var(--caps); letter-spacing: var(--caps-track-small); margin-right: 0.2rem; }
@@ -151,8 +162,6 @@ ol.steps > li::before { content: counter(step); color: var(--faint); text-align:
   transition: opacity 0.12s ease;
 }
 .tip.on { opacity: 1; }
-/* Sanskrit in the picker needs Cochineal: Heliotrope has no dot-below letters (ṭ, ṛ, ṇ). */
-.picker select { font-family: var(--serif); }
 
 /* Heliotrope has no ṇ: draw the dot under its own caps n, to match the ā's macron. */
 .dot-below { position: relative; }
@@ -173,6 +182,13 @@ ol.steps > li::before { content: counter(step); color: var(--faint); text-align:
 /* Root search box: a combobox in the picker pill, results in a glass card below it. */
 .picker .combo { position: relative; display: inline-block; max-width: 100%; }
 .picker input { font: 400 var(--fs-16) var(--serif); color: var(--ink); padding: 0.45rem 0.8rem 0.45rem 0.2rem; width: 17rem; max-width: 60vw; outline: none; }
+.picker input:not(:focus) {
+  font-family: var(--iast);
+  font-size: calc(var(--iast-scale) * var(--fs-16));
+  font-feature-settings: normal;
+  font-variant-ligatures: no-common-ligatures;
+}
+.picker input::placeholder { font: 400 var(--fs-16) var(--serif); }
 .picker .pill:focus-within { border-color: var(--link-underline); }
 .root-list {
   position: absolute;
@@ -203,6 +219,7 @@ ol.steps > li::before { content: counter(step); color: var(--faint); text-align:
   cursor: pointer;
 }
 .root-list li:hover, .root-list li[aria-selected="true"] { background: var(--hover); box-shadow: inset 2px 0 0 var(--accent); }
+.root-list :is(.rname, .rup) { overflow-wrap: anywhere; }
 .root-list .rname { font-weight: 600; }
 .root-list .rup, .root-list .rvoice { font-size: var(--fs-14); color: var(--muted); }
 .root-list .gloss { font-size: var(--fs-14); color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

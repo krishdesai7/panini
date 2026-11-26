@@ -14,6 +14,7 @@ INDEX_PAGE = "index.html"
 _INLINE = re.compile(
     r"\{([^{}|]+)\|([^{}]+)\}|\[@([a-zA-Z0-9_-]+)\]|\b\d+\.\d+\.\d+(?:\.\d+)?\b"
 )
+_IAST = re.compile(r"\[\[([^\[\]]+)\]\]")
 _KIND = {"definition": "Definition", "operation": "Operation"}
 
 
@@ -26,10 +27,18 @@ def _link(href: str, text: str, css_class: str = "") -> str:
     return f'<a{css} href="{escape(href)}">{escape(text)}</a>'
 
 
-def _term(label: str, tip: str) -> str:
+def _iast(text: str) -> str:
+    return f'<span lang="sa-Latn">{escape(text)}</span>'
+
+
+def _inline_iast(text: str) -> str:
+    return "".join(_iast(part) if i % 2 else escape(part) for i, part in enumerate(_IAST.split(text)))
+
+
+def _term(label_html: str, tip: str, kind: str) -> str:
     return (
-        f'<span class="term" tabindex="0" data-tip="{escape(tip)}">'
-        f"{escape(label)}</span>"
+        f'<span class="term" tabindex="0" data-tip-kind="{kind}" data-tip="{escape(tip)}">'
+        f"{label_html}</span>"
     )
 
 
@@ -41,11 +50,12 @@ def _sutra_citation(
         return escape(rule_id)
     heading = f"{rule_id} {sutra['text']}"
     gloss = _INLINE.sub(lambda match: match[1] or match[0], sutra["gloss"])
+    gloss = _IAST.sub(r"\1", gloss)
     tip = f"{heading}\n{gloss}"
-    label = heading if show_text else rule_id
+    label = f"{escape(rule_id)} {_iast(sutra['text'])}" if show_text else escape(rule_id)
     if rule_id in articles:
-        return f'<a href="{escape(rule_id)}.html" data-tip="{escape(tip)}">{escape(label)}</a>'
-    return _term(label, tip)
+        return f'<a href="{escape(rule_id)}.html" data-tip-kind="sutra" data-tip="{escape(tip)}">{label}</a>'
+    return _term(label, tip, "sutra")
 
 
 def _reading(
@@ -58,9 +68,9 @@ def _reading(
     parts = []
     start = 0
     for match in _INLINE.finditer(text):
-        parts.append(escape(text[start : match.start()]))
+        parts.append(_inline_iast(text[start : match.start()]))
         if match[1]:
-            parts.append(_term(match[1], match[2]))
+            parts.append(_term(_inline_iast(match[1]), match[2], "iast"))
         elif match[3]:
             if citations is None or match[3] not in citations:
                 raise ValueError(
@@ -71,7 +81,7 @@ def _reading(
         else:
             parts.append(_sutra_citation(match[0], articles, sutras))
         start = match.end()
-    parts.append(escape(text[start:]))
+    parts.append(_inline_iast(text[start:]))
     return "".join(parts)
 
 
@@ -112,10 +122,10 @@ def _examples(
             fragment = "/".join(quote(part, safe="") for part in [*key, str(number)])
             trace = f"<p>{_link(f'{explorer}#{fragment}', 'View this step in the verb trace', 'trace-link')}</p>"
         entries.append(
-            f'<article class="rule-example card"><h3>{escape(example["result"])}</h3>'
-            f'<p class="rule-request">{escape(request["root"])} · {escape(request["pie"])}</p>'
-            f'<p class="rule-change"><span>{escape(before)}</span>'
-            f'<span class="arrow" aria-label="becomes">→</span><span>{escape(after)}</span></p>'
+            f'<article class="rule-example card"><h3>{_iast(example["result"])}</h3>'
+            f'<p class="rule-request">{_iast(request["root"])} · {escape(request["pie"])}</p>'
+            f'<p class="rule-change">{_iast(before)}'
+            f'<span class="arrow" aria-label="becomes">→</span>{_iast(after)}</p>'
             f'<p class="rule-step">Step {number} · {step_rule}</p>'
             f"<p>{_reading(example['note'], articles, sutras)}</p>{trace}</article>"
         )
@@ -180,7 +190,7 @@ def _article(
         related.setdefault(rid, "Can prevent this rule from applying in the explorer.")
     return (
         f'<header><p class="rule-meta">{escape(rule_id)} · {escape(kind)}</p>'
-        f"<h1>{escape(rule['text'])}</h1>"
+        f"<h1>{_iast(rule['text'])}</h1>"
         f'<p class="rule-gloss">{_reading(rule["gloss"], articles, sutras)}</p></header>'
         f'<section class="rule-explanation"><h2>How to read it</h2>{paragraphs}{scope}</section>'
         + _examples(rule["examples"], articles, sutras, explorer, available_roots)
@@ -209,7 +219,7 @@ def render_rule_pages(
     articles = catalog["rules"]
     rows = "".join(
         f'<li><span class="rule-number">{escape(rid)}</span>'
-        f'<span class="rule-name">{escape(rule["text"])}</span>'
+        f'<span class="rule-name">{_iast(rule["text"])}</span>'
         f'<p class="rule-gloss">{_reading(rule["gloss"], set(), sutras)}</p>'
         f'<a class="rule-open" href="{escape(rid)}.html" '
         f'aria-label="Open {escape(rid)} {escape(rule["text"])}">'

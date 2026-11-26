@@ -137,7 +137,8 @@ function rootNotice(root) {
 /* Tooltip for a sūtra: number and text, then the gloss on the next line. */
 function sutraTitle(id, sutras) {
   var s = sutras[id];
-  return s ? id + " " + s.text + "\n" + splitTerms(s.gloss).map(function (p) { return p[0]; }).join("") : id;
+  return s ? id + " " + s.text + "\n" + splitTerms(s.gloss).map(function (p) { return p[0]; }).join("")
+    .replace(/\[\[([^\[\]]+)\]\]/g, "$1") : id;
 }
 
 if (typeof module !== "undefined") module.exports = { nextActive: nextActive, rootNotice: rootNotice, parseHash: parseHash, fold: fold, searchRoots: searchRoots, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, splitGlossary: splitGlossary, sutraTitle: sutraTitle, markerTip: markerTip, tipPosition: require("./tooltip.js").tipPosition };
@@ -166,26 +167,44 @@ if (typeof document !== "undefined") (function () {
     return node;
   }
 
+  function iast(text) {
+    return el("span", { lang: "sa-Latn", text: text });
+  }
+
+  function splitIast(text) {
+    return text.split(/\[\[([^\[\]]+)\]\]/g);
+  }
+
   /* A form as displayed: markers in capitals, term boundaries as + */
   function renderTerms(views) {
     var span = el("span", { class: "after" });
     views.forEach(function (v, i) {
       if (i) span.appendChild(el("span", { class: "plus", text: "+" }));
+      var word = el("span", { lang: "sa-Latn" });
       v.chars.forEach(function (pair) {
         var c = pair[0], marker = pair[1];
-        if (marker) span.appendChild(el("span", { class: "it", "data-tip": markerTip(v.upadesha, c, data.markers), text: c.charAt(0).toUpperCase() + c.slice(1) }));
-        else span.appendChild(document.createTextNode(c));
+        if (marker) word.appendChild(el("span", { class: "it", "data-tip": markerTip(v.upadesha, c, data.markers), text: c.charAt(0).toUpperCase() + c.slice(1) }));
+        else word.appendChild(document.createTextNode(c));
       });
+      span.appendChild(word);
     });
     return span;
   }
 
   /* A plain word with a dotted underline whose tooltip gives Pāṇini's term. */
-  function term(text, tip) { return el("span", { class: "term", "data-tip": tip, tabindex: "0", text: text }); }
+  function term(text, tip, kind) {
+    var label = typeof text === "string"
+      ? splitIast(text).map(function (part, i) { return i % 2 ? iast(part) : part; })
+      : [text];
+    var node = el("span", { class: "term", "data-tip": tip, tabindex: "0" }, label);
+    if (kind) node.setAttribute("data-tip-kind", kind);
+    return node;
+  }
 
   function citationLink(id, children, css) {
     if (!Object.prototype.hasOwnProperty.call(rulePages, id)) return null;
     return el("a", { href: rulePages[id], class: css || "rule-citation",
+                     "data-tip-kind": "sutra",
                      "data-tip": sutraTitle(id, data.sutras || {}) }, children);
   }
 
@@ -193,18 +212,21 @@ if (typeof document !== "undefined") (function () {
     var link = citationLink(id, [id], css);
     if (link) return link;
     var tip = sutraTitle(id, data.sutras || {});
-    return css ? el("span", { class: css, "data-tip": tip, tabindex: "0", text: id }) : term(id, tip);
+    return css ? el("span", { class: css, "data-tip": tip, "data-tip-kind": "sutra", tabindex: "0", text: id }) : term(id, tip, "sutra");
   }
 
   /* Text with {modern|traditional} terms and links or tooltips for sūtras. */
   function cite(text) {
     var span = el("span", {});
     splitTerms(text).forEach(function (seg) {
-      if (seg[1]) { span.appendChild(term(seg[0], seg[1])); return; }
-      splitCitations(seg[0], data.sutras || {}).forEach(function (part) {
-        if (part[1]) { span.appendChild(sutraCitation(part[1])); return; }
-        splitGlossary(part[0], data.glossary).forEach(function (g) {
-          span.appendChild(g[1] ? term(g[0], g[1]) : document.createTextNode(g[0]));
+      if (seg[1]) { span.appendChild(term(seg[0], seg[1], "iast")); return; }
+      splitIast(seg[0]).forEach(function (chunk, i) {
+        if (i % 2) { span.appendChild(iast(chunk)); return; }
+        splitCitations(chunk, data.sutras || {}).forEach(function (part) {
+          if (part[1]) { span.appendChild(sutraCitation(part[1])); return; }
+          splitGlossary(part[0], data.glossary).forEach(function (g) {
+            span.appendChild(g[1] ? term(iast(g[0]), g[1]) : document.createTextNode(g[0]));
+          });
         });
       });
     });
@@ -250,8 +272,8 @@ if (typeof document !== "undefined") (function () {
     matches.forEach(function (r, i) {
       var attrs = { role: "option", id: "root-opt-" + i, "aria-selected": "false" };
       if (r.unavailable) { attrs["data-tip"] = r.unavailable; attrs.class = "out"; }
-      var gloss = el("span", { class: "gloss" }, [r.meaning_kind === "traditional" ? el("em", { text: r.meaning }) : r.meaning]);
-      var li = el("li", attrs, [el("span", { class: "rname", text: r.name }), el("span", { class: "rup", text: r.upadesha_iast }), gloss,
+      var gloss = el("span", { class: "gloss" }, [r.meaning_kind === "traditional" ? iast(r.meaning) : r.meaning]);
+      var li = el("li", attrs, [el("span", { class: "rname" }, [iast(r.name)]), el("span", { class: "rup" }, [iast(r.upadesha_iast)]), gloss,
                                 el("span", { class: "rvoice", text: PADA_CLASS[r.pada][0] })]);
       li.addEventListener("click", function () { pickRoot(r.key); });
       rootList.appendChild(li);
@@ -287,12 +309,12 @@ if (typeof document !== "undefined") (function () {
     var info = document.getElementById("root-info");
     info.innerHTML = "";
     var gloss = r.meaning_kind === "traditional"
-      ? el("em", { class: "term", "data-tip": "traditional gloss from the root list", tabindex: "0", text: r.meaning })
+      ? term(iast(r.meaning), "traditional gloss from the root list")
       : document.createTextNode(r.meaning);
-    [el("strong", { class: "rname", text: r.name }), " · ",
-     term("Recited as", "upadeśa: the root as taught in the Dhātupāṭha, with its markers"), " " + r.upadesha_iast,
+    [el("strong", { class: "rname" }, [iast(r.name)]), " · ",
+     term("Recited as", "upadeśa: the root as taught in the Dhātupāṭha, with its markers"), " ", iast(r.upadesha_iast),
      " · “", gloss, "” · ", term(r.class_label, r.gana + " (the bhū class, first gaṇa of the Dhātupāṭha)"),
-     " · ", term(pc[0], pc[1]), r.pada === "U" ? "" : " only"].forEach(function (c) {
+     " · ", term(pc[0], pc[1], "iast"), r.pada === "U" ? "" : " only"].forEach(function (c) {
       info.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
     });
   }
@@ -324,11 +346,11 @@ if (typeof document !== "undefined") (function () {
     var bad = !ok || (refs.length && refs.indexOf(d.result) < 0);
     if (bad) td.classList.add("bad");
     if (key === state.key) td.classList.add("selected");
-    var btn = el("button", { class: "form", type: "button" }, [ok ? d.result : d.status === "error" ? "error" : "?"]);
-    if (d.alternatives && d.alternatives.length) btn.appendChild(el("span", { class: "alt", text: "· " + d.alternatives.join(" · ") }));
+    var btn = el("button", { class: "form", type: "button" }, [ok ? iast(d.result) : d.status === "error" ? "error" : "?"]);
+    if (d.alternatives && d.alternatives.length) btn.appendChild(el("span", { class: "alt" }, ["· ", iast(d.alternatives.join(" · "))]));
     btn.addEventListener("click", function () { pendingStep = null; state.key = key; writeHash(); render(); panel.scrollIntoView({ behavior: "smooth", block: "start" }); });
     td.appendChild(btn);
-    if (bad && refs.length) td.appendChild(el("span", { class: "ref", text: "expected " + refs.join(" / ") }));
+    if (bad && refs.length) td.appendChild(el("span", { class: "ref" }, ["expected ", iast(refs.join(" / "))]));
     return td;
   }
 
@@ -337,14 +359,14 @@ if (typeof document !== "undefined") (function () {
     if (probe.status === "unavailable") {
       var m = (probe.message || "").match(/\((\d+\.\d+\.\d+)\)$/);
       var pc = PADA_CLASS[rootByKey(state.root).pada];
-      return el("div", { class: "unavailable" }, [rootByKey(state.root).name + " is ", term(pc[0], pc[1]), " only",
+      return el("div", { class: "unavailable" }, [iast(rootByKey(state.root).name), " is ", term(pc[0], pc[1], "iast"), " only",
         m ? el("span", {}, [" (", sutraCitation(m[1]), ")"]) : null]);
     }
     var head = el("tr", {}, [el("th", { scope: "col" }, [""])].concat(NUMBERS.map(function (n) {
-      return el("th", { scope: "col" }, [term(n[0], n[1])]);
+      return el("th", { scope: "col" }, [term(n[0], n[1], "iast")]);
     })));
     var rows = PERSONS.map(function (p) {
-      return el("tr", {}, [el("th", { scope: "row" }, [term(p[0], p[1])])]
+      return el("tr", {}, [el("th", { scope: "row" }, [term(p[0], p[1], "iast")])]
         .concat(NUMBERS.map(function (n) { return cell(keyOf(state.root, lakara, pada, p[0], n[0])); })));
     });
     return el("table", {}, [el("thead", {}, [head]), el("tbody", {}, rows)]);
@@ -354,12 +376,12 @@ if (typeof document !== "undefined") (function () {
     paradigm.innerHTML = "";
     paradigm.appendChild(el("div", { class: "axis corner" }));
     VOICES.forEach(function (v) {
-      paradigm.appendChild(el("div", { class: "axis col" }, [term(v[1], v[2])]));
+      paradigm.appendChild(el("div", { class: "axis col" }, [term(v[1], v[2], "iast")]));
     });
     LAKARAS.forEach(function (l) {
       paradigm.appendChild(el("div", { class: "axis row" }, [term(l[1], l[2])]));
       VOICES.forEach(function (v) {
-        paradigm.appendChild(el("div", {}, [el("p", { class: "voice-label" }, [term(v[1], v[2])]), table(l[0], v[0])]));
+        paradigm.appendChild(el("div", {}, [el("p", { class: "voice-label" }, [term(v[1], v[2], "iast")]), table(l[0], v[0])]));
       });
     });
   }
@@ -381,7 +403,7 @@ if (typeof document !== "undefined") (function () {
   function step(s) {
     var rule = el("div", { class: "rule" });
     s.sutras.forEach(function (su) {
-      var name = el("span", { class: "stext", text: su.text });
+      var name = el("span", { class: "stext" }, [iast(su.text)]);
       var link = citationLink(su.id, [el("span", { class: "sid", text: su.id }), " ", name]);
       rule.appendChild(el("div", {}, link ? [link] : [sutraCitation(su.id, "sid"), name]));
     });
@@ -420,20 +442,20 @@ if (typeof document !== "undefined") (function () {
   function renderDerivation() {
     panel.innerHTML = "";
     if (!state.key) {
-      panel.appendChild(el("p", { class: "note empty", text: "Pick a form above to see how Pāṇini’s rules derive it." }));
+      panel.appendChild(el("p", { class: "note empty" }, ["Pick a form above to see how ", iast("Pāṇini"), "’s rules derive it."]));
       return;
     }
     var d = data.derivations[state.key];
-    panel.appendChild(el("h2", { text: d.result || "—" }));
+    panel.appendChild(el("h2", {}, [d.result ? iast(d.result) : "—"]));
     var k = state.key.split("|");   // root, lakāra, pada, person, number
     var lak = LAKARAS.filter(function (l) { return l[0] === k[1]; })[0];
     var voice = VOICES.filter(function (v) { return v[0] === k[2]; })[0];
     var person = PERSONS.filter(function (p) { return p[0] === k[3]; })[0];
     var number = NUMBERS.filter(function (n) { return n[0] === k[4]; })[0];
     panel.appendChild(el("p", { class: "desc" }, [
-      d.request.root + " · ", term(k[3] + k[4], person[1] + " " + number[1]), " ",
-      term(lak[1].toLowerCase(), lak[2]), " ", term(voice[1].toLowerCase(), voice[2])]));
-    if (d.alternatives && d.alternatives.length) panel.appendChild(el("p", { class: "also", text: "Also correct: " + d.alternatives.join(", ") }));
+      iast(d.request.root), " · ", term(k[3] + k[4], person[1] + " " + number[1], "iast"), " ",
+      term(lak[1].toLowerCase(), lak[2]), " ", term(voice[1].toLowerCase(), voice[2], "iast")]));
+    if (d.alternatives && d.alternatives.length) panel.appendChild(el("p", { class: "also" }, ["Also correct: ", iast(d.alternatives.join(", "))]));
     if (d.status !== "ok") {
       panel.appendChild(el("p", { class: "message banner-warn" }, [cite(d.message || d.status)]));
       return;

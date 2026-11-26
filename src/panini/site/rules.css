@@ -16,6 +16,7 @@
 }
 .rule-explanation { border-top: 1px solid var(--line); padding-top: var(--half-baseline); }
 .rule-index, .rule-references { list-style: none; padding: 0; }
+.rule-references { overflow-wrap: anywhere; }
 .rule-index li {
   display: grid;
   grid-template-columns: minmax(5.5em, max-content) minmax(0, 1fr) 2.75rem;
@@ -62,6 +63,7 @@
   font-size: var(--fs-20);
 }
 .rule-change .arrow { color: var(--muted); }
+.rule-change [lang="sa-Latn"] { overflow-wrap: anywhere; }
 .rule-step { margin: 0; color: var(--muted); font-size: var(--fs-14); }
 .rule-example p:last-child { margin-bottom: 0; }
 .rule-example .trace-link { font-size: var(--fs-16); }

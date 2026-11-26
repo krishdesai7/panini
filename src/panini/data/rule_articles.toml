@@ -19,9 +19,9 @@ path = "docs/papers/kiparsky-on-the-architecture-of-paninis-grammar.pdf"
 [articles."1.1.1"]
 kind = "definition"
 explanation = """
-Read ādaic as āt + aic. Here āt gives long ā, and aic is the
-{sound abbreviation|pratyāhāra} for ai and au. The Kāśikā explains the
-marker t as fixing the length of ai and au here. Other rules prescribe
+Read [[ādaic]] as [[āt + aic]]. Here [[āt]] gives long [[ā]], and [[aic]] is the
+{sound abbreviation|pratyāhāra} for [[ai]] and [[au]]. The [[Kāśikā]] explains the
+marker [[t]] as fixing the length of [[ai]] and [[au]] here. Other rules prescribe
 when to use a vowel of this grade.
 """
 citations = [
@@ -31,20 +31,20 @@ citations = [
 
 [articles."1.1.1".related]
 "1.1.3" = "Which vowel is replaced when a rule prescribes {lengthened grade|vṛddhi} without naming the original."
-"1.1.70" = "How a following t fixes vowel length."
-"1.1.71" = "How abbreviations such as aic are formed."
-"6.1.90" = "Prescribes {lengthened grade|vṛddhi} after the augment āṭ."
+"1.1.70" = "How a following [[t]] fixes vowel length."
+"1.1.71" = "How abbreviations such as [[aic]] are formed."
+"6.1.90" = "Prescribes {lengthened grade|vṛddhi} after the augment [[āṭ]]."
 
 [[articles."1.1.1".examples]]
 request = { root = "01.1086", tense = "laṅ", person = 3, number = "sg", voice = "active" }
 step_rule = "6.1.90"
-note = "In ārcchat, 6.1.90 combines the augment ā and the root vowel ṛ. The ā of ār is the {lengthened-grade|vṛddhi} vowel. The r is supplied by 1.1.51."
+note = "In [[ārcchat]], 6.1.90 combines the augment [[ā]] and the root vowel [[ṛ]]. The [[ā]] of [[ār]] is the {lengthened-grade|vṛddhi} vowel. The [[r]] is supplied by 1.1.51."
 
 [articles."1.1.2"]
 kind = "definition"
 explanation = """
-Read adeṅ as at + eṅ. Here at gives short a, and eṅ is the
-{sound abbreviation|pratyāhāra} for e and o. Other rules prescribe when to
+Read [[adeṅ]] as [[at + eṅ]]. Here [[at]] gives short [[a]], and [[eṅ]] is the
+{sound abbreviation|pratyāhāra} for [[e]] and [[o]]. Other rules prescribe when to
 use a vowel of this grade.
 """
 citations = [
@@ -55,32 +55,32 @@ citations = [
 [articles."1.1.2".related]
 "1.1.1" = "Defines {lengthened grade|vṛddhi}."
 "1.1.3" = "Which vowel is replaced when a rule prescribes {full grade|guṇa} without naming the original."
-"1.1.70" = "How a following t fixes vowel length."
-"1.1.71" = "How abbreviations such as eṅ are formed."
+"1.1.70" = "How a following [[t]] fixes vowel length."
+"1.1.71" = "How abbreviations such as [[eṅ]] are formed."
 "7.3.84" = "Prescribes {full grade|guṇa} before two classes of affix."
 
 [[articles."1.1.2".examples]]
 request = { root = "01.0001", tense = "laṭ", person = 3, number = "sg", voice = "active" }
 step_rule = "7.3.84"
-note = "In bhavati, 7.3.84 first replaces the ū of bhū with its {full-grade|guṇa} vowel o. The o becomes av in the next step, by 6.1.78."
+note = "In [[bhavati]], 7.3.84 first replaces the [[ū]] of [[bhū]] with its {full-grade|guṇa} vowel [[o]]. The [[o]] becomes [[av]] in the next step, by 6.1.78."
 
 [articles."6.1.90"]
 kind = "operation"
 explanation = """
 {Lengthened grade|vṛddhi} carries over from 6.1.88. When the vowel left by
-the augment āṭ meets the next vowel, a single vowel of that grade takes
+the augment [[āṭ]] meets the next vowel, a single vowel of that grade takes
 the place of both (6.1.84).
 """
 citations = [{ source = "astadhyayi", role = "text", locator = "6.1.84, 6.1.88, 6.1.90" }]
 
 [articles."6.1.90".related]
 "1.1.1" = "Defines {lengthened grade|vṛddhi}."
-"1.1.51" = "Accounts for the r in the substitute ār."
-"6.4.72" = "Supplies the augment āṭ before a vowel."
+"1.1.51" = "Accounts for the [[r]] in the substitute [[ār]]."
+"6.4.72" = "Supplies the augment [[āṭ]] before a vowel."
 
 [[articles."6.1.90".examples]]
 request = { root = "01.1086", tense = "laṅ", person = 3, number = "sg", voice = "active" }
-note = "The imperfect of ṛ receives āṭ. The augment vowel ā and the root vowel ṛ merge into ār on the way to ārcchat."
+note = "The past imperfective of [[ṛ]] receives [[āṭ]]. The augment vowel [[ā]] and the root vowel [[ṛ]] merge into [[ār]] on the way to [[ārcchat]]."
 
 [articles."7.3.84"]
 kind = "operation"
@@ -88,12 +88,12 @@ explanation = """
 The rule names two classes of following affix, {present-system|sārvadhātuka}
 and {non-present|ārdhadhātuka}. The operation is {full grade|guṇa}, carried
 over from 7.3.82. It applies to a final
-{i, u, ṛ, or ḷ (including long counterparts)|ik} vowel of the
-{base|aṅga}. Rule 1.1.5 blocks the change before an affix marked k or ṅ.
+{[[i]], [[u]], [[ṛ]], or [[ḷ]] (including long counterparts)|ik} vowel of the
+{base|aṅga}. Rule 1.1.5 blocks the change before an affix marked [[k]] or [[ṅ]].
 
-Kiparsky points out how the marker p on śap makes {full grade|guṇa} possible in bhavati.
-Without p, 1.2.4 would treat this affix as ṅ-marked, and 1.1.5 would block
-the change from ū to o [@kiparsky_architecture].
+Kiparsky points out how the marker [[p]] on [[śap]] makes {full grade|guṇa} possible in [[bhavati]].
+Without [[p]], 1.2.4 would treat this affix as [[ṅ]]-marked, and 1.1.5 would block
+the change from [[ū]] to [[o]] [@kiparsky_architecture].
 """
 scope = "This rule is implemented for {present-system affixes|sārvadhātuka} in {present imperfective|laṭ} and {past imperfective|laṅ} derivations."
 citations = [
@@ -105,10 +105,10 @@ citations = [
 [articles."7.3.84".related]
 "1.1.2" = "Defines {full grade|guṇa}."
 "1.1.3" = "Specifies {which vowels|ik} can take full grade."
-"1.1.5" = "Blocks {full grade|guṇa} before an affix marked k or ṅ."
-"1.2.4" = "Treats a {present-system|sārvadhātuka} affix without p as ṅ-marked."
+"1.1.5" = "Blocks {full grade|guṇa} before an affix marked [[k]] or [[ṅ]]."
+"1.2.4" = "Treats a {present-system|sārvadhātuka} affix without [[p]] as [[ṅ]]-marked."
 "7.3.86" = "Extends {full grade|guṇa} to a base with a light penultimate vowel."
 
 [[articles."7.3.84".examples]]
 request = { root = "01.0001", tense = "laṭ", person = 3, number = "sg", voice = "active" }
-note = "The final ū of bhū takes {full grade|guṇa} before the thematic suffix śap. After the markers of śap are removed, that suffix appears as a."
+note = "The final [[ū]] of [[bhū]] takes {full grade|guṇa} before the thematic suffix [[śap]]. After the markers of [[śap]] are removed, that suffix appears as [[a]]."
