@@ -353,8 +353,8 @@ gloss = "After the stem suffix śna (the na of the seventh class), n is dropped.
 ["6.4.24"]
 text = "aniditāṃ hala upadhāyāḥ kṅiti"
 gloss = "Before an affix marked with k or ṅ, the penultimate nasal of a root ending in a consonant is dropped, unless the root is marked with i."
-# Not traced in slice 1.5: in laṭ and laṅ the root is followed by śap, which is not marked
-# with k or ṅ, so 6.4.24 never applies there (docs/findings.md, "7.1.58 and 6.4.24").
+# Traced since slice 1.6: in laṭ and laṅ only śa (tudādi, 3.1.77) counts as marked ṅ; śap is
+# marked p, so bhvādi roots never meet 6.4.24 there.
 
 ["6.4.25"]
 text = "daṃśasañjasvañjāṃ śapi"
@@ -395,6 +395,14 @@ gloss = "In a {middle|ātmanepada} ending, jh is replaced by at after a base tha
 ["7.1.58"]
 text = "idito num dhātoḥ"
 gloss = "A root marked with i gets the augment num (n)."
+
+["7.1.59"]
+text = "śe mucādīnām"
+gloss = "Before śa, the roots of the muc group get the {augment|āgama} n (num)."
+
+["7.1.59.1"]
+text = "śe tṛmphādīnāṃ num vācyaḥ"
+gloss = "(Vārttika on 7.1.59) The roots of the tṛmph group also get num before śa."
 
 ["7.1.61"]
 text = "radhijabhor aci"

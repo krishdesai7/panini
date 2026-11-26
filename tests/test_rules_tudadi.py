@@ -75,3 +75,60 @@ def test_bhvadi_still_takes_shap() -> None:
     ids = _rule_ids(form("01.0001"))
     assert "3.1.68" in ids
     assert "3.1.77" not in ids
+
+
+# -- 7.1.59 śe mucādīnām, vārttika 7.1.59.1, 6.4.24 ----------------------------
+
+
+@pytest.mark.parametrize(
+    ("code", "voice", "expected"),
+    [
+        ("06.0166", "active", "muñcati"),
+        ("06.0166", "middle", "muñcate"),
+        ("06.0167", "active", "lumpati"),
+        ("06.0168", "active", "vindati"),
+        ("06.0171", "active", "kṛntati"),
+        ("06.0172", "active", "khindati"),
+        ("06.0173", "active", "piṃśati"),
+    ],
+)
+def test_mucadi_nasal_infix(code, voice, expected) -> None:
+    d = form(code, voice=voice)
+    assert d.result == expected
+    step = next(s for s in d.steps if "7.1.59" in s.rule_ids)
+    assert "1.1.47" in step.note
+
+
+@pytest.mark.parametrize(
+    ("code", "expected"),
+    [
+        ("06.0031", "tṛmphati"),
+        ("06.0043", "gumphati"),
+        ("06.0045", "umbhati"),
+        ("06.0077", "tṛṃhati"),
+    ],
+)
+def test_trmphadi_lose_and_regain_the_nasal(code, expected) -> None:
+    d = form(code)
+    ids = _rule_ids(d)
+    assert d.result == expected
+    assert ids.index("6.4.24") < ids.index("7.1.59.1")
+
+
+def test_strh_loses_its_nasal() -> None:  # 06.0037 stfnhU~: 6.4.24 only
+    d = form("06.0037")
+    assert d.result == "stṛhati"
+    assert "7.1.59.1" not in _rule_ids(d)
+
+
+def test_nasal_infix_aside() -> None:
+    step = next(s for s in form("06.0166").steps if "7.1.59" in s.rule_ids)
+    assert step.history is not None
+    assert "nasal-infix" in step.history
+    assert "rumpit" in step.history_italic
+
+
+def test_bhvadi_nasal_kept_before_shap() -> None:
+    d = form("01.0435", voice="middle")
+    assert d.result == "kampate"
+    assert "6.4.24" not in _rule_ids(d)

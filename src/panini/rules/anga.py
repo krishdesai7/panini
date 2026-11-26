@@ -582,6 +582,100 @@ R_6_4_25 = _nasal_loss("6.4.25")
 R_6_4_26 = _nasal_loss("6.4.26")
 
 
+# 6.4.24 aniditāṃ hala upadhāyāḥ kṅiti: a root not marked with i, ending in a consonant, loses
+# its penultimate n before an affix marked k or ṅ (or counting as such, 1.2.4). In laṭ/laṅ that is
+# only śa (3.1.77): śap is marked p. An augment n (num) is not touched: num added by 7.1.59 would
+# otherwise be pointless (the tradition's vidhāna-sāmarthya), and Vidyut agrees.
+def _find_6424(st: State) -> list[Site]:
+    out: list[Site] = []
+    for i in _before_sarvadhatuka(st):
+        t = st.terms[i]
+        k = len(t.sounds) - 2
+        if (
+            t.kind is TermKind.ROOT
+            and not _is_idit(t)
+            and _is_knit(st.terms[_next_term(st, i)])
+            and k >= 0
+            and t.antya in HAL
+            and t.sounds[k].char == "n"
+            and not t.sounds[k].agama
+        ):
+            out.append(Site.at(i, k))
+    return out
+
+
+R_6_4_24 = Rule(
+    "6.4.24",
+    _find_6424,
+    lambda st, site: (DeleteSounds(site.spans[0].term, (site.spans[0].start,)),),
+    note=lambda st, site: (
+        f"{citation_name(st.terms[site.spans[0].term].upadesha)} is not marked with i, so its "
+        "{penultimate|upadhā} n is dropped before an affix marked ṅ (or counting as such)"
+    ),
+)
+
+
+# 7.1.59 śe mucādīnām: the muc group gets num before śa. The group is listed by upadeśa (accents
+# removed), codes 06.0166–06.0173. Vārttika 7.1.59.1 śe tṛmphādīnāṃ num vācyaḥ does the same for
+# the tṛmph group, roots taught with a nasal (06.0031 … 06.0077): 6.4.24 drops that nasal before
+# śa and the vārttika restores it, so the vārttika applies only to a root that no longer has a
+# nasal before its final consonant (its purpose is to undo 6.4.24; adding num beside the taught n
+# would give a double nasal no one recites).
+MUCADI = frozenset({"mucx~", "lupx~", "vidx~", "lipa~", "zica~", "kftI~", "Kida~", "piSa~"})
+TRMPHADI = frozenset(
+    {"tfnPa~", "tunpa~", "tunPa~", "dfnPa~", "fnPa~", "gunPa~", "unBa~", "SunBa~", "tfnhU~"}
+)
+
+
+def _bare_upadesha(t: Term) -> str:
+    return t.upadesha.replace("\\", "").replace("^", "")
+
+
+def _num_before_sha(group: frozenset[str]):
+    def find(st: State) -> list[Site]:
+        out: list[Site] = []
+        for i in range(len(st.terms) - 1):
+            t, nxt = st.terms[i], st.terms[i + 1]
+            if (
+                t.kind is TermKind.ROOT
+                and _bare_upadesha(t) in group
+                and nxt.upadesha == "Sa"
+                and not any(s.char == "n" for s in t.sounds[1:-1] if not s.it)
+                and (pos := mit_position(st, i)) is not None
+            ):
+                out.append(Site.at(i, pos, pos))
+        return out
+
+    return find
+
+
+NASAL_INFIX = Aside(
+    "historically a nasal-infix present, cf. Latin rumpit and the rudh class", ("rumpit",)
+)
+
+
+def _note_num(which: str):
+    return lambda st, site: (
+        f"{citation_name(st.terms[site.spans[0].term].upadesha)}, one of the {which} group, gets the "
+        "{augment|āgama} n (num) before śa; it goes right after the last vowel (1.1.47)"
+    )
+
+
+R_7_1_59 = Rule(
+    "7.1.59",
+    _num_before_sha(MUCADI),
+    lambda st, site: mit_augment_edit(st, site.spans[0].term, (Sound("n"),)),
+    note=_note_num("muc"),
+    history=lambda st, site: NASAL_INFIX,
+)
+R_7_1_59_1 = Rule(
+    "7.1.59.1",
+    _num_before_sha(TRMPHADI),
+    lambda st, site: mit_augment_edit(st, site.spans[0].term, (Sound("n"),)),
+    note=_note_num("tṛmph"),
+)
+
+
 # 6.4.89 ūd upadhāyā gohaḥ: the penultimate vowel of goha becomes ū before a vowel-initial affix
 # (aci, carried over from 6.4.77). goha is guh in its full grade, so the rule follows guṇa (7.3.86)
 # and reaches only forms where guṇa applied.
@@ -634,5 +728,8 @@ RULES = (
     R_7_3_78_OPT,
     R_6_4_25,
     R_6_4_26,
+    R_6_4_24,
+    R_7_1_59,
+    R_7_1_59_1,
     R_6_4_89,
 )

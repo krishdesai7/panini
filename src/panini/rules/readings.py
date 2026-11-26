@@ -183,6 +183,22 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
         (BASE, "an operation on the {base|aṅga} (heading)"),
         ("1.1.47", "num, marked m, goes right after the last vowel"),
     ),
+    "7.1.59": (
+        (BASE, "an operation on the {base|aṅga} (heading)"),
+        ("7.1.58", "num carries over"),
+        (LOC, "śe (locative): before śa"),
+        ("1.1.47", "num, marked m, goes right after the last vowel"),
+    ),
+    "7.1.59.1": (
+        ("7.1.59", "śe ‘before śa’ and num carry over"),
+        ("1.1.47", "num, marked m, goes right after the last vowel"),
+    ),
+    "6.4.24": (
+        (BASE, "an operation on the {base|aṅga} (heading)"),
+        ("6.4.23", "na lopaḥ ‘n is dropped’ carries over"),
+        ("1.1.65", "upadhā = the penultimate sound"),
+        (LOC, "kṅiti (locative): before an affix marked k or ṅ"),
+    ),
     "7.1.61": (
         (BASE, "an operation on the {base|aṅga} (heading)"),
         ("7.1.58", "num carries over"),
