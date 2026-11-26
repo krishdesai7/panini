@@ -31,7 +31,7 @@ from panini.edits import (
     ReplaceTerm,
     apply_edit,
 )
-from panini.model import Site, State
+from panini.model import Site, State, TermKind
 from panini.translit import slp1_to_iast
 
 if TYPE_CHECKING:
@@ -108,16 +108,21 @@ def blocked_by(state: State, cand: Candidate, rules: Sequence[Rule]) -> str | No
     return None
 
 
-def _term_key(state: State, i: int) -> tuple:
+type _TermKey = tuple[TermKind, str] | tuple[str, int]
+# What an edit does, op by op: a tag naming the op, then what it reads and writes.
+type EditSignature = tuple[tuple[object, ...], ...]
+
+
+def _term_key(state: State, i: int) -> _TermKey:
     if 0 <= i < len(state.terms):
         t = state.terms[i]
         return (t.kind, t.upadesha)
     return ("new", i)
 
 
-def edit_signature(state: State, edit: Edit) -> tuple:
+def edit_signature(state: State, edit: Edit) -> EditSignature:
     """What an edit does, ignoring positions (which shift when other rules insert terms)."""
-    sig = []
+    sig: list[tuple[object, ...]] = []
     for op in edit:
         match op:
             case AddTags(term=i, tags=tags):
@@ -157,7 +162,9 @@ def edit_signature(state: State, edit: Edit) -> tuple:
     return tuple(sig)
 
 
-def _matching_site(state: State, cand: Candidate, signature: tuple) -> Site | None:
+def _matching_site(
+    state: State, cand: Candidate, signature: EditSignature
+) -> Site | None:
     for site in cand.rule.find(state):
         if edit_signature(state, cand.rule.rewrite(state, site)) == signature:
             return site
@@ -190,6 +197,160 @@ def _site_terms(site: Site) -> frozenset[int]:
     return frozenset(sp.term for sp in site.spans)
 
 
+# Two orders that give different states: (first, second, first-then-second, second-then-first).
+type _Conflict = tuple[Candidate, Candidate, State, State]
+
+
+def _unblocked(
+    state: State,
+    candidates: Sequence[Candidate],
+    rules: Sequence[Rule],
+    losers: list[Loser],
+) -> list[Candidate]:
+    """Step 1: drop candidates another rule blocks here, recording each as a loser."""
+    remaining: list[Candidate] = []
+    for c in candidates:
+        blocker = blocked_by(state, c, rules)
+        if blocker is None:
+            remaining.append(c)
+        else:
+            losers.append(Loser(c.rule.id, f"blocked by {blocker}"))
+    return remaining
+
+
+def _loses_by_para(a: Candidate, b: Candidate) -> bool:
+    """Does ``a`` give way to ``b`` under para: conflicting saṃjñās in the ekasaṃjñā section?"""
+    return bool(
+        a.rule.assigns
+        and b.rule.assigns
+        and a.rule.assigns != b.rule.assigns
+        and a.rule.in_ekasamjna
+        and b.rule.in_ekasamjna
+        and _site_terms(a.site) & _site_terms(b.site)
+        and a.rule.key < b.rule.key
+    )
+
+
+def _drop_para_losers(remaining: list[Candidate], losers: list[Loser]) -> None:
+    """Step 2: para (1.4.2), restricted to conflicting saṃjñās in the ekasaṃjñā section."""
+    for a in list(remaining):
+        for b in list(remaining):
+            if a is b or a not in remaining or b not in remaining:
+                continue
+            if _loses_by_para(a, b):
+                remaining.remove(a)
+                losers.append(
+                    Loser(
+                        a.rule.id,
+                        f"para: {b.rule.id} comes later in the ekasaṃjñā section (1.4.2)",
+                    )
+                )
+
+
+def _nitya_domination(
+    state: State, remaining: list[Candidate], settle: Settle
+) -> dict[int, Candidate]:
+    """Step 3: index of each dominated candidate -> the candidate that dominates it.
+
+    X dominates Y if X survives Y but Y does not survive X.
+    """
+    dominated_by: dict[int, Candidate] = {}
+    for i, x in enumerate(remaining):
+        for j, y in enumerate(remaining):
+            if (
+                i != j
+                and j not in dominated_by
+                and still_applies(state, x, y, settle)
+                and not still_applies(state, y, x, settle)
+            ):
+                dominated_by[j] = x
+    return dominated_by
+
+
+def _first_conflict(
+    state: State, c: Candidate, others: list[Candidate], settle: Settle
+) -> _Conflict | None:
+    for other in others:
+        if other is c:
+            continue
+        a, b = then(state, c, other, settle), then(state, other, c, settle)
+        if a != b:
+            return (c, other, a, b)
+    return None
+
+
+def _first_commuting(
+    state: State, ordered: list[Candidate], settle: Settle
+) -> Candidate | _Conflict:
+    """Step 4: the first candidate that commutes with every other one, else the first conflict.
+
+    Its order is immaterial, so it decides nothing, and it may give the next step the
+    information (a new blocker, a nitya relation) that settles a remaining conflict.
+    """
+    conflicts: list[_Conflict] = []
+    for c in ordered:
+        found = _first_conflict(state, c, ordered, settle)
+        if found is None:
+            return c
+        conflicts.append(found)
+    return conflicts[0]
+
+
+def _final_forms(
+    finish: Finish | None, a: State, b: State
+) -> tuple[str | None, str | None]:
+    if finish is None:
+        return None, None
+    try:
+        return finish(a), finish(b)
+    except UnresolvedConflict:
+        return None, None
+
+
+def _accept_if_same_result(
+    conflict: _Conflict, finish: Finish | None, losers: list[Loser]
+) -> None:
+    """Return if both orders reach the same final form; otherwise raise UnresolvedConflict.
+
+    The immediate states differ, but if both orders still lead to the same final form the
+    order is immaterial to the result (the siddha definition compares results).
+    """
+    c, other, a, b = conflict
+    ids, sites = (c.rule.id, other.rule.id), (c.site, other.site)
+    fa, fb = _final_forms(finish, a, b)
+    if fa is None:
+        raise UnresolvedConflict(ids, sites, (state_text(a), state_text(b)))
+    if fa != fb:
+        raise UnresolvedConflict(ids, sites, (fa, fb or "?"))
+    if other.rule.id != c.rule.id:
+        losers.append(
+            Loser(
+                other.rule.id,
+                f"order with {c.rule.id} is immaterial: both orders give {fa}; "
+                "the lower-numbered rule goes first",
+            )
+        )
+
+
+def _with_nitya_losers(
+    winner: Candidate,
+    remaining: list[Candidate],
+    dominated_by: dict[int, Candidate],
+    losers: list[Loser],
+) -> Choice:
+    # "Deferred because X is nitya" is reported on the step where X applies.
+    # A rule at two sites is not two rules competing: both applications appear as steps.
+    extra = [
+        Loser(
+            remaining[k].rule.id,
+            f"deferred: {x.rule.id} {{applies either way|nitya}}",
+        )
+        for k, x in dominated_by.items()
+        if x is winner and remaining[k].rule.id != winner.rule.id
+    ]
+    return Choice(winner, tuple(losers + extra))
+
+
 class LocalResolver:
     def choose(
         self,
@@ -201,114 +362,23 @@ class LocalResolver:
     ) -> Choice | None:
         settle = settle or apply_edit
         losers: list[Loser] = []
-        remaining: list[Candidate] = []
-        for c in candidates:
-            blocker = blocked_by(state, c, rules)
-            if blocker is None:
-                remaining.append(c)
-            else:
-                losers.append(Loser(c.rule.id, f"blocked by {blocker}"))
-
-        # Para (1.4.2), restricted to conflicting saṃjñās in the ekasaṃjñā section.
-        for a in list(remaining):
-            for b in list(remaining):
-                if (
-                    a is not b
-                    and a in remaining
-                    and b in remaining
-                    and a.rule.assigns
-                    and b.rule.assigns
-                    and a.rule.assigns != b.rule.assigns
-                    and a.rule.in_ekasamjna
-                    and b.rule.in_ekasamjna
-                    and _site_terms(a.site) & _site_terms(b.site)
-                    and a.rule.key < b.rule.key
-                ):
-                    remaining.remove(a)
-                    losers.append(
-                        Loser(
-                            a.rule.id,
-                            f"para: {b.rule.id} comes later in the ekasaṃjñā section (1.4.2)",
-                        )
-                    )
-
+        remaining = _unblocked(state, candidates, rules, losers)
+        _drop_para_losers(remaining, losers)
         if not remaining:
             return None
         if len(remaining) == 1:
             return Choice(remaining[0], tuple(losers))
 
-        # Nitya: X dominates Y if X survives Y but Y does not survive X.
-        dominated_by: dict[int, Candidate] = {}
-        for i, x in enumerate(remaining):
-            for j, y in enumerate(remaining):
-                if (
-                    i != j
-                    and j not in dominated_by
-                    and still_applies(state, x, y, settle)
-                    and not still_applies(state, y, x, settle)
-                ):
-                    dominated_by[j] = x
-        undominated = [c for k, c in enumerate(remaining) if k not in dominated_by]
-
-        def with_nitya_losers(winner: Candidate) -> Choice:
-            # "Deferred because X is nitya" is reported on the step where X applies.
-            # A rule at two sites is not two rules competing: both applications appear as steps.
-            extra = [
-                Loser(
-                    remaining[k].rule.id,
-                    f"deferred: {x.rule.id} {{applies either way|nitya}}",
-                )
-                for k, x in dominated_by.items()
-                if x is winner and remaining[k].rule.id != winner.rule.id
-            ]
-            return Choice(winner, tuple(losers + extra))
-
-        if not undominated:  # cyclic domination; treat all as tied
-            undominated = remaining
-
+        dominated_by = _nitya_domination(state, remaining, settle)
+        # Cyclic domination leaves nothing undominated; treat all as tied.
+        undominated = [
+            c for k, c in enumerate(remaining) if k not in dominated_by
+        ] or list(remaining)
         undominated.sort(
             key=lambda c: (c.rule.key, [(sp.term, sp.start) for sp in c.site.spans])
         )
-        # Apply the lowest candidate that commutes with every other one: its order is
-        # immaterial, so it decides nothing, and it may give the next step the information
-        # (a new blocker, a nitya relation) that settles a remaining conflict.
-        conflict: tuple[Candidate, Candidate, State, State] | None = None
-        for c in undominated:
-            for other in undominated:
-                if other is c:
-                    continue
-                a, b = then(state, c, other, settle), then(state, other, c, settle)
-                if a != b:
-                    conflict = conflict or (c, other, a, b)
-                    break
-            else:
-                return with_nitya_losers(c)
-        assert conflict is not None
-        c, other, a, b = conflict
-        # The immediate states differ. If both orders still lead to the same final form,
-        # the order is immaterial to the result (the siddha definition compares results).
-        if finish is not None:
-            try:
-                fa, fb = finish(a), finish(b)
-            except UnresolvedConflict:
-                fa, fb = None, None
-            if fa is not None and fa == fb:
-                if other.rule.id != c.rule.id:
-                    losers.append(
-                        Loser(
-                            other.rule.id,
-                            f"order with {c.rule.id} is immaterial: both orders give {fa}; "
-                            "the lower-numbered rule goes first",
-                        )
-                    )
-                return with_nitya_losers(c)
-            if fa is not None:
-                a_text, b_text = fa, fb or "?"
-                raise UnresolvedConflict(
-                    (c.rule.id, other.rule.id), (c.site, other.site), (a_text, b_text)
-                )
-        raise UnresolvedConflict(
-            (c.rule.id, other.rule.id),
-            (c.site, other.site),
-            (state_text(a), state_text(b)),
-        )
+        found = _first_commuting(state, undominated, settle)
+        if isinstance(found, Candidate):
+            return _with_nitya_losers(found, remaining, dominated_by, losers)
+        _accept_if_same_result(found, finish, losers)
+        return _with_nitya_losers(found[0], remaining, dominated_by, losers)

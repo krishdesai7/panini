@@ -292,7 +292,7 @@ def load_reference(path: Path = REFERENCE_PATH) -> dict[str, list[str]]:
     forms that disagree with the reference.
     """
     if not path.exists():
-        print(
+        print(  # ruff: ignore[print]
             f"warning: reference forms not found at {path}; mismatches will not be flagged",
             file=sys.stderr,
         )

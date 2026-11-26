@@ -13,7 +13,7 @@ from panini.translit import slp1_to_iast
 # Initial markers (it-sounds before the root proper): ḍu, ṭu, ñi.
 _INITIAL_MARKERS = ("qu", "wu", "Yi")
 # Nasal that agrees with a consonant's place of articulation (SLP1): ṃ before a sibilant or h.
-_NASAL_FOR = {
+_NASAL_FOR: dict[str, str] = {
     **dict.fromkeys("kKgGN", "N"),
     **dict.fromkeys("cCjJY", "Y"),
     **dict.fromkeys("wWqQR", "R"),
@@ -22,15 +22,10 @@ _NASAL_FOR = {
 }
 
 
-def citation_name(upadesha_slp1: str) -> str:
-    r"""The root as it is usually quoted (IAST), e.g. ``ga\\mx~`` -> gam, ``kradi~`` -> krand.
+type _Recited = list[tuple[str, bool]]  # (SLP1 sound, recited nasal)
 
-    Only a display label, so it uses plain string logic rather than the it-rules.
-    """
-    sounds = [
-        (s.char, s.nasal)
-        for s in Term.from_upadesha(TermKind.ROOT, upadesha_slp1).sounds
-    ]
+
+def _strip_initial_markers(sounds: _Recited) -> _Recited:
     for marker in _INITIAL_MARKERS:  # ḍu, ṭu, ñi
         if "".join(c for c, _ in sounds[:2]) == marker and len(sounds) > 2:
             sounds = sounds[2:]
@@ -39,36 +34,50 @@ def citation_name(upadesha_slp1: str) -> str:
         len(sounds) > 1 and sounds[0][1]
     ):  # an initial nasal vowel (o~, u~) is a marker too
         sounds = sounds[1:]
+    return sounds
+
+
+def _strip_markers(sounds: _Recited) -> tuple[_Recited, bool]:
+    """The root without its marker sounds, and whether a final i~ made it idit."""
+    sounds = _strip_initial_markers(sounds)
     nasal_vowels = [k for k, (_, nasal) in enumerate(sounds) if nasal]
+    if not nasal_vowels:
+        if len(sounds) > 1 and sounds[-1][0] in "NY":  # ṅ, ñ marker
+            sounds = sounds[:-1]
+        return sounds, False
     # A final i~ marks the root idit; i~r (dṛś, df\Si~r) is the marker ir, which adds no nasal.
-    idit = (
-        bool(nasal_vowels)
-        and nasal_vowels[-1] == len(sounds) - 1
-        and sounds[-1][0] == "i"
-    )
-    if nasal_vowels:  # the last nasal vowel and whatever follows it are markers
-        sounds = sounds[: nasal_vowels[-1]]
-    elif len(sounds) > 1 and sounds[-1][0] in "NY":  # ṅ, ñ marker
-        sounds = sounds[:-1]
-    text = "".join(c for c, _ in sounds)
-    if text.startswith("z"):
-        text = "s" + text[1:]
-        text = (
-            text[:1]
-            + {"w": "t", "W": "T", "R": "n"}.get(text[1:2], text[1:2])
-            + text[2:]
-        )
+    idit = nasal_vowels[-1] == len(sounds) - 1 and sounds[-1][0] == "i"
+    # The last nasal vowel and whatever follows it are markers.
+    return sounds[: nasal_vowels[-1]], idit
+
+
+def _respell(text: str, idit: bool) -> str:
+    """Quote the bare root as the grammar's spelling rules would leave it (SLP1)."""
+    if text.startswith("z"):  # ṣ → s, and a following ṭ, ṭh, ṇ back to dental
+        text = "s" + {"w": "t", "W": "T", "R": "n"}.get(text[1:2], text[1:2]) + text[2:]
     elif text.startswith("R"):
         text = "n" + text[1:]
     if idit and len(text) > 1 and text[-2] not in "nNYRmM":  # kradi~ -> krand
         text = text[:-1] + _NASAL_FOR.get(text[-1], "n") + text[-1]
     # A taught n before a consonant is quoted as the nasal of that consonant's place (sañj, tump,
     # śranbh -> śrambh), or as ṃ before a sibilant or h (daṃś); before a dental it stays n.
-    text = "".join(
+    return "".join(
         _NASAL_FOR.get(nxt, c) if c == "n" else c
         for c, nxt in zip(text, text[1:] + " ", strict=False)
     )
-    return slp1_to_iast(text)
+
+
+def citation_name(upadesha_slp1: str) -> str:
+    r"""The root as it is usually quoted (IAST), e.g. ``ga\mx~`` -> gam, ``kradi~`` -> krand.
+
+    Only a display label, so it uses plain string logic rather than the it-rules.
+    """
+    recited = [
+        (s.char, s.nasal)
+        for s in Term.from_upadesha(TermKind.ROOT, upadesha_slp1).sounds
+    ]
+    sounds, idit = _strip_markers(recited)
+    return slp1_to_iast(_respell("".join(c for c, _ in sounds), idit))
 
 
 @dataclass(frozen=True)

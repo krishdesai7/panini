@@ -17,6 +17,7 @@ import shutil
 import threading
 from functools import cache
 from pathlib import Path
+from typing import Any
 
 ENV = "PANINI_CACHE_DIR"
 DEFAULT_DIR = Path(".cache/panini")
@@ -62,7 +63,7 @@ class DerivationCache:
     def _dir(self) -> Path:
         return self.root / "derivations" / fingerprint()
 
-    def get(self, code: str) -> dict | None:
+    def get(self, code: str) -> dict[str, Any] | None:
         if not self.enabled:
             return None
         try:
@@ -73,7 +74,7 @@ class DerivationCache:
             return None
         return data if isinstance(data, dict) else None
 
-    def put(self, code: str, data: dict) -> None:
+    def put(self, code: str, data: dict[str, Any]) -> None:
         if not self.enabled:
             return
         here = self._dir()

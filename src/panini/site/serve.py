@@ -6,6 +6,7 @@ import json
 import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from typing import Any, override
 from urllib.parse import unquote, urlsplit
 
 from panini.lexicon import ROOTS
@@ -22,7 +23,7 @@ def _handler(page: bytes) -> type[BaseHTTPRequestHandler]:
             if self.command != "HEAD":
                 self.wfile.write(body)
 
-        def _json(self, status: int, obj: dict) -> None:
+        def _json(self, status: int, obj: dict[str, Any]) -> None:
             self._send(
                 status,
                 json.dumps(obj, ensure_ascii=False).encode("utf-8"),
@@ -45,7 +46,8 @@ def _handler(page: bytes) -> type[BaseHTTPRequestHandler]:
         def do_HEAD(self) -> None:
             self.do_GET()  # same status and headers; _send leaves out the body
 
-        def log_message(self, format: str, *args) -> None:
+        @override
+        def log_message(self, format: str, *args: Any) -> None:
             pass
 
     return Handler

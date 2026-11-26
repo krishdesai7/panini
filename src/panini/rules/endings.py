@@ -7,7 +7,7 @@ lazy from collections.abc import Callable
 from panini.edits import VIKRTA, AddTags, DeleteSounds, ReplaceSounds, ReplaceTerm
 from panini.meta import augment_edit, sthanivat_note, substitute_term
 from panini.model import Site, Sound, State, Term, TermKind
-from panini.rules.base import Rule
+from panini.rules.base import Rewrite, Rule
 from panini.sounds import is_vowel
 from panini.translit import slp1_to_iast
 
@@ -96,8 +96,6 @@ R_3_4_80 = Rule(
     note=lambda st, site: "in laṭ, the ending thās is replaced by se",
 )
 
-RULES = (R_3_4_79, R_3_4_80)
-
 
 # -- laṅ -------------------------------------------------------------------
 
@@ -136,9 +134,9 @@ def _augment_find(vowel_initial: bool) -> Callable[[State], list[Site]]:
     return find
 
 
-def _augment_rewrite(upadesha: str):
+def _augment_rewrite(upadesha: str) -> Rewrite:
     return lambda st, site: augment_edit(
-        st, site.spans[0].term, Term.from_upadesha(TermKind.AGAMA, upadesha)
+        site.spans[0].term, Term.from_upadesha(TermKind.AGAMA, upadesha)
     )
 
 
@@ -245,4 +243,13 @@ R_3_4_101 = Rule(
     ),
 )
 
-RULES = (*RULES, R_6_4_71, R_6_4_72, R_3_4_99, R_3_4_100, R_3_4_101)
+
+RULES = (
+    R_3_4_79,
+    R_3_4_80,
+    R_6_4_71,
+    R_6_4_72,
+    R_3_4_99,
+    R_3_4_100,
+    R_3_4_101,
+)

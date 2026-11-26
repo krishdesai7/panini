@@ -70,6 +70,20 @@ _VRDDHI = {
 }
 
 
+def _shiva_span(first: str, marker: str) -> list[str] | None:
+    """Sounds of the Śiva sūtras from ``first`` up to the sūtra ending in ``marker``."""
+    sounds: list[str] = []
+    for sutra in SHIVA_SUTRAS:
+        body, end = sutra[:-1], sutra[-1]
+        if sounds:
+            sounds.extend(body)
+        elif first in body:
+            sounds.extend(body[body.index(first) :])
+        if sounds and end == marker:
+            return sounds
+    return None
+
+
 @cache
 def pratyahara(name: str) -> frozenset[str]:
     """Expand a pratyāhāra name such as ``"ik"`` or ``"Jal"``.
@@ -82,18 +96,8 @@ def pratyahara(name: str) -> frozenset[str]:
         first = first[0]
     if name in ("cu", "wu"):  # the ku/cu/ṭu/tu/pu classes (1.1.69 udit)
         return next(v for v in VARGAS if name[0] in v)
-    sounds: list[str] = []
-    started = False
-    for sutra in SHIVA_SUTRAS:
-        body, end = sutra[:-1], sutra[-1]
-        for c in body:
-            if not started and c == first:
-                started = True
-            if started:
-                sounds.append(c)
-        if started and end == marker:
-            break
-    else:
+    sounds = _shiva_span(first, marker)
+    if sounds is None:
         raise ValueError(f"unknown pratyāhāra: {name}")
     out = set(sounds)
     out |= {LONG_OF[c] for c in sounds if c in LONG_OF}

@@ -15,6 +15,7 @@ vowel of what it is added to.
 
 from __future__ import annotations
 
+from typing import Protocol
 lazy from collections.abc import Callable
 
 from panini.edits import EKADESHA_START, Edit, InsertSounds, InsertTerm, ReplaceSounds
@@ -52,7 +53,7 @@ def sthanivat_note(term: Term) -> str | None:
     return f"{new} inherits the properties of {old} via 1.1.56"
 
 
-def augment_edit(state: State, target: int, augment: Term) -> Edit:
+def augment_edit(target: int, augment: Term) -> Edit:
     """Place a ṭit augment before ``target`` or a kit augment after it (1.1.46).
 
     1.1.46 refers to the augment as taught, so the marker is read from its upadeśa
@@ -66,9 +67,7 @@ def augment_edit(state: State, target: int, augment: Term) -> Edit:
     raise ValueError(f"augment {augment.upadesha} is neither ṭit nor kit")
 
 
-def augment_in_term_edit(
-    state: State, term: int, after_pos: int, sounds: tuple[Sound, ...]
-) -> Edit:
+def augment_in_term_edit(term: int, after_pos: int, sounds: tuple[Sound, ...]) -> Edit:
     """Insert a kit augment's sounds right after a sound inside a term (e.g. tuk, 6.1.73)."""
     tagged = tuple(Sound(s.char, agama=True) for s in sounds)
     return (InsertSounds(term, after_pos + 1, tagged),)
@@ -109,6 +108,13 @@ def mit_augment_edit(state: State, term: int, sounds: tuple[Sound, ...]) -> Edit
     return (InsertSounds(term, pos, tagged),)
 
 
+class Merges(Protocol):
+    """A single-substitute (ekādeśa) rule, as far as substitution_edit needs one."""
+
+    @property
+    def merge(self) -> Callable[[str, str], str | None] | None: ...
+
+
 def _ekadesha_tail(term: Term) -> int:
     """How many sounds at the end of a term are one recorded ekādeśa substitute."""
     k = 0
@@ -127,7 +133,8 @@ def absorbed_ekadesha(state: State, term: int) -> list[tuple[str, str, str]]:
         left = next((u for u in reversed(state.terms[:term]) if u.sounds), None)
         if left is not None and _ekadesha_tail(left):
             s = left.sounds[-1]
-            return [(s.ekadesha_rule, *s.ekadesha_inputs)]
+            if s.ekadesha_rule is not None and s.ekadesha_inputs is not None:
+                return [(s.ekadesha_rule, *s.ekadesha_inputs)]
     return []
 
 
@@ -135,7 +142,7 @@ def substitution_edit(
     state: State,
     term: int,
     stem: str,
-    rule_lookup: Callable[[str], object] | None = None,
+    rule_lookup: Callable[[str], Merges] | None = None,
 ) -> Edit:
     """Replace a whole term by ``stem`` (a substitution for the sthānin, 1.1.56), taking its place in
     the ekādeśa that had absorbed its first sound: the substitute is an input of that ekādeśa, so
@@ -151,10 +158,13 @@ def substitution_edit(
         rule_lookup = get_rule
     t = state.terms[term]
     chars = list(stem)
-    edits: list = []
+    edits: list[ReplaceSounds] = []
     if absorbed := absorbed_ekadesha(state, term):
         rule_id, x, _ = absorbed[0]
-        out = rule_lookup(rule_id).merge(x, chars[0])
+        merge = rule_lookup(rule_id).merge
+        if merge is None:
+            raise ValueError(f"{rule_id} absorbed a sound but is not an ekādeśa rule")
+        out = merge(x, chars[0])
         if out is None:
             raise ValueError(
                 f"{rule_id} does not apply to {x} + {chars[0]}, so the substitute cannot take its place"

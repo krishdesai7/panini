@@ -8,8 +8,6 @@ import json
 from pathlib import Path
 
 import vidyut
-from panini import request as rq
-from panini.request import all_requests, availability
 from vidyut.lipi import Scheme, transliterate
 from vidyut.prakriya import (
     Dhatu,
@@ -22,6 +20,9 @@ from vidyut.prakriya import (
     Vacana,
     Vyakarana,
 )
+
+from panini import request as rq
+from panini.request import all_requests, availability
 
 DATA = Path("build/vidyut-data")
 OUT = Path("src/panini/data/reference_forms.json")

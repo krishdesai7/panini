@@ -4,12 +4,13 @@ from __future__ import annotations
 
 import json
 import os
-import subprocess
+import subprocess  # ruff: ignore[suspicious-subprocess-import] -- runs the font script with a fixed argv
 import sys
 import tomllib
 from functools import lru_cache
 from importlib.resources import files
 from pathlib import Path
+from typing import Any
 lazy from collections.abc import Iterable
 
 from panini.cache import DerivationCache
@@ -21,7 +22,7 @@ from panini.request import OUT_OF_SCOPE, all_requests, effective_pada, load_refe
 DEFAULT_STYLE_DIR = Path.home() / ".local/state/claude/skills/krish-frontend-style"
 
 
-def root_entries() -> list[dict]:
+def root_entries() -> list[dict[str, Any]]:
     """One entry per root: what the picker and the heading need."""
     return [
         {
@@ -51,19 +52,19 @@ def use_disk_cache(enabled: bool) -> None:
 
 
 @lru_cache(maxsize=128)
-def root_derivations(code: str) -> dict[str, dict]:
+def root_derivations(code: str) -> dict[str, dict[str, Any]]:
     """Every request of one root (unavailable ones included): request key -> Derivation.to_json().
 
     Looked up in memory, then on disk (keyed by the engine's fingerprint), then derived."""
     if (hit := DISK_CACHE.get(code)) is not None:
         return hit
     reference = load_reference()
-    out: dict[str, dict] = {}
+    out: dict[str, dict[str, Any]] = {}
     crashed = False
     for req in all_requests([code]):
         try:
             d = derive(req, reference=reference)
-        except Exception as e:  # one broken derivation must not take the page down
+        except Exception as e:  # ruff: ignore[blind-except] -- one broken derivation must not take the page down
             crashed = True
             panini, pie = req.describe()
             ref = reference.get(req.key)
@@ -82,7 +83,7 @@ def root_derivations(code: str) -> dict[str, dict]:
     return out
 
 
-def site_data(codes: Iterable[str] | None, *, embed_all_roots: bool) -> dict:
+def site_data(codes: Iterable[str] | None, *, embed_all_roots: bool) -> dict[str, Any]:
     """Page data. Derivations are embedded for `codes` (None: every root); the root list covers
     every root if `embed_all_roots`, else just `codes`."""
     codes = list(ROOTS) if codes is None else list(codes)
@@ -163,14 +164,14 @@ def _sutras() -> dict[str, dict[str, str]]:
 def _font_css(style_dir: Path) -> str:
     script = style_dir / "scripts" / "font_faces.py"
     if not script.exists():
-        print(
+        print(  # ruff: ignore[print]
             f"warning: fonts not embedded: {script} not found; using fallback font stacks",
             file=sys.stderr,
         )
         return ""
     try:
-        done = subprocess.run(
-            [
+        done = subprocess.run(  # ruff: ignore[subprocess-without-shell-equals-true]
+            [  # ruff: ignore[start-process-with-partial-path] -- uv is on PATH wherever this project builds
                 "uv",
                 "run",
                 "--no-project",
@@ -185,7 +186,7 @@ def _font_css(style_dir: Path) -> str:
             timeout=120,
         )
     except (OSError, subprocess.SubprocessError) as e:
-        print(
+        print(  # ruff: ignore[print]
             f"warning: fonts not embedded ({e}); using fallback font stacks",
             file=sys.stderr,
         )
@@ -197,7 +198,7 @@ def _asset(name: str) -> str:
     return files("panini.site").joinpath(name).read_text(encoding="utf-8")
 
 
-def page_html(data: dict, style_dir: Path | None) -> str:
+def page_html(data: dict[str, Any], style_dir: Path | None) -> str:
     """The explorer page with `data` and (if `style_dir` has them) the fonts embedded."""
     if style_dir is None:
         style_dir = Path(os.environ.get("PANINI_STYLE_DIR", DEFAULT_STYLE_DIR))

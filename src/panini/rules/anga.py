@@ -34,6 +34,14 @@ def _following(st: State, i: int) -> int | None:
     return next((k for k in range(i + 1, len(st.terms)) if st.terms[k].sounds), None)
 
 
+def _next_term(st: State, i: int) -> int:
+    """Like _following, for callers whose site guarantees such a term exists."""
+    j = _following(st, i)
+    if j is None:
+        raise ValueError(f"no term with sounds after term {i}")
+    return j
+
+
 def _before_sarvadhatuka(st: State) -> list[int]:
     """Indices i whose term is an aṅga directly before a sārvadhātuka affix. A term emptied by
     a single substitute (śap's a merged into the stem's a, 6.1.97) is not in the way."""
@@ -75,7 +83,7 @@ def _rewrite_7384(st: State, site: Site) -> tuple[ReplaceSounds]:
 def _note_7384(st: State, site: Site) -> str:
     sp = site.spans[0]
     v = st.terms[sp.term].sounds[sp.start].char
-    affix = slp1_to_iast(st.terms[_following(st, sp.term)].text)
+    affix = slp1_to_iast(st.terms[_next_term(st, sp.term)].text)
     note = f"final {slp1_to_iast(v)} takes {{full grade|guṇa}} → {slp1_to_iast(guna(v))} before the {{present-system|sārvadhātuka}} affix {affix} (1.1.3)"
     if v in "fFxX":
         note += "; the r/l comes from 1.1.51 uraṇ raparaḥ"
@@ -137,7 +145,7 @@ def _find_73101(st: State) -> list[Site]:
     return [
         Site.at(i, len(st.terms[i].sounds) - 1)
         for i in _before_sarvadhatuka(st)
-        if st.terms[i].antya == "a" and adi(st, _following(st, i)) in YAN_
+        if st.terms[i].antya == "a" and adi(st, _next_term(st, i)) in YAN_
     ]
 
 
@@ -150,7 +158,7 @@ R_7_3_101 = Rule(
         ),
     ),
     note=lambda st, site: (
-        f"a is lengthened before {slp1_to_iast(st.terms[_following(st, site.spans[0].term)].adi)},"
+        f"a is lengthened before {slp1_to_iast(st.terms[_next_term(st, site.spans[0].term)].adi or '')},"
         " one of {resonants, jh, and bh|yañ}, beginning a {present-system|sārvadhātuka} affix"
     ),
 )
@@ -263,7 +271,7 @@ def _tuk_rule(rule_id: str, short: bool, which: str) -> Rule:
         rule_id,
         lambda st: _tuk_before_ch(st, short),
         lambda st, site: augment_in_term_edit(
-            st, site.spans[0].term, site.spans[0].start, (Sound("t"),)
+            site.spans[0].term, site.spans[0].start, (Sound("t"),)
         ),
         tuk_or_satva=True,
         note=lambda st, site: (
@@ -321,18 +329,6 @@ R_7_3_75 = Rule(
     ),
 )
 
-RULES = (
-    R_7_3_84,
-    R_7_3_86,
-    R_7_3_101,
-    R_7_1_3,
-    R_7_1_5,
-    R_7_3_77,
-    R_6_1_73,
-    R_6_1_75,
-    R_7_3_75,
-)
-
 
 # 7.2.81 āto ṅitaḥ
 def _find_7281(st: State) -> list[Site]:
@@ -362,19 +358,17 @@ R_7_2_81 = Rule(
     ),
 )
 
-RULES = (*RULES, R_7_2_81)
-
 
 # 1.1.5 kṅiti ca — a niṣedha: no guṇa/vṛddhi of an ik vowel before an affix marked k or ṅ
 # (or treated as ṅit, 1.2.4). Like 1.3.4 it changes nothing itself and blocks the rules.
-def _is_knit(t) -> bool:
+def _is_knit(t: Term) -> bool:
     return t.has_marker("k") or t.has_marker("N") or t.has_tag("ṅit-vat")
 
 
 def _find_115(st: State) -> list[Site]:
     out: list[Site] = []
     for i in _before_sarvadhatuka(st):
-        if not _is_knit(st.terms[_following(st, i)]):
+        if not _is_knit(st.terms[_next_term(st, i)]):
             continue
         t = st.terms[i]
         if t.antya in IK:
@@ -391,18 +385,16 @@ R_1_1_5 = Rule(
     lambda st, site: (),
     blocks=("7.3.84", "7.3.86"),
     note=lambda st, site: (
-        f"no {{full grade|guṇa}} before {slp1_to_iast(st.terms[_following(st, site.spans[0].term)].text)}, "
+        f"no {{full grade|guṇa}} before {slp1_to_iast(st.terms[_next_term(st, site.spans[0].term)].text)}, "
         "which is marked ṅ (or counts as such)"
     ),
 )
-
-RULES = (*RULES, R_1_1_5)
 
 
 # 7.1.58 idito num dhātoḥ
 def _is_idit(t: Term) -> bool:
     r"""A root whose marker is a final i. The it-rules must have marked it (1.3.2); the upadeśa
-    tells i from ir: in i~r (dṛś, df\\Si~r) the nasal i belongs to the marker ir and adds no nasal."""
+    tells i from ir: in i~r (dṛś, df\Si~r) the nasal i belongs to the marker ir and adds no nasal."""
     return t.kind is TermKind.ROOT and t.has_marker("i") and t.upadesha.endswith("i~")
 
 
@@ -427,8 +419,6 @@ R_7_1_58 = Rule(
         "the {augment|āgama} n (num) goes right after its last vowel (1.1.47)"
     ),
 )
-
-RULES = (*RULES, R_7_1_58)
 
 
 # 7.1.61 radhijabhor aci: radh and jabh get num before a vowel-initial affix. The sūtra names the
@@ -471,8 +461,6 @@ R_7_1_61 = Rule(
         "the last vowel (1.1.47)"
     ),
 )
-
-RULES = (*RULES, R_7_1_61)
 
 
 # 7.3.78 pāghrādhmāsthāmnādāṇdṛśyartisartiśadasadāṃ pibajighradhamatiṣṭhamanayacchapaśyarcchadhauśīyasīdāḥ:
@@ -555,8 +543,6 @@ R_7_3_78_OPT = replace(
     optional_phrase="{only in the sense of running|Kāśikā: vegitāyāṃ gatau}, so not applied here",
 )
 
-RULES = (*RULES, R_7_3_78, R_7_3_78_OPT)
-
 
 # 6.4.25 daṃśasañjasvañjāṃ śapi, 6.4.26 rañjeś ca: these roots lose their penultimate nasal before
 # śap (na lopaḥ from 6.4.23, upadhāyāḥ from 6.4.24), extending 6.4.24's loss before a kit/ṅit affix.
@@ -595,8 +581,6 @@ def _nasal_loss(rule_id: str) -> Rule:
 R_6_4_25 = _nasal_loss("6.4.25")
 R_6_4_26 = _nasal_loss("6.4.26")
 
-RULES = (*RULES, R_6_4_25, R_6_4_26)
-
 
 # 6.4.89 ūd upadhāyā gohaḥ: the penultimate vowel of goha becomes ū before a vowel-initial affix
 # (aci, carried over from 6.4.77). goha is guh in its full grade, so the rule follows guṇa (7.3.86)
@@ -631,4 +615,24 @@ R_6_4_89 = Rule(
     ),
 )
 
-RULES = (*RULES, R_6_4_89)
+
+RULES = (
+    R_7_3_84,
+    R_7_3_86,
+    R_7_3_101,
+    R_7_1_3,
+    R_7_1_5,
+    R_7_3_77,
+    R_6_1_73,
+    R_6_1_75,
+    R_7_3_75,
+    R_7_2_81,
+    R_1_1_5,
+    R_7_1_58,
+    R_7_1_61,
+    R_7_3_78,
+    R_7_3_78_OPT,
+    R_6_4_25,
+    R_6_4_26,
+    R_6_4_89,
+)

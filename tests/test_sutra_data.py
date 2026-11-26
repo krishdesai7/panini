@@ -1,4 +1,5 @@
 import pytest
+
 from panini.rules import ALL_RULES
 from panini.rules.base import sutra_info
 
@@ -47,4 +48,5 @@ def test_no_bare_jargon_left_in_these_glosses() -> None:
 
     for rid in ("7.3.101", "8.3.24", "8.4.58"):
         bare = re.sub(r"\{[^}]*\}", "", sutra_info(rid)[1])
-        assert "anusvāra" not in bare and "y v r l ñ m" not in bare, rid
+        assert "anusvāra" not in bare, rid
+        assert "y v r l ñ m" not in bare, rid

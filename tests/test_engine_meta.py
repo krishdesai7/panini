@@ -3,6 +3,7 @@
 import json
 
 import pytest
+
 from panini.derivation import Derivation, Status, StepRecord
 from panini.edits import DeleteSounds, InsertSounds, ReplaceSounds
 from panini.engine import StepLimitExceeded, final_text, run
@@ -23,7 +24,7 @@ from panini.rules.base import Optionality, Rule
 INTENT = Intent(Time.PRESENT, Coreference.NONE, Number.ONE, False)
 
 
-def S(text: str) -> State:
+def S(text: str) -> State:  # ruff: ignore[invalid-function-name] -- reads like a constructor
     return State((Term.from_upadesha(TermKind.ROOT, text),), INTENT)
 
 
@@ -37,7 +38,7 @@ def replace_rule(
             if s.char == old and (only_at is None or k == only_at)
         ]
 
-    def rewrite(st: State, site: Site) -> tuple[ReplaceSounds]:
+    def rewrite(_st: State, site: Site) -> tuple[ReplaceSounds]:
         k = site.spans[0].start
         return (ReplaceSounds(0, k, k + 1, (Sound(new),)),)
 
@@ -62,7 +63,7 @@ def test_collective_blocking() -> None:
     c = replace_rule("9.9.4", "a", "o", only_at=0, blocks=("9.9.2", "9.9.5"))
     state, steps, _ = run(S("aba"), [a, b, c])
     assert final_text(state) == "obi"
-    losers = {l for s in steps for l in s.losers}
+    losers = {loser for s in steps for loser in s.losers}
     assert Loser("9.9.2", "blocked by 9.9.4") in losers
     assert Loser("9.9.5", "blocked by 9.9.4") in losers
 
@@ -87,7 +88,7 @@ def test_nitya_preference() -> None:
         t = st.terms[0].text
         return [Site.at(0, len(t) - 2, len(t))] if t.endswith("su") else []
 
-    def rewrite_x(st, site) -> tuple[DeleteSounds]:
+    def rewrite_x(_st, site) -> tuple[DeleteSounds]:
         sp = site.spans[0]
         return (DeleteSounds(0, tuple(range(sp.start, sp.end))),)
 
@@ -206,7 +207,9 @@ def test_orders_converging_on_the_same_final_form_are_not_a_conflict() -> None:
     )
     state, steps, _ = run(S("a"), [a, b, c])
     assert final_text(state) == "e"
-    assert any("both orders give e" in l.reason for s in steps for l in s.losers)
+    assert any(
+        "both orders give e" in loser.reason for s in steps for loser in s.losers
+    )
 
 
 def test_declined_optional_rule_stops_blocking_in_later_alternative_branches() -> None:

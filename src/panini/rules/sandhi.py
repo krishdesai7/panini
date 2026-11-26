@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import itertools
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from panini.edits import DeleteSounds, Ekadesha, ReplaceSounds
 from panini.model import Site, Sound, Span, State, TermKind
@@ -30,9 +30,9 @@ def junctions(st: State) -> Iterator[tuple[int, int, str, str]]:
         yield a, b, st.terms[a].sounds[-1].char, st.terms[b].sounds[0].char
 
 
-def _site(st: State, l: int, r: int) -> Site:
-    n = len(st.terms[l].sounds)
-    return Site((Span(l, n - 1, n), Span(r, 0, 1)))
+def _site(st: State, left: int, right: int) -> Site:
+    n = len(st.terms[left].sounds)
+    return Site((Span(left, n - 1, n), Span(right, 0, 1)))
 
 
 def _sandhi_rule(
@@ -41,23 +41,23 @@ def _sandhi_rule(
     result: Callable[[str, str], str],
     describe: str,
     word_internal: bool = False,
-    **kw,
+    **kw: Any,
 ) -> Rule:
     def find(st: State) -> list[Site]:
         return [
-            _site(st, l, r)
-            for l, r, x, y in junctions(st)
-            if cond(x, y) and not (word_internal and "pada" in st.terms[l].tags)
+            _site(st, left, right)
+            for left, right, x, y in junctions(st)
+            if cond(x, y) and not (word_internal and "pada" in st.terms[left].tags)
         ]
 
     def rewrite(st: State, site: Site) -> tuple[Ekadesha]:
-        l, r = site.spans[0].term, site.spans[1].term
-        x, y = st.terms[l].sounds[-1].char, st.terms[r].sounds[0].char
-        return (Ekadesha(l, r, _sounds(result(x, y)), rule_id),)
+        left, right = site.spans[0].term, site.spans[1].term
+        x, y = st.terms[left].sounds[-1].char, st.terms[right].sounds[0].char
+        return (Ekadesha(left, right, _sounds(result(x, y)), rule_id),)
 
     def note(st: State, site: Site) -> str:
-        l, r = site.spans[0].term, site.spans[1].term
-        x, y = st.terms[l].sounds[-1].char, st.terms[r].sounds[0].char
+        left, right = site.spans[0].term, site.spans[1].term
+        x, y = st.terms[left].sounds[-1].char, st.terms[right].sounds[0].char
         return f"{slp1_to_iast(x)} + {slp1_to_iast(y)} → {slp1_to_iast(result(x, y))} ({describe})"
 
     return Rule(
@@ -72,7 +72,11 @@ def _sandhi_rule(
 
 # 6.1.78 eco 'yavāyāvaḥ (not a single substitute: e → ay etc. before a vowel)
 def _find_6178(st: State) -> list[Site]:
-    return [_site(st, l, r) for l, r, x, y in junctions(st) if x in EC and is_vowel(y)]
+    return [
+        _site(st, left, right)
+        for left, right, x, y in junctions(st)
+        if x in EC and is_vowel(y)
+    ]
 
 
 def _rewrite_6178(st: State, site: Site) -> tuple[ReplaceSounds]:
@@ -124,8 +128,6 @@ R_6_1_101 = _sandhi_rule(
     "a vowel and a like vowel are replaced by the long vowel",
     blocks=("6.1.87",),
 )
-
-RULES = (R_6_1_78, R_6_1_87, R_6_1_88, R_6_1_97, R_6_1_101)
 
 
 # 6.1.66 lopo vyor vali — not the initial v/y of a root as taught (vacanasāmarthya): reciting
@@ -188,15 +190,13 @@ R_6_1_66 = Rule(
     ),
 )
 
-RULES = (*RULES, R_6_1_66)
-
 
 # 6.1.90 āṭaś ca
 def _find_6190(st: State) -> list[Site]:
     return [
-        _site(st, l, r)
-        for l, r, x, y in junctions(st)
-        if st.terms[l].upadesha == "Aw" and x == "A" and is_vowel(y)
+        _site(st, left, right)
+        for left, right, x, y in junctions(st)
+        if st.terms[left].upadesha == "Aw" and x == "A" and is_vowel(y)
     ]
 
 
@@ -219,4 +219,13 @@ R_6_1_90 = Rule(
     ),
 )
 
-RULES = (*RULES, R_6_1_90)
+
+RULES = (
+    R_6_1_78,
+    R_6_1_87,
+    R_6_1_88,
+    R_6_1_97,
+    R_6_1_101,
+    R_6_1_66,
+    R_6_1_90,
+)

@@ -1,5 +1,6 @@
 # tests/test_rules_bhvadi.py — rules added for the whole bhvādi class (slice 1.5)
 import pytest
+
 from panini.derivation import Derivation, Status
 from panini.engine import derive
 from panini.lexicon import lookup_root
@@ -287,14 +288,15 @@ def test_7_3_78_after_the_augment_merged_the_initial_r() -> None:
     ids = _rule_ids(d)
     assert ids.index("6.1.90") < ids.index("7.3.78")
     losers = [
-        (l.rule_id, l.reason)
+        (loser.rule_id, loser.reason)
         for s in d.steps
-        for l in s.losers
-        if "6.1.90" in l.reason or l.rule_id in ("6.1.90", "7.3.78")
+        for loser in s.losers
+        if "6.1.90" in loser.reason or loser.rule_id in ("6.1.90", "7.3.78")
     ]
     assert not any("blocked by 7.3.78" in r for _, r in losers)
     assert not any(i == "6.1.90" for i, _ in losers)
     step = next(s for s in d.steps if "7.3.78" in s.rule_ids)
+    assert step.note is not None
     assert step.note.startswith(
         "ṛ is replaced by the stem ṛccha"
     )  # the root is named, not blank
@@ -304,7 +306,7 @@ def test_7_3_78_after_the_augment_merged_the_initial_r() -> None:
 def test_7_3_78_replaces_guna_of_r_roots() -> None:
     d = form("01.1086")
     assert "7.3.84" not in _rule_ids(d)
-    assert any(l.rule_id == "7.3.84" for s in d.steps for l in s.losers)
+    assert any(loser.rule_id == "7.3.84" for s in d.steps for loser in s.losers)
 
 
 def test_7_3_77_only_for_yam_uparame() -> None:
@@ -382,7 +384,8 @@ def test_history_asides_for_each_root() -> None:
     assert "spaś ‘see’" in got["01.1143"]
     assert "yam ‘hold out’" in got["01.1079"]
     assert got["01.1086"] == "a present in *-sḱe-"
-    assert got["01.1137"].endswith("Greek báskō")
+    assert (greek := got["01.1137"]) is not None
+    assert greek.endswith("Greek báskō")
     assert got["01.1076"] is None
     assert got["01.1078"] is None
     assert got["01.0991"] is None
@@ -484,9 +487,9 @@ def test_jh_becomes_at_after_a_base_not_in_short_a(tense, number, expected) -> N
         assert "7.1.5" in ids
         assert "7.1.3" not in ids
         assert any(
-            l.rule_id == "7.1.3" and "7.1.5" in l.reason
+            loser.rule_id == "7.1.3" and "7.1.5" in loser.reason
             for s in d.steps
-            for l in s.losers
+            for loser in s.losers
         )
 
 
@@ -575,7 +578,7 @@ def test_1312_note_names_the_marker(code, says, not_says) -> None:
 
 
 def _losers(d: Derivation) -> list[str]:
-    return [f"{l.rule_id}: {l.reason}" for s in d.steps for l in s.losers]
+    return [f"{loser.rule_id}: {loser.reason}" for s in d.steps for loser in s.losers]
 
 
 def test_shap_is_nitya_over_7_1_5() -> None:
@@ -593,7 +596,7 @@ def test_shap_is_nitya_over_6_1_66() -> None:
 def test_a_rule_making_the_same_change_either_side_of_shap_is_not_deferred() -> None:
     # jabh takes num before the ending's vowel and before śap's alike, so śap doesn't bleed 7.1.61.
     d = form("01.0453", number="du", voice="middle")
-    assert not any(l.startswith("7.1.61: deferred") for l in _losers(d))
+    assert not any(line.startswith("7.1.61: deferred") for line in _losers(d))
 
 
 def test_a_rule_is_not_reported_as_losing_to_itself() -> None:
@@ -602,5 +605,7 @@ def test_a_rule_is_not_reported_as_losing_to_itself() -> None:
     )  # kakkha: 6.1.97 applies at two sites, one after the other
     assert d.result == "akakkham"
     assert not any(
-        l.reason.split()[1:2] == [l.rule_id] for s in d.steps for l in s.losers
+        loser.reason.split()[1:2] == [loser.rule_id]
+        for s in d.steps
+        for loser in s.losers
     )

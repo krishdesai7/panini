@@ -2,6 +2,7 @@
 import json
 
 import pytest
+
 from panini.derivation import Status
 from panini.engine import derive
 from panini.lexicon import FEATURED
@@ -10,7 +11,7 @@ from panini.request import REFERENCE_PATH, all_requests, availability
 REF = json.loads(REFERENCE_PATH.read_text())
 
 
-def _SLOT(code: str) -> list[str]:
+def _slots(code: str) -> list[str]:
     return [r.key for r in all_requests([code]) if availability(r) is None]
 
 
@@ -19,7 +20,7 @@ XFAIL: dict[str, str] = {
     # Vidyut also gives ārchat: 8.4.65 jharo jhari savarṇe optionally drops one c of rcch (docs/findings.md).
     **{
         k: "8.4.65 optional cluster simplification not modelled (ārchat)"
-        for k in _SLOT("01.1086")
+        for k in _slots("01.1086")
         if "|laṅ|" in k
     },
 }

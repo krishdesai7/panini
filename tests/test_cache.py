@@ -3,10 +3,11 @@
 import json
 
 import pytest
+
 from panini import cache
 from panini.cache import DerivationCache, fingerprint_of
-from panini.derivation import Derivation
 from panini.site import build
+lazy from panini.derivation import Derivation
 
 
 @pytest.fixture

@@ -5,10 +5,12 @@ import shutil
 import subprocess
 import threading
 from pathlib import Path
+from typing import Any
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 import pytest
+
 from panini.cache import DerivationCache
 from panini.lexicon import FEATURED, ROOTS
 from panini.site.build import (
@@ -20,6 +22,15 @@ from panini.site.build import (
 )
 from panini.site.serve import make_server
 lazy from panini.derivation import Derivation
+
+
+def _embedded_data(html: str) -> dict[str, Any]:
+    """The JSON the page carries in its data script tag."""
+    m = re.search(
+        r'<script type="application/json" id="data">(.*?)</script>', html, re.DOTALL
+    )
+    assert m is not None, "no data script in the page"
+    return json.loads(m.group(1))
 
 
 def test_site_data_covers_everything() -> None:
@@ -73,13 +84,7 @@ def test_api_root_and_404() -> None:
         assert int(head.headers["Content-Length"]) > 0
         assert head.read() == b""
         page = urlopen(base + "/").read().decode()
-        data = json.loads(
-            re.search(
-                r'<script type="application/json" id="data">(.*?)</script>',
-                page,
-                re.DOTALL,
-            ).group(1)
-        )
+        data = _embedded_data(page)
         assert data["source"] == "server"
         assert len(data["roots"]) == len(ROOTS)
         assert data["derivations"] == {}
@@ -102,11 +107,7 @@ def test_build_without_fonts(tmp_path, capsys) -> None:
     out = build_site(tmp_path / "p.html", style_dir=tmp_path / "nope")
     html = out.read_text()
     assert "warning" in capsys.readouterr().err.lower()
-    data = json.loads(
-        re.search(
-            r'<script type="application/json" id="data">(.*?)</script>', html, re.DOTALL
-        ).group(1)
-    )
+    data = _embedded_data(html)
     assert data["derivations"]["01.0381|laṭ|P|3|sg"]["result"] == "paṭhati"
     urls = set(re.findall(r"https?://[^\s\"')]+", html)) - {
         "http://www.w3.org/2000/svg"
@@ -277,7 +278,7 @@ def test_marker_tip_prefers_a_specific_note() -> None:
     )
 
 
-def test_step_views_carry_the_term_upadesha(tmp_path) -> None:
+def test_step_views_carry_the_term_upadesha() -> None:
     d = site_data(FEATURED, embed_all_roots=False)["derivations"]["01.0001|laṭ|P|3|sg"]
     assert any(v.get("upadesha") == "lãṭ" for s in d["steps"] for v in s["after"])
 

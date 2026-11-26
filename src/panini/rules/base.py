@@ -13,6 +13,9 @@ from panini.edits import EKADESHA_START, VIKRTA, Edit
 from panini.model import Site, State, Term, TermKind
 lazy from panini.rules.readings import Aside
 
+type Find = Callable[[State], list[Site]]
+type Rewrite = Callable[[State, Site], Edit]
+
 
 class Optionality(Enum):
     VA = "vā"  # preferably (Kiparsky): applies, alternative noted

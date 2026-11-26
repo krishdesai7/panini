@@ -126,7 +126,6 @@ wheels = [
 name = "panini"
 version = "0.1.0"
 source = { editable = "." }
-default-groups = ["dev", "test"]
 dependencies = [
     { name = "rich" },
     { name = "typer" },

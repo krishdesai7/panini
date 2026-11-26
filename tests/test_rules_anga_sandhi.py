@@ -1,5 +1,6 @@
 # tests/test_rules_anga_sandhi.py
 import pytest
+
 from panini.engine import derive
 from panini.request import parse_request
 
@@ -31,7 +32,7 @@ def test_gam_before_tripadi() -> None:
 def test_bhavanti_shows_collective_blocking() -> None:
     d = derive(parse_request("bhū", "laṭ", 3, "pl", "active"))
     step = next(s for s in d.steps if "6.1.97" in s.rule_ids)
-    assert {l.rule_id for l in step.losers} >= {"6.1.101", "6.1.87"}
+    assert {loser.rule_id for loser in step.losers} >= {"6.1.101", "6.1.87"}
 
 
 def test_pathati_near_miss() -> None:

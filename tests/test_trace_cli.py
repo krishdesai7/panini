@@ -62,7 +62,7 @@ def test_trace_has_no_bare_tildes() -> None:
 
 def test_trace_flags_steps_that_leave_the_form_unchanged() -> None:
     out = render_text(derive(parse_request("bhū", "laṭ", 3, "sg", "active")))
-    line = next(l for l in out.splitlines() if "1.3.78" in l and "śeṣāt" in l)
+    line = next(ln for ln in out.splitlines() if "1.3.78" in ln and "śeṣāt" in ln)
     assert "form unchanged" in out.splitlines()[out.splitlines().index(line) + 1]
 
 
@@ -80,6 +80,6 @@ def test_multiline_notes_stay_aligned_in_the_trace() -> None:
     out = render_text(
         derive(parse_request("bhū", "laṭ", 3, "sg", "active"))
     ).splitlines()
-    k = next(i for i, l in enumerate(out) if "chosen by:" in l)
+    k = next(i for i, line in enumerate(out) if "chosen by:" in line)
     indent = len(out[k]) - len(out[k].lstrip())
-    assert all(len(l) - len(l.lstrip()) == indent for l in out[k + 1 : k + 4])
+    assert all(len(line) - len(line.lstrip()) == indent for line in out[k + 1 : k + 4])

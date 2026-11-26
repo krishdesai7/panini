@@ -8,7 +8,7 @@ from panini.edits import AddTags, InsertTerm, ReplaceTerm
 from panini.lexicon import middle_voice_markers, middle_voice_reason
 from panini.meta import substitute_term
 from panini.model import Coreference, Number, Site, State, Term, TermKind, Time
-from panini.rules.base import Rule, dhatu_index, is_pratyaya
+from panini.rules.base import Find, Rewrite, Rule, dhatu_index, is_pratyaya
 from panini.translit import slp1_to_iast
 
 PADA_TAGS = ("parasmaipada", "ātmanepada")
@@ -38,6 +38,13 @@ _NUMBER_REASON = {
 }
 
 
+def _root(st: State) -> Term:
+    d = dhatu_index(st)
+    if d is None:
+        raise ValueError("the derivation has no root")
+    return st.terms[d]
+
+
 def _la_index(st: State) -> int | None:
     return next((i for i, t in enumerate(st.terms) if t.kind is TermKind.LA), None)
 
@@ -58,7 +65,7 @@ def _add_la(time: Time) -> Callable[[State], list[Site]]:
     return find
 
 
-def _insert_la(upadesha: str):
+def _insert_la(upadesha: str) -> Rewrite:
     return lambda st, site: (
         InsertTerm(
             site.spans[0].term + 1,
@@ -92,7 +99,7 @@ R_3_2_111 = Rule(
 
 # Pada: 1.3.12 anudāttaṅita ātmanepadam, 1.3.72 svaritañitaḥ kartrabhiprāye kriyāphale,
 # 1.3.78 śeṣāt kartari parasmaipadam
-def _pada_find(condition) -> Callable[[State], list[Site]]:
+def _pada_find(condition: Callable[[State, Term], bool]) -> Find:
     def find(st: State) -> list[Site]:
         la, d = _la_index(st), dhatu_index(st)
         if la is None or d is None or any(st.terms[la].has_tag(p) for p in PADA_TAGS):
@@ -102,7 +109,7 @@ def _pada_find(condition) -> Callable[[State], list[Site]]:
     return find
 
 
-def _tag_pada(pada: str, rule_id: str):
+def _tag_pada(pada: str, rule_id: str) -> Rewrite:
     return lambda st, site: (
         AddTags(site.spans[0].term, frozenset({pada, f"pada-by:{rule_id}"})),
     )
@@ -114,7 +121,7 @@ R_1_3_12 = Rule(
     _tag_pada("ātmanepada", "1.3.12"),
     blocks=("1.3.78",),
     note=lambda st, site: (
-        f"{middle_voice_reason(st.terms[dhatu_index(st)])}, so l is classed as "
+        f"{middle_voice_reason(_root(st))}, so l is classed as "
         "taking {middle|ātmanepada} endings; 3.4.78 will choose from that set"
     ),
 )

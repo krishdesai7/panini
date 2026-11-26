@@ -1,5 +1,8 @@
 # tests/test_model_edits.py
+from typing import ClassVar
+
 import pytest
+
 from panini.edits import (
     DeleteSounds,
     EditConflict,
@@ -86,7 +89,7 @@ def test_substantive_change_marks_term_vikrta_but_marker_deletion_does_not() -> 
 class _ToyMerge:
     """A toy ekādeśa rule: a+i → e, a+u → o, i+a → y, u+a → v."""
 
-    TABLE = {"ai": "e", "au": "o", "ia": "y", "ua": "v"}
+    TABLE: ClassVar[dict[str, str]] = {"ai": "e", "au": "o", "ia": "y", "ua": "v"}
     merge = staticmethod(lambda x, y: _ToyMerge.TABLE.get(x + y))
 
 
@@ -125,5 +128,5 @@ def test_substitute_that_cannot_combine_is_refused() -> None:
     from panini.meta import substitution_edit
 
     st = apply_edit(_terms("a", "i"), (Ekadesha(0, 1, (Sound("e"),), "9.9.8"),))
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="does not apply"):
         substitution_edit(st, 1, "ta", lambda rid: _ToyMerge)

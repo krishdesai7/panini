@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import itertools
+from typing import Any
 lazy from collections.abc import Iterator
 
 from panini.edits import DeleteSounds, ReplaceSounds
@@ -16,8 +17,10 @@ YAY = frozenset("yvrlYmNRnJBGQDjbgqdKPCWTcwtkp")  # yay: y … the y of Śiva s�
 HAL = pratyahara("hal")
 CU = pratyahara("cu")
 STU = frozenset("stTdDn")
-_JAS: dict[LiteralString, str] = {}  # jhal → jaś (voiced unaspirated stop of the same place), 8.2.39
-_CAR: dict[LiteralString, str] = {}  # jhal → car (voiceless unaspirated), 8.4.56
+_JAS: dict[
+    str, str
+] = {}  # jhal → jaś (voiced unaspirated stop of the same place), 8.2.39
+_CAR: dict[str, str] = {}  # jhal → car (voiceless unaspirated), 8.4.56
 for varga in ("kKgGN", "cCjJY", "wWqQR", "tTdDn", "pPbBm"):
     for c in varga[:4]:
         _JAS[c], _CAR[c] = varga[2], varga[0]
@@ -48,7 +51,7 @@ def _final_rule(
     letters: frozenset[str] | set[str],
     target: dict[str, str] | str,
     what: str,
-    **kw,
+    **kw: Any,
 ) -> Rule:
     def get(c: str) -> str:
         return target if isinstance(target, str) else target[c]
@@ -219,16 +222,21 @@ R_8_2_78 = Rule(
 # (8.4.58 restores it later: bharanti); a word-final n is exempt by 8.4.37 padāntasya.
 RA_SA = frozenset("rz")  # r and ṣ
 RVARNA = frozenset("fF")  # ṛ and ṝ (vārttika)
+_NATVA_STOP = RA_SA | RVARNA
 _BETWEEN = pratyahara("aw") | frozenset(
     "kKgGNpPbBm"
 )  # aṭ, ku, pu (ā is in aṭ; num is handled in _natva_sites)
+
+
+def _may_intervene(c: str, *, agama: bool) -> bool:
+    """Can this sound stand between the trigger and the n (8.4.2; num, an augment n, too)?"""
+    return c not in _NATVA_STOP and (c in _BETWEEN or (c == "n" and agama))
 
 
 def _natva_sites(
     st: State, triggers: frozenset[str], separated: bool | None
 ) -> list[Site]:
     """n sites after a trigger; separated says whether something stands between (None: either)."""
-    stop = RA_SA | RVARNA
     sounds = [
         (i, k, s.char, s.agama)
         for i, t in enumerate(st.terms)
@@ -239,11 +247,7 @@ def _natva_sites(
         if c != "n":
             continue
         m = n - 1
-        while (
-            m >= 0
-            and sounds[m][2] not in stop
-            and (sounds[m][2] in _BETWEEN or (sounds[m][2] == "n" and sounds[m][3]))
-        ):
+        while m >= 0 and _may_intervene(sounds[m][2], agama=sounds[m][3]):
             m -= 1
         if m >= 0 and sounds[m][2] in triggers and separated in (None, m < n - 1):
             out.append(Site.at(i, k))

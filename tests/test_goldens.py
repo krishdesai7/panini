@@ -17,7 +17,8 @@ def steps_of(
 
 
 def before(order: list[str], a: str, b: str) -> None:
-    assert a in order and b in order, (a, b, order)
+    assert a in order, (a, order)
+    assert b in order, (b, order)
     assert order.index(a) < order.index(b), (a, b, order)
 
 
@@ -88,7 +89,9 @@ def test_guna_before_a_nit_ending_is_prohibited_by_1_1_5_not_merely_deferred() -
         "nī", "laṭ", 3, "du"
     )  # tas is ṅit-vat (1.2.4) until śap intervenes
     assert d.result == "nayataḥ"
-    reasons = {l.reason for s in d.steps for l in s.losers if l.rule_id == "7.3.84"}
+    reasons = {
+        loser.reason for s in d.steps for loser in s.losers if loser.rule_id == "7.3.84"
+    }
     assert "blocked by 1.1.5" in reasons
     assert not any("nitya" in r for r in reasons)
 
@@ -96,6 +99,7 @@ def test_guna_before_a_nit_ending_is_prohibited_by_1_1_5_not_merely_deferred() -
 def test_optional_rule_note_just_says_preferably() -> None:
     d, _o = steps_of("bhū", "laṅ", 3, "sg")
     note = next(s for s in d.steps if "8.4.56" in s.rule_ids).note
+    assert note is not None
     assert note.endswith("{preferably|vā}; also correct: abhavad")
     assert "Kiparsky" not in note
     from panini.rules.base import sutra_info

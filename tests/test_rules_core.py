@@ -56,13 +56,13 @@ def test_nisedha_applies_once_and_losers_not_repeated() -> None:
     d = derive(parse_request("pac", "laṭ", 1, "pl", "active"))
     assert ids(d).count("1.3.4") == 1
     blocked = [
-        l
+        loser
         for s in d.steps
-        for l in s.losers
-        if l.rule_id == "1.3.3" and "1.3.4" in l.reason
+        for loser in s.losers
+        if loser.rule_id == "1.3.3" and "1.3.4" in loser.reason
     ]
     assert len(blocked) == 1
-    assert not any("commutes" in l.reason for s in d.steps for l in s.losers)
+    assert not any("commutes" in loser.reason for s in d.steps for loser in s.losers)
 
 
 def test_lakara_note_explains_the_unwritten_nasal_and_the_placement() -> None:
@@ -125,6 +125,12 @@ def test_ending_choice_note_uses_modern_voice_name() -> None:
 
 def test_ending_choice_note_is_one_line_per_category() -> None:
     d = derive(parse_request("bhū", "laṭ", 3, "sg", "active"))
-    lines = next(s.note for s in d.steps if "3.4.78" in s.rule_ids).split("\n")
+    note = next(s.note for s in d.steps if "3.4.78" in s.rule_ids)
+    assert note is not None
+    lines = note.split("\n")
     assert lines[0] == "l is replaced by tip, chosen by:"
-    assert [l.split(":")[0] for l in lines[1:]] == ["· voice", "· person", "· number"]
+    assert [line.split(":")[0] for line in lines[1:]] == [
+        "· voice",
+        "· person",
+        "· number",
+    ]

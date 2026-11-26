@@ -3,8 +3,22 @@ import json
 import unicodedata
 
 import pytest
+
 from panini.lexicon import ROOTS, AmbiguousRoot, UnknownRoot, citation_name, lookup_root
-from panini.request import REFERENCE_PATH, all_requests, availability, parse_request
+from panini.request import (
+    REFERENCE_PATH,
+    Request,
+    all_requests,
+    availability,
+    parse_request,
+)
+
+
+def _unavailable(req: Request) -> tuple[str, str]:
+    """Why this request is unavailable: (reason, sūtra). Fails if it is available."""
+    got = availability(req)
+    assert got is not None, f"{req.key} is available"
+    return got
 
 
 def test_lexicon_loads_whole_section() -> None:
@@ -86,15 +100,15 @@ def test_parse_both_vocabularies() -> None:
 
 
 def test_availability() -> None:
-    assert availability(parse_request("paṭh", "laṭ", 3, "sg", "middle"))[1] == "1.3.78"
-    assert availability(parse_request("edh", "laṭ", 3, "sg", "active"))[1] == "1.3.12"
+    assert _unavailable(parse_request("paṭh", "laṭ", 3, "sg", "middle"))[1] == "1.3.78"
+    assert _unavailable(parse_request("edh", "laṭ", 3, "sg", "active"))[1] == "1.3.12"
     assert availability(parse_request("nī", "laṭ", 3, "sg", "middle")) is None
 
 
 def test_middle_only_reason_names_the_marker_1312_reads() -> None:
     # 1.3.12 anudāttaṅitaḥ: an unaccented marker vowel (edh) or the marker ṅ (smi, zmi\N)
-    edh = availability(parse_request("edh", "laṭ", 3, "sg", "active"))[0]
-    smi = availability(parse_request("01.1099", "laṭ", 3, "sg", "active"))
+    edh = _unavailable(parse_request("edh", "laṭ", 3, "sg", "active"))[0]
+    smi = _unavailable(parse_request("01.1099", "laṭ", 3, "sg", "active"))
     assert "anudātta" in edh
     assert "ṅ" not in edh
     assert smi[1] == "1.3.12"
@@ -147,7 +161,7 @@ def test_out_of_scope_roots_say_why() -> None:
         "3.1.74",
     )
     assert (
-        availability(parse_request("01.0461", "laṭ", 3, "sg"))[1] == "3.1.28"
+        _unavailable(parse_request("01.0461", "laṭ", 3, "sg"))[1] == "3.1.28"
     )  # gup → gopāyati
 
 
