@@ -621,9 +621,10 @@ R_6_4_24 = Rule(
 # 7.1.59 śe mucādīnām: the muc group gets num before śa. The group is listed by upadeśa (accents
 # removed), codes 06.0166–06.0173. Vārttika 7.1.59.1 śe tṛmphādīnāṃ num vācyaḥ does the same for
 # the tṛmph group, roots taught with a nasal (06.0031 … 06.0077): 6.4.24 drops that nasal before
-# śa and the vārttika restores it, so the vārttika applies only to a root that no longer has a
-# nasal before its final consonant (its purpose is to undo 6.4.24; adding num beside the taught n
-# would give a double nasal no one recites).
+# śa and the vārttika restores it. Both rules apply only to a root with no n left (a non-marker
+# sound): for the muc group that makes num apply once; for the tṛmph group it means the vārttika
+# waits until 6.4.24 has dropped the taught n (its purpose is to undo 6.4.24; num beside the
+# taught n would give a double nasal no one recites). No root of either group ends in n.
 MUCADI = frozenset(
     {"mucx~", "lupx~", "vidx~", "lipa~", "zica~", "kftI~", "Kida~", "piSa~"}
 )

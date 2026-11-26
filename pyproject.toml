@@ -41,7 +41,7 @@
 
 [tool.pyrefly]
   python-interpreter-path          = ".venv/bin/python"
-  search-path                      = ["src", "."]
+  search-path                      = ["src", ".", "scripts"]
   site-package-path                = []
   check-unannotated-defs           = true
   infer-return-types               = "checked"

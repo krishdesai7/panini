@@ -7,7 +7,6 @@ Disagreements are recorded in docs/findings.md.
 from vidyut.prakriya import (
     Dhatu,
     DhatuPada,
-    Gana,
     Lakara,
     Pada,
     Prayoga,
@@ -15,14 +14,13 @@ from vidyut.prakriya import (
     Vacana,
     Vyakarana,
 )
+from vidyut_gana import vidyut_gana
 
 from panini.lexicon import ROOTS
 
-GANA = {"bhvādi": Gana.Bhvadi, "tudādi": Gana.Tudadi}
-
 
 def vidyut_pada(v: Vyakarana, upadesha: str, gana: str) -> str:
-    dhatu = Dhatu.mula(aupadeshika=upadesha, gana=GANA[gana])
+    dhatu = Dhatu.mula(aupadeshika=upadesha, gana=vidyut_gana(gana))
     have = ""
     for letter, dp in (("P", DhatuPada.Parasmaipada), ("A", DhatuPada.Atmanepada)):
         pada = Pada.Tinanta(
