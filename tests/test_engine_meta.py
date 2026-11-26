@@ -173,3 +173,4 @@ def test_optional_rule_supplies_its_own_phrase():
     _, steps, _ = run(S("ab"), [opt])
     assert "only in sense Z, so not applied here; also correct: au" in steps[0].note
     assert "vibhāṣā" not in steps[0].note
+

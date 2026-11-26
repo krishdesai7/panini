@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from copy import copy
 from dataclasses import replace
 from typing import Literal
 
@@ -83,6 +84,8 @@ class _Runner:
         self.losers_seen: set[Loser] = set()
         self.count = 0
         self.nested = False  # lookahead runners don't look ahead again
+        # _settle results, shared with this derivation's lookahead runners: (state, edit, disabled) -> state
+        self.settle_cache: dict[tuple, State] = {}
 
     @property
     def _effective(self) -> tuple[Rule, ...]:
@@ -143,7 +146,8 @@ class _Runner:
                      and not self._was_declined(state, c)]
             if not cands:
                 return state
-            choice = self.resolver.choose(state, cands, self._effective, finish=self._finish if not self.nested else None)
+            choice = self.resolver.choose(state, cands, self._effective, finish=self._finish if not self.nested else None,
+                                          settle=self._settle)
             if choice is None:
                 return state
             state, edit = self._apply(state, choice.winner, choice.losers, resume)
@@ -177,12 +181,41 @@ class _Runner:
 
     # -- applying one rule -------------------------------------------------
 
+    def _settle(self, state: State, edit: Edit) -> State:
+        """Apply an edit as ``_main`` does, without recording it: the edit, then the reading of a new
+        upadeśa's markers (amendment A2). The resolver's one-step checks use it."""
+        new = apply_edit(state, edit)
+        if not any(isinstance(op, (InsertTerm, ReplaceTerm)) for op in edit):
+            return new
+        key = (state, edit, self.disabled)
+        if key not in self.settle_cache:
+            self.settle_cache[key] = self._read_new_markers(new, edit)
+        return self.settle_cache[key]
+
+    def _read_new_markers(self, new: State, edit: Edit) -> State:
+        introduced = [op.term for op in edit if isinstance(op, (InsertTerm, ReplaceTerm))]
+        fresh = frozenset(i for i, t in enumerate(new.terms) if any(t is u for u in introduced))
+        if not fresh:
+            return new
+
+        def on_fresh(r: Rule) -> Rule:
+            # Only the new upadeśa is read here; markers elsewhere wait for their own step.
+            return replace(r, find=lambda st: [s for s in r.find(st) if all(sp.term in fresh for sp in s.spans)])
+        sub = self._lookahead_runner()
+        return sub._main(new, tuple(on_fresh(r) for r in sub.it_rules), ("main",))
+
+    def _lookahead_runner(self) -> _Runner:
+        """A runner for a silent lookahead from the current state: same rules, nothing recorded here."""
+        sub = copy(self)   # shares the rule tuples; the mutable bookkeeping is replaced below
+        sub.steps, sub.alternatives, sub.abhiya = [], [], []
+        sub.applied, sub.declined = set(self.applied), set(self.declined)
+        sub.near_seen, sub.losers_seen = set(self.near_seen), set(self.losers_seen)
+        sub.nested = True
+        return sub
+
     def _finish(self, state: State) -> str:
         """Final form reached from ``state`` (a lookahead for the resolver's conflict check)."""
-        sub = _Runner(self.all_rules, self.resolver, self.max_steps, self.disabled)
-        sub.applied, sub.count, sub.nested = set(self.applied), self.count, True
-        sub.declined = set(self.declined)
-        final, _, _ = sub.run(state)
+        final, _, _ = self._lookahead_runner().run(state)
         return final_text(final)
 
     def _alternative(self, state: State, extra_disabled: frozenset[str], resume: Resume) -> tuple[str, ...]:

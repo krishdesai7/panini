@@ -374,3 +374,33 @@ def test_jabha_variant_is_out_of_scope():
 def test_1312_note_names_the_marker(code, says, not_says):
     note = next(s.note for s in form(code, voice="middle").steps if "1.3.12" in s.rule_ids)
     assert says in note and not_says not in note
+
+
+# -- the resolver's one-step checks read a new upadeśa's markers (amendment A2) -------------------
+# Without A2, śap arrives as śaP with its markers unread, so it seemed not to bleed 7.1.5 (jh → at after
+# a base not ending in a): the trace said "7.1.3: blocked by 7.1.5" and then 7.1.5 silently dropped out.
+
+def _losers(d: Derivation) -> list[str]:
+    return [f"{l.rule_id}: {l.reason}" for s in d.steps for l in s.losers]
+
+
+def test_shap_is_nitya_over_7_1_5():
+    d = form("01.0002", person=3, number="pl", voice="middle")
+    assert d.result == "edhante" and "7.1.5: deferred: 3.1.68 {applies either way|nitya}" in _losers(d)
+
+
+def test_shap_is_nitya_over_6_1_66():
+    d = form("01.0265")   # kav + ti: v before a consonant until śap comes between
+    assert d.result == "kavati" and "6.1.66: deferred: 3.1.68 {applies either way|nitya}" in _losers(d)
+
+
+def test_a_rule_making_the_same_change_either_side_of_shap_is_not_deferred():
+    # jabh takes num before the ending's vowel and before śap's alike, so śap doesn't bleed 7.1.61.
+    d = form("01.0453", number="du", voice="middle")
+    assert not any(l.startswith("7.1.61: deferred") for l in _losers(d))
+
+
+def test_a_rule_is_not_reported_as_losing_to_itself():
+    d = form("01.0167", "laṅ", person=1)   # kakkha: 6.1.97 applies at two sites, one after the other
+    assert d.result == "akakkham"
+    assert not any(l.reason.split()[1:2] == [l.rule_id] for s in d.steps for l in s.losers)

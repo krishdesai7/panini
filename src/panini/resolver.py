@@ -56,11 +56,15 @@ class UnresolvedConflict(Exception):
 
 
 type Finish = Callable[[State], str]
+# Applies an edit as the engine would: the edit, then the reading of any new upadeśa's markers
+# (amendment A2). The one-step checks below use it so that they compare the states the engine
+# would actually reach.
+type Settle = Callable[[State, Edit], State]
 
 
 class Resolver(Protocol):
     def choose(self, state: State, candidates: Sequence[Candidate], rules: Sequence[Rule],
-               finish: Finish | None = None) -> Choice | None: ...
+               finish: Finish | None = None, settle: Settle | None = None) -> Choice | None: ...
 
 
 def state_text(state: State) -> str:
@@ -106,7 +110,10 @@ def edit_signature(state: State, edit: Edit) -> tuple:
                 sig.append(("replace_term", _term_key(state, i), t.upadesha))
             case Ekadesha(left=l, right=r, sounds=new):
                 lt, rt = state.terms[l], state.terms[r]
-                sig.append(("ekadesha", lt.antya, rt.adi, tuple(s.char for s in new)))
+                # The terms are part of what it does: a + a → a between the root and śap is a
+                # different change from a + a → a between the root and the ending.
+                sig.append(("ekadesha", _term_key(state, l), _term_key(state, r), lt.antya, rt.adi,
+                            tuple(s.char for s in new)))
     return tuple(sig)
 
 
@@ -117,22 +124,22 @@ def _matching_site(state: State, cand: Candidate, signature: tuple) -> Site | No
     return None
 
 
-def still_applies(state: State, x: Candidate, after: Candidate) -> bool:
+def still_applies(state: State, x: Candidate, after: Candidate, settle: Settle = apply_edit) -> bool:
     """Does x still make the same change once ``after`` has applied?"""
     sig = edit_signature(state, x.rule.rewrite(state, x.site))
-    s2 = apply_edit(state, after.rule.rewrite(state, after.site))
+    s2 = settle(state, after.rule.rewrite(state, after.site))
     return _matching_site(s2, x, sig) is not None
 
 
-def then(state: State, first: Candidate, second: Candidate) -> State:
+def then(state: State, first: Candidate, second: Candidate, settle: Settle = apply_edit) -> State:
     """Apply ``first``, then ``second`` if it still applies (at the matching site, else its first site)."""
     sig = edit_signature(state, second.rule.rewrite(state, second.site))
-    s1 = apply_edit(state, first.rule.rewrite(state, first.site))
+    s1 = settle(state, first.rule.rewrite(state, first.site))
     site = _matching_site(s1, second, sig)
     if site is None:
         sites = second.rule.find(s1)
         site = sites[0] if sites else None
-    return s1 if site is None else apply_edit(s1, second.rule.rewrite(s1, site))
+    return s1 if site is None else settle(s1, second.rule.rewrite(s1, site))
 
 
 def _site_terms(site: Site) -> frozenset[int]:
@@ -141,7 +148,8 @@ def _site_terms(site: Site) -> frozenset[int]:
 
 class LocalResolver:
     def choose(self, state: State, candidates: Sequence[Candidate], rules: Sequence[Rule],
-               finish: Finish | None = None) -> Choice | None:
+               finish: Finish | None = None, settle: Settle | None = None) -> Choice | None:
+        settle = settle or apply_edit
         losers: list[Loser] = []
         remaining: list[Candidate] = []
         for c in candidates:
@@ -170,14 +178,15 @@ class LocalResolver:
         dominated_by: dict[int, Candidate] = {}
         for i, x in enumerate(remaining):
             for j, y in enumerate(remaining):
-                if i != j and j not in dominated_by and still_applies(state, x, y) and not still_applies(state, y, x):
+                if i != j and j not in dominated_by and still_applies(state, x, y, settle) and not still_applies(state, y, x, settle):
                     dominated_by[j] = x
         undominated = [c for k, c in enumerate(remaining) if k not in dominated_by]
 
         def with_nitya_losers(winner: Candidate) -> Choice:
             # "Deferred because X is nitya" is reported on the step where X applies.
+            # A rule at two sites is not two rules competing: both applications appear as steps.
             extra = [Loser(remaining[k].rule.id, f"deferred: {x.rule.id} {{applies either way|nitya}}")
-                     for k, x in dominated_by.items() if x is winner]
+                     for k, x in dominated_by.items() if x is winner and remaining[k].rule.id != winner.rule.id]
             return Choice(winner, tuple(losers + extra))
         if not undominated:  # cyclic domination; treat all as tied
             undominated = remaining
@@ -191,7 +200,7 @@ class LocalResolver:
             for other in undominated:
                 if other is c:
                     continue
-                a, b = then(state, c, other), then(state, other, c)
+                a, b = then(state, c, other, settle), then(state, other, c, settle)
                 if a != b:
                     conflict = conflict or (c, other, a, b)
                     break
@@ -207,8 +216,9 @@ class LocalResolver:
             except UnresolvedConflict:
                 fa, fb = None, None
             if fa is not None and fa == fb:
-                losers.append(Loser(other.rule.id, f"order with {c.rule.id} is immaterial: both orders give {fa}; "
-                                                   "the lower-numbered rule goes first"))
+                if other.rule.id != c.rule.id:
+                    losers.append(Loser(other.rule.id, f"order with {c.rule.id} is immaterial: both orders give {fa}; "
+                                                       "the lower-numbered rule goes first"))
                 return with_nitya_losers(c)
             if fa is not None:
                 a_text, b_text = fa, fb or "?"
