@@ -46,12 +46,14 @@ def main(argv: list[str] | None = None) -> int:
     )
     s.add_argument("--out", type=Path, default=Path("build/panini.html"))
     s.add_argument("--open", action="store_true", help="open the page in a browser")
+    s.add_argument("--no-cache", action="store_true", help="derive everything; don't read or write the cache")
 
     v: argparse.ArgumentParser = sub.add_parser(
         "serve", help="serve the explorer locally, deriving one root at a time"
     )
     v.add_argument("--port", type=int, default=8000)
     v.add_argument("--open", action="store_true", help="open the page in a browser")
+    v.add_argument("--no-cache", action="store_true", help="derive everything; don't read or write the cache")
 
     args: argparse.Namespace = parser.parse_args(argv)
     try:
@@ -80,8 +82,9 @@ def _derive(args: argparse.Namespace) -> int:
 
 
 def _site(args: argparse.Namespace) -> int:
-    from panini.site.build import build_site
+    from panini.site.build import build_site, use_disk_cache
 
+    use_disk_cache(not args.no_cache)
     out: Path = build_site(args.out)
     print(f"wrote {out}")
     if args.open:
@@ -92,8 +95,10 @@ def _site(args: argparse.Namespace) -> int:
 
 
 def _serve(args: argparse.Namespace) -> int:
+    from panini.site.build import use_disk_cache
     from panini.site.serve import make_server
 
+    use_disk_cache(not args.no_cache)
     try:
         server: ThreadingHTTPServer = make_server(port=args.port)
     except OSError as e:

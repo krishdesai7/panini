@@ -5,6 +5,7 @@ from pathlib import Path
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from panini.lexicon import FEATURED, ROOTS
+from panini.cache import DerivationCache
 from panini.site.build import build_site, page_html, root_derivations, root_entries, site_data
 from panini.site.serve import make_server
 from panini.derivation import Status
@@ -70,6 +71,7 @@ def test_one_failing_derivation_does_not_abort(monkeypatch, tmp_path) -> None:
             raise RuntimeError("boom")
         return real(req, **kw)
     monkeypatch.setattr(b, "derive", flaky)
+    monkeypatch.setattr(b, "DISK_CACHE", DerivationCache(tmp_path))   # an empty cache, so derive runs
     root_derivations.cache_clear()
     try:
         assert root_derivations("01.1137")["01.1137|laṭ|P|3|sg"]["status"] == "error"

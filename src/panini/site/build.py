@@ -12,6 +12,7 @@ from functools import lru_cache
 from importlib.resources import files
 from pathlib import Path
 
+from panini.cache import DerivationCache
 from panini.derivation import Derivation, Status
 from panini.engine import derive
 from panini.lexicon import FEATURED, ROOTS
@@ -29,20 +30,36 @@ def root_entries() -> list[dict]:
             for r in ROOTS.values()]
 
 
+DISK_CACHE = DerivationCache()
+
+
+def use_disk_cache(enabled: bool) -> None:
+    """Turn the on-disk derivation cache (panini.cache) on or off for this process."""
+    DISK_CACHE.enabled = enabled
+
+
 @lru_cache(maxsize=128)
 def root_derivations(code: str) -> dict[str, dict]:
-    """Every request of one root (unavailable ones included): request key -> Derivation.to_json()."""
+    """Every request of one root (unavailable ones included): request key -> Derivation.to_json().
+
+    Looked up in memory, then on disk (keyed by the engine's fingerprint), then derived."""
+    if (hit := DISK_CACHE.get(code)) is not None:
+        return hit
     reference = load_reference()
     out: dict[str, dict] = {}
+    crashed = False
     for req in all_requests([code]):
         try:
             d = derive(req, reference=reference)
         except Exception as e:  # one broken derivation must not take the page down
+            crashed = True
             panini, pie = req.describe()
             ref = reference.get(req.key)
             d = Derivation({"key": req.key, "root": req.root.name, "panini": panini, "pie": pie}, Status.ERROR,
                            None, (), tuple(ref) if ref else None, (), f"{type(e).__name__}: {e}")
         out[req.key] = d.to_json()
+    if not crashed:  # a crash is a bug; once it's fixed the root must be derived again
+        DISK_CACHE.put(code, out)
     return out
 
 

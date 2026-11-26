@@ -30,6 +30,11 @@ uv run panini derive bhū laṅ 3 pl -v   # -v adds the competitors each step be
 Either vocabulary works: `present imperfective` or `laṭ`, `3` or `prathama`,
 `sg` or `ekavacana`, `middle` or `ātmanepada`.
 
+`site` and `serve` cache each root's derivations on disk, in `$PANINI_CACHE_DIR`
+(default `.cache/panini/`), so a restarted server doesn't derive them again. The
+cache is keyed by a hash of the engine's code and data, so any change to the rules
+starts a fresh one. `--no-cache` bypasses it.
+
 ## Development
 
 ```sh
