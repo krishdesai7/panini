@@ -1,24 +1,73 @@
 [project]
-name = "panini"
-version = "0.1.0"
-description = "A Pāṇinian prakriyā engine: watch the Aṣṭādhyāyī derive Sanskrit verb forms step by step"
-authors = [
-    { name = "Krish Desai", email = "27725015+krishdesai7@users.noreply.github.com" }
-]
-requires-python = ">=3.15"
-dependencies = []
+  name            = "panini"
+  version         = "0.1.0"
+  description     = "A Pāṇinian prakriyā engine: watch the Aṣṭādhyāyī derive Sanskrit verb forms step by step"
+  requires-python = ">=3.15"
+  authors         = [{ name = "Krish Desai", email = "27725015+krishdesai7@users.noreply.github.com" }]
+  dependencies    = []
 
-[project.scripts]
-panini = "panini.cli:main"
+
+  [project.scripts]
+    panini = "panini.cli:main"
+
 
 [dependency-groups]
-dev = ["pytest", "vidyut==0.4.*"]
+  dev = ["pytest", "vidyut==0.4.*"]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-markers = ["slow: full-class sweep"]
-addopts = "-m 'not slow'"
 
 [build-system]
-requires = ["uv_build>=0.13.9,<0.14.0"]
-build-backend = "uv_build"
+  requires      = ["uv_build>=0.13.9,<0.14.0"]
+  build-backend = "uv_build"
+
+
+[tool.complexipy]
+  paths                  = ["."]
+  max-complexity-allowed = 10
+  sort                   = "desc"
+  check-script           = true
+  no-ignore              = true
+  ignore-complexity      = true
+  failed                 = true
+  cache-dir              = ".cache/complexipy"
+
+
+[tool.coverage.run]
+  data_file = ".cache/coverage/.coverage"
+
+
+[tool.pyrefly]
+  python-interpreter-path          = ".venv/bin/python"
+  search-path                      = ["src", "."]
+  site-package-path                = []
+  check-unannotated-defs           = true
+  infer-return-types               = "checked"
+  infer-param-types-from-docstring = true
+  preset                           = "strict"
+  min-severity                     = "info"
+  treat-all-caps-as-final          = true
+  permissive-ignores               = true
+  strict-callable-subtyping        = true
+  strict-partial-subtyping         = true
+
+
+[tool.pytest.ini_options]
+  addopts    = "-m 'not slow'"
+  cache_dir  = ".cache/pytest"
+  markers    = ["slow: full-class sweep"]
+  pythonpath = ["."]
+  testpaths  = ["tests"]
+  env        = [
+    "OMP_NUM_THREADS = 1",
+    "OPENBLAS_NUM_THREADS = 1",
+    "MKL_NUM_THREADS = 1",
+    "XLA_PYTHON_CLIENT_PREALLOCATE = false",
+    # Typer forces Rich terminal output when `GITHUB_ACTIONS` (or `FORCE_COLOR`, `PY_COLORS`) is set, and the option highlighter then splits `--n-epochs` into separately styled pieces, so an assertion on CLI output passes locally and fails in CI. This is Typer's own off switch.
+    "_TYPER_FORCE_DISABLE_TERMINAL = 1",
+  ]
+
+
+[tool.uv]
+  required-environments = [
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "sys_platform == 'darwin' and platform_machine == 'arm64'",
+  ]
