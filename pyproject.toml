@@ -55,7 +55,7 @@
 
 
 [tool.pytest.ini_options]
-  addopts    = "-m 'not slow' -xq --dist worksteal --cov panini"
+  addopts    = "-m 'not slow' -xq --cov panini"
   cache_dir  = ".cache/pytest"
   markers    = ["slow: full-class sweep"]
   pythonpath = ["."]
