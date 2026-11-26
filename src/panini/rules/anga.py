@@ -120,6 +120,26 @@ R_7_1_3 = Rule("7.1.3", _find_713, lambda st, site: (ReplaceSounds(site.spans[0]
                note=lambda st, site: "jh of the ending is replaced by ant")
 
 
+def _preceding(st: State, j: int) -> int:
+    """Index of the last term with sounds before term j."""
+    return next(i for i in range(j - 1, -1, -1) if st.terms[i].sounds)
+
+
+# 7.1.5 ātmanepadeṣv anataḥ: in a middle ending, jh becomes at after a base that does not end in
+# short a. In this class, once śap is there, the base ends in its a, except where that a has merged
+# into a root's ā (gā + a → gā, 6.1.101).
+def _find_715(st: State) -> list[Site]:
+    return [site for site in _find_713(st) if (j := site.spans[0].term) > 0 and st.terms[j].has_tag("ātmanepada")
+            and st.terms[_preceding(st, j)].antya != "a"]
+
+
+# Apavāda of 7.1.3: wherever 7.1.5 applies (the jh of a middle ending), 7.1.3 applies too.
+R_7_1_5 = Rule("7.1.5", _find_715, lambda st, site: (ReplaceSounds(site.spans[0].term, 0, 1, _sounds("at")),),
+               blocks=("7.1.3",),
+               note=lambda st, site: "in a {middle|ātmanepada} ending, jh is replaced by at, because the {base|aṅga} "
+               f"before it ends in {slp1_to_iast(st.terms[_preceding(st, site.spans[0].term)].antya or '')}, not short a")
+
+
 # 7.3.77 iṣugamiyamāṃ chaḥ. The roots are named by their upadeśa: yam is the one marked with an
 # accent on its vowel (ya\ma~, 'to stop'); yama~ ('to serve food') is not meant.
 def _takes_ch(t: Term) -> bool:
@@ -189,7 +209,7 @@ R_7_3_75 = Rule("7.3.75", _find_7375,
                 note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].text)} gets a long vowel "
                 "before an affix marked ś (śap); this takes the place of the {full grade|guṇa} of 7.3.86")
 
-RULES = (R_7_3_84, R_7_3_86, R_7_3_101, R_7_1_3, R_7_3_77, R_6_1_73, R_6_1_75, R_7_3_75)
+RULES = (R_7_3_84, R_7_3_86, R_7_3_101, R_7_1_3, R_7_1_5, R_7_3_77, R_6_1_73, R_6_1_75, R_7_3_75)
 
 
 # 7.2.81 āto ṅitaḥ
@@ -342,3 +362,25 @@ R_6_4_25 = _nasal_loss("6.4.25")
 R_6_4_26 = _nasal_loss("6.4.26")
 
 RULES = (*RULES, R_6_4_25, R_6_4_26)
+
+
+# 6.4.89 ūd upadhāyā gohaḥ: the penultimate vowel of goha becomes ū before a vowel-initial affix
+# (aci, carried over from 6.4.77). goha is guh in its full grade, so the rule follows guṇa (7.3.86)
+# and reaches only forms where guṇa applied.
+def _find_6489(st: State) -> list[Site]:
+    out = []
+    for i, t in enumerate(st.terms):
+        j = _following(st, i)
+        if (t.kind is TermKind.ROOT and t.upadesha == "guhU~" and t.upadha == "o" and j is not None
+                and is_pratyaya(st.terms[j]) and is_vowel(adi(st, j) or "")):
+            out.append(Site.at(i, len(t.sounds) - 2))
+    return out
+
+
+R_6_4_89 = Rule("6.4.89", _find_6489,
+                lambda st, site: (ReplaceSounds(site.spans[0].term, site.spans[0].start, site.spans[0].end,
+                                                (Sound("U"),)),),
+                note=lambda st, site: "guh in its {full grade|guṇa} form goh has its {penultimate|upadhā} o "
+                "replaced by ū before an affix beginning with a vowel")
+
+RULES = (*RULES, R_6_4_89)

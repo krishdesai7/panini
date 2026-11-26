@@ -115,7 +115,7 @@ def _near_6166(st: State) -> str | None:
         if _root_initial(st, i, k):
             c = slp1_to_iast(st.terms[i].sounds[k].char)
             return (f"6.1.66 (y/v before a consonant other than y is deleted) is not applied to the {c} "
-                    f"that begins the root: the root is taught with that {c}, which would be pointless "
+                    f"that begins the root: teaching the root with that {c} would be pointless "
                     "if the rule always deleted it")
     return None
 

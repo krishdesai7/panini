@@ -14,7 +14,11 @@ def test_lexicon_loads_whole_section():
 
 @pytest.mark.parametrize("up, name", [("BU", "bhū"), ("paWa~", "paṭh"), ("ga\\mx~", "gam"), ("smf\\", "smṛ"),
     ("eDa~\\", "edh"), ("RI\\Y", "nī"), ("qupa\\ca~^z", "pac"), ("kradi~", "krand"), ("zwana~", "stan"),
-    ("zWA\\", "sthā"), ("Divi~", "dhinv"), ("da\\nSa~", "daṃś"), ("df\\Si~r", "dṛś")])
+    ("zWA\\", "sthā"), ("Divi~", "dhinv"), ("da\\nSa~", "daṃś"), ("df\\Si~r", "dṛś"),
+    # a nasal is quoted at the place of the consonant after it: palatal, labial, velar, retroflex
+    ("za\\nja~", "sañj"), ("zva\\nja~\\", "svañj"), ("ra\\nja~^", "rañj"), ("ancu~", "añc"),
+    ("tunpa~", "tump"), ("SranBu~\\", "śrambh"), ("vaki~\\", "vaṅk"), ("GiRi~\\", "ghiṇṇ"),
+    ("kanka~", "kaṅk"), ("kanwa~", "kaṇṭ")])   # no bhvādi root is taught with n before a velar or retroflex
 def test_citation_name(up, name):
     assert citation_name(up) == name
 

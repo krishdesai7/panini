@@ -18,6 +18,9 @@ XFAIL: dict[str, str] = {
     # Laṅ of uch is unaffected: āṭ and u merge first (6.1.90), so there is no light u for guṇa.
     **{k: "6.1.73 vs 7.3.86 unresolved; awaiting a ruling (docs/findings.md)"
        for k in [*_SLOT("01.0242"), *(k for k in _SLOT("01.0244") if "|laṭ|" in k)]},
+    # jabh: 7.1.61 radhijabhor aci is not implemented until it is settled which jabh it names; Vidyut
+    # gives num to jaBI~ (01.0453, jambhate) but not to jaBa~ (01.0150, jabhati) (docs/findings.md).
+    **{k: "7.1.61: which jabh is meant; awaiting a ruling (docs/findings.md)" for k in _SLOT("01.0453")},
 }
 
 

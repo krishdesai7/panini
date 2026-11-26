@@ -108,6 +108,10 @@ lie outside laṭ/laṅ of these roots (Joshi & Kiparsky's *adhītya*,
   partly because the newly inserted śap isn't yet tagged sārvadhātuka in the
   very next state. The derivation search in slice 2 should compare
   derivations, not single states, which removes this sensitivity.
+- **The one-step checks ignore blocking and marker reading.** `still_applies` and
+  the commutation check apply a rule's edit and look again, but they don't apply A2
+  (markers of a new term) and they don't ask whether a rule that still matches is
+  now blocked. 7.1.5 (slice 1.5) shows both (see "Task 9" below).
 - **The tripādī never re-checks a blocked candidate.** It stays skipped even
   if its blocker later disappears. No slice-1 form is affected.
 - **The page build looks for the style skill in a fixed home-directory
@@ -152,11 +156,12 @@ bhvādi root and compares with `Root.pada` (read from the marker vowel). 1147 of
   `OUT_OF_SCOPE` until optional rules are modelled. (sṛ 01.1085 also has two
   stems, via 7.3.78; Task 7.)
 - **nāth 01.0007, sasj 01.0229** (Vidyut both): not marker-reading bugs (Task 8).
-  Vidyut's active of nāth comes from 1.3.78 with no pada rule cited; it follows the
-  vārttika *āśiṣi nāthaḥ* (on 1.3.21), by which nāth is ātmanepada only in the sense
-  of a blessing, which is meaning-conditioned like sthā and vad. Vidyut derives the
-  middle of sasj (`zasja~`, no accent on the marker) with no pada rule at all, so its
-  data treats the root as taking both voices. Our marker readings (nāth A by 1.3.12,
+  Vidyut also derives an active of nāth, by the default 1.3.78, against the root's
+  anudātta marker; it follows the vārttika *āśiṣi nāthaḥ* (on 1.3.21), by which nāth is
+  ātmanepada only in the sense of a blessing, which is meaning-conditioned like sthā and
+  vad. Our middle-only nāth is therefore a narrowing: it gives the blessing sense's voice
+  in every sense. Vidyut derives the middle of sasj (`zasja~`, no accent on the
+  marker) with no pada rule at all, so its data treats the root as taking both voices. Our marker readings (nāth A by 1.3.12,
   sasj P by 1.3.78) stand.
 
 ## Whole-class sweep (before the new rules)
@@ -219,7 +224,7 @@ roots with an *i*-marker that inserts a nasal (7.1.58 *idito num dhātoḥ*,
 
 ## ṇatva after ṛ (8.4.1.1) in ghṛṇṇ
 
-For *ghṛṇ* (`GfRi~\`) our trace cites the vārttika 8.4.1.1 *ṛvarṇāc ca* (ṛ/ṝ trigger ṇatva, as in *nṛṇām*) for the n that num inserts (it follows ṛ); Vidyut cites 8.4.41 alone (the n before ṇ). The form is the same (*ghṛṇṇate*). We cite the vārttika because the tripādī runs once in sūtra order (8.2.1 pūrvatrāsiddham), and 8.4.1.1 precedes 8.4.41, so it fires first and 8.4.41 then has nothing left to change.
+For *ghṛṇ* (`GfRi~\`) our trace cites the vārttika 8.4.1.1 *ṛvarṇāc ceti vaktavyam* (ṛ/ṝ trigger ṇatva, as in *nṛṇām*) for the n that num inserts (it follows ṛ); Vidyut cites 8.4.41 alone (the n before ṇ). The form is the same (*ghṛṇṇate*). We cite the vārttika because the tripādī runs once in sūtra order (8.2.1 pūrvatrāsiddham), and 8.4.1.1 precedes 8.4.41, so it fires first and 8.4.41 then has nothing left to change.
 
 ## Task 8: bugs from the sweep
 
@@ -254,3 +259,66 @@ For *ghṛṇ* (`GfRi~\`) our trace cites the vārttika 8.4.1.1 *ṛvarṇāc ca
   *ucchī*), but Vidyut's list doesn't. Awaiting a ruling. Until then the 27
   requests (yuch laṭ and laṅ, uch laṭ; laṅ of uch merges āṭ + u first) are in the
   `XFAIL` table, and the fast tests are strict xfails.
+
+## Task 9: closing the sweep
+
+- **7.1.5 *ātmanepadeṣv anataḥ*** (gāṅ 01.1101, 3pl middle). In a middle ending, jh
+  becomes *at*, not *ant*, after a base that does not end in short a. After śap's a
+  merges into the root's ā (6.1.101) the base ends in ā, so *gā + jhe* → *gā + ate* →
+  *gāte* (laṅ *agāta*). It is an apavāda of 7.1.3: wherever it applies, 7.1.3 applies
+  too. For every other root of the class the base before the ending ends in śap's a.
+  Two things about the trace, both instances of the step-granularity note under
+  slice 2:
+  - ā + a merge before jh is replaced. That is what nitya gives (6.1.101 applies
+    before and after 7.1.3; after the merge 7.1.3 is blocked by 7.1.5), and it is
+    Vidyut's order. But the resolver gets there by its tie-break: its one-step
+    commutation check doesn't see blocking, so the two look order-independent and the
+    lower-numbered 6.1.101 goes first.
+  - In every middle 3pl, the base is the bare root before śap arrives (*edh + jha*),
+    and that root doesn't end in short a, so the trace reports "7.1.3: blocked by
+    7.1.5" at that step. Śap then comes first (3.1.68 and 7.1.5 commute while śap
+    still has its markers) and, once its markers are deleted, the base ends in a,
+    7.1.5 no longer applies, and 7.1.3 applies after all. Nothing in the trace says
+    why 7.1.5 dropped out. A resolver whose lookahead reads the markers of a new term
+    (amendment A2) reports "7.1.5: deferred: 3.1.68 (nitya)" instead. We tried that.
+    It also changes about 200 other traces in the class: new deferral notes for
+    6.1.66, reorderings in laṅ 1sg of the 7.3.78 roots, and one rule shown as
+    deferred by itself. It also needs the ekādeśa signature to name its terms. So it
+    was left out pending a decision.
+- **6.4.89 *ūd upadhāyā gohaḥ*** (guh 01.1043). The sūtra names the root as *goha*,
+  guh in its full grade (as the commentaries read it), so the engine applies guṇa
+  first (7.3.86, *goh*) and then replaces the penultimate o by ū before the vowel of
+  śap (*aci*, from 6.4.77): *gūhati*, *agūhata*. The wording is what keeps the rule out
+  of forms without guṇa (before a kit/ṅit affix, as in the perfect *juguhatuḥ*); no
+  extra condition is needed. Vidyut applies 6.4.89 to *guh* directly, in place of
+  guṇa (`asiddhavat.rs`, conditioned on a non-kṅit affix). Same form, different trace.
+- **8.2.18 *kṛpo ro laḥ*** (kṛp 01.0866 and 01.0875). In the root kṛp, r becomes l:
+  after guṇa *karp* → *kalp*, *kalpate*. Both roots taught as kṛp are meant (the
+  sūtra names the root by its shape, as it does elsewhere); *krap* 01.0876 is not.
+  The rule also covers the r heard inside ṛ (ṛ → ḷ, as in *kḷpta*), which laṭ and laṅ
+  never reach because guṇa always applies first.
+- **Open: 7.1.61 *radhijabhor aci* for jabh.** The rule gives radh and jabh the
+  augment num before a vowel (*jambhate*). Two bhvādi roots are taught as jabh, both
+  "gātravināme": *jabhī* (`jaBI~\`, 01.0453, ātmanepada) and *jabha* (`jaBa~`,
+  01.0150, parasmaipada). Vidyut gives num to the first only (*jambhate*, but
+  *jabhati*), with no reason cited (`angasya.rs`: `has_u("jaBI~\\")`). The options:
+  (1) apply 7.1.61 to every root of the shape jabh, as the sūtra's wording reads and as
+  the engine does for kṛp; 01.0150 then gives *jambhati* and differs from Vidyut;
+  (2) restrict it to *jabhī* by upadeśa, matching Vidyut, which needs a source for the
+  restriction (a commentary that reads *jabhi* in the sūtra as *jabhī*), or else it is
+  citation-matching; (3) leave it out. Until a ruling, the rule is not implemented and
+  the 18 requests of 01.0453 are in `XFAIL`, with a strict xfail test.
+- **Citation names** now quote a taught nasal at the place of the consonant after it,
+  as the tripādī would pronounce it: *sañj*, *svañj*, *rañj*, *añc*, *tump*,
+  *śrambh* (ṃ before a sibilant or h, as in *daṃś*; n before a dental). A name is only
+  a display label: lookup by name now needs the ñ/m spelling, or the upadeśa.
+
+## Where slice 1.5 ends
+
+The slow sweep checks 21,582 requests over 1,133 of the 1,156 bhvādi roots (23 are
+in `OUT_OF_SCOPE`: other present stems, the *-āya-*/*-īya-*/ṇiṅ suffixes, optional
+stems). 21,528 match Vidyut. The 54 documented differences, all in `XFAIL`:
+
+- ṛ 01.1086 laṅ, 9 requests: no 8.4.65 (*ārchat*).
+- yuch 01.0242 and uch 01.0244, 27 requests: 6.1.73 against 7.3.86, awaiting a ruling.
+- jabh 01.0453, 18 requests: 7.1.61, awaiting a ruling on which jabh it names.

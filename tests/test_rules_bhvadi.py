@@ -181,8 +181,8 @@ def test_7_3_78_stems(code, voice, expected):
 
 
 def test_7_3_78_after_the_augment_merged_the_initial_r():
-    # laṅ of ṛ: 6.1.90 (nitya) merges ā + ṛ first; by 6.1.85/1.1.56 the substitute still stands for
-    # the root's first sound, so 7.3.78 then writes only the rest of ṛccha. Nothing is "blocked".
+    # laṅ of ṛ: 6.1.90 (nitya) merges ā + ṛ first; by 6.1.85/1.1.56 the stem takes the root's place in
+    # that ekādeśa, so meta.substitution_edit applies 6.1.90 again to ā + ṛ, then writes ccha. Nothing is "blocked".
     d = form("01.1086", "laṅ")
     assert d.result == "ārcchat"
     ids = _rule_ids(d)
@@ -291,3 +291,51 @@ def test_tuk_and_guna_resolve(code, expected):
 def test_nasal_loss_before_shap(code, tense, voice, expected, rule):
     d = form(code, tense, voice=voice)
     assert d.result == expected and rule in _rule_ids(d)
+
+
+# -- Task 9: closing the sweep ------------------------------------------------
+
+@pytest.mark.parametrize("tense, number, expected", [
+    ("laṭ", "pl", "gāte"), ("laṅ", "pl", "agāta"), ("laṭ", "sg", "gāte")])
+def test_jh_becomes_at_after_a_base_not_in_short_a(tense, number, expected):
+    # gāṅ: ā + śap's a merge (6.1.101), so the base before jh ends in ā, not short a (7.1.5)
+    d = form("01.1101", tense, number=number, voice="middle")
+    assert d.result == expected
+    if number == "pl":
+        ids = _rule_ids(d)
+        assert "7.1.5" in ids and "7.1.3" not in ids
+        assert any(l.rule_id == "7.1.3" and "7.1.5" in l.reason for s in d.steps for l in s.losers)
+
+
+def test_jh_becomes_ant_after_short_a():
+    d = form("01.0002", number="pl", voice="middle")   # edh: edha + jhe, the base ends in short a
+    assert d.result == "edhante" and "7.1.3" in _rule_ids(d) and "7.1.5" not in _rule_ids(d)
+
+
+@pytest.mark.parametrize("tense, voice, expected", [
+    ("laṭ", "active", "gūhati"), ("laṅ", "middle", "agūhata"), ("laṭ", "middle", "gūhate")])
+def test_guh_takes_long_u_after_guna(tense, voice, expected):
+    # 6.4.89 names the root as goha, its full-grade form: guṇa first (7.3.86), then o → ū
+    d = form("01.1043", tense, voice=voice)
+    ids = _rule_ids(d)
+    assert d.result == expected and ids.index("7.3.86") < ids.index("6.4.89")
+    note = next(s.note for s in d.steps if "6.4.89" in s.rule_ids)
+    assert "{full grade|guṇa}" in note and "ū" in note
+
+
+@pytest.mark.parametrize("code, tense, expected", [
+    ("01.0866", "laṭ", "kalpate"), ("01.0875", "laṭ", "kalpate"), ("01.0866", "laṅ", "akalpata")])
+def test_krp_r_becomes_l(code, tense, expected):
+    d = form(code, tense, voice="middle")
+    assert d.result == expected and "8.2.18" in _rule_ids(d)
+
+
+def test_krap_is_not_krp():
+    assert "8.2.18" not in _rule_ids(form("01.0876", voice="middle"))   # krapa~, a different root
+
+
+# 7.1.61 radhijabhor aci: which jabh does the sūtra name? Vidyut gives num only to jaBI~ (01.0453),
+# not to jaBa~ (01.0150), with no reason cited. Open: see docs/findings.md.
+@pytest.mark.xfail(strict=True, reason="7.1.61: which jabh is meant; awaiting a ruling (findings)")
+def test_jabh_takes_nasal_before_a_vowel():
+    assert form("01.0453", voice="middle").result == "jambhate"

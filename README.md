@@ -11,8 +11,11 @@ tripādī runs once in sūtra order. Where the tradition is divided, the engine
 follows Paul Kiparsky's analysis. The design is in
 `docs/superpowers/specs/2026-11-24-prakriya-engine-design.md`.
 
-Slice 1 covers laṭ (present) and laṅ (imperfect) of seven bhvādi roots (bhū,
-paṭh, gam, smṛ, edh, nī, pac), in both voices where the root allows them.
+It covers laṭ (present) and laṅ (imperfect) of the whole bhvādi class, in both
+voices where the root allows them: 1,133 of the 1,156 roots (the other 23 need
+present stems or suffixes the engine doesn't derive yet). 21,528 of 21,582 forms
+match the reference (Vidyut 0.4). The 54 that don't are documented differences
+in `docs/findings.md`, each awaiting a ruling or a rule not yet modelled.
 
 ## Use
 
@@ -28,7 +31,8 @@ Either vocabulary works: `present imperfective` or `laṭ`, `3` or `prathama`,
 ## Development
 
 ```sh
-uv run pytest
+uv run pytest                                  # fast tests
+uv run pytest -m slow                          # every form of the class against the reference
 uv run --group dev scripts/make_reference.py   # regenerate the reference forms (Vidyut)
 ```
 

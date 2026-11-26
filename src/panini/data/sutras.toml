@@ -360,6 +360,14 @@ gloss = "Before śap, daṃś, sañj and svañj lose their penultimate nasal."
 text = "rañjeś ca"
 gloss = "Before śap, rañj also loses its penultimate nasal."
 
+["6.4.77"]
+text = "aci śnudhātubhruvāṃ yvor iyaṅuvaṅau"
+gloss = "Before a vowel, the i/u of śnu, of a root and of bhrū is replaced by iy/uv."
+
+["6.4.89"]
+text = "ūd upadhāyā gohaḥ"
+gloss = "Before an affix beginning with a vowel, the penultimate vowel of goh (guh in its {full grade|guṇa}) is replaced by ū."
+
 ["6.4.71"]
 text = "luṅlaṅlṛṅkṣv aḍ udāttaḥ"
 gloss = "Before luṅ, laṅ and lṛṅ, the base gets the (accented) augment aṭ."
@@ -375,6 +383,10 @@ gloss = "At the start of an affix, ph ḍh kh ch gh are replaced by āyan, ey, �
 ["7.1.3"]
 text = "jho 'ntaḥ"
 gloss = "The jh of an affix is replaced by ant."
+
+["7.1.5"]
+text = "ātmanepadeṣv anataḥ"
+gloss = "In a {middle|ātmanepada} ending, jh is replaced by at after a base that does not end in short a."
 
 ["7.1.58"]
 text = "idito num dhātoḥ"
@@ -423,6 +435,10 @@ gloss = "(Heading to 8.3.55) The following apply to a {word|pada}."
 ["8.2.1"]
 text = "pūrvatrāsiddham"
 gloss = "(Heading) From here to the end of the grammar, each rule is treated as not having taken effect (asiddha) with respect to every earlier rule."
+
+["8.2.18"]
+text = "kṛpo ro laḥ"
+gloss = "In the root kṛp, r (also the r heard in ṛ) is replaced by l."
 
 ["8.2.23"]
 text = "saṃyogāntasya lopaḥ"

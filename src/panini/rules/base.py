@@ -50,7 +50,7 @@ class Rule:
     history: Callable[[State, Site], Aside | None] | None = None
     optional: Optionality | None = None
     merge: Callable[[str, str], str | None] | None = None  # an ekādeśa rule: (left, right) sound -> substitute, None if it doesn't apply
-    optional_phrase: str | None = None  # replaces "preferably not, so not applied" for a VIBHASHA rule
+    optional_phrase: str | None = None  # replaces "preferably not, so not applied" for a VIBHASHA or SENSE rule
     assigns: str | None = None
     tuk_or_satva: bool = False
     reintroduces_upadesha: bool = False

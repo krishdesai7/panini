@@ -12,7 +12,7 @@ from panini.translit import slp1_to_iast
 
 # Initial markers (it-sounds before the root proper): ḍu, ṭu, ñi.
 _INITIAL_MARKERS = ("qu", "wu", "Yi")
-# Nasal that agrees with a consonant's place of articulation (SLP1), for idit roots.
+# Nasal that agrees with a consonant's place of articulation (SLP1): ṃ before a sibilant or h.
 _NASAL_FOR = {**dict.fromkeys("kKgGN", "N"), **dict.fromkeys("cCjJY", "Y"), **dict.fromkeys("wWqQR", "R"),
               **dict.fromkeys("pPbBm", "m"), **dict.fromkeys("Szsh", "M")}
 
@@ -44,7 +44,9 @@ def citation_name(upadesha_slp1: str) -> str:
         text = "n" + text[1:]
     if idit and len(text) > 1 and text[-2] not in "nNYRmM":  # kradi~ -> krand
         text = text[:-1] + _NASAL_FOR.get(text[-1], "n") + text[-1]
-    text = text.replace("nS", "MS").replace("ns", "Ms").replace("nz", "Mz").replace("nh", "Mh")
+    # A taught n before a consonant is quoted as the nasal of that consonant's place (sañj, tump,
+    # śranbh -> śrambh), or as ṃ before a sibilant or h (daṃś); before a dental it stays n.
+    text = "".join(_NASAL_FOR.get(nxt, c) if c == "n" else c for c, nxt in zip(text, text[1:] + " "))
     return slp1_to_iast(text)
 
 

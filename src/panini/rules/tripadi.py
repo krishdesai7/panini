@@ -74,6 +74,25 @@ R_8_2_23 = Rule("8.2.23", _find_8223,
                 note=lambda st, site: "a word cannot end in a consonant cluster: final "
                 f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} is dropped")
 
+# 8.2.18 kṛpo ro laḥ: in the root kṛp, r becomes l. r here means the sound r wherever it is heard,
+# also inside ṛ (ṛ → ḷ). In laṭ and laṅ the ṛ has already taken guṇa (karp), so the r is a consonant.
+# Both roots named kṛp are meant (kṛpū sāmarthye, kṛpa kṛpāyāṃ gatau).
+KRP = ("kfpU~", "kfpa~")
+_RA_LA = {"r": "l", "f": "x"}
+
+
+def _find_8218(st: State) -> list[Site]:
+    return [Site.at(i, k) for i, t in enumerate(st.terms) if t.kind is TermKind.ROOT and t.upadesha in KRP
+            for k, s in enumerate(t.sounds) if s.char in _RA_LA]
+
+
+R_8_2_18 = Rule("8.2.18", _find_8218,
+                lambda st, site: _replace(site.spans[0].term, site.spans[0].start,
+                                          _RA_LA[st.terms[site.spans[0].term].sounds[site.spans[0].start].char]),
+                note=lambda st, site: "in the root kṛp, r becomes l: "
+                f"{slp1_to_iast(st.terms[site.spans[0].term].text)} → "
+                f"{slp1_to_iast(st.terms[site.spans[0].term].text.replace('r', 'l').replace('f', 'x'))}")
+
 R_8_2_39 = _final_rule("8.2.39", JHAL & _JAS.keys(), _JAS, "an obstruent at the end of a word becomes voiced")
 
 
@@ -128,7 +147,7 @@ R_8_2_78 = Rule("8.2.78", _find_8278,
 
 # 8.4.1 raṣābhyāṃ no ṇaḥ samānapade / 8.4.2 aṭkupvāṅnumvyavāye 'pi: n becomes ṇ after r or ṣ in the
 # same word, even with aṭ (a vowel, h, y, v, r), ku, pu, ā or num between (8.4.2). The vārttika
-# ṛvarṇāc ca (8.4.1.1) adds ṛ/ṝ as triggers. Before an obstruent the n has already become ṃ by 8.3.24
+# ṛvarṇāc ceti vaktavyam (8.4.1.1) adds ṛ/ṝ as triggers. Before an obstruent the n has already become ṃ by 8.3.24
 # (8.4.58 restores it later: bharanti); a word-final n is exempt by 8.4.37 padāntasya.
 RA_SA = frozenset("rz")    # r and ṣ
 RVARNA = frozenset("fF")   # ṛ and ṝ (vārttika)
@@ -257,4 +276,4 @@ def _rewrite_8458(st: State, site: Site):
 R_8_4_58 = Rule("8.4.58", _find_8458, _rewrite_8458,
                 note=lambda st, site: "the {nasal glide|anusvāra} before a stop becomes the nasal of that stop's class")
 
-RULES = (R_8_2_23, R_8_2_39, R_8_2_66, R_8_2_78, R_8_3_15, R_8_3_24, R_8_4_1, R_8_4_1_1, R_8_4_2, R_8_4_37, R_8_4_40, R_8_4_41, R_8_4_53, R_8_4_56, R_8_4_58)
+RULES = (R_8_2_18, R_8_2_23, R_8_2_39, R_8_2_66, R_8_2_78, R_8_3_15, R_8_3_24, R_8_4_1, R_8_4_1_1, R_8_4_2, R_8_4_37, R_8_4_40, R_8_4_41, R_8_4_53, R_8_4_56, R_8_4_58)
