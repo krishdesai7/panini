@@ -120,7 +120,6 @@ function markerTip(upadesha, ch, notes) {
   return note ? "marker (it) · " + note : "marker (it): deleted by 1.3.9";
 }
 
-/* Tooltip for a sūtra: number and text, then the gloss on the next line. */
 /* The option an arrow key moves to in a list of n, wrapping round; from none (-1),
    down goes to the first and up to the last. */
 function nextActive(active, n, down) {
@@ -135,6 +134,7 @@ function rootNotice(root) {
   return root && root.unavailable ? [root.unavailable, root.unavailable_rule || null] : null;
 }
 
+/* Tooltip for a sūtra: number and text, then the gloss on the next line. */
 function sutraTitle(id, sutras) {
   var s = sutras[id];
   return s ? id + " " + s.text + "\n" + splitTerms(s.gloss).map(function (p) { return p[0]; }).join("") : id;
