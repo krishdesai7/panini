@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from panini.edits import AddTags, InsertTerm, ReplaceTerm
+from panini.lexicon import middle_voice_markers, middle_voice_reason
 from panini.meta import substitute_term
 from panini.model import Coreference, Number, Site, State, Term, TermKind, Time
 from panini.rules.base import Rule, dhatu_index, is_pratyaya
@@ -76,10 +77,10 @@ def _tag_pada(pada: str, rule_id: str):
     return lambda st, site: (AddTags(site.spans[0].term, frozenset({pada, f"pada-by:{rule_id}"})),)
 
 
-R_1_3_12 = Rule("1.3.12", _pada_find(lambda st, root: "anudattet" in root.tags or root.has_marker("N")),
+R_1_3_12 = Rule("1.3.12", _pada_find(lambda st, root: bool(middle_voice_markers(root))),
                 _tag_pada("ātmanepada", "1.3.12"), blocks=("1.3.78",),
-                note=lambda st, site: "the root's marker vowel is {unaccented|anudātta}, so l is classed as taking {middle|ātmanepada} "
-                "endings; 3.4.78 will choose from that set")
+                note=lambda st, site: f"{middle_voice_reason(st.terms[dhatu_index(st)])}, so l is classed as "
+                "taking {middle|ātmanepada} endings; 3.4.78 will choose from that set")
 R_1_3_72 = Rule("1.3.72", _pada_find(lambda st, root: ("svaritet" in root.tags or root.has_marker("Y"))
                                      and st.intent.fruit_to_agent),
                 _tag_pada("ātmanepada", "1.3.72"), blocks=("1.3.78",),

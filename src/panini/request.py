@@ -10,8 +10,8 @@ from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 
-from panini.lexicon import ROOTS, Root, lookup_root
-from panini.model import Coreference, Intent, Number, Time
+from panini.lexicon import ROOTS, Root, lookup_root, middle_voice_reason
+from panini.model import Coreference, Intent, Number, Term, TermKind, Time
 
 
 class Lakara(Enum):
@@ -184,7 +184,8 @@ def availability(req: Request) -> tuple[str, str] | None:
     if req.root.pada == "P" and req.voice is Voice.MIDDLE:
         return (f"{req.root.name} takes parasmaipada only", "1.3.78")
     if req.root.pada == "A" and req.voice is Voice.ACTIVE:
-        return (f"{req.root.name} takes ātmanepada only: its marker vowel is anudātta", "1.3.12")
+        reason = middle_voice_reason(Term.from_upadesha(TermKind.ROOT, req.root.upadesha), "it", markup=False)
+        return (f"{req.root.name} takes ātmanepada only: {reason}", "1.3.12")
     return None
 
 

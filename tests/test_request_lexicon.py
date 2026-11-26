@@ -56,6 +56,14 @@ def test_availability():
     assert availability(parse_request("edh", "laṭ", 3, "sg", "active"))[1] == "1.3.12"
     assert availability(parse_request("nī", "laṭ", 3, "sg", "middle")) is None
 
+
+def test_middle_only_reason_names_the_marker_1312_reads():
+    # 1.3.12 anudāttaṅitaḥ: an unaccented marker vowel (edh) or the marker ṅ (smi, zmi\N)
+    edh = availability(parse_request("edh", "laṭ", 3, "sg", "active"))[0]
+    smi = availability(parse_request("01.1099", "laṭ", 3, "sg", "active"))
+    assert "anudātta" in edh and "ṅ" not in edh
+    assert smi[1] == "1.3.12" and "marked ṅ" in smi[0] and "anudātta" not in smi[0]
+
 def test_reference_fixture_matches_available_requests():
     ref = json.loads(REFERENCE_PATH.read_text())
     avail = [r.key for r in all_requests() if availability(r) is None]

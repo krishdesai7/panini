@@ -78,11 +78,27 @@ class Root:
         """Which voices the markers allow: anudātta vowel or ṅ gives middle (1.3.12); svarita
         vowel or ñ gives both (1.3.72); otherwise active (1.3.78)."""
         term = Term.from_upadesha(TermKind.ROOT, self.upadesha)
-        if "anudattet" in term.tags or term.upadesha.endswith("N"):
+        if middle_voice_markers(term):
             return "A"
         if "svaritet" in term.tags or term.upadesha.endswith("Y"):
             return "U"
         return "P"
+
+
+def middle_voice_markers(root: Term) -> tuple[str, ...]:
+    """The markers by which 1.3.12 anudāttaṅita ātmanepadam gives a root middle endings: "anudātta"
+    (its marker vowel is unaccented) and/or "ṅ" (it is marked ṅ)."""
+    found = (("anudātta", "anudattet" in root.tags), ("ṅ", root.has_marker("N") or root.upadesha.endswith("N")))
+    return tuple(name for name, present in found if present)
+
+
+def middle_voice_reason(root: Term, subject: str = "the root", markup: bool = True) -> str:
+    """Why 1.3.12 applies, e.g. "the root's marker vowel is {unaccented|anudātta}" or "the root is
+    marked ṅ". ``subject`` "it" gives "its marker vowel …" / "it is marked ṅ"."""
+    unaccented = "{unaccented|anudātta}" if markup else "unaccented (anudātta)"
+    possessive = "its" if subject == "it" else f"{subject}'s"
+    phrases = {"anudātta": f"{possessive} marker vowel is {unaccented}", "ṅ": f"{subject} is marked ṅ"}
+    return " and ".join(phrases[m] for m in middle_voice_markers(root))
 
 
 # English glosses for the roots the explorer features; the rest keep the list's own artha.

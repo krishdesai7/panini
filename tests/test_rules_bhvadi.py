@@ -352,3 +352,11 @@ def test_krap_is_not_krp():
 @pytest.mark.xfail(strict=True, reason="7.1.61: which jabh is meant; awaiting a ruling (findings)")
 def test_jabh_takes_nasal_before_a_vowel():
     assert form("01.0453", voice="middle").result == "jambhate"
+
+
+# -- 1.3.12 anudāttaṅita ātmanepadam: the note names the marker that applies -----
+
+@pytest.mark.parametrize("code, says, not_says", [("01.0002", "anudātta", "marked ṅ"), ("01.1099", "marked ṅ", "anudātta")])
+def test_1312_note_names_the_marker(code, says, not_says):
+    note = next(s.note for s in form(code, voice="middle").steps if "1.3.12" in s.rule_ids)
+    assert says in note and not_says not in note
