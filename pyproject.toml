@@ -4,11 +4,11 @@
   description     = "A Pāṇinian prakriyā engine: watch the Aṣṭādhyāyī derive Sanskrit verb forms step by step"
   requires-python = ">=3.15"
   authors         = [{ name = "Krish Desai", email = "27725015+krishdesai7@users.noreply.github.com" }]
-  dependencies    = []
+  dependencies    = ["rich>=15.0.0", "typer>=0.29.2"]
 
 
   [project.scripts]
-    panini = "panini.cli:main"
+    panini = "panini.__main__:main"
 
 
 [dependency-groups]

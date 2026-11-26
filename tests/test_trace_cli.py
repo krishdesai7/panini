@@ -1,8 +1,12 @@
 # tests/test_trace_cli.py
-from panini.cli import main
+from typer.testing import CliRunner
+
+from panini.cli import app
 from panini.engine import derive
 from panini.request import parse_request
 from panini.trace import render_text
+
+runner = CliRunner()
 
 
 def test_render_default_and_verbose() -> None:
@@ -14,14 +18,16 @@ def test_render_default_and_verbose() -> None:
     assert "✗ 6.1.101" in render_text(d, verbosity=1)
 
 
-def test_cli_derive(capsys) -> None:
-    assert main(["derive", "paṭh", "present", "3", "sg"]) == 0
-    assert "paṭhati" in capsys.readouterr().out
+def test_cli_derive() -> None:
+    result = runner.invoke(app, ["derive", "paṭh", "present", "3", "sg"])
+    assert result.exit_code == 0
+    assert "paṭhati" in result.stdout
 
 
-def test_cli_unknown_root(capsys) -> None:
-    assert main(["derive", "kṛ", "laṭ", "3", "sg"]) == 2
-    err = capsys.readouterr().err
+def test_cli_unknown_root() -> None:
+    result = runner.invoke(app, ["derive", "kṛ", "laṭ", "3", "sg"])
+    assert result.exit_code == 2
+    err = result.stderr
     assert "kṛ" in err
     assert "bhū" in err
     assert "Traceback" not in err
@@ -32,7 +38,7 @@ def test_render_explains_marker_notation() -> None:
     assert "capitals = markers (it)" in out.splitlines()[1]
 
 
-def test_cli_exits_nonzero_when_derivation_errors(monkeypatch, capsys) -> None:
+def test_cli_exits_nonzero_when_derivation_errors(monkeypatch) -> None:
     from panini import engine
     from panini.derivation import Derivation, Status
 
@@ -43,8 +49,9 @@ def test_cli_exits_nonzero_when_derivation_errors(monkeypatch, capsys) -> None:
             {"root": "paṭh", "panini": "x"}, Status.ERROR, None, (), None, (), "boom"
         ),
     )
-    assert main(["derive", "paṭh", "laṭ", "3", "sg"]) == 1
-    assert "boom" in capsys.readouterr().out
+    result = runner.invoke(app, ["derive", "paṭh", "laṭ", "3", "sg"])
+    assert result.exit_code == 1
+    assert "boom" in result.stdout
 
 
 def test_trace_has_no_bare_tildes() -> None:
