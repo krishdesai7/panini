@@ -91,7 +91,7 @@ def _near_7386(st: State) -> str | None:
                 and t.sounds[k].char not in IK):
             v = slp1_to_iast(st.terms[i].sounds[k].char)
             return (f"7.3.86 ({{full grade|guṇa}} of a light penultimate vowel) does not apply: "
-                    f"{v} is not one of {{i u ṛ ḷ|ik}} (1.1.3)")
+                    f"[[{v}]] is outside the {{close syllabics|ik}} (1.1.3)")
     return None
 
 
@@ -110,7 +110,7 @@ R_7_3_101 = Rule("7.3.101", _find_73101,
                  lambda st, site: (ReplaceSounds(site.spans[0].term, site.spans[0].start, site.spans[0].end,
                                                  (Sound("A"),)),),
                  note=lambda st, site: f"a is lengthened before {slp1_to_iast(st.terms[_following(st, site.spans[0].term)].adi)},"
-                 " one of {resonants, jh, and bh|yañ}, beginning a {present-system|sārvadhātuka} affix")
+                 " a {resonant, [[jh]], or [[bh]]|yañ}, beginning a {present-system|sārvadhātuka} affix")
 
 
 # 7.1.3 jho 'ntaḥ

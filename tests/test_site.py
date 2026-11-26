@@ -77,6 +77,7 @@ def test_build_without_fonts(tmp_path, capsys) -> None:
     assert '<span class="rule-name"><span lang="sa-Latn">vṛddhir ādaic</span></span>' in index
     assert 'class="rule-open" href="1.1.1.html" aria-label="Open 1.1.1 vṛddhir ādaic"' in index
     assert 'data-tip="vṛddhi">lengthened grade</span>' in index
+    assert 'data-tip-kind="iast" data-tip="aic">long diphthongs</span>' in index
     assert '<script defer src="tooltip.js"></script>' in index
     definition = (tmp_path / "rules" / "1.1.1.html").read_text()
     assert "data-tip=\"1.1.51 uraṇ raparaḥ" in definition
@@ -90,6 +91,7 @@ def test_build_without_fonts(tmp_path, capsys) -> None:
     assert 'href="1.1.2.html"' in article
     assert 'href="1.1.3.html"' not in article
     assert '<h3><span lang="sa-Latn">bhavati</span></h3>' in article
+    assert 'data-tip-kind="iast" data-tip="ik">close syllabic</span>' in article
     assert 'possible in <span lang="sa-Latn">bhavati</span>.' in article
     assert 'data-tip="laṭ">present imperfective</span>' in article
     assert 'data-tip="laṅ">past imperfective</span>' in article

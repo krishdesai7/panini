@@ -72,7 +72,7 @@ R_6_1_87 = _sandhi_rule("6.1.87", lambda x, y: x in "aA" and is_vowel(y), lambda
                         "a and a following vowel are replaced by {full grade|guṇa}")
 # 6.1.88 vṛddhir eci
 R_6_1_88 = _sandhi_rule("6.1.88", lambda x, y: x in "aA" and y in EC, lambda x, y: vrddhi(y),
-                        "a and a following e/o/ai/au are replaced by {lengthened grade|vṛddhi}", blocks=("6.1.87",))
+                        "[[a]] or [[ā]] and a following {diphthong|ec} are replaced by {lengthened grade|vṛddhi}", blocks=("6.1.87",))
 # 6.1.97 ato guṇe — its domain (short a + a/e/o) lies inside 6.1.101 (a+a) ∪ 6.1.88 (a+e/o)
 # ∪ 6.1.87, so it collectively blocks all three (Kiparsky, Architecture §1.4.2, (23) and (32)).
 R_6_1_97 = _sandhi_rule("6.1.97", lambda x, y: x == "a" and y in "aeo", lambda x, y: y,
@@ -81,7 +81,7 @@ R_6_1_97 = _sandhi_rule("6.1.97", lambda x, y: x == "a" and y in "aeo", lambda x
                         blocks=("6.1.87", "6.1.88", "6.1.101"))
 # 6.1.101 akaḥ savarṇe dīrghaḥ
 R_6_1_101 = _sandhi_rule("6.1.101", lambda x, y: x in AK and is_vowel(y) and is_savarna(x, y),
-                         lambda x, y: dirgha(x), "a vowel and a like vowel are replaced by the long vowel",
+                         lambda x, y: dirgha(x), "a {simple syllabic|ak} and a following syllabic of the same kind merge into a long syllabic",
                          blocks=("6.1.87",))
 
 RULES = (R_6_1_78, R_6_1_87, R_6_1_88, R_6_1_97, R_6_1_101)
@@ -116,8 +116,8 @@ def _near_6166(st: State) -> str | None:
     for i, k in _candidates_6166(st):
         if _root_initial(st, i, k):
             c = slp1_to_iast(st.terms[i].sounds[k].char)
-            return (f"6.1.66 (y/v before a consonant other than y is deleted) is not applied to the {c} "
-                    f"that begins the root: teaching the root with that {c} would be pointless "
+            return ("6.1.66 ([[y]] or [[v]] before {any consonant other than [[y]]|val} is deleted) "
+                    f"is not applied to the [[{c}]] that begins the root: teaching the root with that [[{c}]] would be pointless "
                     "if the rule always deleted it")
     return None
 
@@ -126,7 +126,7 @@ R_6_1_66 = Rule("6.1.66", _find_6166,
                 lambda st, site: (DeleteSounds(site.spans[0].term, (site.spans[0].start,)),),
                 near_miss=_near_6166,
                 note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)}"
-                " before a consonant other than y is deleted")
+                " before {any consonant other than [[y]]|val} is deleted")
 
 RULES = (*RULES, R_6_1_66)
 

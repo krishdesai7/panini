@@ -19,10 +19,10 @@ path = "docs/papers/kiparsky-on-the-architecture-of-paninis-grammar.pdf"
 [articles."1.1.1"]
 kind = "definition"
 explanation = """
-Read [[ādaic]] as [[āt + aic]]. Here [[āt]] gives long [[ā]], and [[aic]] is the
-{sound abbreviation|pratyāhāra} for [[ai]] and [[au]]. The [[Kāśikā]] explains the
-marker [[t]] as fixing the length of [[ai]] and [[au]] here. Other rules prescribe
-when to use a vowel of this grade.
+In [[ādaic]], [[āt]] gives long [[ā]], and the rest of the word names the
+{long diphthongs|aic}, [[ai]] and [[au]]. The [[Kāśikā]] explains that the marker
+[[t]] fixes the length of the diphthongs here. Other rules prescribe when to use
+a vowel of this grade.
 """
 citations = [
   { source = "astadhyayi", role = "text", locator = "1.1.1" },
@@ -32,7 +32,7 @@ citations = [
 [articles."1.1.1".related]
 "1.1.3" = "Which vowel is replaced when a rule prescribes {lengthened grade|vṛddhi} without naming the original."
 "1.1.70" = "How a following [[t]] fixes vowel length."
-"1.1.71" = "How abbreviations such as [[aic]] are formed."
+"1.1.71" = "How the {sound-class abbreviation|pratyāhāra} for the {long diphthongs|aic} is formed."
 "6.1.90" = "Prescribes {lengthened grade|vṛddhi} after the augment [[āṭ]]."
 
 [[articles."1.1.1".examples]]
@@ -43,9 +43,9 @@ note = "In [[ārcchat]], 6.1.90 combines the augment [[ā]] and the root vowel [
 [articles."1.1.2"]
 kind = "definition"
 explanation = """
-Read [[adeṅ]] as [[at + eṅ]]. Here [[at]] gives short [[a]], and [[eṅ]] is the
-{sound abbreviation|pratyāhāra} for [[e]] and [[o]]. Other rules prescribe when to
-use a vowel of this grade.
+In [[adeṅ]], [[at]] gives short [[a]], and the rest of the word names the
+{short diphthongs|eṅ}, [[e]] and [[o]]. Other rules prescribe when to use a vowel
+of this grade.
 """
 citations = [
   { source = "astadhyayi", role = "text", locator = "1.1.2" },
@@ -56,7 +56,7 @@ citations = [
 "1.1.1" = "Defines {lengthened grade|vṛddhi}."
 "1.1.3" = "Which vowel is replaced when a rule prescribes {full grade|guṇa} without naming the original."
 "1.1.70" = "How a following [[t]] fixes vowel length."
-"1.1.71" = "How abbreviations such as [[eṅ]] are formed."
+"1.1.71" = "How the {sound-class abbreviation|pratyāhāra} for the {short diphthongs|eṅ} is formed."
 "7.3.84" = "Prescribes {full grade|guṇa} before two classes of affix."
 
 [[articles."1.1.2".examples]]
@@ -88,7 +88,7 @@ explanation = """
 The rule names two classes of following affix, {present-system|sārvadhātuka}
 and {non-present|ārdhadhātuka}. The operation is {full grade|guṇa}, carried
 over from 7.3.82. It applies to a final
-{[[i]], [[u]], [[ṛ]], or [[ḷ]] (including long counterparts)|ik} vowel of the
+{close syllabic|ik} ([[i]], [[u]], [[ṛ]], or [[ḷ]], including their long counterparts) of the
 {base|aṅga}. Rule 1.1.5 blocks the change before an affix marked [[k]] or [[ṅ]].
 
 Kiparsky points out how the marker [[p]] on [[śap]] makes {full grade|guṇa} possible in [[bhavati]].
@@ -104,7 +104,7 @@ citations = [
 
 [articles."7.3.84".related]
 "1.1.2" = "Defines {full grade|guṇa}."
-"1.1.3" = "Specifies {which vowels|ik} can take full grade."
+"1.1.3" = "Identifies the {close syllabics|ik} as the targets of full grade."
 "1.1.5" = "Blocks {full grade|guṇa} before an affix marked [[k]] or [[ṅ]]."
 "1.2.4" = "Treats a {present-system|sārvadhātuka} affix without [[p]] as [[ṅ]]-marked."
 "7.3.86" = "Extends {full grade|guṇa} to a base with a light penultimate vowel."

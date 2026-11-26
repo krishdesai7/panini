@@ -50,7 +50,12 @@ def test_abhavam() -> None:
 def test_abhavat_optional_devoicing() -> None:
     d, o = steps_of("bhū", "laṅ", 3, "sg")
     assert d.result == "abhavat" and d.alternatives == ("abhavad",)
-    assert next(s for s in d.steps if "8.4.56" in s.rule_ids).alternatives == ("abhavad",)
+    voicing = next(s for s in d.steps if "8.2.39" in s.rule_ids)
+    assert "{modal voiced oral stop|jaś}" in voicing.note
+    devoicing = next(s for s in d.steps if "8.4.56" in s.rule_ids)
+    assert devoicing.alternatives == ("abhavad",)
+    assert "[[d → t]] (devoicing at a pause)" in devoicing.note
+    assert "{voiceless unaspirated obstruent|car}" in devoicing.to_json()["sutras"][0]["gloss"]
 
 
 def test_abhavan() -> None:

@@ -39,3 +39,12 @@ uses the catalogue to render `rules/index.html` and one HTML page per
 article. Worked examples link back to the verb trace at the selected step
 when the root is available. In the static build, an example for a root
 outside the featured set still shows its before and after forms.
+
+Use the modern class name in glosses and notes, for example
+`{close syllabic|ik}` or `{voiced oral stop|jhaś}`. Add the members in
+IAST when they help the reader follow the rule. The
+[Pratyāhāras table](https://en.wikipedia.org/wiki/Shiva_Sutras#Pratyāhāras)
+gives the preferred phonological terminology.
+Obstruents include oral stops, affricates, and fricatives. Use
+`{voiceless unaspirated obstruents|car}` for the full class and
+`{voiceless unaspirated stops|cay}` for the stop class.

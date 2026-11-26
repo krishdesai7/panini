@@ -57,7 +57,7 @@ def _final_rule(rule_id: str, letters: frozenset[str] | set[str], target: dict[s
 
     def note(st: State, site: Site) -> str:
         c = st.terms[site.spans[0].term].sounds[site.spans[0].start].char
-        return f"word-final {slp1_to_iast(c)} → {slp1_to_iast(get(c))} ({what})"
+        return f"word-final [[{slp1_to_iast(c)} → {slp1_to_iast(get(c))}]] ({what})"
 
     return Rule(rule_id, find, rewrite, note=note, **kw)
 
@@ -94,7 +94,7 @@ R_8_2_18 = Rule("8.2.18", _find_8218,
                 f"{slp1_to_iast(st.terms[site.spans[0].term].text)} → "
                 f"{slp1_to_iast(st.terms[site.spans[0].term].text.replace('r', 'l').replace('f', 'x'))}")
 
-R_8_2_39 = _final_rule("8.2.39", JHAL & _JAS.keys(), _JAS, "an obstruent at the end of a word becomes voiced")
+R_8_2_39 = _final_rule("8.2.39", JHAL & _JAS.keys(), _JAS, "an {obstruent|jhal} becomes the corresponding {modal voiced oral stop|jaś}")
 
 
 # 8.2.66 sasajuṣo ruḥ — a later, more specific rule that blocks 8.2.39 for s.
@@ -141,7 +141,7 @@ def _find_8278(st: State) -> list[Site]:
 R_8_2_78 = Rule("8.2.78", _find_8278,
                 lambda st, site: _replace(site.spans[0].term, site.spans[0].start,
                                           _DIRGHA[st.terms[site.spans[0].term].sounds[site.spans[0].start].char]),
-                note=lambda st, site: "the {simple vowel|ik} "
+                note=lambda st, site: "the {close syllabic|ik} "
                 f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} is lengthened "
                 "before an r or v that is the {penultimate sound|upadhā} of the {root|dhātu} and is followed by a consonant")
 
@@ -253,10 +253,10 @@ R_8_4_53 = Rule("8.4.53", _find_8453,
                 lambda st, site: _replace(site.spans[0].term, site.spans[0].start,
                                           _JAS_53[st.terms[site.spans[0].term].sounds[site.spans[0].start].char]),
                 note=lambda st, site: f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} "
-                "before a voiced stop becomes voiced: "
+                "before a {voiced oral stop|jhaś} becomes the corresponding {modal voiced oral stop|jaś}: "
                 f"{slp1_to_iast(_JAS_53[st.terms[site.spans[0].term].sounds[site.spans[0].start].char])}")
 
-R_8_4_56 = _final_rule("8.4.56", JHAL & _CAR.keys(), _CAR, "at a pause an obstruent becomes voiceless", optional=Optionality.VA)
+R_8_4_56 = _final_rule("8.4.56", JHAL & _CAR.keys(), _CAR, "devoicing at a pause", optional=Optionality.VA)
 
 
 # 8.4.58 anusvārasya yayi parasavarṇaḥ
