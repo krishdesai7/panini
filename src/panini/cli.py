@@ -55,16 +55,32 @@ def main(argv: list[str] | None = None) -> int:
     v.add_argument("--open", action="store_true", help="open the page in a browser")
     v.add_argument("--no-cache", action="store_true", help="derive everything; don't read or write the cache")
 
+    r: argparse.ArgumentParser = sub.add_parser(
+        "rules", help="export rule articles as JSON"
+    )
+    r.add_argument("id", nargs="?", help="optional sūtra number, e.g. 1.1.1")
+
     args: argparse.Namespace = parser.parse_args(argv)
     try:
         if args.command == "derive":
             return _derive(args)
         if args.command == "serve":
             return _serve(args)
+        if args.command == "rules":
+            return _rules(args.id)
         return _site(args)
     except (UnknownRoot, ValueError) as e:
         print(f"panini: {e}", file=sys.stderr)
         return 2
+
+
+def _rules(rule_id: str | None) -> int:
+    import json
+
+    from panini.rule_catalog import build_catalog
+
+    print(json.dumps(build_catalog(rule_id), ensure_ascii=False, indent=2))
+    return 0
 
 
 def _derive(args: argparse.Namespace) -> int:

@@ -2,6 +2,14 @@
 # In glosses and notes, {modern|traditional} marks a technical term: the page shows the
 # modern word with the traditional one on hover.
 
+["1.1.1"]
+text = "vṛddhir ādaic"
+gloss = "The vowels ā, ai and au are called {lengthened grade|vṛddhi}."
+
+["1.1.2"]
+text = "adeṅ guṇaḥ"
+gloss = "The vowels a, e and o are called {full grade|guṇa}."
+
 ["1.1.3"]
 text = "iko guṇavṛddhī"
 gloss = "Where {full grade|guṇa} or {lengthened grade|vṛddhi} is prescribed without naming the vowel it replaces, it replaces one of {i u ṛ ḷ|ik}."

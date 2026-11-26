@@ -1,0 +1,39 @@
+# Rule catalogue
+
+The explorer can cite a sūtra as soon as its IAST text and short gloss are in
+`src/panini/data/sutras.toml`. Add an entry in
+`src/panini/data/rule_articles.toml` when there is enough material for an
+article. The same dotted sūtra ID joins the two files and keys the exported
+catalogue. Keep the full ID, including a fourth component for a vārttika.
+
+A page can lead with the sūtra and its gloss, then show what kind of rule it is,
+how to read it, a worked example, and where to read further. The export
+distinguishes three sources of information:
+
+- **Text and editorial notes.** Write the explanation in plain English and
+  use the existing `{plain term|Sanskrit term}` markup. Cite an edition or
+  commentary using a bibliography key, locator, and role (`text`, `commentary`,
+  or `analysis`). Follow Kiparsky where his work addresses a question of
+  interpretation, and cite the particular passage. Use `related` for a
+  sūtra and a short explanation of why it matters. A related sūtra needs a
+  text entry and can acquire its own article later.
+- **Explorer behavior.** The export pulls readings from `rules/readings.py`
+  and blocking relationships from the rule registry. Write an optional
+  `scope` note if the implementation covers only part of the traditional
+  rule. Definitions like 1.1.1 can inform an operation without having a
+  standalone entry in the rule registry.
+- **Worked examples.** Record the request using a Dhātupāṭha code, tense,
+  person, number, and voice. Supply `step_rule` when another sūtra performs
+  the operation that illustrates the article. The exporter runs the same
+  engine as the verb explorer and emits the request key, result, and selected
+  step with its before and after terms. A missing or ambiguous step fails the
+  export. Set a one-based `occurrence` only when the same sūtra appears
+  several times and you want a specific occurrence.
+
+Run `uv run panini rules` for the full catalogue or
+`uv run panini rules 1.1.1` for one article. Both emit JSON. A future renderer
+can use the keys in the full export's `rules` map to decide which sūtra
+citations have article destinations. It can use an example's request key to
+link back to its verb derivation when that root is available. The static verb
+build contains only featured roots, so it may show an example's extracted step
+without a link to the full trace.

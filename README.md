@@ -35,6 +35,9 @@ Either vocabulary works: `present imperfective` or `laṭ`, `3` or `prathama`,
 cache is keyed by a hash of the engine's code and data, so any change to the rules
 starts a fresh one. `--no-cache` bypasses it.
 
+Export the [rule catalogue](docs/rule-catalog.md) as JSON with
+`uv run panini rules`, or pass a sūtra number to select one article.
+
 ## Development
 
 ```sh
