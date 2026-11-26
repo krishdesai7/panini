@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import argparse
 import sys
-from http.server import ThreadingHTTPServer
 from pathlib import Path
+lazy from http.server import ThreadingHTTPServer
 
 from .lexicon import UnknownRoot
 lazy from .derivation import Derivation

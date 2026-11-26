@@ -2,18 +2,23 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
 from copy import copy
 from dataclasses import replace
 from typing import Literal
-
-from collections.abc import Mapping
+lazy from collections.abc import Mapping, Sequence
 
 from panini.derivation import Derivation, Status, StepRecord, render_terms
 from panini.edits import AddTags, Edit, InsertTerm, ReplaceTerm, apply_edit
 from panini.model import Site, State, Term, TermKind
 from panini.request import Request, availability
-from panini.resolver import Candidate, LocalResolver, Loser, Resolver, UnresolvedConflict, blocked_by
+from panini.resolver import (
+    Candidate,
+    LocalResolver,
+    Loser,
+    Resolver,
+    UnresolvedConflict,
+    blocked_by,
+)
 from panini.rules.base import Optionality, Rule
 from panini.translit import slp1_to_iast
 
@@ -52,7 +57,8 @@ type Resume = tuple[Literal["main"]] | tuple[Literal["tripadi"], tuple[int, int,
 
 
 def _step_kind(edit: Edit) -> str:
-    """change: the form changes; category: only labels are assigned; prohibition: nothing (a niṣedha)."""
+    """change: the form changes; category: only labels are assigned; prohibition:
+    nothing (a niṣedha)."""
     if not edit:
         return "prohibition"
     if all(isinstance(op, AddTags) for op in edit):
@@ -61,12 +67,18 @@ def _step_kind(edit: Edit) -> str:
 
 
 def _join(*parts: str | None) -> str | None:
-    kept = [p for p in parts if p]
+    kept: list[str] = [p for p in parts if p]
     return "; ".join(kept) if kept else None
 
 
 class _Runner:
-    def __init__(self, rules: Sequence[Rule], resolver: Resolver, max_steps: int, disabled: frozenset[str]) -> None:
+    def __init__(
+        self,
+        rules: Sequence[Rule],
+        resolver: Resolver,
+        max_steps: int,
+        disabled: frozenset[str],
+    ) -> None:
         self.all_rules = tuple(rules)
         self.resolver = resolver
         self.max_steps = max_steps
@@ -74,10 +86,14 @@ class _Runner:
         self.rules = tuple(r for r in rules if r.id not in disabled)
         self.main = tuple(r for r in self.rules if not r.in_tripadi)
         self.it_rules = tuple(r for r in self.main if r.is_it_rule)
-        self.tripadi = tuple(sorted((r for r in self.rules if r.in_tripadi), key=lambda r: r.key))
+        self.tripadi = tuple(
+            sorted((r for r in self.rules if r.in_tripadi), key=lambda r: r.key)
+        )
         self.steps: list[StepRecord] = []
         self.alternatives: list[str] = []
-        self.declined: set[tuple[str, tuple]] = set()  # (rule id, terms) where an optional rule chose not to apply
+        self.declined: set[tuple[str, tuple]] = (
+            set()
+        )  # (rule id, terms) where an optional rule chose not to apply
         self.applied: set[tuple] = set()
         self.near_seen: set[str] = set()
         self.abhiya: list[str] = []
@@ -96,14 +112,22 @@ class _Runner:
         declined = self.declined
 
         def undeclined(r: Rule):
-            return lambda st: [s for s in r.find(st) if (r.id, self._terms_key(st, s)) not in declined]
+            return lambda st: [
+                s for s in r.find(st) if (r.id, self._terms_key(st, s)) not in declined
+            ]
+
         ids = {rid for rid, _ in declined}
-        return tuple(replace(r, find=undeclined(r)) if r.id in ids else r for r in self.rules)
+        return tuple(
+            replace(r, find=undeclined(r)) if r.id in ids else r for r in self.rules
+        )
 
     @staticmethod
     def _terms_key(state: State, site: Site) -> tuple:
-        return tuple((state.terms[sp.term].kind, state.terms[sp.term].upadesha) for sp in site.spans
-                     if sp.term < len(state.terms))
+        return tuple(
+            (state.terms[sp.term].kind, state.terms[sp.term].upadesha)
+            for sp in site.spans
+            if sp.term < len(state.terms)
+        )
 
     def _was_declined(self, state: State, cand: Candidate) -> bool:
         return (cand.rule.id, self._terms_key(state, cand.site)) in self.declined
@@ -117,7 +141,9 @@ class _Runner:
         out = []
         for sp in site.spans:
             t = state.terms[sp.term] if sp.term < len(state.terms) else None
-            out.append(None if t is None else (t.kind, t.upadesha, t.sounds, sp.start, sp.end))
+            out.append(
+                None if t is None else (t.kind, t.upadesha, t.sounds, sp.start, sp.end)
+            )
         return tuple(out)
 
     def _guard_key(self, state: State, cand: Candidate) -> tuple:
@@ -126,12 +152,19 @@ class _Runner:
     def _tick(self) -> None:
         self.count += 1
         if self.count > self.max_steps:
-            raise StepLimitExceeded(f"more than {self.max_steps} steps; the rules may be looping")
+            raise StepLimitExceeded(
+                f"more than {self.max_steps} steps; the rules may be looping"
+            )
 
     # -- phases ------------------------------------------------------------
 
-    def run(self, state: State, *, skip_main: bool = False,
-            tripadi_from: tuple[int, int, int] | None = None) -> tuple[State, tuple[StepRecord, ...], tuple[str, ...]]:
+    def run(
+        self,
+        state: State,
+        *,
+        skip_main: bool = False,
+        tripadi_from: tuple[int, int, int] | None = None,
+    ) -> tuple[State, tuple[StepRecord, ...], tuple[str, ...]]:
         if not skip_main:
             state = self._main(state, self.main, ("main",))
         state = self._tripadi(state, tripadi_from)
@@ -142,16 +175,27 @@ class _Runner:
     def _main(self, state: State, rules: Sequence[Rule], resume: Resume) -> State:
         while True:
             cands = [Candidate(r, s) for r in rules for s in r.find(state)]
-            cands = [c for c in cands if self._guard_key(state, c) not in self.applied
-                     and not self._was_declined(state, c)]
+            cands = [
+                c
+                for c in cands
+                if self._guard_key(state, c) not in self.applied
+                and not self._was_declined(state, c)
+            ]
             if not cands:
                 return state
-            choice = self.resolver.choose(state, cands, self._effective, finish=self._finish if not self.nested else None,
-                                          settle=self._settle)
+            choice = self.resolver.choose(
+                state,
+                cands,
+                self._effective,
+                finish=self._finish if not self.nested else None,
+                settle=self._settle,
+            )
             if choice is None:
                 return state
             state, edit = self._apply(state, choice.winner, choice.losers, resume)
-            if rules is not self.it_rules and any(isinstance(op, (InsertTerm, ReplaceTerm)) for op in edit):
+            if rules is not self.it_rules and any(
+                isinstance(op, (InsertTerm, ReplaceTerm)) for op in edit
+            ):
                 # A newly introduced upadeśa is read with its markers (amendment A2, generalized).
                 state = self._main(state, self.it_rules, resume)
 
@@ -193,20 +237,32 @@ class _Runner:
         return self.settle_cache[key]
 
     def _read_new_markers(self, new: State, edit: Edit) -> State:
-        introduced = [op.term for op in edit if isinstance(op, (InsertTerm, ReplaceTerm))]
-        fresh = frozenset(i for i, t in enumerate(new.terms) if any(t is u for u in introduced))
+        introduced = [
+            op.term for op in edit if isinstance(op, (InsertTerm, ReplaceTerm))
+        ]
+        fresh = frozenset(
+            i for i, t in enumerate(new.terms) if any(t is u for u in introduced)
+        )
         if not fresh:
             return new
 
         def on_fresh(r: Rule) -> Rule:
             # Only the new upadeśa is read here; markers elsewhere wait for their own step.
-            return replace(r, find=lambda st: [s for s in r.find(st) if all(sp.term in fresh for sp in s.spans)])
+            return replace(
+                r,
+                find=lambda st: [
+                    s for s in r.find(st) if all(sp.term in fresh for sp in s.spans)
+                ],
+            )
+
         sub = self._lookahead_runner()
         return sub._main(new, tuple(on_fresh(r) for r in sub.it_rules), ("main",))
 
     def _lookahead_runner(self) -> _Runner:
         """A runner for a silent lookahead from the current state: same rules, nothing recorded here."""
-        sub = copy(self)   # shares the rule tuples; the mutable bookkeeping is replaced below
+        sub = copy(
+            self
+        )  # shares the rule tuples; the mutable bookkeeping is replaced below
         sub.steps, sub.alternatives, sub.abhiya = [], [], []
         sub.applied, sub.declined = set(self.applied), set(self.declined)
         sub.near_seen, sub.losers_seen = set(self.near_seen), set(self.losers_seen)
@@ -218,8 +274,15 @@ class _Runner:
         final, _, _ = self._lookahead_runner().run(state)
         return final_text(final)
 
-    def _alternative(self, state: State, extra_disabled: frozenset[str], resume: Resume) -> tuple[str, ...]:
-        alt = _Runner(self.all_rules, self.resolver, self.max_steps, self.disabled | extra_disabled)
+    def _alternative(
+        self, state: State, extra_disabled: frozenset[str], resume: Resume
+    ) -> tuple[str, ...]:
+        alt = _Runner(
+            self.all_rules,
+            self.resolver,
+            self.max_steps,
+            self.disabled | extra_disabled,
+        )
         alt.applied = set(self.applied)
         alt.declined = set(self.declined)
         alt.count = self.count
@@ -235,7 +298,9 @@ class _Runner:
         self.losers_seen.update(fresh)
         return fresh
 
-    def _apply(self, state: State, cand: Candidate, losers: tuple[Loser, ...], resume: Resume) -> tuple[State, Edit]:
+    def _apply(
+        self, state: State, cand: Candidate, losers: tuple[Loser, ...], resume: Resume
+    ) -> tuple[State, Edit]:
         self._tick()
         rule = cand.rule
         self.applied.add(self._guard_key(state, cand))
@@ -249,24 +314,35 @@ class _Runner:
             case Optionality.VA:
                 new = apply_edit(state, edit)
                 alternatives = self._alternative(state, frozenset({rule.id}), resume)
-                note = _join(note, "{preferably|vā}; also correct: " + ", ".join(alternatives))
+                note = _join(
+                    note, "{preferably|vā}; also correct: " + ", ".join(alternatives)
+                )
             case Optionality.VIBHASHA | Optionality.SENSE:
                 new = state
                 self.declined.add((rule.id, self._terms_key(state, cand.site)))
-                alternatives = self._alternative(apply_edit(state, edit), frozenset({rule.id}), resume)
-                note = _join(note, (rule.optional_phrase or "{preferably not|vibhāṣā}, so not applied")
-                             + "; also correct: " + ", ".join(alternatives))
+                alternatives = self._alternative(
+                    apply_edit(state, edit), frozenset({rule.id}), resume
+                )
+                note = _join(
+                    note,
+                    (rule.optional_phrase or "{preferably not|vibhāṣā}, so not applied")
+                    + "; also correct: "
+                    + ", ".join(alternatives),
+                )
             case Optionality.ANYATARASYAM:
                 raise OptionalRuleNotSupported(
                     f"{rule.id} is optional (anyatarasyām, an equal choice); optional rules of this kind "
-                    "are not supported yet")
+                    "are not supported yet"
+                )
 
         warnings: list[str] = []
         if rule.in_abhiya:
             others = [a for a in self.abhiya if a != rule.id]
             if others:
-                warnings.append(f"6.4.22: {others[0]} and {rule.id} are both in the ābhīya section; "
-                                "asiddhavat not modelled in slice 1")
+                warnings.append(
+                    f"6.4.22: {others[0]} and {rule.id} are both in the ābhīya section; "
+                    "asiddhavat not modelled in slice 1"
+                )
             self.abhiya.append(rule.id)
 
         near: list[str] = []
@@ -280,20 +356,22 @@ class _Runner:
         aside = rule.history(state, cand.site) if rule.history else None
         # A later choice varies fastest, so its alternatives come before those of an earlier one.
         self.alternatives[:0] = alternatives
-        self.steps.append(StepRecord(
-            rule_ids=(rule.id,),
-            before=render_terms(state.terms),
-            after=render_terms(new.terms),
-            note=note,
-            losers=self._new_losers(losers),
-            near_misses=tuple(near),
-            warnings=tuple(warnings),
-            alternatives=alternatives,
-            kind=_step_kind(edit),
-            reads=rule.reads if rule.section_override is None else (),
-            history=aside.text if aside else None,
-            history_italic=aside.italic if aside else (),
-        ))
+        self.steps.append(
+            StepRecord(
+                rule_ids=(rule.id,),
+                before=render_terms(state.terms),
+                after=render_terms(new.terms),
+                note=note,
+                losers=self._new_losers(losers),
+                near_misses=tuple(near),
+                warnings=tuple(warnings),
+                alternatives=alternatives,
+                kind=_step_kind(edit),
+                reads=rule.reads if rule.section_override is None else (),
+                history=aside.text if aside else None,
+                history_italic=aside.italic if aside else (),
+            )
+        )
         return new, edit
 
 
@@ -313,11 +391,19 @@ def derive(
     ref = tuple(reference[req.key]) if reference and req.key in reference else None
     if (why := availability(req)) is not None:
         reason, rule_id = why
-        return Derivation(record, Status.UNAVAILABLE, None, (), ref, (), f"{reason} ({rule_id})")
+        return Derivation(
+            record, Status.UNAVAILABLE, None, (), ref, (), f"{reason} ({rule_id})"
+        )
     state = State((Term.from_upadesha(TermKind.ROOT, req.root.upadesha),), req.intent())
     try:
-        final, steps, alternatives = run(state, ALL_RULES if rules is None else rules,
-                                         resolver=resolver, disabled=disabled)
+        final, steps, alternatives = run(
+            state,
+            ALL_RULES if rules is None else rules,
+            resolver=resolver,
+            disabled=disabled,
+        )
     except (UnresolvedConflict, StepLimitExceeded, OptionalRuleNotSupported) as e:
         return Derivation(record, Status.ERROR, None, (), ref, (), str(e))
-    return Derivation(record, Status.OK, final_text(final), alternatives, ref, steps, None)
+    return Derivation(
+        record, Status.OK, final_text(final), alternatives, ref, steps, None
+    )

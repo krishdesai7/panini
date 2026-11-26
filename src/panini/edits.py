@@ -143,27 +143,29 @@ def _apply_op(terms: list[Term], op: Op) -> None:
         case ReplaceTerm(index=i, term=term):
             _set_term(terms, i, term)
         case Ekadesha(left=l, right=r, sounds=new, rule=rule):
-            lt, rt = terms[l], terms[r]
+            lt: Term = terms[l]
+            rt: Term = terms[r]
             inputs = (lt.sounds[-1].char, rt.sounds[0].char)
             flagged = tuple(
                 replace(s, ekadesha=True, ekadesha_rule=rule, ekadesha_inputs=inputs)
                 for s in new
             )
             _set_term(terms, l, _vikrta(replace(lt, sounds=lt.sounds[:-1] + flagged)))
-            right = _vikrta(replace(rt, sounds=rt.sounds[1:]))
+            right: Term = _vikrta(replace(rt, sounds=rt.sounds[1:]))
             _set_term(terms, r, replace(right, tags=right.tags | {EKADESHA_START}))
 
 
 def apply_edit(state: State, edit: Edit) -> State:
     """Apply the ops of one edit in order."""
-    terms = list(state.terms)
+    terms: list[Term] = list(state.terms)
     for op in edit:
         _apply_op(terms, op)
     return replace(state, terms=tuple(terms))
 
 
-def _footprint(state: State, op: Op) -> set[tuple]:
-    """The material an op touches: ("s", term, pos) for sounds, ("t", index) for term slots."""
+def _footprint(state: State, op: Op) -> set[tuple[str, int] | tuple[str, int, int]]:
+    """The material an op touches: ("s", term, pos) for sounds,
+    ("t", index) for term slots."""
     match op:
         case AddTags(term=i):
             return {("tags", i)}
@@ -199,16 +201,16 @@ def apply_simultaneous(state: State, edits: Sequence[Edit]) -> State:
 
     Raises EditConflict when two edits touch the same sound or term slot.
     """
-    seen: set[tuple] = set()
+    seen: set[tuple[str, int] | tuple[str, int, int]] = set()
     for edit in edits:
-        fp: set[tuple] = set()
+        fp: set[tuple[str, int] | tuple[str, int, int]] = set()
         for op in edit:
             fp |= _footprint(state, op)
         if fp & seen:
             raise EditConflict(f"overlapping edits at {sorted(fp & seen)}")
         seen |= fp
-    ops = [op for edit in edits for op in edit]
-    terms = list(state.terms)
+    ops: list[Op] = [op for edit in edits for op in edit]
+    terms: list[Term] = list(state.terms)
     for op in sorted(ops, key=_sort_key, reverse=True):
         _apply_op(terms, op)
     return replace(state, terms=tuple(terms))

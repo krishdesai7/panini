@@ -59,7 +59,7 @@ def _terms(*texts) -> State:
     return State(ts, Intent(Time.PRESENT, Coreference.NONE, Number.ONE, False))
 
 
-def _chars(state: State):
+def _chars(state: State) -> list[str]:
     return ["".join(s.char for s in t.sounds) for t in state.terms]
 
 

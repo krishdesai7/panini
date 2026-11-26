@@ -4,7 +4,7 @@ from panini.engine import derive
 from panini.derivation import Status
 from panini.request import parse_request
 
-def ids(d: Derivation): return [i for s in d.steps for i in s.rule_ids]
+def ids(d: Derivation) -> list[str]: return [i for s in d.steps for i in s.rule_ids]
 
 def test_pathati() -> None:
     d = derive(parse_request("paṭh", "laṭ", 3, "sg", "active"))
