@@ -7,6 +7,7 @@ import sys
 import unicodedata
 from dataclasses import dataclass
 from enum import Enum
+from functools import cache
 from pathlib import Path
 lazy from collections.abc import Iterable
 
@@ -283,6 +284,7 @@ def all_requests(codes: Iterable[str] | None = None) -> list[Request]:
 REFERENCE_PATH = Path(__file__).parent / "data" / "reference_forms.json"
 
 
+@cache
 def load_reference(path: Path = REFERENCE_PATH) -> dict[str, list[str]]:
     """Reference forms keyed by Request.key (generated from Vidyut by scripts/make_reference.py).
 
