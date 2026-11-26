@@ -65488,5 +65488,10204 @@
  ],
  "01.1165|laṭ|P|3|sg": [
   "śvayati"
+ ],
+ "06.0001|laṅ|P|1|du": [
+  "atudāva"
+ ],
+ "06.0001|laṅ|P|1|pl": [
+  "atudāma"
+ ],
+ "06.0001|laṅ|P|1|sg": [
+  "atudam"
+ ],
+ "06.0001|laṅ|P|2|du": [
+  "atudatam"
+ ],
+ "06.0001|laṅ|P|2|pl": [
+  "atudata"
+ ],
+ "06.0001|laṅ|P|2|sg": [
+  "atudaḥ"
+ ],
+ "06.0001|laṅ|P|3|du": [
+  "atudatām"
+ ],
+ "06.0001|laṅ|P|3|pl": [
+  "atudan"
+ ],
+ "06.0001|laṅ|P|3|sg": [
+  "atudat",
+  "atudad"
+ ],
+ "06.0001|laṅ|Ā|1|du": [
+  "atudāvahi"
+ ],
+ "06.0001|laṅ|Ā|1|pl": [
+  "atudāmahi"
+ ],
+ "06.0001|laṅ|Ā|1|sg": [
+  "atude"
+ ],
+ "06.0001|laṅ|Ā|2|du": [
+  "atudethām"
+ ],
+ "06.0001|laṅ|Ā|2|pl": [
+  "atudadhvam"
+ ],
+ "06.0001|laṅ|Ā|2|sg": [
+  "atudathāḥ"
+ ],
+ "06.0001|laṅ|Ā|3|du": [
+  "atudetām"
+ ],
+ "06.0001|laṅ|Ā|3|pl": [
+  "atudanta"
+ ],
+ "06.0001|laṅ|Ā|3|sg": [
+  "atudata"
+ ],
+ "06.0001|laṭ|P|1|du": [
+  "tudāvaḥ"
+ ],
+ "06.0001|laṭ|P|1|pl": [
+  "tudāmaḥ"
+ ],
+ "06.0001|laṭ|P|1|sg": [
+  "tudāmi"
+ ],
+ "06.0001|laṭ|P|2|du": [
+  "tudathaḥ"
+ ],
+ "06.0001|laṭ|P|2|pl": [
+  "tudatha"
+ ],
+ "06.0001|laṭ|P|2|sg": [
+  "tudasi"
+ ],
+ "06.0001|laṭ|P|3|du": [
+  "tudataḥ"
+ ],
+ "06.0001|laṭ|P|3|pl": [
+  "tudanti"
+ ],
+ "06.0001|laṭ|P|3|sg": [
+  "tudati"
+ ],
+ "06.0001|laṭ|Ā|1|du": [
+  "tudāvahe"
+ ],
+ "06.0001|laṭ|Ā|1|pl": [
+  "tudāmahe"
+ ],
+ "06.0001|laṭ|Ā|1|sg": [
+  "tude"
+ ],
+ "06.0001|laṭ|Ā|2|du": [
+  "tudethe"
+ ],
+ "06.0001|laṭ|Ā|2|pl": [
+  "tudadhve"
+ ],
+ "06.0001|laṭ|Ā|2|sg": [
+  "tudase"
+ ],
+ "06.0001|laṭ|Ā|3|du": [
+  "tudete"
+ ],
+ "06.0001|laṭ|Ā|3|pl": [
+  "tudante"
+ ],
+ "06.0001|laṭ|Ā|3|sg": [
+  "tudate"
+ ],
+ "06.0002|laṅ|P|1|du": [
+  "anudāva"
+ ],
+ "06.0002|laṅ|P|1|pl": [
+  "anudāma"
+ ],
+ "06.0002|laṅ|P|1|sg": [
+  "anudam"
+ ],
+ "06.0002|laṅ|P|2|du": [
+  "anudatam"
+ ],
+ "06.0002|laṅ|P|2|pl": [
+  "anudata"
+ ],
+ "06.0002|laṅ|P|2|sg": [
+  "anudaḥ"
+ ],
+ "06.0002|laṅ|P|3|du": [
+  "anudatām"
+ ],
+ "06.0002|laṅ|P|3|pl": [
+  "anudan"
+ ],
+ "06.0002|laṅ|P|3|sg": [
+  "anudat",
+  "anudad"
+ ],
+ "06.0002|laṅ|Ā|1|du": [
+  "anudāvahi"
+ ],
+ "06.0002|laṅ|Ā|1|pl": [
+  "anudāmahi"
+ ],
+ "06.0002|laṅ|Ā|1|sg": [
+  "anude"
+ ],
+ "06.0002|laṅ|Ā|2|du": [
+  "anudethām"
+ ],
+ "06.0002|laṅ|Ā|2|pl": [
+  "anudadhvam"
+ ],
+ "06.0002|laṅ|Ā|2|sg": [
+  "anudathāḥ"
+ ],
+ "06.0002|laṅ|Ā|3|du": [
+  "anudetām"
+ ],
+ "06.0002|laṅ|Ā|3|pl": [
+  "anudanta"
+ ],
+ "06.0002|laṅ|Ā|3|sg": [
+  "anudata"
+ ],
+ "06.0002|laṭ|P|1|du": [
+  "nudāvaḥ"
+ ],
+ "06.0002|laṭ|P|1|pl": [
+  "nudāmaḥ"
+ ],
+ "06.0002|laṭ|P|1|sg": [
+  "nudāmi"
+ ],
+ "06.0002|laṭ|P|2|du": [
+  "nudathaḥ"
+ ],
+ "06.0002|laṭ|P|2|pl": [
+  "nudatha"
+ ],
+ "06.0002|laṭ|P|2|sg": [
+  "nudasi"
+ ],
+ "06.0002|laṭ|P|3|du": [
+  "nudataḥ"
+ ],
+ "06.0002|laṭ|P|3|pl": [
+  "nudanti"
+ ],
+ "06.0002|laṭ|P|3|sg": [
+  "nudati"
+ ],
+ "06.0002|laṭ|Ā|1|du": [
+  "nudāvahe"
+ ],
+ "06.0002|laṭ|Ā|1|pl": [
+  "nudāmahe"
+ ],
+ "06.0002|laṭ|Ā|1|sg": [
+  "nude"
+ ],
+ "06.0002|laṭ|Ā|2|du": [
+  "nudethe"
+ ],
+ "06.0002|laṭ|Ā|2|pl": [
+  "nudadhve"
+ ],
+ "06.0002|laṭ|Ā|2|sg": [
+  "nudase"
+ ],
+ "06.0002|laṭ|Ā|3|du": [
+  "nudete"
+ ],
+ "06.0002|laṭ|Ā|3|pl": [
+  "nudante"
+ ],
+ "06.0002|laṭ|Ā|3|sg": [
+  "nudate"
+ ],
+ "06.0003|laṅ|P|1|du": [
+  "adiśāva"
+ ],
+ "06.0003|laṅ|P|1|pl": [
+  "adiśāma"
+ ],
+ "06.0003|laṅ|P|1|sg": [
+  "adiśam"
+ ],
+ "06.0003|laṅ|P|2|du": [
+  "adiśatam"
+ ],
+ "06.0003|laṅ|P|2|pl": [
+  "adiśata"
+ ],
+ "06.0003|laṅ|P|2|sg": [
+  "adiśaḥ"
+ ],
+ "06.0003|laṅ|P|3|du": [
+  "adiśatām"
+ ],
+ "06.0003|laṅ|P|3|pl": [
+  "adiśan"
+ ],
+ "06.0003|laṅ|P|3|sg": [
+  "adiśat",
+  "adiśad"
+ ],
+ "06.0003|laṅ|Ā|1|du": [
+  "adiśāvahi"
+ ],
+ "06.0003|laṅ|Ā|1|pl": [
+  "adiśāmahi"
+ ],
+ "06.0003|laṅ|Ā|1|sg": [
+  "adiśe"
+ ],
+ "06.0003|laṅ|Ā|2|du": [
+  "adiśethām"
+ ],
+ "06.0003|laṅ|Ā|2|pl": [
+  "adiśadhvam"
+ ],
+ "06.0003|laṅ|Ā|2|sg": [
+  "adiśathāḥ"
+ ],
+ "06.0003|laṅ|Ā|3|du": [
+  "adiśetām"
+ ],
+ "06.0003|laṅ|Ā|3|pl": [
+  "adiśanta"
+ ],
+ "06.0003|laṅ|Ā|3|sg": [
+  "adiśata"
+ ],
+ "06.0003|laṭ|P|1|du": [
+  "diśāvaḥ"
+ ],
+ "06.0003|laṭ|P|1|pl": [
+  "diśāmaḥ"
+ ],
+ "06.0003|laṭ|P|1|sg": [
+  "diśāmi"
+ ],
+ "06.0003|laṭ|P|2|du": [
+  "diśathaḥ"
+ ],
+ "06.0003|laṭ|P|2|pl": [
+  "diśatha"
+ ],
+ "06.0003|laṭ|P|2|sg": [
+  "diśasi"
+ ],
+ "06.0003|laṭ|P|3|du": [
+  "diśataḥ"
+ ],
+ "06.0003|laṭ|P|3|pl": [
+  "diśanti"
+ ],
+ "06.0003|laṭ|P|3|sg": [
+  "diśati"
+ ],
+ "06.0003|laṭ|Ā|1|du": [
+  "diśāvahe"
+ ],
+ "06.0003|laṭ|Ā|1|pl": [
+  "diśāmahe"
+ ],
+ "06.0003|laṭ|Ā|1|sg": [
+  "diśe"
+ ],
+ "06.0003|laṭ|Ā|2|du": [
+  "diśethe"
+ ],
+ "06.0003|laṭ|Ā|2|pl": [
+  "diśadhve"
+ ],
+ "06.0003|laṭ|Ā|2|sg": [
+  "diśase"
+ ],
+ "06.0003|laṭ|Ā|3|du": [
+  "diśete"
+ ],
+ "06.0003|laṭ|Ā|3|pl": [
+  "diśante"
+ ],
+ "06.0003|laṭ|Ā|3|sg": [
+  "diśate"
+ ],
+ "06.0004|laṅ|P|1|du": [
+  "abhṛjjāva"
+ ],
+ "06.0004|laṅ|P|1|pl": [
+  "abhṛjjāma"
+ ],
+ "06.0004|laṅ|P|1|sg": [
+  "abhṛjjam"
+ ],
+ "06.0004|laṅ|P|2|du": [
+  "abhṛjjatam"
+ ],
+ "06.0004|laṅ|P|2|pl": [
+  "abhṛjjata"
+ ],
+ "06.0004|laṅ|P|2|sg": [
+  "abhṛjjaḥ"
+ ],
+ "06.0004|laṅ|P|3|du": [
+  "abhṛjjatām"
+ ],
+ "06.0004|laṅ|P|3|pl": [
+  "abhṛjjan"
+ ],
+ "06.0004|laṅ|P|3|sg": [
+  "abhṛjjat",
+  "abhṛjjad"
+ ],
+ "06.0004|laṅ|Ā|1|du": [
+  "abhṛjjāvahi"
+ ],
+ "06.0004|laṅ|Ā|1|pl": [
+  "abhṛjjāmahi"
+ ],
+ "06.0004|laṅ|Ā|1|sg": [
+  "abhṛjje"
+ ],
+ "06.0004|laṅ|Ā|2|du": [
+  "abhṛjjethām"
+ ],
+ "06.0004|laṅ|Ā|2|pl": [
+  "abhṛjjadhvam"
+ ],
+ "06.0004|laṅ|Ā|2|sg": [
+  "abhṛjjathāḥ"
+ ],
+ "06.0004|laṅ|Ā|3|du": [
+  "abhṛjjetām"
+ ],
+ "06.0004|laṅ|Ā|3|pl": [
+  "abhṛjjanta"
+ ],
+ "06.0004|laṅ|Ā|3|sg": [
+  "abhṛjjata"
+ ],
+ "06.0004|laṭ|P|1|du": [
+  "bhṛjjāvaḥ"
+ ],
+ "06.0004|laṭ|P|1|pl": [
+  "bhṛjjāmaḥ"
+ ],
+ "06.0004|laṭ|P|1|sg": [
+  "bhṛjjāmi"
+ ],
+ "06.0004|laṭ|P|2|du": [
+  "bhṛjjathaḥ"
+ ],
+ "06.0004|laṭ|P|2|pl": [
+  "bhṛjjatha"
+ ],
+ "06.0004|laṭ|P|2|sg": [
+  "bhṛjjasi"
+ ],
+ "06.0004|laṭ|P|3|du": [
+  "bhṛjjataḥ"
+ ],
+ "06.0004|laṭ|P|3|pl": [
+  "bhṛjjanti"
+ ],
+ "06.0004|laṭ|P|3|sg": [
+  "bhṛjjati"
+ ],
+ "06.0004|laṭ|Ā|1|du": [
+  "bhṛjjāvahe"
+ ],
+ "06.0004|laṭ|Ā|1|pl": [
+  "bhṛjjāmahe"
+ ],
+ "06.0004|laṭ|Ā|1|sg": [
+  "bhṛjje"
+ ],
+ "06.0004|laṭ|Ā|2|du": [
+  "bhṛjjethe"
+ ],
+ "06.0004|laṭ|Ā|2|pl": [
+  "bhṛjjadhve"
+ ],
+ "06.0004|laṭ|Ā|2|sg": [
+  "bhṛjjase"
+ ],
+ "06.0004|laṭ|Ā|3|du": [
+  "bhṛjjete"
+ ],
+ "06.0004|laṭ|Ā|3|pl": [
+  "bhṛjjante"
+ ],
+ "06.0004|laṭ|Ā|3|sg": [
+  "bhṛjjate"
+ ],
+ "06.0005|laṅ|P|1|du": [
+  "akṣipāva"
+ ],
+ "06.0005|laṅ|P|1|pl": [
+  "akṣipāma"
+ ],
+ "06.0005|laṅ|P|1|sg": [
+  "akṣipam"
+ ],
+ "06.0005|laṅ|P|2|du": [
+  "akṣipatam"
+ ],
+ "06.0005|laṅ|P|2|pl": [
+  "akṣipata"
+ ],
+ "06.0005|laṅ|P|2|sg": [
+  "akṣipaḥ"
+ ],
+ "06.0005|laṅ|P|3|du": [
+  "akṣipatām"
+ ],
+ "06.0005|laṅ|P|3|pl": [
+  "akṣipan"
+ ],
+ "06.0005|laṅ|P|3|sg": [
+  "akṣipat",
+  "akṣipad"
+ ],
+ "06.0005|laṅ|Ā|1|du": [
+  "akṣipāvahi"
+ ],
+ "06.0005|laṅ|Ā|1|pl": [
+  "akṣipāmahi"
+ ],
+ "06.0005|laṅ|Ā|1|sg": [
+  "akṣipe"
+ ],
+ "06.0005|laṅ|Ā|2|du": [
+  "akṣipethām"
+ ],
+ "06.0005|laṅ|Ā|2|pl": [
+  "akṣipadhvam"
+ ],
+ "06.0005|laṅ|Ā|2|sg": [
+  "akṣipathāḥ"
+ ],
+ "06.0005|laṅ|Ā|3|du": [
+  "akṣipetām"
+ ],
+ "06.0005|laṅ|Ā|3|pl": [
+  "akṣipanta"
+ ],
+ "06.0005|laṅ|Ā|3|sg": [
+  "akṣipata"
+ ],
+ "06.0005|laṭ|P|1|du": [
+  "kṣipāvaḥ"
+ ],
+ "06.0005|laṭ|P|1|pl": [
+  "kṣipāmaḥ"
+ ],
+ "06.0005|laṭ|P|1|sg": [
+  "kṣipāmi"
+ ],
+ "06.0005|laṭ|P|2|du": [
+  "kṣipathaḥ"
+ ],
+ "06.0005|laṭ|P|2|pl": [
+  "kṣipatha"
+ ],
+ "06.0005|laṭ|P|2|sg": [
+  "kṣipasi"
+ ],
+ "06.0005|laṭ|P|3|du": [
+  "kṣipataḥ"
+ ],
+ "06.0005|laṭ|P|3|pl": [
+  "kṣipanti"
+ ],
+ "06.0005|laṭ|P|3|sg": [
+  "kṣipati"
+ ],
+ "06.0005|laṭ|Ā|1|du": [
+  "kṣipāvahe"
+ ],
+ "06.0005|laṭ|Ā|1|pl": [
+  "kṣipāmahe"
+ ],
+ "06.0005|laṭ|Ā|1|sg": [
+  "kṣipe"
+ ],
+ "06.0005|laṭ|Ā|2|du": [
+  "kṣipethe"
+ ],
+ "06.0005|laṭ|Ā|2|pl": [
+  "kṣipadhve"
+ ],
+ "06.0005|laṭ|Ā|2|sg": [
+  "kṣipase"
+ ],
+ "06.0005|laṭ|Ā|3|du": [
+  "kṣipete"
+ ],
+ "06.0005|laṭ|Ā|3|pl": [
+  "kṣipante"
+ ],
+ "06.0005|laṭ|Ā|3|sg": [
+  "kṣipate"
+ ],
+ "06.0006|laṅ|P|1|du": [
+  "akṛṣāva"
+ ],
+ "06.0006|laṅ|P|1|pl": [
+  "akṛṣāma"
+ ],
+ "06.0006|laṅ|P|1|sg": [
+  "akṛṣam"
+ ],
+ "06.0006|laṅ|P|2|du": [
+  "akṛṣatam"
+ ],
+ "06.0006|laṅ|P|2|pl": [
+  "akṛṣata"
+ ],
+ "06.0006|laṅ|P|2|sg": [
+  "akṛṣaḥ"
+ ],
+ "06.0006|laṅ|P|3|du": [
+  "akṛṣatām"
+ ],
+ "06.0006|laṅ|P|3|pl": [
+  "akṛṣan"
+ ],
+ "06.0006|laṅ|P|3|sg": [
+  "akṛṣat",
+  "akṛṣad"
+ ],
+ "06.0006|laṅ|Ā|1|du": [
+  "akṛṣāvahi"
+ ],
+ "06.0006|laṅ|Ā|1|pl": [
+  "akṛṣāmahi"
+ ],
+ "06.0006|laṅ|Ā|1|sg": [
+  "akṛṣe"
+ ],
+ "06.0006|laṅ|Ā|2|du": [
+  "akṛṣethām"
+ ],
+ "06.0006|laṅ|Ā|2|pl": [
+  "akṛṣadhvam"
+ ],
+ "06.0006|laṅ|Ā|2|sg": [
+  "akṛṣathāḥ"
+ ],
+ "06.0006|laṅ|Ā|3|du": [
+  "akṛṣetām"
+ ],
+ "06.0006|laṅ|Ā|3|pl": [
+  "akṛṣanta"
+ ],
+ "06.0006|laṅ|Ā|3|sg": [
+  "akṛṣata"
+ ],
+ "06.0006|laṭ|P|1|du": [
+  "kṛṣāvaḥ"
+ ],
+ "06.0006|laṭ|P|1|pl": [
+  "kṛṣāmaḥ"
+ ],
+ "06.0006|laṭ|P|1|sg": [
+  "kṛṣāmi"
+ ],
+ "06.0006|laṭ|P|2|du": [
+  "kṛṣathaḥ"
+ ],
+ "06.0006|laṭ|P|2|pl": [
+  "kṛṣatha"
+ ],
+ "06.0006|laṭ|P|2|sg": [
+  "kṛṣasi"
+ ],
+ "06.0006|laṭ|P|3|du": [
+  "kṛṣataḥ"
+ ],
+ "06.0006|laṭ|P|3|pl": [
+  "kṛṣanti"
+ ],
+ "06.0006|laṭ|P|3|sg": [
+  "kṛṣati"
+ ],
+ "06.0006|laṭ|Ā|1|du": [
+  "kṛṣāvahe"
+ ],
+ "06.0006|laṭ|Ā|1|pl": [
+  "kṛṣāmahe"
+ ],
+ "06.0006|laṭ|Ā|1|sg": [
+  "kṛṣe"
+ ],
+ "06.0006|laṭ|Ā|2|du": [
+  "kṛṣethe"
+ ],
+ "06.0006|laṭ|Ā|2|pl": [
+  "kṛṣadhve"
+ ],
+ "06.0006|laṭ|Ā|2|sg": [
+  "kṛṣase"
+ ],
+ "06.0006|laṭ|Ā|3|du": [
+  "kṛṣete"
+ ],
+ "06.0006|laṭ|Ā|3|pl": [
+  "kṛṣante"
+ ],
+ "06.0006|laṭ|Ā|3|sg": [
+  "kṛṣate"
+ ],
+ "06.0007|laṅ|P|1|du": [
+  "ārṣāva"
+ ],
+ "06.0007|laṅ|P|1|pl": [
+  "ārṣāma"
+ ],
+ "06.0007|laṅ|P|1|sg": [
+  "ārṣam"
+ ],
+ "06.0007|laṅ|P|2|du": [
+  "ārṣatam"
+ ],
+ "06.0007|laṅ|P|2|pl": [
+  "ārṣata"
+ ],
+ "06.0007|laṅ|P|2|sg": [
+  "ārṣaḥ"
+ ],
+ "06.0007|laṅ|P|3|du": [
+  "ārṣatām"
+ ],
+ "06.0007|laṅ|P|3|pl": [
+  "ārṣan"
+ ],
+ "06.0007|laṅ|P|3|sg": [
+  "ārṣat",
+  "ārṣad"
+ ],
+ "06.0007|laṭ|P|1|du": [
+  "ṛṣāvaḥ"
+ ],
+ "06.0007|laṭ|P|1|pl": [
+  "ṛṣāmaḥ"
+ ],
+ "06.0007|laṭ|P|1|sg": [
+  "ṛṣāmi"
+ ],
+ "06.0007|laṭ|P|2|du": [
+  "ṛṣathaḥ"
+ ],
+ "06.0007|laṭ|P|2|pl": [
+  "ṛṣatha"
+ ],
+ "06.0007|laṭ|P|2|sg": [
+  "ṛṣasi"
+ ],
+ "06.0007|laṭ|P|3|du": [
+  "ṛṣataḥ"
+ ],
+ "06.0007|laṭ|P|3|pl": [
+  "ṛṣanti"
+ ],
+ "06.0007|laṭ|P|3|sg": [
+  "ṛṣati"
+ ],
+ "06.0008|laṅ|Ā|1|du": [
+  "ajuṣāvahi"
+ ],
+ "06.0008|laṅ|Ā|1|pl": [
+  "ajuṣāmahi"
+ ],
+ "06.0008|laṅ|Ā|1|sg": [
+  "ajuṣe"
+ ],
+ "06.0008|laṅ|Ā|2|du": [
+  "ajuṣethām"
+ ],
+ "06.0008|laṅ|Ā|2|pl": [
+  "ajuṣadhvam"
+ ],
+ "06.0008|laṅ|Ā|2|sg": [
+  "ajuṣathāḥ"
+ ],
+ "06.0008|laṅ|Ā|3|du": [
+  "ajuṣetām"
+ ],
+ "06.0008|laṅ|Ā|3|pl": [
+  "ajuṣanta"
+ ],
+ "06.0008|laṅ|Ā|3|sg": [
+  "ajuṣata"
+ ],
+ "06.0008|laṭ|Ā|1|du": [
+  "juṣāvahe"
+ ],
+ "06.0008|laṭ|Ā|1|pl": [
+  "juṣāmahe"
+ ],
+ "06.0008|laṭ|Ā|1|sg": [
+  "juṣe"
+ ],
+ "06.0008|laṭ|Ā|2|du": [
+  "juṣethe"
+ ],
+ "06.0008|laṭ|Ā|2|pl": [
+  "juṣadhve"
+ ],
+ "06.0008|laṭ|Ā|2|sg": [
+  "juṣase"
+ ],
+ "06.0008|laṭ|Ā|3|du": [
+  "juṣete"
+ ],
+ "06.0008|laṭ|Ā|3|pl": [
+  "juṣante"
+ ],
+ "06.0008|laṭ|Ā|3|sg": [
+  "juṣate"
+ ],
+ "06.0009|laṅ|Ā|1|du": [
+  "avijāvahi"
+ ],
+ "06.0009|laṅ|Ā|1|pl": [
+  "avijāmahi"
+ ],
+ "06.0009|laṅ|Ā|1|sg": [
+  "avije"
+ ],
+ "06.0009|laṅ|Ā|2|du": [
+  "avijethām"
+ ],
+ "06.0009|laṅ|Ā|2|pl": [
+  "avijadhvam"
+ ],
+ "06.0009|laṅ|Ā|2|sg": [
+  "avijathāḥ"
+ ],
+ "06.0009|laṅ|Ā|3|du": [
+  "avijetām"
+ ],
+ "06.0009|laṅ|Ā|3|pl": [
+  "avijanta"
+ ],
+ "06.0009|laṅ|Ā|3|sg": [
+  "avijata"
+ ],
+ "06.0009|laṭ|Ā|1|du": [
+  "vijāvahe"
+ ],
+ "06.0009|laṭ|Ā|1|pl": [
+  "vijāmahe"
+ ],
+ "06.0009|laṭ|Ā|1|sg": [
+  "vije"
+ ],
+ "06.0009|laṭ|Ā|2|du": [
+  "vijethe"
+ ],
+ "06.0009|laṭ|Ā|2|pl": [
+  "vijadhve"
+ ],
+ "06.0009|laṭ|Ā|2|sg": [
+  "vijase"
+ ],
+ "06.0009|laṭ|Ā|3|du": [
+  "vijete"
+ ],
+ "06.0009|laṭ|Ā|3|pl": [
+  "vijante"
+ ],
+ "06.0009|laṭ|Ā|3|sg": [
+  "vijate"
+ ],
+ "06.0010|laṅ|Ā|1|du": [
+  "alajāvahi"
+ ],
+ "06.0010|laṅ|Ā|1|pl": [
+  "alajāmahi"
+ ],
+ "06.0010|laṅ|Ā|1|sg": [
+  "alaje"
+ ],
+ "06.0010|laṅ|Ā|2|du": [
+  "alajethām"
+ ],
+ "06.0010|laṅ|Ā|2|pl": [
+  "alajadhvam"
+ ],
+ "06.0010|laṅ|Ā|2|sg": [
+  "alajathāḥ"
+ ],
+ "06.0010|laṅ|Ā|3|du": [
+  "alajetām"
+ ],
+ "06.0010|laṅ|Ā|3|pl": [
+  "alajanta"
+ ],
+ "06.0010|laṅ|Ā|3|sg": [
+  "alajata"
+ ],
+ "06.0010|laṭ|Ā|1|du": [
+  "lajāvahe"
+ ],
+ "06.0010|laṭ|Ā|1|pl": [
+  "lajāmahe"
+ ],
+ "06.0010|laṭ|Ā|1|sg": [
+  "laje"
+ ],
+ "06.0010|laṭ|Ā|2|du": [
+  "lajethe"
+ ],
+ "06.0010|laṭ|Ā|2|pl": [
+  "lajadhve"
+ ],
+ "06.0010|laṭ|Ā|2|sg": [
+  "lajase"
+ ],
+ "06.0010|laṭ|Ā|3|du": [
+  "lajete"
+ ],
+ "06.0010|laṭ|Ā|3|pl": [
+  "lajante"
+ ],
+ "06.0010|laṭ|Ā|3|sg": [
+  "lajate"
+ ],
+ "06.0011|laṅ|Ā|1|du": [
+  "alajjāvahi"
+ ],
+ "06.0011|laṅ|Ā|1|pl": [
+  "alajjāmahi"
+ ],
+ "06.0011|laṅ|Ā|1|sg": [
+  "alajje"
+ ],
+ "06.0011|laṅ|Ā|2|du": [
+  "alajjethām"
+ ],
+ "06.0011|laṅ|Ā|2|pl": [
+  "alajjadhvam"
+ ],
+ "06.0011|laṅ|Ā|2|sg": [
+  "alajjathāḥ"
+ ],
+ "06.0011|laṅ|Ā|3|du": [
+  "alajjetām"
+ ],
+ "06.0011|laṅ|Ā|3|pl": [
+  "alajjanta"
+ ],
+ "06.0011|laṅ|Ā|3|sg": [
+  "alajjata"
+ ],
+ "06.0011|laṭ|Ā|1|du": [
+  "lajjāvahe"
+ ],
+ "06.0011|laṭ|Ā|1|pl": [
+  "lajjāmahe"
+ ],
+ "06.0011|laṭ|Ā|1|sg": [
+  "lajje"
+ ],
+ "06.0011|laṭ|Ā|2|du": [
+  "lajjethe"
+ ],
+ "06.0011|laṭ|Ā|2|pl": [
+  "lajjadhve"
+ ],
+ "06.0011|laṭ|Ā|2|sg": [
+  "lajjase"
+ ],
+ "06.0011|laṭ|Ā|3|du": [
+  "lajjete"
+ ],
+ "06.0011|laṭ|Ā|3|pl": [
+  "lajjante"
+ ],
+ "06.0011|laṭ|Ā|3|sg": [
+  "lajjate"
+ ],
+ "06.0012|laṅ|P|1|du": [
+  "avṛścāva"
+ ],
+ "06.0012|laṅ|P|1|pl": [
+  "avṛścāma"
+ ],
+ "06.0012|laṅ|P|1|sg": [
+  "avṛścam"
+ ],
+ "06.0012|laṅ|P|2|du": [
+  "avṛścatam"
+ ],
+ "06.0012|laṅ|P|2|pl": [
+  "avṛścata"
+ ],
+ "06.0012|laṅ|P|2|sg": [
+  "avṛścaḥ"
+ ],
+ "06.0012|laṅ|P|3|du": [
+  "avṛścatām"
+ ],
+ "06.0012|laṅ|P|3|pl": [
+  "avṛścan"
+ ],
+ "06.0012|laṅ|P|3|sg": [
+  "avṛścat",
+  "avṛścad"
+ ],
+ "06.0012|laṭ|P|1|du": [
+  "vṛścāvaḥ"
+ ],
+ "06.0012|laṭ|P|1|pl": [
+  "vṛścāmaḥ"
+ ],
+ "06.0012|laṭ|P|1|sg": [
+  "vṛścāmi"
+ ],
+ "06.0012|laṭ|P|2|du": [
+  "vṛścathaḥ"
+ ],
+ "06.0012|laṭ|P|2|pl": [
+  "vṛścatha"
+ ],
+ "06.0012|laṭ|P|2|sg": [
+  "vṛścasi"
+ ],
+ "06.0012|laṭ|P|3|du": [
+  "vṛścataḥ"
+ ],
+ "06.0012|laṭ|P|3|pl": [
+  "vṛścanti"
+ ],
+ "06.0012|laṭ|P|3|sg": [
+  "vṛścati"
+ ],
+ "06.0013|laṅ|P|1|du": [
+  "avicāva"
+ ],
+ "06.0013|laṅ|P|1|pl": [
+  "avicāma"
+ ],
+ "06.0013|laṅ|P|1|sg": [
+  "avicam"
+ ],
+ "06.0013|laṅ|P|2|du": [
+  "avicatam"
+ ],
+ "06.0013|laṅ|P|2|pl": [
+  "avicata"
+ ],
+ "06.0013|laṅ|P|2|sg": [
+  "avicaḥ"
+ ],
+ "06.0013|laṅ|P|3|du": [
+  "avicatām"
+ ],
+ "06.0013|laṅ|P|3|pl": [
+  "avican"
+ ],
+ "06.0013|laṅ|P|3|sg": [
+  "avicat",
+  "avicad"
+ ],
+ "06.0013|laṭ|P|1|du": [
+  "vicāvaḥ"
+ ],
+ "06.0013|laṭ|P|1|pl": [
+  "vicāmaḥ"
+ ],
+ "06.0013|laṭ|P|1|sg": [
+  "vicāmi"
+ ],
+ "06.0013|laṭ|P|2|du": [
+  "vicathaḥ"
+ ],
+ "06.0013|laṭ|P|2|pl": [
+  "vicatha"
+ ],
+ "06.0013|laṭ|P|2|sg": [
+  "vicasi"
+ ],
+ "06.0013|laṭ|P|3|du": [
+  "vicataḥ"
+ ],
+ "06.0013|laṭ|P|3|pl": [
+  "vicanti"
+ ],
+ "06.0013|laṭ|P|3|sg": [
+  "vicati"
+ ],
+ "06.0014|laṅ|P|1|du": [
+  "auñchāva"
+ ],
+ "06.0014|laṅ|P|1|pl": [
+  "auñchāma"
+ ],
+ "06.0014|laṅ|P|1|sg": [
+  "auñcham"
+ ],
+ "06.0014|laṅ|P|2|du": [
+  "auñchatam"
+ ],
+ "06.0014|laṅ|P|2|pl": [
+  "auñchata"
+ ],
+ "06.0014|laṅ|P|2|sg": [
+  "auñchaḥ"
+ ],
+ "06.0014|laṅ|P|3|du": [
+  "auñchatām"
+ ],
+ "06.0014|laṅ|P|3|pl": [
+  "auñchan"
+ ],
+ "06.0014|laṅ|P|3|sg": [
+  "auñchat",
+  "auñchad"
+ ],
+ "06.0014|laṭ|P|1|du": [
+  "uñchāvaḥ"
+ ],
+ "06.0014|laṭ|P|1|pl": [
+  "uñchāmaḥ"
+ ],
+ "06.0014|laṭ|P|1|sg": [
+  "uñchāmi"
+ ],
+ "06.0014|laṭ|P|2|du": [
+  "uñchathaḥ"
+ ],
+ "06.0014|laṭ|P|2|pl": [
+  "uñchatha"
+ ],
+ "06.0014|laṭ|P|2|sg": [
+  "uñchasi"
+ ],
+ "06.0014|laṭ|P|3|du": [
+  "uñchataḥ"
+ ],
+ "06.0014|laṭ|P|3|pl": [
+  "uñchanti"
+ ],
+ "06.0014|laṭ|P|3|sg": [
+  "uñchati"
+ ],
+ "06.0015|laṅ|P|1|du": [
+  "aucchāva"
+ ],
+ "06.0015|laṅ|P|1|pl": [
+  "aucchāma"
+ ],
+ "06.0015|laṅ|P|1|sg": [
+  "auccham"
+ ],
+ "06.0015|laṅ|P|2|du": [
+  "aucchatam"
+ ],
+ "06.0015|laṅ|P|2|pl": [
+  "aucchata"
+ ],
+ "06.0015|laṅ|P|2|sg": [
+  "aucchaḥ"
+ ],
+ "06.0015|laṅ|P|3|du": [
+  "aucchatām"
+ ],
+ "06.0015|laṅ|P|3|pl": [
+  "aucchan"
+ ],
+ "06.0015|laṅ|P|3|sg": [
+  "aucchat",
+  "aucchad"
+ ],
+ "06.0015|laṭ|P|1|du": [
+  "ucchāvaḥ"
+ ],
+ "06.0015|laṭ|P|1|pl": [
+  "ucchāmaḥ"
+ ],
+ "06.0015|laṭ|P|1|sg": [
+  "ucchāmi"
+ ],
+ "06.0015|laṭ|P|2|du": [
+  "ucchathaḥ"
+ ],
+ "06.0015|laṭ|P|2|pl": [
+  "ucchatha"
+ ],
+ "06.0015|laṭ|P|2|sg": [
+  "ucchasi"
+ ],
+ "06.0015|laṭ|P|3|du": [
+  "ucchataḥ"
+ ],
+ "06.0015|laṭ|P|3|pl": [
+  "ucchanti"
+ ],
+ "06.0015|laṭ|P|3|sg": [
+  "ucchati"
+ ],
+ "06.0016|laṅ|P|1|du": [
+  "ārchāva",
+  "ārcchāva"
+ ],
+ "06.0016|laṅ|P|1|pl": [
+  "ārchāma",
+  "ārcchāma"
+ ],
+ "06.0016|laṅ|P|1|sg": [
+  "ārcham",
+  "ārccham"
+ ],
+ "06.0016|laṅ|P|2|du": [
+  "ārchatam",
+  "ārcchatam"
+ ],
+ "06.0016|laṅ|P|2|pl": [
+  "ārchata",
+  "ārcchata"
+ ],
+ "06.0016|laṅ|P|2|sg": [
+  "ārchaḥ",
+  "ārcchaḥ"
+ ],
+ "06.0016|laṅ|P|3|du": [
+  "ārchatām",
+  "ārcchatām"
+ ],
+ "06.0016|laṅ|P|3|pl": [
+  "ārchan",
+  "ārcchan"
+ ],
+ "06.0016|laṅ|P|3|sg": [
+  "ārchat",
+  "ārcchat",
+  "ārchad",
+  "ārcchad"
+ ],
+ "06.0016|laṭ|P|1|du": [
+  "ṛcchāvaḥ"
+ ],
+ "06.0016|laṭ|P|1|pl": [
+  "ṛcchāmaḥ"
+ ],
+ "06.0016|laṭ|P|1|sg": [
+  "ṛcchāmi"
+ ],
+ "06.0016|laṭ|P|2|du": [
+  "ṛcchathaḥ"
+ ],
+ "06.0016|laṭ|P|2|pl": [
+  "ṛcchatha"
+ ],
+ "06.0016|laṭ|P|2|sg": [
+  "ṛcchasi"
+ ],
+ "06.0016|laṭ|P|3|du": [
+  "ṛcchataḥ"
+ ],
+ "06.0016|laṭ|P|3|pl": [
+  "ṛcchanti"
+ ],
+ "06.0016|laṭ|P|3|sg": [
+  "ṛcchati"
+ ],
+ "06.0017|laṅ|P|1|du": [
+  "amicchāva"
+ ],
+ "06.0017|laṅ|P|1|pl": [
+  "amicchāma"
+ ],
+ "06.0017|laṅ|P|1|sg": [
+  "amiccham"
+ ],
+ "06.0017|laṅ|P|2|du": [
+  "amicchatam"
+ ],
+ "06.0017|laṅ|P|2|pl": [
+  "amicchata"
+ ],
+ "06.0017|laṅ|P|2|sg": [
+  "amicchaḥ"
+ ],
+ "06.0017|laṅ|P|3|du": [
+  "amicchatām"
+ ],
+ "06.0017|laṅ|P|3|pl": [
+  "amicchan"
+ ],
+ "06.0017|laṅ|P|3|sg": [
+  "amicchat",
+  "amicchad"
+ ],
+ "06.0017|laṭ|P|1|du": [
+  "micchāvaḥ"
+ ],
+ "06.0017|laṭ|P|1|pl": [
+  "micchāmaḥ"
+ ],
+ "06.0017|laṭ|P|1|sg": [
+  "micchāmi"
+ ],
+ "06.0017|laṭ|P|2|du": [
+  "micchathaḥ"
+ ],
+ "06.0017|laṭ|P|2|pl": [
+  "micchatha"
+ ],
+ "06.0017|laṭ|P|2|sg": [
+  "micchasi"
+ ],
+ "06.0017|laṭ|P|3|du": [
+  "micchataḥ"
+ ],
+ "06.0017|laṭ|P|3|pl": [
+  "micchanti"
+ ],
+ "06.0017|laṭ|P|3|sg": [
+  "micchati"
+ ],
+ "06.0018|laṅ|P|1|du": [
+  "ajarjāva"
+ ],
+ "06.0018|laṅ|P|1|pl": [
+  "ajarjāma"
+ ],
+ "06.0018|laṅ|P|1|sg": [
+  "ajarjam"
+ ],
+ "06.0018|laṅ|P|2|du": [
+  "ajarjatam"
+ ],
+ "06.0018|laṅ|P|2|pl": [
+  "ajarjata"
+ ],
+ "06.0018|laṅ|P|2|sg": [
+  "ajarjaḥ"
+ ],
+ "06.0018|laṅ|P|3|du": [
+  "ajarjatām"
+ ],
+ "06.0018|laṅ|P|3|pl": [
+  "ajarjan"
+ ],
+ "06.0018|laṅ|P|3|sg": [
+  "ajarjat",
+  "ajarjad"
+ ],
+ "06.0018|laṭ|P|1|du": [
+  "jarjāvaḥ"
+ ],
+ "06.0018|laṭ|P|1|pl": [
+  "jarjāmaḥ"
+ ],
+ "06.0018|laṭ|P|1|sg": [
+  "jarjāmi"
+ ],
+ "06.0018|laṭ|P|2|du": [
+  "jarjathaḥ"
+ ],
+ "06.0018|laṭ|P|2|pl": [
+  "jarjatha"
+ ],
+ "06.0018|laṭ|P|2|sg": [
+  "jarjasi"
+ ],
+ "06.0018|laṭ|P|3|du": [
+  "jarjataḥ"
+ ],
+ "06.0018|laṭ|P|3|pl": [
+  "jarjanti"
+ ],
+ "06.0018|laṭ|P|3|sg": [
+  "jarjati"
+ ],
+ "06.0019|laṅ|P|1|du": [
+  "acarcāva"
+ ],
+ "06.0019|laṅ|P|1|pl": [
+  "acarcāma"
+ ],
+ "06.0019|laṅ|P|1|sg": [
+  "acarcam"
+ ],
+ "06.0019|laṅ|P|2|du": [
+  "acarcatam"
+ ],
+ "06.0019|laṅ|P|2|pl": [
+  "acarcata"
+ ],
+ "06.0019|laṅ|P|2|sg": [
+  "acarcaḥ"
+ ],
+ "06.0019|laṅ|P|3|du": [
+  "acarcatām"
+ ],
+ "06.0019|laṅ|P|3|pl": [
+  "acarcan"
+ ],
+ "06.0019|laṅ|P|3|sg": [
+  "acarcat",
+  "acarcad"
+ ],
+ "06.0019|laṭ|P|1|du": [
+  "carcāvaḥ"
+ ],
+ "06.0019|laṭ|P|1|pl": [
+  "carcāmaḥ"
+ ],
+ "06.0019|laṭ|P|1|sg": [
+  "carcāmi"
+ ],
+ "06.0019|laṭ|P|2|du": [
+  "carcathaḥ"
+ ],
+ "06.0019|laṭ|P|2|pl": [
+  "carcatha"
+ ],
+ "06.0019|laṭ|P|2|sg": [
+  "carcasi"
+ ],
+ "06.0019|laṭ|P|3|du": [
+  "carcataḥ"
+ ],
+ "06.0019|laṭ|P|3|pl": [
+  "carcanti"
+ ],
+ "06.0019|laṭ|P|3|sg": [
+  "carcati"
+ ],
+ "06.0020|laṅ|P|1|du": [
+  "ajharjhāva"
+ ],
+ "06.0020|laṅ|P|1|pl": [
+  "ajharjhāma"
+ ],
+ "06.0020|laṅ|P|1|sg": [
+  "ajharjham"
+ ],
+ "06.0020|laṅ|P|2|du": [
+  "ajharjhatam"
+ ],
+ "06.0020|laṅ|P|2|pl": [
+  "ajharjhata"
+ ],
+ "06.0020|laṅ|P|2|sg": [
+  "ajharjhaḥ"
+ ],
+ "06.0020|laṅ|P|3|du": [
+  "ajharjhatām"
+ ],
+ "06.0020|laṅ|P|3|pl": [
+  "ajharjhan"
+ ],
+ "06.0020|laṅ|P|3|sg": [
+  "ajharjhat",
+  "ajharjhad"
+ ],
+ "06.0020|laṭ|P|1|du": [
+  "jharjhāvaḥ"
+ ],
+ "06.0020|laṭ|P|1|pl": [
+  "jharjhāmaḥ"
+ ],
+ "06.0020|laṭ|P|1|sg": [
+  "jharjhāmi"
+ ],
+ "06.0020|laṭ|P|2|du": [
+  "jharjhathaḥ"
+ ],
+ "06.0020|laṭ|P|2|pl": [
+  "jharjhatha"
+ ],
+ "06.0020|laṭ|P|2|sg": [
+  "jharjhasi"
+ ],
+ "06.0020|laṭ|P|3|du": [
+  "jharjhataḥ"
+ ],
+ "06.0020|laṭ|P|3|pl": [
+  "jharjhanti"
+ ],
+ "06.0020|laṭ|P|3|sg": [
+  "jharjhati"
+ ],
+ "06.0021|laṅ|P|1|du": [
+  "atvacāva"
+ ],
+ "06.0021|laṅ|P|1|pl": [
+  "atvacāma"
+ ],
+ "06.0021|laṅ|P|1|sg": [
+  "atvacam"
+ ],
+ "06.0021|laṅ|P|2|du": [
+  "atvacatam"
+ ],
+ "06.0021|laṅ|P|2|pl": [
+  "atvacata"
+ ],
+ "06.0021|laṅ|P|2|sg": [
+  "atvacaḥ"
+ ],
+ "06.0021|laṅ|P|3|du": [
+  "atvacatām"
+ ],
+ "06.0021|laṅ|P|3|pl": [
+  "atvacan"
+ ],
+ "06.0021|laṅ|P|3|sg": [
+  "atvacat",
+  "atvacad"
+ ],
+ "06.0021|laṭ|P|1|du": [
+  "tvacāvaḥ"
+ ],
+ "06.0021|laṭ|P|1|pl": [
+  "tvacāmaḥ"
+ ],
+ "06.0021|laṭ|P|1|sg": [
+  "tvacāmi"
+ ],
+ "06.0021|laṭ|P|2|du": [
+  "tvacathaḥ"
+ ],
+ "06.0021|laṭ|P|2|pl": [
+  "tvacatha"
+ ],
+ "06.0021|laṭ|P|2|sg": [
+  "tvacasi"
+ ],
+ "06.0021|laṭ|P|3|du": [
+  "tvacataḥ"
+ ],
+ "06.0021|laṭ|P|3|pl": [
+  "tvacanti"
+ ],
+ "06.0021|laṭ|P|3|sg": [
+  "tvacati"
+ ],
+ "06.0022|laṅ|P|1|du": [
+  "ārcāva"
+ ],
+ "06.0022|laṅ|P|1|pl": [
+  "ārcāma"
+ ],
+ "06.0022|laṅ|P|1|sg": [
+  "ārcam"
+ ],
+ "06.0022|laṅ|P|2|du": [
+  "ārcatam"
+ ],
+ "06.0022|laṅ|P|2|pl": [
+  "ārcata"
+ ],
+ "06.0022|laṅ|P|2|sg": [
+  "ārcaḥ"
+ ],
+ "06.0022|laṅ|P|3|du": [
+  "ārcatām"
+ ],
+ "06.0022|laṅ|P|3|pl": [
+  "ārcan"
+ ],
+ "06.0022|laṅ|P|3|sg": [
+  "ārcat",
+  "ārcad"
+ ],
+ "06.0022|laṭ|P|1|du": [
+  "ṛcāvaḥ"
+ ],
+ "06.0022|laṭ|P|1|pl": [
+  "ṛcāmaḥ"
+ ],
+ "06.0022|laṭ|P|1|sg": [
+  "ṛcāmi"
+ ],
+ "06.0022|laṭ|P|2|du": [
+  "ṛcathaḥ"
+ ],
+ "06.0022|laṭ|P|2|pl": [
+  "ṛcatha"
+ ],
+ "06.0022|laṭ|P|2|sg": [
+  "ṛcasi"
+ ],
+ "06.0022|laṭ|P|3|du": [
+  "ṛcataḥ"
+ ],
+ "06.0022|laṭ|P|3|pl": [
+  "ṛcanti"
+ ],
+ "06.0022|laṭ|P|3|sg": [
+  "ṛcati"
+ ],
+ "06.0023|laṅ|P|1|du": [
+  "aubjāva"
+ ],
+ "06.0023|laṅ|P|1|pl": [
+  "aubjāma"
+ ],
+ "06.0023|laṅ|P|1|sg": [
+  "aubjam"
+ ],
+ "06.0023|laṅ|P|2|du": [
+  "aubjatam"
+ ],
+ "06.0023|laṅ|P|2|pl": [
+  "aubjata"
+ ],
+ "06.0023|laṅ|P|2|sg": [
+  "aubjaḥ"
+ ],
+ "06.0023|laṅ|P|3|du": [
+  "aubjatām"
+ ],
+ "06.0023|laṅ|P|3|pl": [
+  "aubjan"
+ ],
+ "06.0023|laṅ|P|3|sg": [
+  "aubjat",
+  "aubjad"
+ ],
+ "06.0023|laṭ|P|1|du": [
+  "ubjāvaḥ"
+ ],
+ "06.0023|laṭ|P|1|pl": [
+  "ubjāmaḥ"
+ ],
+ "06.0023|laṭ|P|1|sg": [
+  "ubjāmi"
+ ],
+ "06.0023|laṭ|P|2|du": [
+  "ubjathaḥ"
+ ],
+ "06.0023|laṭ|P|2|pl": [
+  "ubjatha"
+ ],
+ "06.0023|laṭ|P|2|sg": [
+  "ubjasi"
+ ],
+ "06.0023|laṭ|P|3|du": [
+  "ubjataḥ"
+ ],
+ "06.0023|laṭ|P|3|pl": [
+  "ubjanti"
+ ],
+ "06.0023|laṭ|P|3|sg": [
+  "ubjati"
+ ],
+ "06.0024|laṅ|P|1|du": [
+  "aujjhāva"
+ ],
+ "06.0024|laṅ|P|1|pl": [
+  "aujjhāma"
+ ],
+ "06.0024|laṅ|P|1|sg": [
+  "aujjham"
+ ],
+ "06.0024|laṅ|P|2|du": [
+  "aujjhatam"
+ ],
+ "06.0024|laṅ|P|2|pl": [
+  "aujjhata"
+ ],
+ "06.0024|laṅ|P|2|sg": [
+  "aujjhaḥ"
+ ],
+ "06.0024|laṅ|P|3|du": [
+  "aujjhatām"
+ ],
+ "06.0024|laṅ|P|3|pl": [
+  "aujjhan"
+ ],
+ "06.0024|laṅ|P|3|sg": [
+  "aujjhat",
+  "aujjhad"
+ ],
+ "06.0024|laṭ|P|1|du": [
+  "ujjhāvaḥ"
+ ],
+ "06.0024|laṭ|P|1|pl": [
+  "ujjhāmaḥ"
+ ],
+ "06.0024|laṭ|P|1|sg": [
+  "ujjhāmi"
+ ],
+ "06.0024|laṭ|P|2|du": [
+  "ujjhathaḥ"
+ ],
+ "06.0024|laṭ|P|2|pl": [
+  "ujjhatha"
+ ],
+ "06.0024|laṭ|P|2|sg": [
+  "ujjhasi"
+ ],
+ "06.0024|laṭ|P|3|du": [
+  "ujjhataḥ"
+ ],
+ "06.0024|laṭ|P|3|pl": [
+  "ujjhanti"
+ ],
+ "06.0024|laṭ|P|3|sg": [
+  "ujjhati"
+ ],
+ "06.0025|laṅ|P|1|du": [
+  "alubhāva"
+ ],
+ "06.0025|laṅ|P|1|pl": [
+  "alubhāma"
+ ],
+ "06.0025|laṅ|P|1|sg": [
+  "alubham"
+ ],
+ "06.0025|laṅ|P|2|du": [
+  "alubhatam"
+ ],
+ "06.0025|laṅ|P|2|pl": [
+  "alubhata"
+ ],
+ "06.0025|laṅ|P|2|sg": [
+  "alubhaḥ"
+ ],
+ "06.0025|laṅ|P|3|du": [
+  "alubhatām"
+ ],
+ "06.0025|laṅ|P|3|pl": [
+  "alubhan"
+ ],
+ "06.0025|laṅ|P|3|sg": [
+  "alubhat",
+  "alubhad"
+ ],
+ "06.0025|laṭ|P|1|du": [
+  "lubhāvaḥ"
+ ],
+ "06.0025|laṭ|P|1|pl": [
+  "lubhāmaḥ"
+ ],
+ "06.0025|laṭ|P|1|sg": [
+  "lubhāmi"
+ ],
+ "06.0025|laṭ|P|2|du": [
+  "lubhathaḥ"
+ ],
+ "06.0025|laṭ|P|2|pl": [
+  "lubhatha"
+ ],
+ "06.0025|laṭ|P|2|sg": [
+  "lubhasi"
+ ],
+ "06.0025|laṭ|P|3|du": [
+  "lubhataḥ"
+ ],
+ "06.0025|laṭ|P|3|pl": [
+  "lubhanti"
+ ],
+ "06.0025|laṭ|P|3|sg": [
+  "lubhati"
+ ],
+ "06.0026|laṅ|P|1|du": [
+  "ariphāva"
+ ],
+ "06.0026|laṅ|P|1|pl": [
+  "ariphāma"
+ ],
+ "06.0026|laṅ|P|1|sg": [
+  "aripham"
+ ],
+ "06.0026|laṅ|P|2|du": [
+  "ariphatam"
+ ],
+ "06.0026|laṅ|P|2|pl": [
+  "ariphata"
+ ],
+ "06.0026|laṅ|P|2|sg": [
+  "ariphaḥ"
+ ],
+ "06.0026|laṅ|P|3|du": [
+  "ariphatām"
+ ],
+ "06.0026|laṅ|P|3|pl": [
+  "ariphan"
+ ],
+ "06.0026|laṅ|P|3|sg": [
+  "ariphat",
+  "ariphad"
+ ],
+ "06.0026|laṭ|P|1|du": [
+  "riphāvaḥ"
+ ],
+ "06.0026|laṭ|P|1|pl": [
+  "riphāmaḥ"
+ ],
+ "06.0026|laṭ|P|1|sg": [
+  "riphāmi"
+ ],
+ "06.0026|laṭ|P|2|du": [
+  "riphathaḥ"
+ ],
+ "06.0026|laṭ|P|2|pl": [
+  "riphatha"
+ ],
+ "06.0026|laṭ|P|2|sg": [
+  "riphasi"
+ ],
+ "06.0026|laṭ|P|3|du": [
+  "riphataḥ"
+ ],
+ "06.0026|laṭ|P|3|pl": [
+  "riphanti"
+ ],
+ "06.0026|laṭ|P|3|sg": [
+  "riphati"
+ ],
+ "06.0027|laṅ|P|1|du": [
+  "arihāva"
+ ],
+ "06.0027|laṅ|P|1|pl": [
+  "arihāma"
+ ],
+ "06.0027|laṅ|P|1|sg": [
+  "ariham"
+ ],
+ "06.0027|laṅ|P|2|du": [
+  "arihatam"
+ ],
+ "06.0027|laṅ|P|2|pl": [
+  "arihata"
+ ],
+ "06.0027|laṅ|P|2|sg": [
+  "arihaḥ"
+ ],
+ "06.0027|laṅ|P|3|du": [
+  "arihatām"
+ ],
+ "06.0027|laṅ|P|3|pl": [
+  "arihan"
+ ],
+ "06.0027|laṅ|P|3|sg": [
+  "arihat",
+  "arihad"
+ ],
+ "06.0027|laṭ|P|1|du": [
+  "rihāvaḥ"
+ ],
+ "06.0027|laṭ|P|1|pl": [
+  "rihāmaḥ"
+ ],
+ "06.0027|laṭ|P|1|sg": [
+  "rihāmi"
+ ],
+ "06.0027|laṭ|P|2|du": [
+  "rihathaḥ"
+ ],
+ "06.0027|laṭ|P|2|pl": [
+  "rihatha"
+ ],
+ "06.0027|laṭ|P|2|sg": [
+  "rihasi"
+ ],
+ "06.0027|laṭ|P|3|du": [
+  "rihataḥ"
+ ],
+ "06.0027|laṭ|P|3|pl": [
+  "rihanti"
+ ],
+ "06.0027|laṭ|P|3|sg": [
+  "rihati"
+ ],
+ "06.0028|laṅ|P|1|du": [
+  "atṛpāva"
+ ],
+ "06.0028|laṅ|P|1|pl": [
+  "atṛpāma"
+ ],
+ "06.0028|laṅ|P|1|sg": [
+  "atṛpam"
+ ],
+ "06.0028|laṅ|P|2|du": [
+  "atṛpatam"
+ ],
+ "06.0028|laṅ|P|2|pl": [
+  "atṛpata"
+ ],
+ "06.0028|laṅ|P|2|sg": [
+  "atṛpaḥ"
+ ],
+ "06.0028|laṅ|P|3|du": [
+  "atṛpatām"
+ ],
+ "06.0028|laṅ|P|3|pl": [
+  "atṛpan"
+ ],
+ "06.0028|laṅ|P|3|sg": [
+  "atṛpat",
+  "atṛpad"
+ ],
+ "06.0028|laṭ|P|1|du": [
+  "tṛpāvaḥ"
+ ],
+ "06.0028|laṭ|P|1|pl": [
+  "tṛpāmaḥ"
+ ],
+ "06.0028|laṭ|P|1|sg": [
+  "tṛpāmi"
+ ],
+ "06.0028|laṭ|P|2|du": [
+  "tṛpathaḥ"
+ ],
+ "06.0028|laṭ|P|2|pl": [
+  "tṛpatha"
+ ],
+ "06.0028|laṭ|P|2|sg": [
+  "tṛpasi"
+ ],
+ "06.0028|laṭ|P|3|du": [
+  "tṛpataḥ"
+ ],
+ "06.0028|laṭ|P|3|pl": [
+  "tṛpanti"
+ ],
+ "06.0028|laṭ|P|3|sg": [
+  "tṛpati"
+ ],
+ "06.0029|laṅ|P|1|du": [
+  "ārhāva"
+ ],
+ "06.0029|laṅ|P|1|pl": [
+  "ārhāma"
+ ],
+ "06.0029|laṅ|P|1|sg": [
+  "ārham"
+ ],
+ "06.0029|laṅ|P|2|du": [
+  "ārhatam"
+ ],
+ "06.0029|laṅ|P|2|pl": [
+  "ārhata"
+ ],
+ "06.0029|laṅ|P|2|sg": [
+  "ārhaḥ"
+ ],
+ "06.0029|laṅ|P|3|du": [
+  "ārhatām"
+ ],
+ "06.0029|laṅ|P|3|pl": [
+  "ārhan"
+ ],
+ "06.0029|laṅ|P|3|sg": [
+  "ārhat",
+  "ārhad"
+ ],
+ "06.0029|laṭ|P|1|du": [
+  "ṛhāvaḥ"
+ ],
+ "06.0029|laṭ|P|1|pl": [
+  "ṛhāmaḥ"
+ ],
+ "06.0029|laṭ|P|1|sg": [
+  "ṛhāmi"
+ ],
+ "06.0029|laṭ|P|2|du": [
+  "ṛhathaḥ"
+ ],
+ "06.0029|laṭ|P|2|pl": [
+  "ṛhatha"
+ ],
+ "06.0029|laṭ|P|2|sg": [
+  "ṛhasi"
+ ],
+ "06.0029|laṭ|P|3|du": [
+  "ṛhataḥ"
+ ],
+ "06.0029|laṭ|P|3|pl": [
+  "ṛhanti"
+ ],
+ "06.0029|laṭ|P|3|sg": [
+  "ṛhati"
+ ],
+ "06.0030|laṅ|P|1|du": [
+  "atṛphāva"
+ ],
+ "06.0030|laṅ|P|1|pl": [
+  "atṛphāma"
+ ],
+ "06.0030|laṅ|P|1|sg": [
+  "atṛpham"
+ ],
+ "06.0030|laṅ|P|2|du": [
+  "atṛphatam"
+ ],
+ "06.0030|laṅ|P|2|pl": [
+  "atṛphata"
+ ],
+ "06.0030|laṅ|P|2|sg": [
+  "atṛphaḥ"
+ ],
+ "06.0030|laṅ|P|3|du": [
+  "atṛphatām"
+ ],
+ "06.0030|laṅ|P|3|pl": [
+  "atṛphan"
+ ],
+ "06.0030|laṅ|P|3|sg": [
+  "atṛphat",
+  "atṛphad"
+ ],
+ "06.0030|laṭ|P|1|du": [
+  "tṛphāvaḥ"
+ ],
+ "06.0030|laṭ|P|1|pl": [
+  "tṛphāmaḥ"
+ ],
+ "06.0030|laṭ|P|1|sg": [
+  "tṛphāmi"
+ ],
+ "06.0030|laṭ|P|2|du": [
+  "tṛphathaḥ"
+ ],
+ "06.0030|laṭ|P|2|pl": [
+  "tṛphatha"
+ ],
+ "06.0030|laṭ|P|2|sg": [
+  "tṛphasi"
+ ],
+ "06.0030|laṭ|P|3|du": [
+  "tṛphataḥ"
+ ],
+ "06.0030|laṭ|P|3|pl": [
+  "tṛphanti"
+ ],
+ "06.0030|laṭ|P|3|sg": [
+  "tṛphati"
+ ],
+ "06.0031|laṅ|P|1|du": [
+  "atṛmphāva"
+ ],
+ "06.0031|laṅ|P|1|pl": [
+  "atṛmphāma"
+ ],
+ "06.0031|laṅ|P|1|sg": [
+  "atṛmpham"
+ ],
+ "06.0031|laṅ|P|2|du": [
+  "atṛmphatam"
+ ],
+ "06.0031|laṅ|P|2|pl": [
+  "atṛmphata"
+ ],
+ "06.0031|laṅ|P|2|sg": [
+  "atṛmphaḥ"
+ ],
+ "06.0031|laṅ|P|3|du": [
+  "atṛmphatām"
+ ],
+ "06.0031|laṅ|P|3|pl": [
+  "atṛmphan"
+ ],
+ "06.0031|laṅ|P|3|sg": [
+  "atṛmphat",
+  "atṛmphad"
+ ],
+ "06.0031|laṭ|P|1|du": [
+  "tṛmphāvaḥ"
+ ],
+ "06.0031|laṭ|P|1|pl": [
+  "tṛmphāmaḥ"
+ ],
+ "06.0031|laṭ|P|1|sg": [
+  "tṛmphāmi"
+ ],
+ "06.0031|laṭ|P|2|du": [
+  "tṛmphathaḥ"
+ ],
+ "06.0031|laṭ|P|2|pl": [
+  "tṛmphatha"
+ ],
+ "06.0031|laṭ|P|2|sg": [
+  "tṛmphasi"
+ ],
+ "06.0031|laṭ|P|3|du": [
+  "tṛmphataḥ"
+ ],
+ "06.0031|laṭ|P|3|pl": [
+  "tṛmphanti"
+ ],
+ "06.0031|laṭ|P|3|sg": [
+  "tṛmphati"
+ ],
+ "06.0032|laṅ|P|1|du": [
+  "atupāva"
+ ],
+ "06.0032|laṅ|P|1|pl": [
+  "atupāma"
+ ],
+ "06.0032|laṅ|P|1|sg": [
+  "atupam"
+ ],
+ "06.0032|laṅ|P|2|du": [
+  "atupatam"
+ ],
+ "06.0032|laṅ|P|2|pl": [
+  "atupata"
+ ],
+ "06.0032|laṅ|P|2|sg": [
+  "atupaḥ"
+ ],
+ "06.0032|laṅ|P|3|du": [
+  "atupatām"
+ ],
+ "06.0032|laṅ|P|3|pl": [
+  "atupan"
+ ],
+ "06.0032|laṅ|P|3|sg": [
+  "atupat",
+  "atupad"
+ ],
+ "06.0032|laṭ|P|1|du": [
+  "tupāvaḥ"
+ ],
+ "06.0032|laṭ|P|1|pl": [
+  "tupāmaḥ"
+ ],
+ "06.0032|laṭ|P|1|sg": [
+  "tupāmi"
+ ],
+ "06.0032|laṭ|P|2|du": [
+  "tupathaḥ"
+ ],
+ "06.0032|laṭ|P|2|pl": [
+  "tupatha"
+ ],
+ "06.0032|laṭ|P|2|sg": [
+  "tupasi"
+ ],
+ "06.0032|laṭ|P|3|du": [
+  "tupataḥ"
+ ],
+ "06.0032|laṭ|P|3|pl": [
+  "tupanti"
+ ],
+ "06.0032|laṭ|P|3|sg": [
+  "tupati"
+ ],
+ "06.0033|laṅ|P|1|du": [
+  "atumpāva"
+ ],
+ "06.0033|laṅ|P|1|pl": [
+  "atumpāma"
+ ],
+ "06.0033|laṅ|P|1|sg": [
+  "atumpam"
+ ],
+ "06.0033|laṅ|P|2|du": [
+  "atumpatam"
+ ],
+ "06.0033|laṅ|P|2|pl": [
+  "atumpata"
+ ],
+ "06.0033|laṅ|P|2|sg": [
+  "atumpaḥ"
+ ],
+ "06.0033|laṅ|P|3|du": [
+  "atumpatām"
+ ],
+ "06.0033|laṅ|P|3|pl": [
+  "atumpan"
+ ],
+ "06.0033|laṅ|P|3|sg": [
+  "atumpat",
+  "atumpad"
+ ],
+ "06.0033|laṭ|P|1|du": [
+  "tumpāvaḥ"
+ ],
+ "06.0033|laṭ|P|1|pl": [
+  "tumpāmaḥ"
+ ],
+ "06.0033|laṭ|P|1|sg": [
+  "tumpāmi"
+ ],
+ "06.0033|laṭ|P|2|du": [
+  "tumpathaḥ"
+ ],
+ "06.0033|laṭ|P|2|pl": [
+  "tumpatha"
+ ],
+ "06.0033|laṭ|P|2|sg": [
+  "tumpasi"
+ ],
+ "06.0033|laṭ|P|3|du": [
+  "tumpataḥ"
+ ],
+ "06.0033|laṭ|P|3|pl": [
+  "tumpanti"
+ ],
+ "06.0033|laṭ|P|3|sg": [
+  "tumpati"
+ ],
+ "06.0034|laṅ|P|1|du": [
+  "atuphāva"
+ ],
+ "06.0034|laṅ|P|1|pl": [
+  "atuphāma"
+ ],
+ "06.0034|laṅ|P|1|sg": [
+  "atupham"
+ ],
+ "06.0034|laṅ|P|2|du": [
+  "atuphatam"
+ ],
+ "06.0034|laṅ|P|2|pl": [
+  "atuphata"
+ ],
+ "06.0034|laṅ|P|2|sg": [
+  "atuphaḥ"
+ ],
+ "06.0034|laṅ|P|3|du": [
+  "atuphatām"
+ ],
+ "06.0034|laṅ|P|3|pl": [
+  "atuphan"
+ ],
+ "06.0034|laṅ|P|3|sg": [
+  "atuphat",
+  "atuphad"
+ ],
+ "06.0034|laṭ|P|1|du": [
+  "tuphāvaḥ"
+ ],
+ "06.0034|laṭ|P|1|pl": [
+  "tuphāmaḥ"
+ ],
+ "06.0034|laṭ|P|1|sg": [
+  "tuphāmi"
+ ],
+ "06.0034|laṭ|P|2|du": [
+  "tuphathaḥ"
+ ],
+ "06.0034|laṭ|P|2|pl": [
+  "tuphatha"
+ ],
+ "06.0034|laṭ|P|2|sg": [
+  "tuphasi"
+ ],
+ "06.0034|laṭ|P|3|du": [
+  "tuphataḥ"
+ ],
+ "06.0034|laṭ|P|3|pl": [
+  "tuphanti"
+ ],
+ "06.0034|laṭ|P|3|sg": [
+  "tuphati"
+ ],
+ "06.0035|laṅ|P|1|du": [
+  "atumphāva"
+ ],
+ "06.0035|laṅ|P|1|pl": [
+  "atumphāma"
+ ],
+ "06.0035|laṅ|P|1|sg": [
+  "atumpham"
+ ],
+ "06.0035|laṅ|P|2|du": [
+  "atumphatam"
+ ],
+ "06.0035|laṅ|P|2|pl": [
+  "atumphata"
+ ],
+ "06.0035|laṅ|P|2|sg": [
+  "atumphaḥ"
+ ],
+ "06.0035|laṅ|P|3|du": [
+  "atumphatām"
+ ],
+ "06.0035|laṅ|P|3|pl": [
+  "atumphan"
+ ],
+ "06.0035|laṅ|P|3|sg": [
+  "atumphat",
+  "atumphad"
+ ],
+ "06.0035|laṭ|P|1|du": [
+  "tumphāvaḥ"
+ ],
+ "06.0035|laṭ|P|1|pl": [
+  "tumphāmaḥ"
+ ],
+ "06.0035|laṭ|P|1|sg": [
+  "tumphāmi"
+ ],
+ "06.0035|laṭ|P|2|du": [
+  "tumphathaḥ"
+ ],
+ "06.0035|laṭ|P|2|pl": [
+  "tumphatha"
+ ],
+ "06.0035|laṭ|P|2|sg": [
+  "tumphasi"
+ ],
+ "06.0035|laṭ|P|3|du": [
+  "tumphataḥ"
+ ],
+ "06.0035|laṭ|P|3|pl": [
+  "tumphanti"
+ ],
+ "06.0035|laṭ|P|3|sg": [
+  "tumphati"
+ ],
+ "06.0036|laṅ|P|1|du": [
+  "adṛpāva"
+ ],
+ "06.0036|laṅ|P|1|pl": [
+  "adṛpāma"
+ ],
+ "06.0036|laṅ|P|1|sg": [
+  "adṛpam"
+ ],
+ "06.0036|laṅ|P|2|du": [
+  "adṛpatam"
+ ],
+ "06.0036|laṅ|P|2|pl": [
+  "adṛpata"
+ ],
+ "06.0036|laṅ|P|2|sg": [
+  "adṛpaḥ"
+ ],
+ "06.0036|laṅ|P|3|du": [
+  "adṛpatām"
+ ],
+ "06.0036|laṅ|P|3|pl": [
+  "adṛpan"
+ ],
+ "06.0036|laṅ|P|3|sg": [
+  "adṛpat",
+  "adṛpad"
+ ],
+ "06.0036|laṭ|P|1|du": [
+  "dṛpāvaḥ"
+ ],
+ "06.0036|laṭ|P|1|pl": [
+  "dṛpāmaḥ"
+ ],
+ "06.0036|laṭ|P|1|sg": [
+  "dṛpāmi"
+ ],
+ "06.0036|laṭ|P|2|du": [
+  "dṛpathaḥ"
+ ],
+ "06.0036|laṭ|P|2|pl": [
+  "dṛpatha"
+ ],
+ "06.0036|laṭ|P|2|sg": [
+  "dṛpasi"
+ ],
+ "06.0036|laṭ|P|3|du": [
+  "dṛpataḥ"
+ ],
+ "06.0036|laṭ|P|3|pl": [
+  "dṛpanti"
+ ],
+ "06.0036|laṭ|P|3|sg": [
+  "dṛpati"
+ ],
+ "06.0037|laṅ|P|1|du": [
+  "astṛhāva"
+ ],
+ "06.0037|laṅ|P|1|pl": [
+  "astṛhāma"
+ ],
+ "06.0037|laṅ|P|1|sg": [
+  "astṛham"
+ ],
+ "06.0037|laṅ|P|2|du": [
+  "astṛhatam"
+ ],
+ "06.0037|laṅ|P|2|pl": [
+  "astṛhata"
+ ],
+ "06.0037|laṅ|P|2|sg": [
+  "astṛhaḥ"
+ ],
+ "06.0037|laṅ|P|3|du": [
+  "astṛhatām"
+ ],
+ "06.0037|laṅ|P|3|pl": [
+  "astṛhan"
+ ],
+ "06.0037|laṅ|P|3|sg": [
+  "astṛhat",
+  "astṛhad"
+ ],
+ "06.0037|laṭ|P|1|du": [
+  "stṛhāvaḥ"
+ ],
+ "06.0037|laṭ|P|1|pl": [
+  "stṛhāmaḥ"
+ ],
+ "06.0037|laṭ|P|1|sg": [
+  "stṛhāmi"
+ ],
+ "06.0037|laṭ|P|2|du": [
+  "stṛhathaḥ"
+ ],
+ "06.0037|laṭ|P|2|pl": [
+  "stṛhatha"
+ ],
+ "06.0037|laṭ|P|2|sg": [
+  "stṛhasi"
+ ],
+ "06.0037|laṭ|P|3|du": [
+  "stṛhataḥ"
+ ],
+ "06.0037|laṭ|P|3|pl": [
+  "stṛhanti"
+ ],
+ "06.0037|laṭ|P|3|sg": [
+  "stṛhati"
+ ],
+ "06.0038|laṅ|P|1|du": [
+  "adṛphāva"
+ ],
+ "06.0038|laṅ|P|1|pl": [
+  "adṛphāma"
+ ],
+ "06.0038|laṅ|P|1|sg": [
+  "adṛpham"
+ ],
+ "06.0038|laṅ|P|2|du": [
+  "adṛphatam"
+ ],
+ "06.0038|laṅ|P|2|pl": [
+  "adṛphata"
+ ],
+ "06.0038|laṅ|P|2|sg": [
+  "adṛphaḥ"
+ ],
+ "06.0038|laṅ|P|3|du": [
+  "adṛphatām"
+ ],
+ "06.0038|laṅ|P|3|pl": [
+  "adṛphan"
+ ],
+ "06.0038|laṅ|P|3|sg": [
+  "adṛphat",
+  "adṛphad"
+ ],
+ "06.0038|laṭ|P|1|du": [
+  "dṛphāvaḥ"
+ ],
+ "06.0038|laṭ|P|1|pl": [
+  "dṛphāmaḥ"
+ ],
+ "06.0038|laṭ|P|1|sg": [
+  "dṛphāmi"
+ ],
+ "06.0038|laṭ|P|2|du": [
+  "dṛphathaḥ"
+ ],
+ "06.0038|laṭ|P|2|pl": [
+  "dṛphatha"
+ ],
+ "06.0038|laṭ|P|2|sg": [
+  "dṛphasi"
+ ],
+ "06.0038|laṭ|P|3|du": [
+  "dṛphataḥ"
+ ],
+ "06.0038|laṭ|P|3|pl": [
+  "dṛphanti"
+ ],
+ "06.0038|laṭ|P|3|sg": [
+  "dṛphati"
+ ],
+ "06.0039|laṅ|P|1|du": [
+  "adṛmphāva"
+ ],
+ "06.0039|laṅ|P|1|pl": [
+  "adṛmphāma"
+ ],
+ "06.0039|laṅ|P|1|sg": [
+  "adṛmpham"
+ ],
+ "06.0039|laṅ|P|2|du": [
+  "adṛmphatam"
+ ],
+ "06.0039|laṅ|P|2|pl": [
+  "adṛmphata"
+ ],
+ "06.0039|laṅ|P|2|sg": [
+  "adṛmphaḥ"
+ ],
+ "06.0039|laṅ|P|3|du": [
+  "adṛmphatām"
+ ],
+ "06.0039|laṅ|P|3|pl": [
+  "adṛmphan"
+ ],
+ "06.0039|laṅ|P|3|sg": [
+  "adṛmphat",
+  "adṛmphad"
+ ],
+ "06.0039|laṭ|P|1|du": [
+  "dṛmphāvaḥ"
+ ],
+ "06.0039|laṭ|P|1|pl": [
+  "dṛmphāmaḥ"
+ ],
+ "06.0039|laṭ|P|1|sg": [
+  "dṛmphāmi"
+ ],
+ "06.0039|laṭ|P|2|du": [
+  "dṛmphathaḥ"
+ ],
+ "06.0039|laṭ|P|2|pl": [
+  "dṛmphatha"
+ ],
+ "06.0039|laṭ|P|2|sg": [
+  "dṛmphasi"
+ ],
+ "06.0039|laṭ|P|3|du": [
+  "dṛmphataḥ"
+ ],
+ "06.0039|laṭ|P|3|pl": [
+  "dṛmphanti"
+ ],
+ "06.0039|laṭ|P|3|sg": [
+  "dṛmphati"
+ ],
+ "06.0040|laṅ|P|1|du": [
+  "ārphāva"
+ ],
+ "06.0040|laṅ|P|1|pl": [
+  "ārphāma"
+ ],
+ "06.0040|laṅ|P|1|sg": [
+  "ārpham"
+ ],
+ "06.0040|laṅ|P|2|du": [
+  "ārphatam"
+ ],
+ "06.0040|laṅ|P|2|pl": [
+  "ārphata"
+ ],
+ "06.0040|laṅ|P|2|sg": [
+  "ārphaḥ"
+ ],
+ "06.0040|laṅ|P|3|du": [
+  "ārphatām"
+ ],
+ "06.0040|laṅ|P|3|pl": [
+  "ārphan"
+ ],
+ "06.0040|laṅ|P|3|sg": [
+  "ārphat",
+  "ārphad"
+ ],
+ "06.0040|laṭ|P|1|du": [
+  "ṛphāvaḥ"
+ ],
+ "06.0040|laṭ|P|1|pl": [
+  "ṛphāmaḥ"
+ ],
+ "06.0040|laṭ|P|1|sg": [
+  "ṛphāmi"
+ ],
+ "06.0040|laṭ|P|2|du": [
+  "ṛphathaḥ"
+ ],
+ "06.0040|laṭ|P|2|pl": [
+  "ṛphatha"
+ ],
+ "06.0040|laṭ|P|2|sg": [
+  "ṛphasi"
+ ],
+ "06.0040|laṭ|P|3|du": [
+  "ṛphataḥ"
+ ],
+ "06.0040|laṭ|P|3|pl": [
+  "ṛphanti"
+ ],
+ "06.0040|laṭ|P|3|sg": [
+  "ṛphati"
+ ],
+ "06.0041|laṅ|P|1|du": [
+  "ārmphāva"
+ ],
+ "06.0041|laṅ|P|1|pl": [
+  "ārmphāma"
+ ],
+ "06.0041|laṅ|P|1|sg": [
+  "ārmpham"
+ ],
+ "06.0041|laṅ|P|2|du": [
+  "ārmphatam"
+ ],
+ "06.0041|laṅ|P|2|pl": [
+  "ārmphata"
+ ],
+ "06.0041|laṅ|P|2|sg": [
+  "ārmphaḥ"
+ ],
+ "06.0041|laṅ|P|3|du": [
+  "ārmphatām"
+ ],
+ "06.0041|laṅ|P|3|pl": [
+  "ārmphan"
+ ],
+ "06.0041|laṅ|P|3|sg": [
+  "ārmphat",
+  "ārmphad"
+ ],
+ "06.0041|laṭ|P|1|du": [
+  "ṛmphāvaḥ"
+ ],
+ "06.0041|laṭ|P|1|pl": [
+  "ṛmphāmaḥ"
+ ],
+ "06.0041|laṭ|P|1|sg": [
+  "ṛmphāmi"
+ ],
+ "06.0041|laṭ|P|2|du": [
+  "ṛmphathaḥ"
+ ],
+ "06.0041|laṭ|P|2|pl": [
+  "ṛmphatha"
+ ],
+ "06.0041|laṭ|P|2|sg": [
+  "ṛmphasi"
+ ],
+ "06.0041|laṭ|P|3|du": [
+  "ṛmphataḥ"
+ ],
+ "06.0041|laṭ|P|3|pl": [
+  "ṛmphanti"
+ ],
+ "06.0041|laṭ|P|3|sg": [
+  "ṛmphati"
+ ],
+ "06.0042|laṅ|P|1|du": [
+  "aguphāva"
+ ],
+ "06.0042|laṅ|P|1|pl": [
+  "aguphāma"
+ ],
+ "06.0042|laṅ|P|1|sg": [
+  "agupham"
+ ],
+ "06.0042|laṅ|P|2|du": [
+  "aguphatam"
+ ],
+ "06.0042|laṅ|P|2|pl": [
+  "aguphata"
+ ],
+ "06.0042|laṅ|P|2|sg": [
+  "aguphaḥ"
+ ],
+ "06.0042|laṅ|P|3|du": [
+  "aguphatām"
+ ],
+ "06.0042|laṅ|P|3|pl": [
+  "aguphan"
+ ],
+ "06.0042|laṅ|P|3|sg": [
+  "aguphat",
+  "aguphad"
+ ],
+ "06.0042|laṭ|P|1|du": [
+  "guphāvaḥ"
+ ],
+ "06.0042|laṭ|P|1|pl": [
+  "guphāmaḥ"
+ ],
+ "06.0042|laṭ|P|1|sg": [
+  "guphāmi"
+ ],
+ "06.0042|laṭ|P|2|du": [
+  "guphathaḥ"
+ ],
+ "06.0042|laṭ|P|2|pl": [
+  "guphatha"
+ ],
+ "06.0042|laṭ|P|2|sg": [
+  "guphasi"
+ ],
+ "06.0042|laṭ|P|3|du": [
+  "guphataḥ"
+ ],
+ "06.0042|laṭ|P|3|pl": [
+  "guphanti"
+ ],
+ "06.0042|laṭ|P|3|sg": [
+  "guphati"
+ ],
+ "06.0043|laṅ|P|1|du": [
+  "agumphāva"
+ ],
+ "06.0043|laṅ|P|1|pl": [
+  "agumphāma"
+ ],
+ "06.0043|laṅ|P|1|sg": [
+  "agumpham"
+ ],
+ "06.0043|laṅ|P|2|du": [
+  "agumphatam"
+ ],
+ "06.0043|laṅ|P|2|pl": [
+  "agumphata"
+ ],
+ "06.0043|laṅ|P|2|sg": [
+  "agumphaḥ"
+ ],
+ "06.0043|laṅ|P|3|du": [
+  "agumphatām"
+ ],
+ "06.0043|laṅ|P|3|pl": [
+  "agumphan"
+ ],
+ "06.0043|laṅ|P|3|sg": [
+  "agumphat",
+  "agumphad"
+ ],
+ "06.0043|laṭ|P|1|du": [
+  "gumphāvaḥ"
+ ],
+ "06.0043|laṭ|P|1|pl": [
+  "gumphāmaḥ"
+ ],
+ "06.0043|laṭ|P|1|sg": [
+  "gumphāmi"
+ ],
+ "06.0043|laṭ|P|2|du": [
+  "gumphathaḥ"
+ ],
+ "06.0043|laṭ|P|2|pl": [
+  "gumphatha"
+ ],
+ "06.0043|laṭ|P|2|sg": [
+  "gumphasi"
+ ],
+ "06.0043|laṭ|P|3|du": [
+  "gumphataḥ"
+ ],
+ "06.0043|laṭ|P|3|pl": [
+  "gumphanti"
+ ],
+ "06.0043|laṭ|P|3|sg": [
+  "gumphati"
+ ],
+ "06.0044|laṅ|P|1|du": [
+  "aubhāva"
+ ],
+ "06.0044|laṅ|P|1|pl": [
+  "aubhāma"
+ ],
+ "06.0044|laṅ|P|1|sg": [
+  "aubham"
+ ],
+ "06.0044|laṅ|P|2|du": [
+  "aubhatam"
+ ],
+ "06.0044|laṅ|P|2|pl": [
+  "aubhata"
+ ],
+ "06.0044|laṅ|P|2|sg": [
+  "aubhaḥ"
+ ],
+ "06.0044|laṅ|P|3|du": [
+  "aubhatām"
+ ],
+ "06.0044|laṅ|P|3|pl": [
+  "aubhan"
+ ],
+ "06.0044|laṅ|P|3|sg": [
+  "aubhat",
+  "aubhad"
+ ],
+ "06.0044|laṭ|P|1|du": [
+  "ubhāvaḥ"
+ ],
+ "06.0044|laṭ|P|1|pl": [
+  "ubhāmaḥ"
+ ],
+ "06.0044|laṭ|P|1|sg": [
+  "ubhāmi"
+ ],
+ "06.0044|laṭ|P|2|du": [
+  "ubhathaḥ"
+ ],
+ "06.0044|laṭ|P|2|pl": [
+  "ubhatha"
+ ],
+ "06.0044|laṭ|P|2|sg": [
+  "ubhasi"
+ ],
+ "06.0044|laṭ|P|3|du": [
+  "ubhataḥ"
+ ],
+ "06.0044|laṭ|P|3|pl": [
+  "ubhanti"
+ ],
+ "06.0044|laṭ|P|3|sg": [
+  "ubhati"
+ ],
+ "06.0045|laṅ|P|1|du": [
+  "aumbhāva"
+ ],
+ "06.0045|laṅ|P|1|pl": [
+  "aumbhāma"
+ ],
+ "06.0045|laṅ|P|1|sg": [
+  "aumbham"
+ ],
+ "06.0045|laṅ|P|2|du": [
+  "aumbhatam"
+ ],
+ "06.0045|laṅ|P|2|pl": [
+  "aumbhata"
+ ],
+ "06.0045|laṅ|P|2|sg": [
+  "aumbhaḥ"
+ ],
+ "06.0045|laṅ|P|3|du": [
+  "aumbhatām"
+ ],
+ "06.0045|laṅ|P|3|pl": [
+  "aumbhan"
+ ],
+ "06.0045|laṅ|P|3|sg": [
+  "aumbhat",
+  "aumbhad"
+ ],
+ "06.0045|laṭ|P|1|du": [
+  "umbhāvaḥ"
+ ],
+ "06.0045|laṭ|P|1|pl": [
+  "umbhāmaḥ"
+ ],
+ "06.0045|laṭ|P|1|sg": [
+  "umbhāmi"
+ ],
+ "06.0045|laṭ|P|2|du": [
+  "umbhathaḥ"
+ ],
+ "06.0045|laṭ|P|2|pl": [
+  "umbhatha"
+ ],
+ "06.0045|laṭ|P|2|sg": [
+  "umbhasi"
+ ],
+ "06.0045|laṭ|P|3|du": [
+  "umbhataḥ"
+ ],
+ "06.0045|laṭ|P|3|pl": [
+  "umbhanti"
+ ],
+ "06.0045|laṭ|P|3|sg": [
+  "umbhati"
+ ],
+ "06.0046|laṅ|P|1|du": [
+  "aśubhāva"
+ ],
+ "06.0046|laṅ|P|1|pl": [
+  "aśubhāma"
+ ],
+ "06.0046|laṅ|P|1|sg": [
+  "aśubham"
+ ],
+ "06.0046|laṅ|P|2|du": [
+  "aśubhatam"
+ ],
+ "06.0046|laṅ|P|2|pl": [
+  "aśubhata"
+ ],
+ "06.0046|laṅ|P|2|sg": [
+  "aśubhaḥ"
+ ],
+ "06.0046|laṅ|P|3|du": [
+  "aśubhatām"
+ ],
+ "06.0046|laṅ|P|3|pl": [
+  "aśubhan"
+ ],
+ "06.0046|laṅ|P|3|sg": [
+  "aśubhat",
+  "aśubhad"
+ ],
+ "06.0046|laṭ|P|1|du": [
+  "śubhāvaḥ"
+ ],
+ "06.0046|laṭ|P|1|pl": [
+  "śubhāmaḥ"
+ ],
+ "06.0046|laṭ|P|1|sg": [
+  "śubhāmi"
+ ],
+ "06.0046|laṭ|P|2|du": [
+  "śubhathaḥ"
+ ],
+ "06.0046|laṭ|P|2|pl": [
+  "śubhatha"
+ ],
+ "06.0046|laṭ|P|2|sg": [
+  "śubhasi"
+ ],
+ "06.0046|laṭ|P|3|du": [
+  "śubhataḥ"
+ ],
+ "06.0046|laṭ|P|3|pl": [
+  "śubhanti"
+ ],
+ "06.0046|laṭ|P|3|sg": [
+  "śubhati"
+ ],
+ "06.0047|laṅ|P|1|du": [
+  "aśumbhāva"
+ ],
+ "06.0047|laṅ|P|1|pl": [
+  "aśumbhāma"
+ ],
+ "06.0047|laṅ|P|1|sg": [
+  "aśumbham"
+ ],
+ "06.0047|laṅ|P|2|du": [
+  "aśumbhatam"
+ ],
+ "06.0047|laṅ|P|2|pl": [
+  "aśumbhata"
+ ],
+ "06.0047|laṅ|P|2|sg": [
+  "aśumbhaḥ"
+ ],
+ "06.0047|laṅ|P|3|du": [
+  "aśumbhatām"
+ ],
+ "06.0047|laṅ|P|3|pl": [
+  "aśumbhan"
+ ],
+ "06.0047|laṅ|P|3|sg": [
+  "aśumbhat",
+  "aśumbhad"
+ ],
+ "06.0047|laṭ|P|1|du": [
+  "śumbhāvaḥ"
+ ],
+ "06.0047|laṭ|P|1|pl": [
+  "śumbhāmaḥ"
+ ],
+ "06.0047|laṭ|P|1|sg": [
+  "śumbhāmi"
+ ],
+ "06.0047|laṭ|P|2|du": [
+  "śumbhathaḥ"
+ ],
+ "06.0047|laṭ|P|2|pl": [
+  "śumbhatha"
+ ],
+ "06.0047|laṭ|P|2|sg": [
+  "śumbhasi"
+ ],
+ "06.0047|laṭ|P|3|du": [
+  "śumbhataḥ"
+ ],
+ "06.0047|laṭ|P|3|pl": [
+  "śumbhanti"
+ ],
+ "06.0047|laṭ|P|3|sg": [
+  "śumbhati"
+ ],
+ "06.0048|laṅ|P|1|du": [
+  "adṛbhāva"
+ ],
+ "06.0048|laṅ|P|1|pl": [
+  "adṛbhāma"
+ ],
+ "06.0048|laṅ|P|1|sg": [
+  "adṛbham"
+ ],
+ "06.0048|laṅ|P|2|du": [
+  "adṛbhatam"
+ ],
+ "06.0048|laṅ|P|2|pl": [
+  "adṛbhata"
+ ],
+ "06.0048|laṅ|P|2|sg": [
+  "adṛbhaḥ"
+ ],
+ "06.0048|laṅ|P|3|du": [
+  "adṛbhatām"
+ ],
+ "06.0048|laṅ|P|3|pl": [
+  "adṛbhan"
+ ],
+ "06.0048|laṅ|P|3|sg": [
+  "adṛbhat",
+  "adṛbhad"
+ ],
+ "06.0048|laṭ|P|1|du": [
+  "dṛbhāvaḥ"
+ ],
+ "06.0048|laṭ|P|1|pl": [
+  "dṛbhāmaḥ"
+ ],
+ "06.0048|laṭ|P|1|sg": [
+  "dṛbhāmi"
+ ],
+ "06.0048|laṭ|P|2|du": [
+  "dṛbhathaḥ"
+ ],
+ "06.0048|laṭ|P|2|pl": [
+  "dṛbhatha"
+ ],
+ "06.0048|laṭ|P|2|sg": [
+  "dṛbhasi"
+ ],
+ "06.0048|laṭ|P|3|du": [
+  "dṛbhataḥ"
+ ],
+ "06.0048|laṭ|P|3|pl": [
+  "dṛbhanti"
+ ],
+ "06.0048|laṭ|P|3|sg": [
+  "dṛbhati"
+ ],
+ "06.0049|laṅ|P|1|du": [
+  "acṛtāva"
+ ],
+ "06.0049|laṅ|P|1|pl": [
+  "acṛtāma"
+ ],
+ "06.0049|laṅ|P|1|sg": [
+  "acṛtam"
+ ],
+ "06.0049|laṅ|P|2|du": [
+  "acṛtatam"
+ ],
+ "06.0049|laṅ|P|2|pl": [
+  "acṛtata"
+ ],
+ "06.0049|laṅ|P|2|sg": [
+  "acṛtaḥ"
+ ],
+ "06.0049|laṅ|P|3|du": [
+  "acṛtatām"
+ ],
+ "06.0049|laṅ|P|3|pl": [
+  "acṛtan"
+ ],
+ "06.0049|laṅ|P|3|sg": [
+  "acṛtat",
+  "acṛtad"
+ ],
+ "06.0049|laṭ|P|1|du": [
+  "cṛtāvaḥ"
+ ],
+ "06.0049|laṭ|P|1|pl": [
+  "cṛtāmaḥ"
+ ],
+ "06.0049|laṭ|P|1|sg": [
+  "cṛtāmi"
+ ],
+ "06.0049|laṭ|P|2|du": [
+  "cṛtathaḥ"
+ ],
+ "06.0049|laṭ|P|2|pl": [
+  "cṛtatha"
+ ],
+ "06.0049|laṭ|P|2|sg": [
+  "cṛtasi"
+ ],
+ "06.0049|laṭ|P|3|du": [
+  "cṛtataḥ"
+ ],
+ "06.0049|laṭ|P|3|pl": [
+  "cṛtanti"
+ ],
+ "06.0049|laṭ|P|3|sg": [
+  "cṛtati"
+ ],
+ "06.0050|laṅ|P|1|du": [
+  "avidhāva"
+ ],
+ "06.0050|laṅ|P|1|pl": [
+  "avidhāma"
+ ],
+ "06.0050|laṅ|P|1|sg": [
+  "avidham"
+ ],
+ "06.0050|laṅ|P|2|du": [
+  "avidhatam"
+ ],
+ "06.0050|laṅ|P|2|pl": [
+  "avidhata"
+ ],
+ "06.0050|laṅ|P|2|sg": [
+  "avidhaḥ"
+ ],
+ "06.0050|laṅ|P|3|du": [
+  "avidhatām"
+ ],
+ "06.0050|laṅ|P|3|pl": [
+  "avidhan"
+ ],
+ "06.0050|laṅ|P|3|sg": [
+  "avidhat",
+  "avidhad"
+ ],
+ "06.0050|laṭ|P|1|du": [
+  "vidhāvaḥ"
+ ],
+ "06.0050|laṭ|P|1|pl": [
+  "vidhāmaḥ"
+ ],
+ "06.0050|laṭ|P|1|sg": [
+  "vidhāmi"
+ ],
+ "06.0050|laṭ|P|2|du": [
+  "vidhathaḥ"
+ ],
+ "06.0050|laṭ|P|2|pl": [
+  "vidhatha"
+ ],
+ "06.0050|laṭ|P|2|sg": [
+  "vidhasi"
+ ],
+ "06.0050|laṭ|P|3|du": [
+  "vidhataḥ"
+ ],
+ "06.0050|laṭ|P|3|pl": [
+  "vidhanti"
+ ],
+ "06.0050|laṭ|P|3|sg": [
+  "vidhati"
+ ],
+ "06.0051|laṅ|P|1|du": [
+  "ajuḍāva"
+ ],
+ "06.0051|laṅ|P|1|pl": [
+  "ajuḍāma"
+ ],
+ "06.0051|laṅ|P|1|sg": [
+  "ajuḍam"
+ ],
+ "06.0051|laṅ|P|2|du": [
+  "ajuḍatam"
+ ],
+ "06.0051|laṅ|P|2|pl": [
+  "ajuḍata"
+ ],
+ "06.0051|laṅ|P|2|sg": [
+  "ajuḍaḥ"
+ ],
+ "06.0051|laṅ|P|3|du": [
+  "ajuḍatām"
+ ],
+ "06.0051|laṅ|P|3|pl": [
+  "ajuḍan"
+ ],
+ "06.0051|laṅ|P|3|sg": [
+  "ajuḍat",
+  "ajuḍad"
+ ],
+ "06.0051|laṭ|P|1|du": [
+  "juḍāvaḥ"
+ ],
+ "06.0051|laṭ|P|1|pl": [
+  "juḍāmaḥ"
+ ],
+ "06.0051|laṭ|P|1|sg": [
+  "juḍāmi"
+ ],
+ "06.0051|laṭ|P|2|du": [
+  "juḍathaḥ"
+ ],
+ "06.0051|laṭ|P|2|pl": [
+  "juḍatha"
+ ],
+ "06.0051|laṭ|P|2|sg": [
+  "juḍasi"
+ ],
+ "06.0051|laṭ|P|3|du": [
+  "juḍataḥ"
+ ],
+ "06.0051|laṭ|P|3|pl": [
+  "juḍanti"
+ ],
+ "06.0051|laṭ|P|3|sg": [
+  "juḍati"
+ ],
+ "06.0052|laṅ|P|1|du": [
+  "ajunāva"
+ ],
+ "06.0052|laṅ|P|1|pl": [
+  "ajunāma"
+ ],
+ "06.0052|laṅ|P|1|sg": [
+  "ajunam"
+ ],
+ "06.0052|laṅ|P|2|du": [
+  "ajunatam"
+ ],
+ "06.0052|laṅ|P|2|pl": [
+  "ajunata"
+ ],
+ "06.0052|laṅ|P|2|sg": [
+  "ajunaḥ"
+ ],
+ "06.0052|laṅ|P|3|du": [
+  "ajunatām"
+ ],
+ "06.0052|laṅ|P|3|pl": [
+  "ajunan"
+ ],
+ "06.0052|laṅ|P|3|sg": [
+  "ajunat",
+  "ajunad"
+ ],
+ "06.0052|laṭ|P|1|du": [
+  "junāvaḥ"
+ ],
+ "06.0052|laṭ|P|1|pl": [
+  "junāmaḥ"
+ ],
+ "06.0052|laṭ|P|1|sg": [
+  "junāmi"
+ ],
+ "06.0052|laṭ|P|2|du": [
+  "junathaḥ"
+ ],
+ "06.0052|laṭ|P|2|pl": [
+  "junatha"
+ ],
+ "06.0052|laṭ|P|2|sg": [
+  "junasi"
+ ],
+ "06.0052|laṭ|P|3|du": [
+  "junataḥ"
+ ],
+ "06.0052|laṭ|P|3|pl": [
+  "junanti"
+ ],
+ "06.0052|laṭ|P|3|sg": [
+  "junati"
+ ],
+ "06.0053|laṅ|P|1|du": [
+  "amṛḍāva"
+ ],
+ "06.0053|laṅ|P|1|pl": [
+  "amṛḍāma"
+ ],
+ "06.0053|laṅ|P|1|sg": [
+  "amṛḍam"
+ ],
+ "06.0053|laṅ|P|2|du": [
+  "amṛḍatam"
+ ],
+ "06.0053|laṅ|P|2|pl": [
+  "amṛḍata"
+ ],
+ "06.0053|laṅ|P|2|sg": [
+  "amṛḍaḥ"
+ ],
+ "06.0053|laṅ|P|3|du": [
+  "amṛḍatām"
+ ],
+ "06.0053|laṅ|P|3|pl": [
+  "amṛḍan"
+ ],
+ "06.0053|laṅ|P|3|sg": [
+  "amṛḍat",
+  "amṛḍad"
+ ],
+ "06.0053|laṭ|P|1|du": [
+  "mṛḍāvaḥ"
+ ],
+ "06.0053|laṭ|P|1|pl": [
+  "mṛḍāmaḥ"
+ ],
+ "06.0053|laṭ|P|1|sg": [
+  "mṛḍāmi"
+ ],
+ "06.0053|laṭ|P|2|du": [
+  "mṛḍathaḥ"
+ ],
+ "06.0053|laṭ|P|2|pl": [
+  "mṛḍatha"
+ ],
+ "06.0053|laṭ|P|2|sg": [
+  "mṛḍasi"
+ ],
+ "06.0053|laṭ|P|3|du": [
+  "mṛḍataḥ"
+ ],
+ "06.0053|laṭ|P|3|pl": [
+  "mṛḍanti"
+ ],
+ "06.0053|laṭ|P|3|sg": [
+  "mṛḍati"
+ ],
+ "06.0054|laṅ|P|1|du": [
+  "apṛḍāva"
+ ],
+ "06.0054|laṅ|P|1|pl": [
+  "apṛḍāma"
+ ],
+ "06.0054|laṅ|P|1|sg": [
+  "apṛḍam"
+ ],
+ "06.0054|laṅ|P|2|du": [
+  "apṛḍatam"
+ ],
+ "06.0054|laṅ|P|2|pl": [
+  "apṛḍata"
+ ],
+ "06.0054|laṅ|P|2|sg": [
+  "apṛḍaḥ"
+ ],
+ "06.0054|laṅ|P|3|du": [
+  "apṛḍatām"
+ ],
+ "06.0054|laṅ|P|3|pl": [
+  "apṛḍan"
+ ],
+ "06.0054|laṅ|P|3|sg": [
+  "apṛḍat",
+  "apṛḍad"
+ ],
+ "06.0054|laṭ|P|1|du": [
+  "pṛḍāvaḥ"
+ ],
+ "06.0054|laṭ|P|1|pl": [
+  "pṛḍāmaḥ"
+ ],
+ "06.0054|laṭ|P|1|sg": [
+  "pṛḍāmi"
+ ],
+ "06.0054|laṭ|P|2|du": [
+  "pṛḍathaḥ"
+ ],
+ "06.0054|laṭ|P|2|pl": [
+  "pṛḍatha"
+ ],
+ "06.0054|laṭ|P|2|sg": [
+  "pṛḍasi"
+ ],
+ "06.0054|laṭ|P|3|du": [
+  "pṛḍataḥ"
+ ],
+ "06.0054|laṭ|P|3|pl": [
+  "pṛḍanti"
+ ],
+ "06.0054|laṭ|P|3|sg": [
+  "pṛḍati"
+ ],
+ "06.0055|laṅ|P|1|du": [
+  "apṛṇāva"
+ ],
+ "06.0055|laṅ|P|1|pl": [
+  "apṛṇāma"
+ ],
+ "06.0055|laṅ|P|1|sg": [
+  "apṛṇam"
+ ],
+ "06.0055|laṅ|P|2|du": [
+  "apṛṇatam"
+ ],
+ "06.0055|laṅ|P|2|pl": [
+  "apṛṇata"
+ ],
+ "06.0055|laṅ|P|2|sg": [
+  "apṛṇaḥ"
+ ],
+ "06.0055|laṅ|P|3|du": [
+  "apṛṇatām"
+ ],
+ "06.0055|laṅ|P|3|pl": [
+  "apṛṇan"
+ ],
+ "06.0055|laṅ|P|3|sg": [
+  "apṛṇat",
+  "apṛṇad"
+ ],
+ "06.0055|laṭ|P|1|du": [
+  "pṛṇāvaḥ"
+ ],
+ "06.0055|laṭ|P|1|pl": [
+  "pṛṇāmaḥ"
+ ],
+ "06.0055|laṭ|P|1|sg": [
+  "pṛṇāmi"
+ ],
+ "06.0055|laṭ|P|2|du": [
+  "pṛṇathaḥ"
+ ],
+ "06.0055|laṭ|P|2|pl": [
+  "pṛṇatha"
+ ],
+ "06.0055|laṭ|P|2|sg": [
+  "pṛṇasi"
+ ],
+ "06.0055|laṭ|P|3|du": [
+  "pṛṇataḥ"
+ ],
+ "06.0055|laṭ|P|3|pl": [
+  "pṛṇanti"
+ ],
+ "06.0055|laṭ|P|3|sg": [
+  "pṛṇati"
+ ],
+ "06.0056|laṅ|P|1|du": [
+  "avṛṇāva"
+ ],
+ "06.0056|laṅ|P|1|pl": [
+  "avṛṇāma"
+ ],
+ "06.0056|laṅ|P|1|sg": [
+  "avṛṇam"
+ ],
+ "06.0056|laṅ|P|2|du": [
+  "avṛṇatam"
+ ],
+ "06.0056|laṅ|P|2|pl": [
+  "avṛṇata"
+ ],
+ "06.0056|laṅ|P|2|sg": [
+  "avṛṇaḥ"
+ ],
+ "06.0056|laṅ|P|3|du": [
+  "avṛṇatām"
+ ],
+ "06.0056|laṅ|P|3|pl": [
+  "avṛṇan"
+ ],
+ "06.0056|laṅ|P|3|sg": [
+  "avṛṇat",
+  "avṛṇad"
+ ],
+ "06.0056|laṭ|P|1|du": [
+  "vṛṇāvaḥ"
+ ],
+ "06.0056|laṭ|P|1|pl": [
+  "vṛṇāmaḥ"
+ ],
+ "06.0056|laṭ|P|1|sg": [
+  "vṛṇāmi"
+ ],
+ "06.0056|laṭ|P|2|du": [
+  "vṛṇathaḥ"
+ ],
+ "06.0056|laṭ|P|2|pl": [
+  "vṛṇatha"
+ ],
+ "06.0056|laṭ|P|2|sg": [
+  "vṛṇasi"
+ ],
+ "06.0056|laṭ|P|3|du": [
+  "vṛṇataḥ"
+ ],
+ "06.0056|laṭ|P|3|pl": [
+  "vṛṇanti"
+ ],
+ "06.0056|laṭ|P|3|sg": [
+  "vṛṇati"
+ ],
+ "06.0057|laṅ|P|1|du": [
+  "amṛṇāva"
+ ],
+ "06.0057|laṅ|P|1|pl": [
+  "amṛṇāma"
+ ],
+ "06.0057|laṅ|P|1|sg": [
+  "amṛṇam"
+ ],
+ "06.0057|laṅ|P|2|du": [
+  "amṛṇatam"
+ ],
+ "06.0057|laṅ|P|2|pl": [
+  "amṛṇata"
+ ],
+ "06.0057|laṅ|P|2|sg": [
+  "amṛṇaḥ"
+ ],
+ "06.0057|laṅ|P|3|du": [
+  "amṛṇatām"
+ ],
+ "06.0057|laṅ|P|3|pl": [
+  "amṛṇan"
+ ],
+ "06.0057|laṅ|P|3|sg": [
+  "amṛṇat",
+  "amṛṇad"
+ ],
+ "06.0057|laṭ|P|1|du": [
+  "mṛṇāvaḥ"
+ ],
+ "06.0057|laṭ|P|1|pl": [
+  "mṛṇāmaḥ"
+ ],
+ "06.0057|laṭ|P|1|sg": [
+  "mṛṇāmi"
+ ],
+ "06.0057|laṭ|P|2|du": [
+  "mṛṇathaḥ"
+ ],
+ "06.0057|laṭ|P|2|pl": [
+  "mṛṇatha"
+ ],
+ "06.0057|laṭ|P|2|sg": [
+  "mṛṇasi"
+ ],
+ "06.0057|laṭ|P|3|du": [
+  "mṛṇataḥ"
+ ],
+ "06.0057|laṭ|P|3|pl": [
+  "mṛṇanti"
+ ],
+ "06.0057|laṭ|P|3|sg": [
+  "mṛṇati"
+ ],
+ "06.0058|laṅ|P|1|du": [
+  "atuṇāva"
+ ],
+ "06.0058|laṅ|P|1|pl": [
+  "atuṇāma"
+ ],
+ "06.0058|laṅ|P|1|sg": [
+  "atuṇam"
+ ],
+ "06.0058|laṅ|P|2|du": [
+  "atuṇatam"
+ ],
+ "06.0058|laṅ|P|2|pl": [
+  "atuṇata"
+ ],
+ "06.0058|laṅ|P|2|sg": [
+  "atuṇaḥ"
+ ],
+ "06.0058|laṅ|P|3|du": [
+  "atuṇatām"
+ ],
+ "06.0058|laṅ|P|3|pl": [
+  "atuṇan"
+ ],
+ "06.0058|laṅ|P|3|sg": [
+  "atuṇat",
+  "atuṇad"
+ ],
+ "06.0058|laṭ|P|1|du": [
+  "tuṇāvaḥ"
+ ],
+ "06.0058|laṭ|P|1|pl": [
+  "tuṇāmaḥ"
+ ],
+ "06.0058|laṭ|P|1|sg": [
+  "tuṇāmi"
+ ],
+ "06.0058|laṭ|P|2|du": [
+  "tuṇathaḥ"
+ ],
+ "06.0058|laṭ|P|2|pl": [
+  "tuṇatha"
+ ],
+ "06.0058|laṭ|P|2|sg": [
+  "tuṇasi"
+ ],
+ "06.0058|laṭ|P|3|du": [
+  "tuṇataḥ"
+ ],
+ "06.0058|laṭ|P|3|pl": [
+  "tuṇanti"
+ ],
+ "06.0058|laṭ|P|3|sg": [
+  "tuṇati"
+ ],
+ "06.0059|laṅ|P|1|du": [
+  "apuṇāva"
+ ],
+ "06.0059|laṅ|P|1|pl": [
+  "apuṇāma"
+ ],
+ "06.0059|laṅ|P|1|sg": [
+  "apuṇam"
+ ],
+ "06.0059|laṅ|P|2|du": [
+  "apuṇatam"
+ ],
+ "06.0059|laṅ|P|2|pl": [
+  "apuṇata"
+ ],
+ "06.0059|laṅ|P|2|sg": [
+  "apuṇaḥ"
+ ],
+ "06.0059|laṅ|P|3|du": [
+  "apuṇatām"
+ ],
+ "06.0059|laṅ|P|3|pl": [
+  "apuṇan"
+ ],
+ "06.0059|laṅ|P|3|sg": [
+  "apuṇat",
+  "apuṇad"
+ ],
+ "06.0059|laṭ|P|1|du": [
+  "puṇāvaḥ"
+ ],
+ "06.0059|laṭ|P|1|pl": [
+  "puṇāmaḥ"
+ ],
+ "06.0059|laṭ|P|1|sg": [
+  "puṇāmi"
+ ],
+ "06.0059|laṭ|P|2|du": [
+  "puṇathaḥ"
+ ],
+ "06.0059|laṭ|P|2|pl": [
+  "puṇatha"
+ ],
+ "06.0059|laṭ|P|2|sg": [
+  "puṇasi"
+ ],
+ "06.0059|laṭ|P|3|du": [
+  "puṇataḥ"
+ ],
+ "06.0059|laṭ|P|3|pl": [
+  "puṇanti"
+ ],
+ "06.0059|laṭ|P|3|sg": [
+  "puṇati"
+ ],
+ "06.0060|laṅ|P|1|du": [
+  "amuṇāva"
+ ],
+ "06.0060|laṅ|P|1|pl": [
+  "amuṇāma"
+ ],
+ "06.0060|laṅ|P|1|sg": [
+  "amuṇam"
+ ],
+ "06.0060|laṅ|P|2|du": [
+  "amuṇatam"
+ ],
+ "06.0060|laṅ|P|2|pl": [
+  "amuṇata"
+ ],
+ "06.0060|laṅ|P|2|sg": [
+  "amuṇaḥ"
+ ],
+ "06.0060|laṅ|P|3|du": [
+  "amuṇatām"
+ ],
+ "06.0060|laṅ|P|3|pl": [
+  "amuṇan"
+ ],
+ "06.0060|laṅ|P|3|sg": [
+  "amuṇat",
+  "amuṇad"
+ ],
+ "06.0060|laṭ|P|1|du": [
+  "muṇāvaḥ"
+ ],
+ "06.0060|laṭ|P|1|pl": [
+  "muṇāmaḥ"
+ ],
+ "06.0060|laṭ|P|1|sg": [
+  "muṇāmi"
+ ],
+ "06.0060|laṭ|P|2|du": [
+  "muṇathaḥ"
+ ],
+ "06.0060|laṭ|P|2|pl": [
+  "muṇatha"
+ ],
+ "06.0060|laṭ|P|2|sg": [
+  "muṇasi"
+ ],
+ "06.0060|laṭ|P|3|du": [
+  "muṇataḥ"
+ ],
+ "06.0060|laṭ|P|3|pl": [
+  "muṇanti"
+ ],
+ "06.0060|laṭ|P|3|sg": [
+  "muṇati"
+ ],
+ "06.0061|laṅ|P|1|du": [
+  "akuṇāva"
+ ],
+ "06.0061|laṅ|P|1|pl": [
+  "akuṇāma"
+ ],
+ "06.0061|laṅ|P|1|sg": [
+  "akuṇam"
+ ],
+ "06.0061|laṅ|P|2|du": [
+  "akuṇatam"
+ ],
+ "06.0061|laṅ|P|2|pl": [
+  "akuṇata"
+ ],
+ "06.0061|laṅ|P|2|sg": [
+  "akuṇaḥ"
+ ],
+ "06.0061|laṅ|P|3|du": [
+  "akuṇatām"
+ ],
+ "06.0061|laṅ|P|3|pl": [
+  "akuṇan"
+ ],
+ "06.0061|laṅ|P|3|sg": [
+  "akuṇat",
+  "akuṇad"
+ ],
+ "06.0061|laṭ|P|1|du": [
+  "kuṇāvaḥ"
+ ],
+ "06.0061|laṭ|P|1|pl": [
+  "kuṇāmaḥ"
+ ],
+ "06.0061|laṭ|P|1|sg": [
+  "kuṇāmi"
+ ],
+ "06.0061|laṭ|P|2|du": [
+  "kuṇathaḥ"
+ ],
+ "06.0061|laṭ|P|2|pl": [
+  "kuṇatha"
+ ],
+ "06.0061|laṭ|P|2|sg": [
+  "kuṇasi"
+ ],
+ "06.0061|laṭ|P|3|du": [
+  "kuṇataḥ"
+ ],
+ "06.0061|laṭ|P|3|pl": [
+  "kuṇanti"
+ ],
+ "06.0061|laṭ|P|3|sg": [
+  "kuṇati"
+ ],
+ "06.0062|laṅ|P|1|du": [
+  "aśunāva"
+ ],
+ "06.0062|laṅ|P|1|pl": [
+  "aśunāma"
+ ],
+ "06.0062|laṅ|P|1|sg": [
+  "aśunam"
+ ],
+ "06.0062|laṅ|P|2|du": [
+  "aśunatam"
+ ],
+ "06.0062|laṅ|P|2|pl": [
+  "aśunata"
+ ],
+ "06.0062|laṅ|P|2|sg": [
+  "aśunaḥ"
+ ],
+ "06.0062|laṅ|P|3|du": [
+  "aśunatām"
+ ],
+ "06.0062|laṅ|P|3|pl": [
+  "aśunan"
+ ],
+ "06.0062|laṅ|P|3|sg": [
+  "aśunat",
+  "aśunad"
+ ],
+ "06.0062|laṭ|P|1|du": [
+  "śunāvaḥ"
+ ],
+ "06.0062|laṭ|P|1|pl": [
+  "śunāmaḥ"
+ ],
+ "06.0062|laṭ|P|1|sg": [
+  "śunāmi"
+ ],
+ "06.0062|laṭ|P|2|du": [
+  "śunathaḥ"
+ ],
+ "06.0062|laṭ|P|2|pl": [
+  "śunatha"
+ ],
+ "06.0062|laṭ|P|2|sg": [
+  "śunasi"
+ ],
+ "06.0062|laṭ|P|3|du": [
+  "śunataḥ"
+ ],
+ "06.0062|laṭ|P|3|pl": [
+  "śunanti"
+ ],
+ "06.0062|laṭ|P|3|sg": [
+  "śunati"
+ ],
+ "06.0063|laṅ|P|1|du": [
+  "adruṇāva"
+ ],
+ "06.0063|laṅ|P|1|pl": [
+  "adruṇāma"
+ ],
+ "06.0063|laṅ|P|1|sg": [
+  "adruṇam"
+ ],
+ "06.0063|laṅ|P|2|du": [
+  "adruṇatam"
+ ],
+ "06.0063|laṅ|P|2|pl": [
+  "adruṇata"
+ ],
+ "06.0063|laṅ|P|2|sg": [
+  "adruṇaḥ"
+ ],
+ "06.0063|laṅ|P|3|du": [
+  "adruṇatām"
+ ],
+ "06.0063|laṅ|P|3|pl": [
+  "adruṇan"
+ ],
+ "06.0063|laṅ|P|3|sg": [
+  "adruṇat",
+  "adruṇad"
+ ],
+ "06.0063|laṭ|P|1|du": [
+  "druṇāvaḥ"
+ ],
+ "06.0063|laṭ|P|1|pl": [
+  "druṇāmaḥ"
+ ],
+ "06.0063|laṭ|P|1|sg": [
+  "druṇāmi"
+ ],
+ "06.0063|laṭ|P|2|du": [
+  "druṇathaḥ"
+ ],
+ "06.0063|laṭ|P|2|pl": [
+  "druṇatha"
+ ],
+ "06.0063|laṭ|P|2|sg": [
+  "druṇasi"
+ ],
+ "06.0063|laṭ|P|3|du": [
+  "druṇataḥ"
+ ],
+ "06.0063|laṭ|P|3|pl": [
+  "druṇanti"
+ ],
+ "06.0063|laṭ|P|3|sg": [
+  "druṇati"
+ ],
+ "06.0064|laṅ|P|1|du": [
+  "aghuṇāva"
+ ],
+ "06.0064|laṅ|P|1|pl": [
+  "aghuṇāma"
+ ],
+ "06.0064|laṅ|P|1|sg": [
+  "aghuṇam"
+ ],
+ "06.0064|laṅ|P|2|du": [
+  "aghuṇatam"
+ ],
+ "06.0064|laṅ|P|2|pl": [
+  "aghuṇata"
+ ],
+ "06.0064|laṅ|P|2|sg": [
+  "aghuṇaḥ"
+ ],
+ "06.0064|laṅ|P|3|du": [
+  "aghuṇatām"
+ ],
+ "06.0064|laṅ|P|3|pl": [
+  "aghuṇan"
+ ],
+ "06.0064|laṅ|P|3|sg": [
+  "aghuṇat",
+  "aghuṇad"
+ ],
+ "06.0064|laṭ|P|1|du": [
+  "ghuṇāvaḥ"
+ ],
+ "06.0064|laṭ|P|1|pl": [
+  "ghuṇāmaḥ"
+ ],
+ "06.0064|laṭ|P|1|sg": [
+  "ghuṇāmi"
+ ],
+ "06.0064|laṭ|P|2|du": [
+  "ghuṇathaḥ"
+ ],
+ "06.0064|laṭ|P|2|pl": [
+  "ghuṇatha"
+ ],
+ "06.0064|laṭ|P|2|sg": [
+  "ghuṇasi"
+ ],
+ "06.0064|laṭ|P|3|du": [
+  "ghuṇataḥ"
+ ],
+ "06.0064|laṭ|P|3|pl": [
+  "ghuṇanti"
+ ],
+ "06.0064|laṭ|P|3|sg": [
+  "ghuṇati"
+ ],
+ "06.0065|laṅ|P|1|du": [
+  "aghūrṇāva"
+ ],
+ "06.0065|laṅ|P|1|pl": [
+  "aghūrṇāma"
+ ],
+ "06.0065|laṅ|P|1|sg": [
+  "aghūrṇam"
+ ],
+ "06.0065|laṅ|P|2|du": [
+  "aghūrṇatam"
+ ],
+ "06.0065|laṅ|P|2|pl": [
+  "aghūrṇata"
+ ],
+ "06.0065|laṅ|P|2|sg": [
+  "aghūrṇaḥ"
+ ],
+ "06.0065|laṅ|P|3|du": [
+  "aghūrṇatām"
+ ],
+ "06.0065|laṅ|P|3|pl": [
+  "aghūrṇan"
+ ],
+ "06.0065|laṅ|P|3|sg": [
+  "aghūrṇat",
+  "aghūrṇad"
+ ],
+ "06.0065|laṭ|P|1|du": [
+  "ghūrṇāvaḥ"
+ ],
+ "06.0065|laṭ|P|1|pl": [
+  "ghūrṇāmaḥ"
+ ],
+ "06.0065|laṭ|P|1|sg": [
+  "ghūrṇāmi"
+ ],
+ "06.0065|laṭ|P|2|du": [
+  "ghūrṇathaḥ"
+ ],
+ "06.0065|laṭ|P|2|pl": [
+  "ghūrṇatha"
+ ],
+ "06.0065|laṭ|P|2|sg": [
+  "ghūrṇasi"
+ ],
+ "06.0065|laṭ|P|3|du": [
+  "ghūrṇataḥ"
+ ],
+ "06.0065|laṭ|P|3|pl": [
+  "ghūrṇanti"
+ ],
+ "06.0065|laṭ|P|3|sg": [
+  "ghūrṇati"
+ ],
+ "06.0066|laṅ|P|1|du": [
+  "asurāva"
+ ],
+ "06.0066|laṅ|P|1|pl": [
+  "asurāma"
+ ],
+ "06.0066|laṅ|P|1|sg": [
+  "asuram"
+ ],
+ "06.0066|laṅ|P|2|du": [
+  "asuratam"
+ ],
+ "06.0066|laṅ|P|2|pl": [
+  "asurata"
+ ],
+ "06.0066|laṅ|P|2|sg": [
+  "asuraḥ"
+ ],
+ "06.0066|laṅ|P|3|du": [
+  "asuratām"
+ ],
+ "06.0066|laṅ|P|3|pl": [
+  "asuran"
+ ],
+ "06.0066|laṅ|P|3|sg": [
+  "asurat",
+  "asurad"
+ ],
+ "06.0066|laṭ|P|1|du": [
+  "surāvaḥ"
+ ],
+ "06.0066|laṭ|P|1|pl": [
+  "surāmaḥ"
+ ],
+ "06.0066|laṭ|P|1|sg": [
+  "surāmi"
+ ],
+ "06.0066|laṭ|P|2|du": [
+  "surathaḥ"
+ ],
+ "06.0066|laṭ|P|2|pl": [
+  "suratha"
+ ],
+ "06.0066|laṭ|P|2|sg": [
+  "surasi"
+ ],
+ "06.0066|laṭ|P|3|du": [
+  "surataḥ"
+ ],
+ "06.0066|laṭ|P|3|pl": [
+  "suranti"
+ ],
+ "06.0066|laṭ|P|3|sg": [
+  "surati"
+ ],
+ "06.0067|laṅ|P|1|du": [
+  "akurāva"
+ ],
+ "06.0067|laṅ|P|1|pl": [
+  "akurāma"
+ ],
+ "06.0067|laṅ|P|1|sg": [
+  "akuram"
+ ],
+ "06.0067|laṅ|P|2|du": [
+  "akuratam"
+ ],
+ "06.0067|laṅ|P|2|pl": [
+  "akurata"
+ ],
+ "06.0067|laṅ|P|2|sg": [
+  "akuraḥ"
+ ],
+ "06.0067|laṅ|P|3|du": [
+  "akuratām"
+ ],
+ "06.0067|laṅ|P|3|pl": [
+  "akuran"
+ ],
+ "06.0067|laṅ|P|3|sg": [
+  "akurat",
+  "akurad"
+ ],
+ "06.0067|laṭ|P|1|du": [
+  "kurāvaḥ"
+ ],
+ "06.0067|laṭ|P|1|pl": [
+  "kurāmaḥ"
+ ],
+ "06.0067|laṭ|P|1|sg": [
+  "kurāmi"
+ ],
+ "06.0067|laṭ|P|2|du": [
+  "kurathaḥ"
+ ],
+ "06.0067|laṭ|P|2|pl": [
+  "kuratha"
+ ],
+ "06.0067|laṭ|P|2|sg": [
+  "kurasi"
+ ],
+ "06.0067|laṭ|P|3|du": [
+  "kurataḥ"
+ ],
+ "06.0067|laṭ|P|3|pl": [
+  "kuranti"
+ ],
+ "06.0067|laṭ|P|3|sg": [
+  "kurati"
+ ],
+ "06.0068|laṅ|P|1|du": [
+  "akhurāva"
+ ],
+ "06.0068|laṅ|P|1|pl": [
+  "akhurāma"
+ ],
+ "06.0068|laṅ|P|1|sg": [
+  "akhuram"
+ ],
+ "06.0068|laṅ|P|2|du": [
+  "akhuratam"
+ ],
+ "06.0068|laṅ|P|2|pl": [
+  "akhurata"
+ ],
+ "06.0068|laṅ|P|2|sg": [
+  "akhuraḥ"
+ ],
+ "06.0068|laṅ|P|3|du": [
+  "akhuratām"
+ ],
+ "06.0068|laṅ|P|3|pl": [
+  "akhuran"
+ ],
+ "06.0068|laṅ|P|3|sg": [
+  "akhurat",
+  "akhurad"
+ ],
+ "06.0068|laṭ|P|1|du": [
+  "khurāvaḥ"
+ ],
+ "06.0068|laṭ|P|1|pl": [
+  "khurāmaḥ"
+ ],
+ "06.0068|laṭ|P|1|sg": [
+  "khurāmi"
+ ],
+ "06.0068|laṭ|P|2|du": [
+  "khurathaḥ"
+ ],
+ "06.0068|laṭ|P|2|pl": [
+  "khuratha"
+ ],
+ "06.0068|laṭ|P|2|sg": [
+  "khurasi"
+ ],
+ "06.0068|laṭ|P|3|du": [
+  "khurataḥ"
+ ],
+ "06.0068|laṭ|P|3|pl": [
+  "khuranti"
+ ],
+ "06.0068|laṭ|P|3|sg": [
+  "khurati"
+ ],
+ "06.0069|laṅ|P|1|du": [
+  "amurāva"
+ ],
+ "06.0069|laṅ|P|1|pl": [
+  "amurāma"
+ ],
+ "06.0069|laṅ|P|1|sg": [
+  "amuram"
+ ],
+ "06.0069|laṅ|P|2|du": [
+  "amuratam"
+ ],
+ "06.0069|laṅ|P|2|pl": [
+  "amurata"
+ ],
+ "06.0069|laṅ|P|2|sg": [
+  "amuraḥ"
+ ],
+ "06.0069|laṅ|P|3|du": [
+  "amuratām"
+ ],
+ "06.0069|laṅ|P|3|pl": [
+  "amuran"
+ ],
+ "06.0069|laṅ|P|3|sg": [
+  "amurat",
+  "amurad"
+ ],
+ "06.0069|laṭ|P|1|du": [
+  "murāvaḥ"
+ ],
+ "06.0069|laṭ|P|1|pl": [
+  "murāmaḥ"
+ ],
+ "06.0069|laṭ|P|1|sg": [
+  "murāmi"
+ ],
+ "06.0069|laṭ|P|2|du": [
+  "murathaḥ"
+ ],
+ "06.0069|laṭ|P|2|pl": [
+  "muratha"
+ ],
+ "06.0069|laṭ|P|2|sg": [
+  "murasi"
+ ],
+ "06.0069|laṭ|P|3|du": [
+  "murataḥ"
+ ],
+ "06.0069|laṭ|P|3|pl": [
+  "muranti"
+ ],
+ "06.0069|laṭ|P|3|sg": [
+  "murati"
+ ],
+ "06.0070|laṅ|P|1|du": [
+  "akṣurāva"
+ ],
+ "06.0070|laṅ|P|1|pl": [
+  "akṣurāma"
+ ],
+ "06.0070|laṅ|P|1|sg": [
+  "akṣuram"
+ ],
+ "06.0070|laṅ|P|2|du": [
+  "akṣuratam"
+ ],
+ "06.0070|laṅ|P|2|pl": [
+  "akṣurata"
+ ],
+ "06.0070|laṅ|P|2|sg": [
+  "akṣuraḥ"
+ ],
+ "06.0070|laṅ|P|3|du": [
+  "akṣuratām"
+ ],
+ "06.0070|laṅ|P|3|pl": [
+  "akṣuran"
+ ],
+ "06.0070|laṅ|P|3|sg": [
+  "akṣurat",
+  "akṣurad"
+ ],
+ "06.0070|laṭ|P|1|du": [
+  "kṣurāvaḥ"
+ ],
+ "06.0070|laṭ|P|1|pl": [
+  "kṣurāmaḥ"
+ ],
+ "06.0070|laṭ|P|1|sg": [
+  "kṣurāmi"
+ ],
+ "06.0070|laṭ|P|2|du": [
+  "kṣurathaḥ"
+ ],
+ "06.0070|laṭ|P|2|pl": [
+  "kṣuratha"
+ ],
+ "06.0070|laṭ|P|2|sg": [
+  "kṣurasi"
+ ],
+ "06.0070|laṭ|P|3|du": [
+  "kṣurataḥ"
+ ],
+ "06.0070|laṭ|P|3|pl": [
+  "kṣuranti"
+ ],
+ "06.0070|laṭ|P|3|sg": [
+  "kṣurati"
+ ],
+ "06.0071|laṅ|P|1|du": [
+  "aghurāva"
+ ],
+ "06.0071|laṅ|P|1|pl": [
+  "aghurāma"
+ ],
+ "06.0071|laṅ|P|1|sg": [
+  "aghuram"
+ ],
+ "06.0071|laṅ|P|2|du": [
+  "aghuratam"
+ ],
+ "06.0071|laṅ|P|2|pl": [
+  "aghurata"
+ ],
+ "06.0071|laṅ|P|2|sg": [
+  "aghuraḥ"
+ ],
+ "06.0071|laṅ|P|3|du": [
+  "aghuratām"
+ ],
+ "06.0071|laṅ|P|3|pl": [
+  "aghuran"
+ ],
+ "06.0071|laṅ|P|3|sg": [
+  "aghurat",
+  "aghurad"
+ ],
+ "06.0071|laṭ|P|1|du": [
+  "ghurāvaḥ"
+ ],
+ "06.0071|laṭ|P|1|pl": [
+  "ghurāmaḥ"
+ ],
+ "06.0071|laṭ|P|1|sg": [
+  "ghurāmi"
+ ],
+ "06.0071|laṭ|P|2|du": [
+  "ghurathaḥ"
+ ],
+ "06.0071|laṭ|P|2|pl": [
+  "ghuratha"
+ ],
+ "06.0071|laṭ|P|2|sg": [
+  "ghurasi"
+ ],
+ "06.0071|laṭ|P|3|du": [
+  "ghurataḥ"
+ ],
+ "06.0071|laṭ|P|3|pl": [
+  "ghuranti"
+ ],
+ "06.0071|laṭ|P|3|sg": [
+  "ghurati"
+ ],
+ "06.0072|laṅ|P|1|du": [
+  "apurāva"
+ ],
+ "06.0072|laṅ|P|1|pl": [
+  "apurāma"
+ ],
+ "06.0072|laṅ|P|1|sg": [
+  "apuram"
+ ],
+ "06.0072|laṅ|P|2|du": [
+  "apuratam"
+ ],
+ "06.0072|laṅ|P|2|pl": [
+  "apurata"
+ ],
+ "06.0072|laṅ|P|2|sg": [
+  "apuraḥ"
+ ],
+ "06.0072|laṅ|P|3|du": [
+  "apuratām"
+ ],
+ "06.0072|laṅ|P|3|pl": [
+  "apuran"
+ ],
+ "06.0072|laṅ|P|3|sg": [
+  "apurat",
+  "apurad"
+ ],
+ "06.0072|laṭ|P|1|du": [
+  "purāvaḥ"
+ ],
+ "06.0072|laṭ|P|1|pl": [
+  "purāmaḥ"
+ ],
+ "06.0072|laṭ|P|1|sg": [
+  "purāmi"
+ ],
+ "06.0072|laṭ|P|2|du": [
+  "purathaḥ"
+ ],
+ "06.0072|laṭ|P|2|pl": [
+  "puratha"
+ ],
+ "06.0072|laṭ|P|2|sg": [
+  "purasi"
+ ],
+ "06.0072|laṭ|P|3|du": [
+  "purataḥ"
+ ],
+ "06.0072|laṭ|P|3|pl": [
+  "puranti"
+ ],
+ "06.0072|laṭ|P|3|sg": [
+  "purati"
+ ],
+ "06.0073|laṅ|P|1|du": [
+  "avṛhāva"
+ ],
+ "06.0073|laṅ|P|1|pl": [
+  "avṛhāma"
+ ],
+ "06.0073|laṅ|P|1|sg": [
+  "avṛham"
+ ],
+ "06.0073|laṅ|P|2|du": [
+  "avṛhatam"
+ ],
+ "06.0073|laṅ|P|2|pl": [
+  "avṛhata"
+ ],
+ "06.0073|laṅ|P|2|sg": [
+  "avṛhaḥ"
+ ],
+ "06.0073|laṅ|P|3|du": [
+  "avṛhatām"
+ ],
+ "06.0073|laṅ|P|3|pl": [
+  "avṛhan"
+ ],
+ "06.0073|laṅ|P|3|sg": [
+  "avṛhat",
+  "avṛhad"
+ ],
+ "06.0073|laṭ|P|1|du": [
+  "vṛhāvaḥ"
+ ],
+ "06.0073|laṭ|P|1|pl": [
+  "vṛhāmaḥ"
+ ],
+ "06.0073|laṭ|P|1|sg": [
+  "vṛhāmi"
+ ],
+ "06.0073|laṭ|P|2|du": [
+  "vṛhathaḥ"
+ ],
+ "06.0073|laṭ|P|2|pl": [
+  "vṛhatha"
+ ],
+ "06.0073|laṭ|P|2|sg": [
+  "vṛhasi"
+ ],
+ "06.0073|laṭ|P|3|du": [
+  "vṛhataḥ"
+ ],
+ "06.0073|laṭ|P|3|pl": [
+  "vṛhanti"
+ ],
+ "06.0073|laṭ|P|3|sg": [
+  "vṛhati"
+ ],
+ "06.0074|laṅ|P|1|du": [
+  "abṛhāva"
+ ],
+ "06.0074|laṅ|P|1|pl": [
+  "abṛhāma"
+ ],
+ "06.0074|laṅ|P|1|sg": [
+  "abṛham"
+ ],
+ "06.0074|laṅ|P|2|du": [
+  "abṛhatam"
+ ],
+ "06.0074|laṅ|P|2|pl": [
+  "abṛhata"
+ ],
+ "06.0074|laṅ|P|2|sg": [
+  "abṛhaḥ"
+ ],
+ "06.0074|laṅ|P|3|du": [
+  "abṛhatām"
+ ],
+ "06.0074|laṅ|P|3|pl": [
+  "abṛhan"
+ ],
+ "06.0074|laṅ|P|3|sg": [
+  "abṛhat",
+  "abṛhad"
+ ],
+ "06.0074|laṭ|P|1|du": [
+  "bṛhāvaḥ"
+ ],
+ "06.0074|laṭ|P|1|pl": [
+  "bṛhāmaḥ"
+ ],
+ "06.0074|laṭ|P|1|sg": [
+  "bṛhāmi"
+ ],
+ "06.0074|laṭ|P|2|du": [
+  "bṛhathaḥ"
+ ],
+ "06.0074|laṭ|P|2|pl": [
+  "bṛhatha"
+ ],
+ "06.0074|laṭ|P|2|sg": [
+  "bṛhasi"
+ ],
+ "06.0074|laṭ|P|3|du": [
+  "bṛhataḥ"
+ ],
+ "06.0074|laṭ|P|3|pl": [
+  "bṛhanti"
+ ],
+ "06.0074|laṭ|P|3|sg": [
+  "bṛhati"
+ ],
+ "06.0075|laṅ|P|1|du": [
+  "atṛhāva"
+ ],
+ "06.0075|laṅ|P|1|pl": [
+  "atṛhāma"
+ ],
+ "06.0075|laṅ|P|1|sg": [
+  "atṛham"
+ ],
+ "06.0075|laṅ|P|2|du": [
+  "atṛhatam"
+ ],
+ "06.0075|laṅ|P|2|pl": [
+  "atṛhata"
+ ],
+ "06.0075|laṅ|P|2|sg": [
+  "atṛhaḥ"
+ ],
+ "06.0075|laṅ|P|3|du": [
+  "atṛhatām"
+ ],
+ "06.0075|laṅ|P|3|pl": [
+  "atṛhan"
+ ],
+ "06.0075|laṅ|P|3|sg": [
+  "atṛhat",
+  "atṛhad"
+ ],
+ "06.0075|laṭ|P|1|du": [
+  "tṛhāvaḥ"
+ ],
+ "06.0075|laṭ|P|1|pl": [
+  "tṛhāmaḥ"
+ ],
+ "06.0075|laṭ|P|1|sg": [
+  "tṛhāmi"
+ ],
+ "06.0075|laṭ|P|2|du": [
+  "tṛhathaḥ"
+ ],
+ "06.0075|laṭ|P|2|pl": [
+  "tṛhatha"
+ ],
+ "06.0075|laṭ|P|2|sg": [
+  "tṛhasi"
+ ],
+ "06.0075|laṭ|P|3|du": [
+  "tṛhataḥ"
+ ],
+ "06.0075|laṭ|P|3|pl": [
+  "tṛhanti"
+ ],
+ "06.0075|laṭ|P|3|sg": [
+  "tṛhati"
+ ],
+ "06.0076|laṅ|P|1|du": [
+  "astṛhāva"
+ ],
+ "06.0076|laṅ|P|1|pl": [
+  "astṛhāma"
+ ],
+ "06.0076|laṅ|P|1|sg": [
+  "astṛham"
+ ],
+ "06.0076|laṅ|P|2|du": [
+  "astṛhatam"
+ ],
+ "06.0076|laṅ|P|2|pl": [
+  "astṛhata"
+ ],
+ "06.0076|laṅ|P|2|sg": [
+  "astṛhaḥ"
+ ],
+ "06.0076|laṅ|P|3|du": [
+  "astṛhatām"
+ ],
+ "06.0076|laṅ|P|3|pl": [
+  "astṛhan"
+ ],
+ "06.0076|laṅ|P|3|sg": [
+  "astṛhat",
+  "astṛhad"
+ ],
+ "06.0076|laṭ|P|1|du": [
+  "stṛhāvaḥ"
+ ],
+ "06.0076|laṭ|P|1|pl": [
+  "stṛhāmaḥ"
+ ],
+ "06.0076|laṭ|P|1|sg": [
+  "stṛhāmi"
+ ],
+ "06.0076|laṭ|P|2|du": [
+  "stṛhathaḥ"
+ ],
+ "06.0076|laṭ|P|2|pl": [
+  "stṛhatha"
+ ],
+ "06.0076|laṭ|P|2|sg": [
+  "stṛhasi"
+ ],
+ "06.0076|laṭ|P|3|du": [
+  "stṛhataḥ"
+ ],
+ "06.0076|laṭ|P|3|pl": [
+  "stṛhanti"
+ ],
+ "06.0076|laṭ|P|3|sg": [
+  "stṛhati"
+ ],
+ "06.0077|laṅ|P|1|du": [
+  "atṛṃhāva"
+ ],
+ "06.0077|laṅ|P|1|pl": [
+  "atṛṃhāma"
+ ],
+ "06.0077|laṅ|P|1|sg": [
+  "atṛṃham"
+ ],
+ "06.0077|laṅ|P|2|du": [
+  "atṛṃhatam"
+ ],
+ "06.0077|laṅ|P|2|pl": [
+  "atṛṃhata"
+ ],
+ "06.0077|laṅ|P|2|sg": [
+  "atṛṃhaḥ"
+ ],
+ "06.0077|laṅ|P|3|du": [
+  "atṛṃhatām"
+ ],
+ "06.0077|laṅ|P|3|pl": [
+  "atṛṃhan"
+ ],
+ "06.0077|laṅ|P|3|sg": [
+  "atṛṃhat",
+  "atṛṃhad"
+ ],
+ "06.0077|laṭ|P|1|du": [
+  "tṛṃhāvaḥ"
+ ],
+ "06.0077|laṭ|P|1|pl": [
+  "tṛṃhāmaḥ"
+ ],
+ "06.0077|laṭ|P|1|sg": [
+  "tṛṃhāmi"
+ ],
+ "06.0077|laṭ|P|2|du": [
+  "tṛṃhathaḥ"
+ ],
+ "06.0077|laṭ|P|2|pl": [
+  "tṛṃhatha"
+ ],
+ "06.0077|laṭ|P|2|sg": [
+  "tṛṃhasi"
+ ],
+ "06.0077|laṭ|P|3|du": [
+  "tṛṃhataḥ"
+ ],
+ "06.0077|laṭ|P|3|pl": [
+  "tṛṃhanti"
+ ],
+ "06.0077|laṭ|P|3|sg": [
+  "tṛṃhati"
+ ],
+ "06.0078|laṅ|P|1|du": [
+  "aicchāva"
+ ],
+ "06.0078|laṅ|P|1|pl": [
+  "aicchāma"
+ ],
+ "06.0078|laṅ|P|1|sg": [
+  "aiccham"
+ ],
+ "06.0078|laṅ|P|2|du": [
+  "aicchatam"
+ ],
+ "06.0078|laṅ|P|2|pl": [
+  "aicchata"
+ ],
+ "06.0078|laṅ|P|2|sg": [
+  "aicchaḥ"
+ ],
+ "06.0078|laṅ|P|3|du": [
+  "aicchatām"
+ ],
+ "06.0078|laṅ|P|3|pl": [
+  "aicchan"
+ ],
+ "06.0078|laṅ|P|3|sg": [
+  "aicchat",
+  "aicchad"
+ ],
+ "06.0078|laṭ|P|1|du": [
+  "icchāvaḥ"
+ ],
+ "06.0078|laṭ|P|1|pl": [
+  "icchāmaḥ"
+ ],
+ "06.0078|laṭ|P|1|sg": [
+  "icchāmi"
+ ],
+ "06.0078|laṭ|P|2|du": [
+  "icchathaḥ"
+ ],
+ "06.0078|laṭ|P|2|pl": [
+  "icchatha"
+ ],
+ "06.0078|laṭ|P|2|sg": [
+  "icchasi"
+ ],
+ "06.0078|laṭ|P|3|du": [
+  "icchataḥ"
+ ],
+ "06.0078|laṭ|P|3|pl": [
+  "icchanti"
+ ],
+ "06.0078|laṭ|P|3|sg": [
+  "icchati"
+ ],
+ "06.0079|laṅ|P|1|du": [
+  "amiṣāva"
+ ],
+ "06.0079|laṅ|P|1|pl": [
+  "amiṣāma"
+ ],
+ "06.0079|laṅ|P|1|sg": [
+  "amiṣam"
+ ],
+ "06.0079|laṅ|P|2|du": [
+  "amiṣatam"
+ ],
+ "06.0079|laṅ|P|2|pl": [
+  "amiṣata"
+ ],
+ "06.0079|laṅ|P|2|sg": [
+  "amiṣaḥ"
+ ],
+ "06.0079|laṅ|P|3|du": [
+  "amiṣatām"
+ ],
+ "06.0079|laṅ|P|3|pl": [
+  "amiṣan"
+ ],
+ "06.0079|laṅ|P|3|sg": [
+  "amiṣat",
+  "amiṣad"
+ ],
+ "06.0079|laṭ|P|1|du": [
+  "miṣāvaḥ"
+ ],
+ "06.0079|laṭ|P|1|pl": [
+  "miṣāmaḥ"
+ ],
+ "06.0079|laṭ|P|1|sg": [
+  "miṣāmi"
+ ],
+ "06.0079|laṭ|P|2|du": [
+  "miṣathaḥ"
+ ],
+ "06.0079|laṭ|P|2|pl": [
+  "miṣatha"
+ ],
+ "06.0079|laṭ|P|2|sg": [
+  "miṣasi"
+ ],
+ "06.0079|laṭ|P|3|du": [
+  "miṣataḥ"
+ ],
+ "06.0079|laṭ|P|3|pl": [
+  "miṣanti"
+ ],
+ "06.0079|laṭ|P|3|sg": [
+  "miṣati"
+ ],
+ "06.0080|laṅ|P|1|du": [
+  "akilāva"
+ ],
+ "06.0080|laṅ|P|1|pl": [
+  "akilāma"
+ ],
+ "06.0080|laṅ|P|1|sg": [
+  "akilam"
+ ],
+ "06.0080|laṅ|P|2|du": [
+  "akilatam"
+ ],
+ "06.0080|laṅ|P|2|pl": [
+  "akilata"
+ ],
+ "06.0080|laṅ|P|2|sg": [
+  "akilaḥ"
+ ],
+ "06.0080|laṅ|P|3|du": [
+  "akilatām"
+ ],
+ "06.0080|laṅ|P|3|pl": [
+  "akilan"
+ ],
+ "06.0080|laṅ|P|3|sg": [
+  "akilat",
+  "akilad"
+ ],
+ "06.0080|laṭ|P|1|du": [
+  "kilāvaḥ"
+ ],
+ "06.0080|laṭ|P|1|pl": [
+  "kilāmaḥ"
+ ],
+ "06.0080|laṭ|P|1|sg": [
+  "kilāmi"
+ ],
+ "06.0080|laṭ|P|2|du": [
+  "kilathaḥ"
+ ],
+ "06.0080|laṭ|P|2|pl": [
+  "kilatha"
+ ],
+ "06.0080|laṭ|P|2|sg": [
+  "kilasi"
+ ],
+ "06.0080|laṭ|P|3|du": [
+  "kilataḥ"
+ ],
+ "06.0080|laṭ|P|3|pl": [
+  "kilanti"
+ ],
+ "06.0080|laṭ|P|3|sg": [
+  "kilati"
+ ],
+ "06.0081|laṅ|P|1|du": [
+  "atilāva"
+ ],
+ "06.0081|laṅ|P|1|pl": [
+  "atilāma"
+ ],
+ "06.0081|laṅ|P|1|sg": [
+  "atilam"
+ ],
+ "06.0081|laṅ|P|2|du": [
+  "atilatam"
+ ],
+ "06.0081|laṅ|P|2|pl": [
+  "atilata"
+ ],
+ "06.0081|laṅ|P|2|sg": [
+  "atilaḥ"
+ ],
+ "06.0081|laṅ|P|3|du": [
+  "atilatām"
+ ],
+ "06.0081|laṅ|P|3|pl": [
+  "atilan"
+ ],
+ "06.0081|laṅ|P|3|sg": [
+  "atilat",
+  "atilad"
+ ],
+ "06.0081|laṭ|P|1|du": [
+  "tilāvaḥ"
+ ],
+ "06.0081|laṭ|P|1|pl": [
+  "tilāmaḥ"
+ ],
+ "06.0081|laṭ|P|1|sg": [
+  "tilāmi"
+ ],
+ "06.0081|laṭ|P|2|du": [
+  "tilathaḥ"
+ ],
+ "06.0081|laṭ|P|2|pl": [
+  "tilatha"
+ ],
+ "06.0081|laṭ|P|2|sg": [
+  "tilasi"
+ ],
+ "06.0081|laṭ|P|3|du": [
+  "tilataḥ"
+ ],
+ "06.0081|laṭ|P|3|pl": [
+  "tilanti"
+ ],
+ "06.0081|laṭ|P|3|sg": [
+  "tilati"
+ ],
+ "06.0082|laṅ|P|1|du": [
+  "acilāva"
+ ],
+ "06.0082|laṅ|P|1|pl": [
+  "acilāma"
+ ],
+ "06.0082|laṅ|P|1|sg": [
+  "acilam"
+ ],
+ "06.0082|laṅ|P|2|du": [
+  "acilatam"
+ ],
+ "06.0082|laṅ|P|2|pl": [
+  "acilata"
+ ],
+ "06.0082|laṅ|P|2|sg": [
+  "acilaḥ"
+ ],
+ "06.0082|laṅ|P|3|du": [
+  "acilatām"
+ ],
+ "06.0082|laṅ|P|3|pl": [
+  "acilan"
+ ],
+ "06.0082|laṅ|P|3|sg": [
+  "acilat",
+  "acilad"
+ ],
+ "06.0082|laṭ|P|1|du": [
+  "cilāvaḥ"
+ ],
+ "06.0082|laṭ|P|1|pl": [
+  "cilāmaḥ"
+ ],
+ "06.0082|laṭ|P|1|sg": [
+  "cilāmi"
+ ],
+ "06.0082|laṭ|P|2|du": [
+  "cilathaḥ"
+ ],
+ "06.0082|laṭ|P|2|pl": [
+  "cilatha"
+ ],
+ "06.0082|laṭ|P|2|sg": [
+  "cilasi"
+ ],
+ "06.0082|laṭ|P|3|du": [
+  "cilataḥ"
+ ],
+ "06.0082|laṭ|P|3|pl": [
+  "cilanti"
+ ],
+ "06.0082|laṭ|P|3|sg": [
+  "cilati"
+ ],
+ "06.0083|laṅ|P|1|du": [
+  "acalāva"
+ ],
+ "06.0083|laṅ|P|1|pl": [
+  "acalāma"
+ ],
+ "06.0083|laṅ|P|1|sg": [
+  "acalam"
+ ],
+ "06.0083|laṅ|P|2|du": [
+  "acalatam"
+ ],
+ "06.0083|laṅ|P|2|pl": [
+  "acalata"
+ ],
+ "06.0083|laṅ|P|2|sg": [
+  "acalaḥ"
+ ],
+ "06.0083|laṅ|P|3|du": [
+  "acalatām"
+ ],
+ "06.0083|laṅ|P|3|pl": [
+  "acalan"
+ ],
+ "06.0083|laṅ|P|3|sg": [
+  "acalat",
+  "acalad"
+ ],
+ "06.0083|laṭ|P|1|du": [
+  "calāvaḥ"
+ ],
+ "06.0083|laṭ|P|1|pl": [
+  "calāmaḥ"
+ ],
+ "06.0083|laṭ|P|1|sg": [
+  "calāmi"
+ ],
+ "06.0083|laṭ|P|2|du": [
+  "calathaḥ"
+ ],
+ "06.0083|laṭ|P|2|pl": [
+  "calatha"
+ ],
+ "06.0083|laṭ|P|2|sg": [
+  "calasi"
+ ],
+ "06.0083|laṭ|P|3|du": [
+  "calataḥ"
+ ],
+ "06.0083|laṭ|P|3|pl": [
+  "calanti"
+ ],
+ "06.0083|laṭ|P|3|sg": [
+  "calati"
+ ],
+ "06.0084|laṅ|P|1|du": [
+  "ailāva"
+ ],
+ "06.0084|laṅ|P|1|pl": [
+  "ailāma"
+ ],
+ "06.0084|laṅ|P|1|sg": [
+  "ailam"
+ ],
+ "06.0084|laṅ|P|2|du": [
+  "ailatam"
+ ],
+ "06.0084|laṅ|P|2|pl": [
+  "ailata"
+ ],
+ "06.0084|laṅ|P|2|sg": [
+  "ailaḥ"
+ ],
+ "06.0084|laṅ|P|3|du": [
+  "ailatām"
+ ],
+ "06.0084|laṅ|P|3|pl": [
+  "ailan"
+ ],
+ "06.0084|laṅ|P|3|sg": [
+  "ailat",
+  "ailad"
+ ],
+ "06.0084|laṭ|P|1|du": [
+  "ilāvaḥ"
+ ],
+ "06.0084|laṭ|P|1|pl": [
+  "ilāmaḥ"
+ ],
+ "06.0084|laṭ|P|1|sg": [
+  "ilāmi"
+ ],
+ "06.0084|laṭ|P|2|du": [
+  "ilathaḥ"
+ ],
+ "06.0084|laṭ|P|2|pl": [
+  "ilatha"
+ ],
+ "06.0084|laṭ|P|2|sg": [
+  "ilasi"
+ ],
+ "06.0084|laṭ|P|3|du": [
+  "ilataḥ"
+ ],
+ "06.0084|laṭ|P|3|pl": [
+  "ilanti"
+ ],
+ "06.0084|laṭ|P|3|sg": [
+  "ilati"
+ ],
+ "06.0085|laṅ|P|1|du": [
+  "avilāva"
+ ],
+ "06.0085|laṅ|P|1|pl": [
+  "avilāma"
+ ],
+ "06.0085|laṅ|P|1|sg": [
+  "avilam"
+ ],
+ "06.0085|laṅ|P|2|du": [
+  "avilatam"
+ ],
+ "06.0085|laṅ|P|2|pl": [
+  "avilata"
+ ],
+ "06.0085|laṅ|P|2|sg": [
+  "avilaḥ"
+ ],
+ "06.0085|laṅ|P|3|du": [
+  "avilatām"
+ ],
+ "06.0085|laṅ|P|3|pl": [
+  "avilan"
+ ],
+ "06.0085|laṅ|P|3|sg": [
+  "avilat",
+  "avilad"
+ ],
+ "06.0085|laṭ|P|1|du": [
+  "vilāvaḥ"
+ ],
+ "06.0085|laṭ|P|1|pl": [
+  "vilāmaḥ"
+ ],
+ "06.0085|laṭ|P|1|sg": [
+  "vilāmi"
+ ],
+ "06.0085|laṭ|P|2|du": [
+  "vilathaḥ"
+ ],
+ "06.0085|laṭ|P|2|pl": [
+  "vilatha"
+ ],
+ "06.0085|laṭ|P|2|sg": [
+  "vilasi"
+ ],
+ "06.0085|laṭ|P|3|du": [
+  "vilataḥ"
+ ],
+ "06.0085|laṭ|P|3|pl": [
+  "vilanti"
+ ],
+ "06.0085|laṭ|P|3|sg": [
+  "vilati"
+ ],
+ "06.0086|laṅ|P|1|du": [
+  "abilāva"
+ ],
+ "06.0086|laṅ|P|1|pl": [
+  "abilāma"
+ ],
+ "06.0086|laṅ|P|1|sg": [
+  "abilam"
+ ],
+ "06.0086|laṅ|P|2|du": [
+  "abilatam"
+ ],
+ "06.0086|laṅ|P|2|pl": [
+  "abilata"
+ ],
+ "06.0086|laṅ|P|2|sg": [
+  "abilaḥ"
+ ],
+ "06.0086|laṅ|P|3|du": [
+  "abilatām"
+ ],
+ "06.0086|laṅ|P|3|pl": [
+  "abilan"
+ ],
+ "06.0086|laṅ|P|3|sg": [
+  "abilat",
+  "abilad"
+ ],
+ "06.0086|laṭ|P|1|du": [
+  "bilāvaḥ"
+ ],
+ "06.0086|laṭ|P|1|pl": [
+  "bilāmaḥ"
+ ],
+ "06.0086|laṭ|P|1|sg": [
+  "bilāmi"
+ ],
+ "06.0086|laṭ|P|2|du": [
+  "bilathaḥ"
+ ],
+ "06.0086|laṭ|P|2|pl": [
+  "bilatha"
+ ],
+ "06.0086|laṭ|P|2|sg": [
+  "bilasi"
+ ],
+ "06.0086|laṭ|P|3|du": [
+  "bilataḥ"
+ ],
+ "06.0086|laṭ|P|3|pl": [
+  "bilanti"
+ ],
+ "06.0086|laṭ|P|3|sg": [
+  "bilati"
+ ],
+ "06.0087|laṅ|P|1|du": [
+  "anilāva"
+ ],
+ "06.0087|laṅ|P|1|pl": [
+  "anilāma"
+ ],
+ "06.0087|laṅ|P|1|sg": [
+  "anilam"
+ ],
+ "06.0087|laṅ|P|2|du": [
+  "anilatam"
+ ],
+ "06.0087|laṅ|P|2|pl": [
+  "anilata"
+ ],
+ "06.0087|laṅ|P|2|sg": [
+  "anilaḥ"
+ ],
+ "06.0087|laṅ|P|3|du": [
+  "anilatām"
+ ],
+ "06.0087|laṅ|P|3|pl": [
+  "anilan"
+ ],
+ "06.0087|laṅ|P|3|sg": [
+  "anilat",
+  "anilad"
+ ],
+ "06.0087|laṭ|P|1|du": [
+  "nilāvaḥ"
+ ],
+ "06.0087|laṭ|P|1|pl": [
+  "nilāmaḥ"
+ ],
+ "06.0087|laṭ|P|1|sg": [
+  "nilāmi"
+ ],
+ "06.0087|laṭ|P|2|du": [
+  "nilathaḥ"
+ ],
+ "06.0087|laṭ|P|2|pl": [
+  "nilatha"
+ ],
+ "06.0087|laṭ|P|2|sg": [
+  "nilasi"
+ ],
+ "06.0087|laṭ|P|3|du": [
+  "nilataḥ"
+ ],
+ "06.0087|laṭ|P|3|pl": [
+  "nilanti"
+ ],
+ "06.0087|laṭ|P|3|sg": [
+  "nilati"
+ ],
+ "06.0088|laṅ|P|1|du": [
+  "ahilāva"
+ ],
+ "06.0088|laṅ|P|1|pl": [
+  "ahilāma"
+ ],
+ "06.0088|laṅ|P|1|sg": [
+  "ahilam"
+ ],
+ "06.0088|laṅ|P|2|du": [
+  "ahilatam"
+ ],
+ "06.0088|laṅ|P|2|pl": [
+  "ahilata"
+ ],
+ "06.0088|laṅ|P|2|sg": [
+  "ahilaḥ"
+ ],
+ "06.0088|laṅ|P|3|du": [
+  "ahilatām"
+ ],
+ "06.0088|laṅ|P|3|pl": [
+  "ahilan"
+ ],
+ "06.0088|laṅ|P|3|sg": [
+  "ahilat",
+  "ahilad"
+ ],
+ "06.0088|laṭ|P|1|du": [
+  "hilāvaḥ"
+ ],
+ "06.0088|laṭ|P|1|pl": [
+  "hilāmaḥ"
+ ],
+ "06.0088|laṭ|P|1|sg": [
+  "hilāmi"
+ ],
+ "06.0088|laṭ|P|2|du": [
+  "hilathaḥ"
+ ],
+ "06.0088|laṭ|P|2|pl": [
+  "hilatha"
+ ],
+ "06.0088|laṭ|P|2|sg": [
+  "hilasi"
+ ],
+ "06.0088|laṭ|P|3|du": [
+  "hilataḥ"
+ ],
+ "06.0088|laṭ|P|3|pl": [
+  "hilanti"
+ ],
+ "06.0088|laṭ|P|3|sg": [
+  "hilati"
+ ],
+ "06.0089|laṅ|P|1|du": [
+  "aśilāva"
+ ],
+ "06.0089|laṅ|P|1|pl": [
+  "aśilāma"
+ ],
+ "06.0089|laṅ|P|1|sg": [
+  "aśilam"
+ ],
+ "06.0089|laṅ|P|2|du": [
+  "aśilatam"
+ ],
+ "06.0089|laṅ|P|2|pl": [
+  "aśilata"
+ ],
+ "06.0089|laṅ|P|2|sg": [
+  "aśilaḥ"
+ ],
+ "06.0089|laṅ|P|3|du": [
+  "aśilatām"
+ ],
+ "06.0089|laṅ|P|3|pl": [
+  "aśilan"
+ ],
+ "06.0089|laṅ|P|3|sg": [
+  "aśilat",
+  "aśilad"
+ ],
+ "06.0089|laṭ|P|1|du": [
+  "śilāvaḥ"
+ ],
+ "06.0089|laṭ|P|1|pl": [
+  "śilāmaḥ"
+ ],
+ "06.0089|laṭ|P|1|sg": [
+  "śilāmi"
+ ],
+ "06.0089|laṭ|P|2|du": [
+  "śilathaḥ"
+ ],
+ "06.0089|laṭ|P|2|pl": [
+  "śilatha"
+ ],
+ "06.0089|laṭ|P|2|sg": [
+  "śilasi"
+ ],
+ "06.0089|laṭ|P|3|du": [
+  "śilataḥ"
+ ],
+ "06.0089|laṭ|P|3|pl": [
+  "śilanti"
+ ],
+ "06.0089|laṭ|P|3|sg": [
+  "śilati"
+ ],
+ "06.0090|laṅ|P|1|du": [
+  "asilāva"
+ ],
+ "06.0090|laṅ|P|1|pl": [
+  "asilāma"
+ ],
+ "06.0090|laṅ|P|1|sg": [
+  "asilam"
+ ],
+ "06.0090|laṅ|P|2|du": [
+  "asilatam"
+ ],
+ "06.0090|laṅ|P|2|pl": [
+  "asilata"
+ ],
+ "06.0090|laṅ|P|2|sg": [
+  "asilaḥ"
+ ],
+ "06.0090|laṅ|P|3|du": [
+  "asilatām"
+ ],
+ "06.0090|laṅ|P|3|pl": [
+  "asilan"
+ ],
+ "06.0090|laṅ|P|3|sg": [
+  "asilat",
+  "asilad"
+ ],
+ "06.0090|laṭ|P|1|du": [
+  "silāvaḥ"
+ ],
+ "06.0090|laṭ|P|1|pl": [
+  "silāmaḥ"
+ ],
+ "06.0090|laṭ|P|1|sg": [
+  "silāmi"
+ ],
+ "06.0090|laṭ|P|2|du": [
+  "silathaḥ"
+ ],
+ "06.0090|laṭ|P|2|pl": [
+  "silatha"
+ ],
+ "06.0090|laṭ|P|2|sg": [
+  "silasi"
+ ],
+ "06.0090|laṭ|P|3|du": [
+  "silataḥ"
+ ],
+ "06.0090|laṭ|P|3|pl": [
+  "silanti"
+ ],
+ "06.0090|laṭ|P|3|sg": [
+  "silati"
+ ],
+ "06.0091|laṅ|P|1|du": [
+  "amilāva"
+ ],
+ "06.0091|laṅ|P|1|pl": [
+  "amilāma"
+ ],
+ "06.0091|laṅ|P|1|sg": [
+  "amilam"
+ ],
+ "06.0091|laṅ|P|2|du": [
+  "amilatam"
+ ],
+ "06.0091|laṅ|P|2|pl": [
+  "amilata"
+ ],
+ "06.0091|laṅ|P|2|sg": [
+  "amilaḥ"
+ ],
+ "06.0091|laṅ|P|3|du": [
+  "amilatām"
+ ],
+ "06.0091|laṅ|P|3|pl": [
+  "amilan"
+ ],
+ "06.0091|laṅ|P|3|sg": [
+  "amilat",
+  "amilad"
+ ],
+ "06.0091|laṭ|P|1|du": [
+  "milāvaḥ"
+ ],
+ "06.0091|laṭ|P|1|pl": [
+  "milāmaḥ"
+ ],
+ "06.0091|laṭ|P|1|sg": [
+  "milāmi"
+ ],
+ "06.0091|laṭ|P|2|du": [
+  "milathaḥ"
+ ],
+ "06.0091|laṭ|P|2|pl": [
+  "milatha"
+ ],
+ "06.0091|laṭ|P|2|sg": [
+  "milasi"
+ ],
+ "06.0091|laṭ|P|3|du": [
+  "milataḥ"
+ ],
+ "06.0091|laṭ|P|3|pl": [
+  "milanti"
+ ],
+ "06.0091|laṭ|P|3|sg": [
+  "milati"
+ ],
+ "06.0092|laṅ|P|1|du": [
+  "alikhāva"
+ ],
+ "06.0092|laṅ|P|1|pl": [
+  "alikhāma"
+ ],
+ "06.0092|laṅ|P|1|sg": [
+  "alikham"
+ ],
+ "06.0092|laṅ|P|2|du": [
+  "alikhatam"
+ ],
+ "06.0092|laṅ|P|2|pl": [
+  "alikhata"
+ ],
+ "06.0092|laṅ|P|2|sg": [
+  "alikhaḥ"
+ ],
+ "06.0092|laṅ|P|3|du": [
+  "alikhatām"
+ ],
+ "06.0092|laṅ|P|3|pl": [
+  "alikhan"
+ ],
+ "06.0092|laṅ|P|3|sg": [
+  "alikhat",
+  "alikhad"
+ ],
+ "06.0092|laṭ|P|1|du": [
+  "likhāvaḥ"
+ ],
+ "06.0092|laṭ|P|1|pl": [
+  "likhāmaḥ"
+ ],
+ "06.0092|laṭ|P|1|sg": [
+  "likhāmi"
+ ],
+ "06.0092|laṭ|P|2|du": [
+  "likhathaḥ"
+ ],
+ "06.0092|laṭ|P|2|pl": [
+  "likhatha"
+ ],
+ "06.0092|laṭ|P|2|sg": [
+  "likhasi"
+ ],
+ "06.0092|laṭ|P|3|du": [
+  "likhataḥ"
+ ],
+ "06.0092|laṭ|P|3|pl": [
+  "likhanti"
+ ],
+ "06.0092|laṭ|P|3|sg": [
+  "likhati"
+ ],
+ "06.0093|laṅ|P|1|du": [
+  "akuṭāva"
+ ],
+ "06.0093|laṅ|P|1|pl": [
+  "akuṭāma"
+ ],
+ "06.0093|laṅ|P|1|sg": [
+  "akuṭam"
+ ],
+ "06.0093|laṅ|P|2|du": [
+  "akuṭatam"
+ ],
+ "06.0093|laṅ|P|2|pl": [
+  "akuṭata"
+ ],
+ "06.0093|laṅ|P|2|sg": [
+  "akuṭaḥ"
+ ],
+ "06.0093|laṅ|P|3|du": [
+  "akuṭatām"
+ ],
+ "06.0093|laṅ|P|3|pl": [
+  "akuṭan"
+ ],
+ "06.0093|laṅ|P|3|sg": [
+  "akuṭat",
+  "akuṭad"
+ ],
+ "06.0093|laṭ|P|1|du": [
+  "kuṭāvaḥ"
+ ],
+ "06.0093|laṭ|P|1|pl": [
+  "kuṭāmaḥ"
+ ],
+ "06.0093|laṭ|P|1|sg": [
+  "kuṭāmi"
+ ],
+ "06.0093|laṭ|P|2|du": [
+  "kuṭathaḥ"
+ ],
+ "06.0093|laṭ|P|2|pl": [
+  "kuṭatha"
+ ],
+ "06.0093|laṭ|P|2|sg": [
+  "kuṭasi"
+ ],
+ "06.0093|laṭ|P|3|du": [
+  "kuṭataḥ"
+ ],
+ "06.0093|laṭ|P|3|pl": [
+  "kuṭanti"
+ ],
+ "06.0093|laṭ|P|3|sg": [
+  "kuṭati"
+ ],
+ "06.0094|laṅ|P|1|du": [
+  "apuṭāva"
+ ],
+ "06.0094|laṅ|P|1|pl": [
+  "apuṭāma"
+ ],
+ "06.0094|laṅ|P|1|sg": [
+  "apuṭam"
+ ],
+ "06.0094|laṅ|P|2|du": [
+  "apuṭatam"
+ ],
+ "06.0094|laṅ|P|2|pl": [
+  "apuṭata"
+ ],
+ "06.0094|laṅ|P|2|sg": [
+  "apuṭaḥ"
+ ],
+ "06.0094|laṅ|P|3|du": [
+  "apuṭatām"
+ ],
+ "06.0094|laṅ|P|3|pl": [
+  "apuṭan"
+ ],
+ "06.0094|laṅ|P|3|sg": [
+  "apuṭat",
+  "apuṭad"
+ ],
+ "06.0094|laṭ|P|1|du": [
+  "puṭāvaḥ"
+ ],
+ "06.0094|laṭ|P|1|pl": [
+  "puṭāmaḥ"
+ ],
+ "06.0094|laṭ|P|1|sg": [
+  "puṭāmi"
+ ],
+ "06.0094|laṭ|P|2|du": [
+  "puṭathaḥ"
+ ],
+ "06.0094|laṭ|P|2|pl": [
+  "puṭatha"
+ ],
+ "06.0094|laṭ|P|2|sg": [
+  "puṭasi"
+ ],
+ "06.0094|laṭ|P|3|du": [
+  "puṭataḥ"
+ ],
+ "06.0094|laṭ|P|3|pl": [
+  "puṭanti"
+ ],
+ "06.0094|laṭ|P|3|sg": [
+  "puṭati"
+ ],
+ "06.0095|laṅ|P|1|du": [
+  "akucāva"
+ ],
+ "06.0095|laṅ|P|1|pl": [
+  "akucāma"
+ ],
+ "06.0095|laṅ|P|1|sg": [
+  "akucam"
+ ],
+ "06.0095|laṅ|P|2|du": [
+  "akucatam"
+ ],
+ "06.0095|laṅ|P|2|pl": [
+  "akucata"
+ ],
+ "06.0095|laṅ|P|2|sg": [
+  "akucaḥ"
+ ],
+ "06.0095|laṅ|P|3|du": [
+  "akucatām"
+ ],
+ "06.0095|laṅ|P|3|pl": [
+  "akucan"
+ ],
+ "06.0095|laṅ|P|3|sg": [
+  "akucat",
+  "akucad"
+ ],
+ "06.0095|laṭ|P|1|du": [
+  "kucāvaḥ"
+ ],
+ "06.0095|laṭ|P|1|pl": [
+  "kucāmaḥ"
+ ],
+ "06.0095|laṭ|P|1|sg": [
+  "kucāmi"
+ ],
+ "06.0095|laṭ|P|2|du": [
+  "kucathaḥ"
+ ],
+ "06.0095|laṭ|P|2|pl": [
+  "kucatha"
+ ],
+ "06.0095|laṭ|P|2|sg": [
+  "kucasi"
+ ],
+ "06.0095|laṭ|P|3|du": [
+  "kucataḥ"
+ ],
+ "06.0095|laṭ|P|3|pl": [
+  "kucanti"
+ ],
+ "06.0095|laṭ|P|3|sg": [
+  "kucati"
+ ],
+ "06.0096|laṅ|P|1|du": [
+  "agujāva"
+ ],
+ "06.0096|laṅ|P|1|pl": [
+  "agujāma"
+ ],
+ "06.0096|laṅ|P|1|sg": [
+  "agujam"
+ ],
+ "06.0096|laṅ|P|2|du": [
+  "agujatam"
+ ],
+ "06.0096|laṅ|P|2|pl": [
+  "agujata"
+ ],
+ "06.0096|laṅ|P|2|sg": [
+  "agujaḥ"
+ ],
+ "06.0096|laṅ|P|3|du": [
+  "agujatām"
+ ],
+ "06.0096|laṅ|P|3|pl": [
+  "agujan"
+ ],
+ "06.0096|laṅ|P|3|sg": [
+  "agujat",
+  "agujad"
+ ],
+ "06.0096|laṭ|P|1|du": [
+  "gujāvaḥ"
+ ],
+ "06.0096|laṭ|P|1|pl": [
+  "gujāmaḥ"
+ ],
+ "06.0096|laṭ|P|1|sg": [
+  "gujāmi"
+ ],
+ "06.0096|laṭ|P|2|du": [
+  "gujathaḥ"
+ ],
+ "06.0096|laṭ|P|2|pl": [
+  "gujatha"
+ ],
+ "06.0096|laṭ|P|2|sg": [
+  "gujasi"
+ ],
+ "06.0096|laṭ|P|3|du": [
+  "gujataḥ"
+ ],
+ "06.0096|laṭ|P|3|pl": [
+  "gujanti"
+ ],
+ "06.0096|laṭ|P|3|sg": [
+  "gujati"
+ ],
+ "06.0097|laṅ|P|1|du": [
+  "aguḍāva"
+ ],
+ "06.0097|laṅ|P|1|pl": [
+  "aguḍāma"
+ ],
+ "06.0097|laṅ|P|1|sg": [
+  "aguḍam"
+ ],
+ "06.0097|laṅ|P|2|du": [
+  "aguḍatam"
+ ],
+ "06.0097|laṅ|P|2|pl": [
+  "aguḍata"
+ ],
+ "06.0097|laṅ|P|2|sg": [
+  "aguḍaḥ"
+ ],
+ "06.0097|laṅ|P|3|du": [
+  "aguḍatām"
+ ],
+ "06.0097|laṅ|P|3|pl": [
+  "aguḍan"
+ ],
+ "06.0097|laṅ|P|3|sg": [
+  "aguḍat",
+  "aguḍad"
+ ],
+ "06.0097|laṭ|P|1|du": [
+  "guḍāvaḥ"
+ ],
+ "06.0097|laṭ|P|1|pl": [
+  "guḍāmaḥ"
+ ],
+ "06.0097|laṭ|P|1|sg": [
+  "guḍāmi"
+ ],
+ "06.0097|laṭ|P|2|du": [
+  "guḍathaḥ"
+ ],
+ "06.0097|laṭ|P|2|pl": [
+  "guḍatha"
+ ],
+ "06.0097|laṭ|P|2|sg": [
+  "guḍasi"
+ ],
+ "06.0097|laṭ|P|3|du": [
+  "guḍataḥ"
+ ],
+ "06.0097|laṭ|P|3|pl": [
+  "guḍanti"
+ ],
+ "06.0097|laṭ|P|3|sg": [
+  "guḍati"
+ ],
+ "06.0098|laṅ|P|1|du": [
+  "aḍipāva"
+ ],
+ "06.0098|laṅ|P|1|pl": [
+  "aḍipāma"
+ ],
+ "06.0098|laṅ|P|1|sg": [
+  "aḍipam"
+ ],
+ "06.0098|laṅ|P|2|du": [
+  "aḍipatam"
+ ],
+ "06.0098|laṅ|P|2|pl": [
+  "aḍipata"
+ ],
+ "06.0098|laṅ|P|2|sg": [
+  "aḍipaḥ"
+ ],
+ "06.0098|laṅ|P|3|du": [
+  "aḍipatām"
+ ],
+ "06.0098|laṅ|P|3|pl": [
+  "aḍipan"
+ ],
+ "06.0098|laṅ|P|3|sg": [
+  "aḍipat",
+  "aḍipad"
+ ],
+ "06.0098|laṭ|P|1|du": [
+  "ḍipāvaḥ"
+ ],
+ "06.0098|laṭ|P|1|pl": [
+  "ḍipāmaḥ"
+ ],
+ "06.0098|laṭ|P|1|sg": [
+  "ḍipāmi"
+ ],
+ "06.0098|laṭ|P|2|du": [
+  "ḍipathaḥ"
+ ],
+ "06.0098|laṭ|P|2|pl": [
+  "ḍipatha"
+ ],
+ "06.0098|laṭ|P|2|sg": [
+  "ḍipasi"
+ ],
+ "06.0098|laṭ|P|3|du": [
+  "ḍipataḥ"
+ ],
+ "06.0098|laṭ|P|3|pl": [
+  "ḍipanti"
+ ],
+ "06.0098|laṭ|P|3|sg": [
+  "ḍipati"
+ ],
+ "06.0099|laṅ|P|1|du": [
+  "acchurāva"
+ ],
+ "06.0099|laṅ|P|1|pl": [
+  "acchurāma"
+ ],
+ "06.0099|laṅ|P|1|sg": [
+  "acchuram"
+ ],
+ "06.0099|laṅ|P|2|du": [
+  "acchuratam"
+ ],
+ "06.0099|laṅ|P|2|pl": [
+  "acchurata"
+ ],
+ "06.0099|laṅ|P|2|sg": [
+  "acchuraḥ"
+ ],
+ "06.0099|laṅ|P|3|du": [
+  "acchuratām"
+ ],
+ "06.0099|laṅ|P|3|pl": [
+  "acchuran"
+ ],
+ "06.0099|laṅ|P|3|sg": [
+  "acchurat",
+  "acchurad"
+ ],
+ "06.0099|laṭ|P|1|du": [
+  "churāvaḥ"
+ ],
+ "06.0099|laṭ|P|1|pl": [
+  "churāmaḥ"
+ ],
+ "06.0099|laṭ|P|1|sg": [
+  "churāmi"
+ ],
+ "06.0099|laṭ|P|2|du": [
+  "churathaḥ"
+ ],
+ "06.0099|laṭ|P|2|pl": [
+  "churatha"
+ ],
+ "06.0099|laṭ|P|2|sg": [
+  "churasi"
+ ],
+ "06.0099|laṭ|P|3|du": [
+  "churataḥ"
+ ],
+ "06.0099|laṭ|P|3|pl": [
+  "churanti"
+ ],
+ "06.0099|laṭ|P|3|sg": [
+  "churati"
+ ],
+ "06.0100|laṅ|P|1|du": [
+  "asphuṭāva"
+ ],
+ "06.0100|laṅ|P|1|pl": [
+  "asphuṭāma"
+ ],
+ "06.0100|laṅ|P|1|sg": [
+  "asphuṭam"
+ ],
+ "06.0100|laṅ|P|2|du": [
+  "asphuṭatam"
+ ],
+ "06.0100|laṅ|P|2|pl": [
+  "asphuṭata"
+ ],
+ "06.0100|laṅ|P|2|sg": [
+  "asphuṭaḥ"
+ ],
+ "06.0100|laṅ|P|3|du": [
+  "asphuṭatām"
+ ],
+ "06.0100|laṅ|P|3|pl": [
+  "asphuṭan"
+ ],
+ "06.0100|laṅ|P|3|sg": [
+  "asphuṭat",
+  "asphuṭad"
+ ],
+ "06.0100|laṭ|P|1|du": [
+  "sphuṭāvaḥ"
+ ],
+ "06.0100|laṭ|P|1|pl": [
+  "sphuṭāmaḥ"
+ ],
+ "06.0100|laṭ|P|1|sg": [
+  "sphuṭāmi"
+ ],
+ "06.0100|laṭ|P|2|du": [
+  "sphuṭathaḥ"
+ ],
+ "06.0100|laṭ|P|2|pl": [
+  "sphuṭatha"
+ ],
+ "06.0100|laṭ|P|2|sg": [
+  "sphuṭasi"
+ ],
+ "06.0100|laṭ|P|3|du": [
+  "sphuṭataḥ"
+ ],
+ "06.0100|laṭ|P|3|pl": [
+  "sphuṭanti"
+ ],
+ "06.0100|laṭ|P|3|sg": [
+  "sphuṭati"
+ ],
+ "06.0101|laṅ|P|1|du": [
+  "amuṭāva"
+ ],
+ "06.0101|laṅ|P|1|pl": [
+  "amuṭāma"
+ ],
+ "06.0101|laṅ|P|1|sg": [
+  "amuṭam"
+ ],
+ "06.0101|laṅ|P|2|du": [
+  "amuṭatam"
+ ],
+ "06.0101|laṅ|P|2|pl": [
+  "amuṭata"
+ ],
+ "06.0101|laṅ|P|2|sg": [
+  "amuṭaḥ"
+ ],
+ "06.0101|laṅ|P|3|du": [
+  "amuṭatām"
+ ],
+ "06.0101|laṅ|P|3|pl": [
+  "amuṭan"
+ ],
+ "06.0101|laṅ|P|3|sg": [
+  "amuṭat",
+  "amuṭad"
+ ],
+ "06.0101|laṭ|P|1|du": [
+  "muṭāvaḥ"
+ ],
+ "06.0101|laṭ|P|1|pl": [
+  "muṭāmaḥ"
+ ],
+ "06.0101|laṭ|P|1|sg": [
+  "muṭāmi"
+ ],
+ "06.0101|laṭ|P|2|du": [
+  "muṭathaḥ"
+ ],
+ "06.0101|laṭ|P|2|pl": [
+  "muṭatha"
+ ],
+ "06.0101|laṭ|P|2|sg": [
+  "muṭasi"
+ ],
+ "06.0101|laṭ|P|3|du": [
+  "muṭataḥ"
+ ],
+ "06.0101|laṭ|P|3|pl": [
+  "muṭanti"
+ ],
+ "06.0101|laṭ|P|3|sg": [
+  "muṭati"
+ ],
+ "06.0102|laṅ|P|1|du": [
+  "atruṭyāva",
+  "atruṭāva"
+ ],
+ "06.0102|laṅ|P|1|pl": [
+  "atruṭyāma",
+  "atruṭāma"
+ ],
+ "06.0102|laṅ|P|1|sg": [
+  "atruṭyam",
+  "atruṭam"
+ ],
+ "06.0102|laṅ|P|2|du": [
+  "atruṭyatam",
+  "atruṭatam"
+ ],
+ "06.0102|laṅ|P|2|pl": [
+  "atruṭyata",
+  "atruṭata"
+ ],
+ "06.0102|laṅ|P|2|sg": [
+  "atruṭyaḥ",
+  "atruṭaḥ"
+ ],
+ "06.0102|laṅ|P|3|du": [
+  "atruṭyatām",
+  "atruṭatām"
+ ],
+ "06.0102|laṅ|P|3|pl": [
+  "atruṭyan",
+  "atruṭan"
+ ],
+ "06.0102|laṅ|P|3|sg": [
+  "atruṭyat",
+  "atruṭyad",
+  "atruṭat",
+  "atruṭad"
+ ],
+ "06.0102|laṭ|P|1|du": [
+  "truṭyāvaḥ",
+  "truṭāvaḥ"
+ ],
+ "06.0102|laṭ|P|1|pl": [
+  "truṭyāmaḥ",
+  "truṭāmaḥ"
+ ],
+ "06.0102|laṭ|P|1|sg": [
+  "truṭyāmi",
+  "truṭāmi"
+ ],
+ "06.0102|laṭ|P|2|du": [
+  "truṭyathaḥ",
+  "truṭathaḥ"
+ ],
+ "06.0102|laṭ|P|2|pl": [
+  "truṭyatha",
+  "truṭatha"
+ ],
+ "06.0102|laṭ|P|2|sg": [
+  "truṭyasi",
+  "truṭasi"
+ ],
+ "06.0102|laṭ|P|3|du": [
+  "truṭyataḥ",
+  "truṭataḥ"
+ ],
+ "06.0102|laṭ|P|3|pl": [
+  "truṭyanti",
+  "truṭanti"
+ ],
+ "06.0102|laṭ|P|3|sg": [
+  "truṭyati",
+  "truṭati"
+ ],
+ "06.0103|laṅ|P|1|du": [
+  "atuṭāva"
+ ],
+ "06.0103|laṅ|P|1|pl": [
+  "atuṭāma"
+ ],
+ "06.0103|laṅ|P|1|sg": [
+  "atuṭam"
+ ],
+ "06.0103|laṅ|P|2|du": [
+  "atuṭatam"
+ ],
+ "06.0103|laṅ|P|2|pl": [
+  "atuṭata"
+ ],
+ "06.0103|laṅ|P|2|sg": [
+  "atuṭaḥ"
+ ],
+ "06.0103|laṅ|P|3|du": [
+  "atuṭatām"
+ ],
+ "06.0103|laṅ|P|3|pl": [
+  "atuṭan"
+ ],
+ "06.0103|laṅ|P|3|sg": [
+  "atuṭat",
+  "atuṭad"
+ ],
+ "06.0103|laṭ|P|1|du": [
+  "tuṭāvaḥ"
+ ],
+ "06.0103|laṭ|P|1|pl": [
+  "tuṭāmaḥ"
+ ],
+ "06.0103|laṭ|P|1|sg": [
+  "tuṭāmi"
+ ],
+ "06.0103|laṭ|P|2|du": [
+  "tuṭathaḥ"
+ ],
+ "06.0103|laṭ|P|2|pl": [
+  "tuṭatha"
+ ],
+ "06.0103|laṭ|P|2|sg": [
+  "tuṭasi"
+ ],
+ "06.0103|laṭ|P|3|du": [
+  "tuṭataḥ"
+ ],
+ "06.0103|laṭ|P|3|pl": [
+  "tuṭanti"
+ ],
+ "06.0103|laṭ|P|3|sg": [
+  "tuṭati"
+ ],
+ "06.0104|laṅ|P|1|du": [
+  "acuṭāva"
+ ],
+ "06.0104|laṅ|P|1|pl": [
+  "acuṭāma"
+ ],
+ "06.0104|laṅ|P|1|sg": [
+  "acuṭam"
+ ],
+ "06.0104|laṅ|P|2|du": [
+  "acuṭatam"
+ ],
+ "06.0104|laṅ|P|2|pl": [
+  "acuṭata"
+ ],
+ "06.0104|laṅ|P|2|sg": [
+  "acuṭaḥ"
+ ],
+ "06.0104|laṅ|P|3|du": [
+  "acuṭatām"
+ ],
+ "06.0104|laṅ|P|3|pl": [
+  "acuṭan"
+ ],
+ "06.0104|laṅ|P|3|sg": [
+  "acuṭat",
+  "acuṭad"
+ ],
+ "06.0104|laṭ|P|1|du": [
+  "cuṭāvaḥ"
+ ],
+ "06.0104|laṭ|P|1|pl": [
+  "cuṭāmaḥ"
+ ],
+ "06.0104|laṭ|P|1|sg": [
+  "cuṭāmi"
+ ],
+ "06.0104|laṭ|P|2|du": [
+  "cuṭathaḥ"
+ ],
+ "06.0104|laṭ|P|2|pl": [
+  "cuṭatha"
+ ],
+ "06.0104|laṭ|P|2|sg": [
+  "cuṭasi"
+ ],
+ "06.0104|laṭ|P|3|du": [
+  "cuṭataḥ"
+ ],
+ "06.0104|laṭ|P|3|pl": [
+  "cuṭanti"
+ ],
+ "06.0104|laṭ|P|3|sg": [
+  "cuṭati"
+ ],
+ "06.0105|laṅ|P|1|du": [
+  "acchuṭāva"
+ ],
+ "06.0105|laṅ|P|1|pl": [
+  "acchuṭāma"
+ ],
+ "06.0105|laṅ|P|1|sg": [
+  "acchuṭam"
+ ],
+ "06.0105|laṅ|P|2|du": [
+  "acchuṭatam"
+ ],
+ "06.0105|laṅ|P|2|pl": [
+  "acchuṭata"
+ ],
+ "06.0105|laṅ|P|2|sg": [
+  "acchuṭaḥ"
+ ],
+ "06.0105|laṅ|P|3|du": [
+  "acchuṭatām"
+ ],
+ "06.0105|laṅ|P|3|pl": [
+  "acchuṭan"
+ ],
+ "06.0105|laṅ|P|3|sg": [
+  "acchuṭat",
+  "acchuṭad"
+ ],
+ "06.0105|laṭ|P|1|du": [
+  "chuṭāvaḥ"
+ ],
+ "06.0105|laṭ|P|1|pl": [
+  "chuṭāmaḥ"
+ ],
+ "06.0105|laṭ|P|1|sg": [
+  "chuṭāmi"
+ ],
+ "06.0105|laṭ|P|2|du": [
+  "chuṭathaḥ"
+ ],
+ "06.0105|laṭ|P|2|pl": [
+  "chuṭatha"
+ ],
+ "06.0105|laṭ|P|2|sg": [
+  "chuṭasi"
+ ],
+ "06.0105|laṭ|P|3|du": [
+  "chuṭataḥ"
+ ],
+ "06.0105|laṭ|P|3|pl": [
+  "chuṭanti"
+ ],
+ "06.0105|laṭ|P|3|sg": [
+  "chuṭati"
+ ],
+ "06.0106|laṅ|P|1|du": [
+  "ajuḍāva"
+ ],
+ "06.0106|laṅ|P|1|pl": [
+  "ajuḍāma"
+ ],
+ "06.0106|laṅ|P|1|sg": [
+  "ajuḍam"
+ ],
+ "06.0106|laṅ|P|2|du": [
+  "ajuḍatam"
+ ],
+ "06.0106|laṅ|P|2|pl": [
+  "ajuḍata"
+ ],
+ "06.0106|laṅ|P|2|sg": [
+  "ajuḍaḥ"
+ ],
+ "06.0106|laṅ|P|3|du": [
+  "ajuḍatām"
+ ],
+ "06.0106|laṅ|P|3|pl": [
+  "ajuḍan"
+ ],
+ "06.0106|laṅ|P|3|sg": [
+  "ajuḍat",
+  "ajuḍad"
+ ],
+ "06.0106|laṭ|P|1|du": [
+  "juḍāvaḥ"
+ ],
+ "06.0106|laṭ|P|1|pl": [
+  "juḍāmaḥ"
+ ],
+ "06.0106|laṭ|P|1|sg": [
+  "juḍāmi"
+ ],
+ "06.0106|laṭ|P|2|du": [
+  "juḍathaḥ"
+ ],
+ "06.0106|laṭ|P|2|pl": [
+  "juḍatha"
+ ],
+ "06.0106|laṭ|P|2|sg": [
+  "juḍasi"
+ ],
+ "06.0106|laṭ|P|3|du": [
+  "juḍataḥ"
+ ],
+ "06.0106|laṭ|P|3|pl": [
+  "juḍanti"
+ ],
+ "06.0106|laṭ|P|3|sg": [
+  "juḍati"
+ ],
+ "06.0107|laṅ|P|1|du": [
+  "ajuṭāva"
+ ],
+ "06.0107|laṅ|P|1|pl": [
+  "ajuṭāma"
+ ],
+ "06.0107|laṅ|P|1|sg": [
+  "ajuṭam"
+ ],
+ "06.0107|laṅ|P|2|du": [
+  "ajuṭatam"
+ ],
+ "06.0107|laṅ|P|2|pl": [
+  "ajuṭata"
+ ],
+ "06.0107|laṅ|P|2|sg": [
+  "ajuṭaḥ"
+ ],
+ "06.0107|laṅ|P|3|du": [
+  "ajuṭatām"
+ ],
+ "06.0107|laṅ|P|3|pl": [
+  "ajuṭan"
+ ],
+ "06.0107|laṅ|P|3|sg": [
+  "ajuṭat",
+  "ajuṭad"
+ ],
+ "06.0107|laṭ|P|1|du": [
+  "juṭāvaḥ"
+ ],
+ "06.0107|laṭ|P|1|pl": [
+  "juṭāmaḥ"
+ ],
+ "06.0107|laṭ|P|1|sg": [
+  "juṭāmi"
+ ],
+ "06.0107|laṭ|P|2|du": [
+  "juṭathaḥ"
+ ],
+ "06.0107|laṭ|P|2|pl": [
+  "juṭatha"
+ ],
+ "06.0107|laṭ|P|2|sg": [
+  "juṭasi"
+ ],
+ "06.0107|laṭ|P|3|du": [
+  "juṭataḥ"
+ ],
+ "06.0107|laṭ|P|3|pl": [
+  "juṭanti"
+ ],
+ "06.0107|laṭ|P|3|sg": [
+  "juṭati"
+ ],
+ "06.0108|laṅ|P|1|du": [
+  "akaḍāva"
+ ],
+ "06.0108|laṅ|P|1|pl": [
+  "akaḍāma"
+ ],
+ "06.0108|laṅ|P|1|sg": [
+  "akaḍam"
+ ],
+ "06.0108|laṅ|P|2|du": [
+  "akaḍatam"
+ ],
+ "06.0108|laṅ|P|2|pl": [
+  "akaḍata"
+ ],
+ "06.0108|laṅ|P|2|sg": [
+  "akaḍaḥ"
+ ],
+ "06.0108|laṅ|P|3|du": [
+  "akaḍatām"
+ ],
+ "06.0108|laṅ|P|3|pl": [
+  "akaḍan"
+ ],
+ "06.0108|laṅ|P|3|sg": [
+  "akaḍat",
+  "akaḍad"
+ ],
+ "06.0108|laṭ|P|1|du": [
+  "kaḍāvaḥ"
+ ],
+ "06.0108|laṭ|P|1|pl": [
+  "kaḍāmaḥ"
+ ],
+ "06.0108|laṭ|P|1|sg": [
+  "kaḍāmi"
+ ],
+ "06.0108|laṭ|P|2|du": [
+  "kaḍathaḥ"
+ ],
+ "06.0108|laṭ|P|2|pl": [
+  "kaḍatha"
+ ],
+ "06.0108|laṭ|P|2|sg": [
+  "kaḍasi"
+ ],
+ "06.0108|laṭ|P|3|du": [
+  "kaḍataḥ"
+ ],
+ "06.0108|laṭ|P|3|pl": [
+  "kaḍanti"
+ ],
+ "06.0108|laṭ|P|3|sg": [
+  "kaḍati"
+ ],
+ "06.0109|laṅ|P|1|du": [
+  "aluṭāva"
+ ],
+ "06.0109|laṅ|P|1|pl": [
+  "aluṭāma"
+ ],
+ "06.0109|laṅ|P|1|sg": [
+  "aluṭam"
+ ],
+ "06.0109|laṅ|P|2|du": [
+  "aluṭatam"
+ ],
+ "06.0109|laṅ|P|2|pl": [
+  "aluṭata"
+ ],
+ "06.0109|laṅ|P|2|sg": [
+  "aluṭaḥ"
+ ],
+ "06.0109|laṅ|P|3|du": [
+  "aluṭatām"
+ ],
+ "06.0109|laṅ|P|3|pl": [
+  "aluṭan"
+ ],
+ "06.0109|laṅ|P|3|sg": [
+  "aluṭat",
+  "aluṭad"
+ ],
+ "06.0109|laṭ|P|1|du": [
+  "luṭāvaḥ"
+ ],
+ "06.0109|laṭ|P|1|pl": [
+  "luṭāmaḥ"
+ ],
+ "06.0109|laṭ|P|1|sg": [
+  "luṭāmi"
+ ],
+ "06.0109|laṭ|P|2|du": [
+  "luṭathaḥ"
+ ],
+ "06.0109|laṭ|P|2|pl": [
+  "luṭatha"
+ ],
+ "06.0109|laṭ|P|2|sg": [
+  "luṭasi"
+ ],
+ "06.0109|laṭ|P|3|du": [
+  "luṭataḥ"
+ ],
+ "06.0109|laṭ|P|3|pl": [
+  "luṭanti"
+ ],
+ "06.0109|laṭ|P|3|sg": [
+  "luṭati"
+ ],
+ "06.0110|laṅ|P|1|du": [
+  "aluṭhāva"
+ ],
+ "06.0110|laṅ|P|1|pl": [
+  "aluṭhāma"
+ ],
+ "06.0110|laṅ|P|1|sg": [
+  "aluṭham"
+ ],
+ "06.0110|laṅ|P|2|du": [
+  "aluṭhatam"
+ ],
+ "06.0110|laṅ|P|2|pl": [
+  "aluṭhata"
+ ],
+ "06.0110|laṅ|P|2|sg": [
+  "aluṭhaḥ"
+ ],
+ "06.0110|laṅ|P|3|du": [
+  "aluṭhatām"
+ ],
+ "06.0110|laṅ|P|3|pl": [
+  "aluṭhan"
+ ],
+ "06.0110|laṅ|P|3|sg": [
+  "aluṭhat",
+  "aluṭhad"
+ ],
+ "06.0110|laṭ|P|1|du": [
+  "luṭhāvaḥ"
+ ],
+ "06.0110|laṭ|P|1|pl": [
+  "luṭhāmaḥ"
+ ],
+ "06.0110|laṭ|P|1|sg": [
+  "luṭhāmi"
+ ],
+ "06.0110|laṭ|P|2|du": [
+  "luṭhathaḥ"
+ ],
+ "06.0110|laṭ|P|2|pl": [
+  "luṭhatha"
+ ],
+ "06.0110|laṭ|P|2|sg": [
+  "luṭhasi"
+ ],
+ "06.0110|laṭ|P|3|du": [
+  "luṭhataḥ"
+ ],
+ "06.0110|laṭ|P|3|pl": [
+  "luṭhanti"
+ ],
+ "06.0110|laṭ|P|3|sg": [
+  "luṭhati"
+ ],
+ "06.0111|laṅ|P|1|du": [
+  "akaḍāva"
+ ],
+ "06.0111|laṅ|P|1|pl": [
+  "akaḍāma"
+ ],
+ "06.0111|laṅ|P|1|sg": [
+  "akaḍam"
+ ],
+ "06.0111|laṅ|P|2|du": [
+  "akaḍatam"
+ ],
+ "06.0111|laṅ|P|2|pl": [
+  "akaḍata"
+ ],
+ "06.0111|laṅ|P|2|sg": [
+  "akaḍaḥ"
+ ],
+ "06.0111|laṅ|P|3|du": [
+  "akaḍatām"
+ ],
+ "06.0111|laṅ|P|3|pl": [
+  "akaḍan"
+ ],
+ "06.0111|laṅ|P|3|sg": [
+  "akaḍat",
+  "akaḍad"
+ ],
+ "06.0111|laṭ|P|1|du": [
+  "kaḍāvaḥ"
+ ],
+ "06.0111|laṭ|P|1|pl": [
+  "kaḍāmaḥ"
+ ],
+ "06.0111|laṭ|P|1|sg": [
+  "kaḍāmi"
+ ],
+ "06.0111|laṭ|P|2|du": [
+  "kaḍathaḥ"
+ ],
+ "06.0111|laṭ|P|2|pl": [
+  "kaḍatha"
+ ],
+ "06.0111|laṭ|P|2|sg": [
+  "kaḍasi"
+ ],
+ "06.0111|laṭ|P|3|du": [
+  "kaḍataḥ"
+ ],
+ "06.0111|laṭ|P|3|pl": [
+  "kaḍanti"
+ ],
+ "06.0111|laṭ|P|3|sg": [
+  "kaḍati"
+ ],
+ "06.0112|laṅ|P|1|du": [
+  "akṛḍāva"
+ ],
+ "06.0112|laṅ|P|1|pl": [
+  "akṛḍāma"
+ ],
+ "06.0112|laṅ|P|1|sg": [
+  "akṛḍam"
+ ],
+ "06.0112|laṅ|P|2|du": [
+  "akṛḍatam"
+ ],
+ "06.0112|laṅ|P|2|pl": [
+  "akṛḍata"
+ ],
+ "06.0112|laṅ|P|2|sg": [
+  "akṛḍaḥ"
+ ],
+ "06.0112|laṅ|P|3|du": [
+  "akṛḍatām"
+ ],
+ "06.0112|laṅ|P|3|pl": [
+  "akṛḍan"
+ ],
+ "06.0112|laṅ|P|3|sg": [
+  "akṛḍat",
+  "akṛḍad"
+ ],
+ "06.0112|laṭ|P|1|du": [
+  "kṛḍāvaḥ"
+ ],
+ "06.0112|laṭ|P|1|pl": [
+  "kṛḍāmaḥ"
+ ],
+ "06.0112|laṭ|P|1|sg": [
+  "kṛḍāmi"
+ ],
+ "06.0112|laṭ|P|2|du": [
+  "kṛḍathaḥ"
+ ],
+ "06.0112|laṭ|P|2|pl": [
+  "kṛḍatha"
+ ],
+ "06.0112|laṭ|P|2|sg": [
+  "kṛḍasi"
+ ],
+ "06.0112|laṭ|P|3|du": [
+  "kṛḍataḥ"
+ ],
+ "06.0112|laṭ|P|3|pl": [
+  "kṛḍanti"
+ ],
+ "06.0112|laṭ|P|3|sg": [
+  "kṛḍati"
+ ],
+ "06.0113|laṅ|P|1|du": [
+  "akuḍāva"
+ ],
+ "06.0113|laṅ|P|1|pl": [
+  "akuḍāma"
+ ],
+ "06.0113|laṅ|P|1|sg": [
+  "akuḍam"
+ ],
+ "06.0113|laṅ|P|2|du": [
+  "akuḍatam"
+ ],
+ "06.0113|laṅ|P|2|pl": [
+  "akuḍata"
+ ],
+ "06.0113|laṅ|P|2|sg": [
+  "akuḍaḥ"
+ ],
+ "06.0113|laṅ|P|3|du": [
+  "akuḍatām"
+ ],
+ "06.0113|laṅ|P|3|pl": [
+  "akuḍan"
+ ],
+ "06.0113|laṅ|P|3|sg": [
+  "akuḍat",
+  "akuḍad"
+ ],
+ "06.0113|laṭ|P|1|du": [
+  "kuḍāvaḥ"
+ ],
+ "06.0113|laṭ|P|1|pl": [
+  "kuḍāmaḥ"
+ ],
+ "06.0113|laṭ|P|1|sg": [
+  "kuḍāmi"
+ ],
+ "06.0113|laṭ|P|2|du": [
+  "kuḍathaḥ"
+ ],
+ "06.0113|laṭ|P|2|pl": [
+  "kuḍatha"
+ ],
+ "06.0113|laṭ|P|2|sg": [
+  "kuḍasi"
+ ],
+ "06.0113|laṭ|P|3|du": [
+  "kuḍataḥ"
+ ],
+ "06.0113|laṭ|P|3|pl": [
+  "kuḍanti"
+ ],
+ "06.0113|laṭ|P|3|sg": [
+  "kuḍati"
+ ],
+ "06.0114|laṅ|P|1|du": [
+  "apuḍāva"
+ ],
+ "06.0114|laṅ|P|1|pl": [
+  "apuḍāma"
+ ],
+ "06.0114|laṅ|P|1|sg": [
+  "apuḍam"
+ ],
+ "06.0114|laṅ|P|2|du": [
+  "apuḍatam"
+ ],
+ "06.0114|laṅ|P|2|pl": [
+  "apuḍata"
+ ],
+ "06.0114|laṅ|P|2|sg": [
+  "apuḍaḥ"
+ ],
+ "06.0114|laṅ|P|3|du": [
+  "apuḍatām"
+ ],
+ "06.0114|laṅ|P|3|pl": [
+  "apuḍan"
+ ],
+ "06.0114|laṅ|P|3|sg": [
+  "apuḍat",
+  "apuḍad"
+ ],
+ "06.0114|laṭ|P|1|du": [
+  "puḍāvaḥ"
+ ],
+ "06.0114|laṭ|P|1|pl": [
+  "puḍāmaḥ"
+ ],
+ "06.0114|laṭ|P|1|sg": [
+  "puḍāmi"
+ ],
+ "06.0114|laṭ|P|2|du": [
+  "puḍathaḥ"
+ ],
+ "06.0114|laṭ|P|2|pl": [
+  "puḍatha"
+ ],
+ "06.0114|laṭ|P|2|sg": [
+  "puḍasi"
+ ],
+ "06.0114|laṭ|P|3|du": [
+  "puḍataḥ"
+ ],
+ "06.0114|laṭ|P|3|pl": [
+  "puḍanti"
+ ],
+ "06.0114|laṭ|P|3|sg": [
+  "puḍati"
+ ],
+ "06.0115|laṅ|P|1|du": [
+  "aghuṭāva"
+ ],
+ "06.0115|laṅ|P|1|pl": [
+  "aghuṭāma"
+ ],
+ "06.0115|laṅ|P|1|sg": [
+  "aghuṭam"
+ ],
+ "06.0115|laṅ|P|2|du": [
+  "aghuṭatam"
+ ],
+ "06.0115|laṅ|P|2|pl": [
+  "aghuṭata"
+ ],
+ "06.0115|laṅ|P|2|sg": [
+  "aghuṭaḥ"
+ ],
+ "06.0115|laṅ|P|3|du": [
+  "aghuṭatām"
+ ],
+ "06.0115|laṅ|P|3|pl": [
+  "aghuṭan"
+ ],
+ "06.0115|laṅ|P|3|sg": [
+  "aghuṭat",
+  "aghuṭad"
+ ],
+ "06.0115|laṭ|P|1|du": [
+  "ghuṭāvaḥ"
+ ],
+ "06.0115|laṭ|P|1|pl": [
+  "ghuṭāmaḥ"
+ ],
+ "06.0115|laṭ|P|1|sg": [
+  "ghuṭāmi"
+ ],
+ "06.0115|laṭ|P|2|du": [
+  "ghuṭathaḥ"
+ ],
+ "06.0115|laṭ|P|2|pl": [
+  "ghuṭatha"
+ ],
+ "06.0115|laṭ|P|2|sg": [
+  "ghuṭasi"
+ ],
+ "06.0115|laṭ|P|3|du": [
+  "ghuṭataḥ"
+ ],
+ "06.0115|laṭ|P|3|pl": [
+  "ghuṭanti"
+ ],
+ "06.0115|laṭ|P|3|sg": [
+  "ghuṭati"
+ ],
+ "06.0116|laṅ|P|1|du": [
+  "atuḍāva"
+ ],
+ "06.0116|laṅ|P|1|pl": [
+  "atuḍāma"
+ ],
+ "06.0116|laṅ|P|1|sg": [
+  "atuḍam"
+ ],
+ "06.0116|laṅ|P|2|du": [
+  "atuḍatam"
+ ],
+ "06.0116|laṅ|P|2|pl": [
+  "atuḍata"
+ ],
+ "06.0116|laṅ|P|2|sg": [
+  "atuḍaḥ"
+ ],
+ "06.0116|laṅ|P|3|du": [
+  "atuḍatām"
+ ],
+ "06.0116|laṅ|P|3|pl": [
+  "atuḍan"
+ ],
+ "06.0116|laṅ|P|3|sg": [
+  "atuḍat",
+  "atuḍad"
+ ],
+ "06.0116|laṭ|P|1|du": [
+  "tuḍāvaḥ"
+ ],
+ "06.0116|laṭ|P|1|pl": [
+  "tuḍāmaḥ"
+ ],
+ "06.0116|laṭ|P|1|sg": [
+  "tuḍāmi"
+ ],
+ "06.0116|laṭ|P|2|du": [
+  "tuḍathaḥ"
+ ],
+ "06.0116|laṭ|P|2|pl": [
+  "tuḍatha"
+ ],
+ "06.0116|laṭ|P|2|sg": [
+  "tuḍasi"
+ ],
+ "06.0116|laṭ|P|3|du": [
+  "tuḍataḥ"
+ ],
+ "06.0116|laṭ|P|3|pl": [
+  "tuḍanti"
+ ],
+ "06.0116|laṭ|P|3|sg": [
+  "tuḍati"
+ ],
+ "06.0117|laṅ|P|1|du": [
+  "athuḍāva"
+ ],
+ "06.0117|laṅ|P|1|pl": [
+  "athuḍāma"
+ ],
+ "06.0117|laṅ|P|1|sg": [
+  "athuḍam"
+ ],
+ "06.0117|laṅ|P|2|du": [
+  "athuḍatam"
+ ],
+ "06.0117|laṅ|P|2|pl": [
+  "athuḍata"
+ ],
+ "06.0117|laṅ|P|2|sg": [
+  "athuḍaḥ"
+ ],
+ "06.0117|laṅ|P|3|du": [
+  "athuḍatām"
+ ],
+ "06.0117|laṅ|P|3|pl": [
+  "athuḍan"
+ ],
+ "06.0117|laṅ|P|3|sg": [
+  "athuḍat",
+  "athuḍad"
+ ],
+ "06.0117|laṭ|P|1|du": [
+  "thuḍāvaḥ"
+ ],
+ "06.0117|laṭ|P|1|pl": [
+  "thuḍāmaḥ"
+ ],
+ "06.0117|laṭ|P|1|sg": [
+  "thuḍāmi"
+ ],
+ "06.0117|laṭ|P|2|du": [
+  "thuḍathaḥ"
+ ],
+ "06.0117|laṭ|P|2|pl": [
+  "thuḍatha"
+ ],
+ "06.0117|laṭ|P|2|sg": [
+  "thuḍasi"
+ ],
+ "06.0117|laṭ|P|3|du": [
+  "thuḍataḥ"
+ ],
+ "06.0117|laṭ|P|3|pl": [
+  "thuḍanti"
+ ],
+ "06.0117|laṭ|P|3|sg": [
+  "thuḍati"
+ ],
+ "06.0118|laṅ|P|1|du": [
+  "asthuḍāva"
+ ],
+ "06.0118|laṅ|P|1|pl": [
+  "asthuḍāma"
+ ],
+ "06.0118|laṅ|P|1|sg": [
+  "asthuḍam"
+ ],
+ "06.0118|laṅ|P|2|du": [
+  "asthuḍatam"
+ ],
+ "06.0118|laṅ|P|2|pl": [
+  "asthuḍata"
+ ],
+ "06.0118|laṅ|P|2|sg": [
+  "asthuḍaḥ"
+ ],
+ "06.0118|laṅ|P|3|du": [
+  "asthuḍatām"
+ ],
+ "06.0118|laṅ|P|3|pl": [
+  "asthuḍan"
+ ],
+ "06.0118|laṅ|P|3|sg": [
+  "asthuḍat",
+  "asthuḍad"
+ ],
+ "06.0118|laṭ|P|1|du": [
+  "sthuḍāvaḥ"
+ ],
+ "06.0118|laṭ|P|1|pl": [
+  "sthuḍāmaḥ"
+ ],
+ "06.0118|laṭ|P|1|sg": [
+  "sthuḍāmi"
+ ],
+ "06.0118|laṭ|P|2|du": [
+  "sthuḍathaḥ"
+ ],
+ "06.0118|laṭ|P|2|pl": [
+  "sthuḍatha"
+ ],
+ "06.0118|laṭ|P|2|sg": [
+  "sthuḍasi"
+ ],
+ "06.0118|laṭ|P|3|du": [
+  "sthuḍataḥ"
+ ],
+ "06.0118|laṭ|P|3|pl": [
+  "sthuḍanti"
+ ],
+ "06.0118|laṭ|P|3|sg": [
+  "sthuḍati"
+ ],
+ "06.0119|laṅ|P|1|du": [
+  "akhuḍāva"
+ ],
+ "06.0119|laṅ|P|1|pl": [
+  "akhuḍāma"
+ ],
+ "06.0119|laṅ|P|1|sg": [
+  "akhuḍam"
+ ],
+ "06.0119|laṅ|P|2|du": [
+  "akhuḍatam"
+ ],
+ "06.0119|laṅ|P|2|pl": [
+  "akhuḍata"
+ ],
+ "06.0119|laṅ|P|2|sg": [
+  "akhuḍaḥ"
+ ],
+ "06.0119|laṅ|P|3|du": [
+  "akhuḍatām"
+ ],
+ "06.0119|laṅ|P|3|pl": [
+  "akhuḍan"
+ ],
+ "06.0119|laṅ|P|3|sg": [
+  "akhuḍat",
+  "akhuḍad"
+ ],
+ "06.0119|laṭ|P|1|du": [
+  "khuḍāvaḥ"
+ ],
+ "06.0119|laṭ|P|1|pl": [
+  "khuḍāmaḥ"
+ ],
+ "06.0119|laṭ|P|1|sg": [
+  "khuḍāmi"
+ ],
+ "06.0119|laṭ|P|2|du": [
+  "khuḍathaḥ"
+ ],
+ "06.0119|laṭ|P|2|pl": [
+  "khuḍatha"
+ ],
+ "06.0119|laṭ|P|2|sg": [
+  "khuḍasi"
+ ],
+ "06.0119|laṭ|P|3|du": [
+  "khuḍataḥ"
+ ],
+ "06.0119|laṭ|P|3|pl": [
+  "khuḍanti"
+ ],
+ "06.0119|laṭ|P|3|sg": [
+  "khuḍati"
+ ],
+ "06.0120|laṅ|P|1|du": [
+  "acchuḍāva"
+ ],
+ "06.0120|laṅ|P|1|pl": [
+  "acchuḍāma"
+ ],
+ "06.0120|laṅ|P|1|sg": [
+  "acchuḍam"
+ ],
+ "06.0120|laṅ|P|2|du": [
+  "acchuḍatam"
+ ],
+ "06.0120|laṅ|P|2|pl": [
+  "acchuḍata"
+ ],
+ "06.0120|laṅ|P|2|sg": [
+  "acchuḍaḥ"
+ ],
+ "06.0120|laṅ|P|3|du": [
+  "acchuḍatām"
+ ],
+ "06.0120|laṅ|P|3|pl": [
+  "acchuḍan"
+ ],
+ "06.0120|laṅ|P|3|sg": [
+  "acchuḍat",
+  "acchuḍad"
+ ],
+ "06.0120|laṭ|P|1|du": [
+  "chuḍāvaḥ"
+ ],
+ "06.0120|laṭ|P|1|pl": [
+  "chuḍāmaḥ"
+ ],
+ "06.0120|laṭ|P|1|sg": [
+  "chuḍāmi"
+ ],
+ "06.0120|laṭ|P|2|du": [
+  "chuḍathaḥ"
+ ],
+ "06.0120|laṭ|P|2|pl": [
+  "chuḍatha"
+ ],
+ "06.0120|laṭ|P|2|sg": [
+  "chuḍasi"
+ ],
+ "06.0120|laṭ|P|3|du": [
+  "chuḍataḥ"
+ ],
+ "06.0120|laṭ|P|3|pl": [
+  "chuḍanti"
+ ],
+ "06.0120|laṭ|P|3|sg": [
+  "chuḍati"
+ ],
+ "06.0121|laṅ|P|1|du": [
+  "asphurāva"
+ ],
+ "06.0121|laṅ|P|1|pl": [
+  "asphurāma"
+ ],
+ "06.0121|laṅ|P|1|sg": [
+  "asphuram"
+ ],
+ "06.0121|laṅ|P|2|du": [
+  "asphuratam"
+ ],
+ "06.0121|laṅ|P|2|pl": [
+  "asphurata"
+ ],
+ "06.0121|laṅ|P|2|sg": [
+  "asphuraḥ"
+ ],
+ "06.0121|laṅ|P|3|du": [
+  "asphuratām"
+ ],
+ "06.0121|laṅ|P|3|pl": [
+  "asphuran"
+ ],
+ "06.0121|laṅ|P|3|sg": [
+  "asphurat",
+  "asphurad"
+ ],
+ "06.0121|laṭ|P|1|du": [
+  "sphurāvaḥ"
+ ],
+ "06.0121|laṭ|P|1|pl": [
+  "sphurāmaḥ"
+ ],
+ "06.0121|laṭ|P|1|sg": [
+  "sphurāmi"
+ ],
+ "06.0121|laṭ|P|2|du": [
+  "sphurathaḥ"
+ ],
+ "06.0121|laṭ|P|2|pl": [
+  "sphuratha"
+ ],
+ "06.0121|laṭ|P|2|sg": [
+  "sphurasi"
+ ],
+ "06.0121|laṭ|P|3|du": [
+  "sphurataḥ"
+ ],
+ "06.0121|laṭ|P|3|pl": [
+  "sphuranti"
+ ],
+ "06.0121|laṭ|P|3|sg": [
+  "sphurati"
+ ],
+ "06.0122|laṅ|P|1|du": [
+  "asphulāva"
+ ],
+ "06.0122|laṅ|P|1|pl": [
+  "asphulāma"
+ ],
+ "06.0122|laṅ|P|1|sg": [
+  "asphulam"
+ ],
+ "06.0122|laṅ|P|2|du": [
+  "asphulatam"
+ ],
+ "06.0122|laṅ|P|2|pl": [
+  "asphulata"
+ ],
+ "06.0122|laṅ|P|2|sg": [
+  "asphulaḥ"
+ ],
+ "06.0122|laṅ|P|3|du": [
+  "asphulatām"
+ ],
+ "06.0122|laṅ|P|3|pl": [
+  "asphulan"
+ ],
+ "06.0122|laṅ|P|3|sg": [
+  "asphulat",
+  "asphulad"
+ ],
+ "06.0122|laṭ|P|1|du": [
+  "sphulāvaḥ"
+ ],
+ "06.0122|laṭ|P|1|pl": [
+  "sphulāmaḥ"
+ ],
+ "06.0122|laṭ|P|1|sg": [
+  "sphulāmi"
+ ],
+ "06.0122|laṭ|P|2|du": [
+  "sphulathaḥ"
+ ],
+ "06.0122|laṭ|P|2|pl": [
+  "sphulatha"
+ ],
+ "06.0122|laṭ|P|2|sg": [
+  "sphulasi"
+ ],
+ "06.0122|laṭ|P|3|du": [
+  "sphulataḥ"
+ ],
+ "06.0122|laṭ|P|3|pl": [
+  "sphulanti"
+ ],
+ "06.0122|laṭ|P|3|sg": [
+  "sphulati"
+ ],
+ "06.0123|laṅ|P|1|du": [
+  "aspharāva"
+ ],
+ "06.0123|laṅ|P|1|pl": [
+  "aspharāma"
+ ],
+ "06.0123|laṅ|P|1|sg": [
+  "aspharam"
+ ],
+ "06.0123|laṅ|P|2|du": [
+  "aspharatam"
+ ],
+ "06.0123|laṅ|P|2|pl": [
+  "aspharata"
+ ],
+ "06.0123|laṅ|P|2|sg": [
+  "aspharaḥ"
+ ],
+ "06.0123|laṅ|P|3|du": [
+  "aspharatām"
+ ],
+ "06.0123|laṅ|P|3|pl": [
+  "aspharan"
+ ],
+ "06.0123|laṅ|P|3|sg": [
+  "aspharat",
+  "aspharad"
+ ],
+ "06.0123|laṭ|P|1|du": [
+  "spharāvaḥ"
+ ],
+ "06.0123|laṭ|P|1|pl": [
+  "spharāmaḥ"
+ ],
+ "06.0123|laṭ|P|1|sg": [
+  "spharāmi"
+ ],
+ "06.0123|laṭ|P|2|du": [
+  "spharathaḥ"
+ ],
+ "06.0123|laṭ|P|2|pl": [
+  "spharatha"
+ ],
+ "06.0123|laṭ|P|2|sg": [
+  "spharasi"
+ ],
+ "06.0123|laṭ|P|3|du": [
+  "spharataḥ"
+ ],
+ "06.0123|laṭ|P|3|pl": [
+  "spharanti"
+ ],
+ "06.0123|laṭ|P|3|sg": [
+  "spharati"
+ ],
+ "06.0124|laṅ|P|1|du": [
+  "asphalāva"
+ ],
+ "06.0124|laṅ|P|1|pl": [
+  "asphalāma"
+ ],
+ "06.0124|laṅ|P|1|sg": [
+  "asphalam"
+ ],
+ "06.0124|laṅ|P|2|du": [
+  "asphalatam"
+ ],
+ "06.0124|laṅ|P|2|pl": [
+  "asphalata"
+ ],
+ "06.0124|laṅ|P|2|sg": [
+  "asphalaḥ"
+ ],
+ "06.0124|laṅ|P|3|du": [
+  "asphalatām"
+ ],
+ "06.0124|laṅ|P|3|pl": [
+  "asphalan"
+ ],
+ "06.0124|laṅ|P|3|sg": [
+  "asphalat",
+  "asphalad"
+ ],
+ "06.0124|laṭ|P|1|du": [
+  "sphalāvaḥ"
+ ],
+ "06.0124|laṭ|P|1|pl": [
+  "sphalāmaḥ"
+ ],
+ "06.0124|laṭ|P|1|sg": [
+  "sphalāmi"
+ ],
+ "06.0124|laṭ|P|2|du": [
+  "sphalathaḥ"
+ ],
+ "06.0124|laṭ|P|2|pl": [
+  "sphalatha"
+ ],
+ "06.0124|laṭ|P|2|sg": [
+  "sphalasi"
+ ],
+ "06.0124|laṭ|P|3|du": [
+  "sphalataḥ"
+ ],
+ "06.0124|laṭ|P|3|pl": [
+  "sphalanti"
+ ],
+ "06.0124|laṭ|P|3|sg": [
+  "sphalati"
+ ],
+ "06.0125|laṅ|P|1|du": [
+  "asphuḍāva"
+ ],
+ "06.0125|laṅ|P|1|pl": [
+  "asphuḍāma"
+ ],
+ "06.0125|laṅ|P|1|sg": [
+  "asphuḍam"
+ ],
+ "06.0125|laṅ|P|2|du": [
+  "asphuḍatam"
+ ],
+ "06.0125|laṅ|P|2|pl": [
+  "asphuḍata"
+ ],
+ "06.0125|laṅ|P|2|sg": [
+  "asphuḍaḥ"
+ ],
+ "06.0125|laṅ|P|3|du": [
+  "asphuḍatām"
+ ],
+ "06.0125|laṅ|P|3|pl": [
+  "asphuḍan"
+ ],
+ "06.0125|laṅ|P|3|sg": [
+  "asphuḍat",
+  "asphuḍad"
+ ],
+ "06.0125|laṭ|P|1|du": [
+  "sphuḍāvaḥ"
+ ],
+ "06.0125|laṭ|P|1|pl": [
+  "sphuḍāmaḥ"
+ ],
+ "06.0125|laṭ|P|1|sg": [
+  "sphuḍāmi"
+ ],
+ "06.0125|laṭ|P|2|du": [
+  "sphuḍathaḥ"
+ ],
+ "06.0125|laṭ|P|2|pl": [
+  "sphuḍatha"
+ ],
+ "06.0125|laṭ|P|2|sg": [
+  "sphuḍasi"
+ ],
+ "06.0125|laṭ|P|3|du": [
+  "sphuḍataḥ"
+ ],
+ "06.0125|laṭ|P|3|pl": [
+  "sphuḍanti"
+ ],
+ "06.0125|laṭ|P|3|sg": [
+  "sphuḍati"
+ ],
+ "06.0126|laṅ|P|1|du": [
+  "acuḍāva"
+ ],
+ "06.0126|laṅ|P|1|pl": [
+  "acuḍāma"
+ ],
+ "06.0126|laṅ|P|1|sg": [
+  "acuḍam"
+ ],
+ "06.0126|laṅ|P|2|du": [
+  "acuḍatam"
+ ],
+ "06.0126|laṅ|P|2|pl": [
+  "acuḍata"
+ ],
+ "06.0126|laṅ|P|2|sg": [
+  "acuḍaḥ"
+ ],
+ "06.0126|laṅ|P|3|du": [
+  "acuḍatām"
+ ],
+ "06.0126|laṅ|P|3|pl": [
+  "acuḍan"
+ ],
+ "06.0126|laṅ|P|3|sg": [
+  "acuḍat",
+  "acuḍad"
+ ],
+ "06.0126|laṭ|P|1|du": [
+  "cuḍāvaḥ"
+ ],
+ "06.0126|laṭ|P|1|pl": [
+  "cuḍāmaḥ"
+ ],
+ "06.0126|laṭ|P|1|sg": [
+  "cuḍāmi"
+ ],
+ "06.0126|laṭ|P|2|du": [
+  "cuḍathaḥ"
+ ],
+ "06.0126|laṭ|P|2|pl": [
+  "cuḍatha"
+ ],
+ "06.0126|laṭ|P|2|sg": [
+  "cuḍasi"
+ ],
+ "06.0126|laṭ|P|3|du": [
+  "cuḍataḥ"
+ ],
+ "06.0126|laṭ|P|3|pl": [
+  "cuḍanti"
+ ],
+ "06.0126|laṭ|P|3|sg": [
+  "cuḍati"
+ ],
+ "06.0127|laṅ|P|1|du": [
+  "avruḍāva"
+ ],
+ "06.0127|laṅ|P|1|pl": [
+  "avruḍāma"
+ ],
+ "06.0127|laṅ|P|1|sg": [
+  "avruḍam"
+ ],
+ "06.0127|laṅ|P|2|du": [
+  "avruḍatam"
+ ],
+ "06.0127|laṅ|P|2|pl": [
+  "avruḍata"
+ ],
+ "06.0127|laṅ|P|2|sg": [
+  "avruḍaḥ"
+ ],
+ "06.0127|laṅ|P|3|du": [
+  "avruḍatām"
+ ],
+ "06.0127|laṅ|P|3|pl": [
+  "avruḍan"
+ ],
+ "06.0127|laṅ|P|3|sg": [
+  "avruḍat",
+  "avruḍad"
+ ],
+ "06.0127|laṭ|P|1|du": [
+  "vruḍāvaḥ"
+ ],
+ "06.0127|laṭ|P|1|pl": [
+  "vruḍāmaḥ"
+ ],
+ "06.0127|laṭ|P|1|sg": [
+  "vruḍāmi"
+ ],
+ "06.0127|laṭ|P|2|du": [
+  "vruḍathaḥ"
+ ],
+ "06.0127|laṭ|P|2|pl": [
+  "vruḍatha"
+ ],
+ "06.0127|laṭ|P|2|sg": [
+  "vruḍasi"
+ ],
+ "06.0127|laṭ|P|3|du": [
+  "vruḍataḥ"
+ ],
+ "06.0127|laṭ|P|3|pl": [
+  "vruḍanti"
+ ],
+ "06.0127|laṭ|P|3|sg": [
+  "vruḍati"
+ ],
+ "06.0128|laṅ|P|1|du": [
+  "akruḍāva"
+ ],
+ "06.0128|laṅ|P|1|pl": [
+  "akruḍāma"
+ ],
+ "06.0128|laṅ|P|1|sg": [
+  "akruḍam"
+ ],
+ "06.0128|laṅ|P|2|du": [
+  "akruḍatam"
+ ],
+ "06.0128|laṅ|P|2|pl": [
+  "akruḍata"
+ ],
+ "06.0128|laṅ|P|2|sg": [
+  "akruḍaḥ"
+ ],
+ "06.0128|laṅ|P|3|du": [
+  "akruḍatām"
+ ],
+ "06.0128|laṅ|P|3|pl": [
+  "akruḍan"
+ ],
+ "06.0128|laṅ|P|3|sg": [
+  "akruḍat",
+  "akruḍad"
+ ],
+ "06.0128|laṭ|P|1|du": [
+  "kruḍāvaḥ"
+ ],
+ "06.0128|laṭ|P|1|pl": [
+  "kruḍāmaḥ"
+ ],
+ "06.0128|laṭ|P|1|sg": [
+  "kruḍāmi"
+ ],
+ "06.0128|laṭ|P|2|du": [
+  "kruḍathaḥ"
+ ],
+ "06.0128|laṭ|P|2|pl": [
+  "kruḍatha"
+ ],
+ "06.0128|laṭ|P|2|sg": [
+  "kruḍasi"
+ ],
+ "06.0128|laṭ|P|3|du": [
+  "kruḍataḥ"
+ ],
+ "06.0128|laṭ|P|3|pl": [
+  "kruḍanti"
+ ],
+ "06.0128|laṭ|P|3|sg": [
+  "kruḍati"
+ ],
+ "06.0129|laṅ|P|1|du": [
+  "abhṛḍāva"
+ ],
+ "06.0129|laṅ|P|1|pl": [
+  "abhṛḍāma"
+ ],
+ "06.0129|laṅ|P|1|sg": [
+  "abhṛḍam"
+ ],
+ "06.0129|laṅ|P|2|du": [
+  "abhṛḍatam"
+ ],
+ "06.0129|laṅ|P|2|pl": [
+  "abhṛḍata"
+ ],
+ "06.0129|laṅ|P|2|sg": [
+  "abhṛḍaḥ"
+ ],
+ "06.0129|laṅ|P|3|du": [
+  "abhṛḍatām"
+ ],
+ "06.0129|laṅ|P|3|pl": [
+  "abhṛḍan"
+ ],
+ "06.0129|laṅ|P|3|sg": [
+  "abhṛḍat",
+  "abhṛḍad"
+ ],
+ "06.0129|laṭ|P|1|du": [
+  "bhṛḍāvaḥ"
+ ],
+ "06.0129|laṭ|P|1|pl": [
+  "bhṛḍāmaḥ"
+ ],
+ "06.0129|laṭ|P|1|sg": [
+  "bhṛḍāmi"
+ ],
+ "06.0129|laṭ|P|2|du": [
+  "bhṛḍathaḥ"
+ ],
+ "06.0129|laṭ|P|2|pl": [
+  "bhṛḍatha"
+ ],
+ "06.0129|laṭ|P|2|sg": [
+  "bhṛḍasi"
+ ],
+ "06.0129|laṭ|P|3|du": [
+  "bhṛḍataḥ"
+ ],
+ "06.0129|laṭ|P|3|pl": [
+  "bhṛḍanti"
+ ],
+ "06.0129|laṭ|P|3|sg": [
+  "bhṛḍati"
+ ],
+ "06.0130|laṅ|P|1|du": [
+  "ahuḍāva"
+ ],
+ "06.0130|laṅ|P|1|pl": [
+  "ahuḍāma"
+ ],
+ "06.0130|laṅ|P|1|sg": [
+  "ahuḍam"
+ ],
+ "06.0130|laṅ|P|2|du": [
+  "ahuḍatam"
+ ],
+ "06.0130|laṅ|P|2|pl": [
+  "ahuḍata"
+ ],
+ "06.0130|laṅ|P|2|sg": [
+  "ahuḍaḥ"
+ ],
+ "06.0130|laṅ|P|3|du": [
+  "ahuḍatām"
+ ],
+ "06.0130|laṅ|P|3|pl": [
+  "ahuḍan"
+ ],
+ "06.0130|laṅ|P|3|sg": [
+  "ahuḍat",
+  "ahuḍad"
+ ],
+ "06.0130|laṭ|P|1|du": [
+  "huḍāvaḥ"
+ ],
+ "06.0130|laṭ|P|1|pl": [
+  "huḍāmaḥ"
+ ],
+ "06.0130|laṭ|P|1|sg": [
+  "huḍāmi"
+ ],
+ "06.0130|laṭ|P|2|du": [
+  "huḍathaḥ"
+ ],
+ "06.0130|laṭ|P|2|pl": [
+  "huḍatha"
+ ],
+ "06.0130|laṭ|P|2|sg": [
+  "huḍasi"
+ ],
+ "06.0130|laṭ|P|3|du": [
+  "huḍataḥ"
+ ],
+ "06.0130|laṭ|P|3|pl": [
+  "huḍanti"
+ ],
+ "06.0130|laṭ|P|3|sg": [
+  "huḍati"
+ ],
+ "06.0131|laṅ|Ā|1|du": [
+  "agurāvahi"
+ ],
+ "06.0131|laṅ|Ā|1|pl": [
+  "agurāmahi"
+ ],
+ "06.0131|laṅ|Ā|1|sg": [
+  "agure"
+ ],
+ "06.0131|laṅ|Ā|2|du": [
+  "agurethām"
+ ],
+ "06.0131|laṅ|Ā|2|pl": [
+  "aguradhvam"
+ ],
+ "06.0131|laṅ|Ā|2|sg": [
+  "agurathāḥ"
+ ],
+ "06.0131|laṅ|Ā|3|du": [
+  "aguretām"
+ ],
+ "06.0131|laṅ|Ā|3|pl": [
+  "aguranta"
+ ],
+ "06.0131|laṅ|Ā|3|sg": [
+  "agurata"
+ ],
+ "06.0131|laṭ|Ā|1|du": [
+  "gurāvahe"
+ ],
+ "06.0131|laṭ|Ā|1|pl": [
+  "gurāmahe"
+ ],
+ "06.0131|laṭ|Ā|1|sg": [
+  "gure"
+ ],
+ "06.0131|laṭ|Ā|2|du": [
+  "gurethe"
+ ],
+ "06.0131|laṭ|Ā|2|pl": [
+  "guradhve"
+ ],
+ "06.0131|laṭ|Ā|2|sg": [
+  "gurase"
+ ],
+ "06.0131|laṭ|Ā|3|du": [
+  "gurete"
+ ],
+ "06.0131|laṭ|Ā|3|pl": [
+  "gurante"
+ ],
+ "06.0131|laṭ|Ā|3|sg": [
+  "gurate"
+ ],
+ "06.0132|laṅ|P|1|du": [
+  "anuvāva"
+ ],
+ "06.0132|laṅ|P|1|pl": [
+  "anuvāma"
+ ],
+ "06.0132|laṅ|P|1|sg": [
+  "anuvam"
+ ],
+ "06.0132|laṅ|P|2|du": [
+  "anuvatam"
+ ],
+ "06.0132|laṅ|P|2|pl": [
+  "anuvata"
+ ],
+ "06.0132|laṅ|P|2|sg": [
+  "anuvaḥ"
+ ],
+ "06.0132|laṅ|P|3|du": [
+  "anuvatām"
+ ],
+ "06.0132|laṅ|P|3|pl": [
+  "anuvan"
+ ],
+ "06.0132|laṅ|P|3|sg": [
+  "anuvat",
+  "anuvad"
+ ],
+ "06.0132|laṭ|P|1|du": [
+  "nuvāvaḥ"
+ ],
+ "06.0132|laṭ|P|1|pl": [
+  "nuvāmaḥ"
+ ],
+ "06.0132|laṭ|P|1|sg": [
+  "nuvāmi"
+ ],
+ "06.0132|laṭ|P|2|du": [
+  "nuvathaḥ"
+ ],
+ "06.0132|laṭ|P|2|pl": [
+  "nuvatha"
+ ],
+ "06.0132|laṭ|P|2|sg": [
+  "nuvasi"
+ ],
+ "06.0132|laṭ|P|3|du": [
+  "nuvataḥ"
+ ],
+ "06.0132|laṭ|P|3|pl": [
+  "nuvanti"
+ ],
+ "06.0132|laṭ|P|3|sg": [
+  "nuvati"
+ ],
+ "06.0133|laṅ|P|1|du": [
+  "adhuvāva"
+ ],
+ "06.0133|laṅ|P|1|pl": [
+  "adhuvāma"
+ ],
+ "06.0133|laṅ|P|1|sg": [
+  "adhuvam"
+ ],
+ "06.0133|laṅ|P|2|du": [
+  "adhuvatam"
+ ],
+ "06.0133|laṅ|P|2|pl": [
+  "adhuvata"
+ ],
+ "06.0133|laṅ|P|2|sg": [
+  "adhuvaḥ"
+ ],
+ "06.0133|laṅ|P|3|du": [
+  "adhuvatām"
+ ],
+ "06.0133|laṅ|P|3|pl": [
+  "adhuvan"
+ ],
+ "06.0133|laṅ|P|3|sg": [
+  "adhuvat",
+  "adhuvad"
+ ],
+ "06.0133|laṭ|P|1|du": [
+  "dhuvāvaḥ"
+ ],
+ "06.0133|laṭ|P|1|pl": [
+  "dhuvāmaḥ"
+ ],
+ "06.0133|laṭ|P|1|sg": [
+  "dhuvāmi"
+ ],
+ "06.0133|laṭ|P|2|du": [
+  "dhuvathaḥ"
+ ],
+ "06.0133|laṭ|P|2|pl": [
+  "dhuvatha"
+ ],
+ "06.0133|laṭ|P|2|sg": [
+  "dhuvasi"
+ ],
+ "06.0133|laṭ|P|3|du": [
+  "dhuvataḥ"
+ ],
+ "06.0133|laṭ|P|3|pl": [
+  "dhuvanti"
+ ],
+ "06.0133|laṭ|P|3|sg": [
+  "dhuvati"
+ ],
+ "06.0134|laṅ|P|1|du": [
+  "aguvāva"
+ ],
+ "06.0134|laṅ|P|1|pl": [
+  "aguvāma"
+ ],
+ "06.0134|laṅ|P|1|sg": [
+  "aguvam"
+ ],
+ "06.0134|laṅ|P|2|du": [
+  "aguvatam"
+ ],
+ "06.0134|laṅ|P|2|pl": [
+  "aguvata"
+ ],
+ "06.0134|laṅ|P|2|sg": [
+  "aguvaḥ"
+ ],
+ "06.0134|laṅ|P|3|du": [
+  "aguvatām"
+ ],
+ "06.0134|laṅ|P|3|pl": [
+  "aguvan"
+ ],
+ "06.0134|laṅ|P|3|sg": [
+  "aguvat",
+  "aguvad"
+ ],
+ "06.0134|laṭ|P|1|du": [
+  "guvāvaḥ"
+ ],
+ "06.0134|laṭ|P|1|pl": [
+  "guvāmaḥ"
+ ],
+ "06.0134|laṭ|P|1|sg": [
+  "guvāmi"
+ ],
+ "06.0134|laṭ|P|2|du": [
+  "guvathaḥ"
+ ],
+ "06.0134|laṭ|P|2|pl": [
+  "guvatha"
+ ],
+ "06.0134|laṭ|P|2|sg": [
+  "guvasi"
+ ],
+ "06.0134|laṭ|P|3|du": [
+  "guvataḥ"
+ ],
+ "06.0134|laṭ|P|3|pl": [
+  "guvanti"
+ ],
+ "06.0134|laṭ|P|3|sg": [
+  "guvati"
+ ],
+ "06.0135|laṅ|P|1|du": [
+  "adhruvāva"
+ ],
+ "06.0135|laṅ|P|1|pl": [
+  "adhruvāma"
+ ],
+ "06.0135|laṅ|P|1|sg": [
+  "adhruvam"
+ ],
+ "06.0135|laṅ|P|2|du": [
+  "adhruvatam"
+ ],
+ "06.0135|laṅ|P|2|pl": [
+  "adhruvata"
+ ],
+ "06.0135|laṅ|P|2|sg": [
+  "adhruvaḥ"
+ ],
+ "06.0135|laṅ|P|3|du": [
+  "adhruvatām"
+ ],
+ "06.0135|laṅ|P|3|pl": [
+  "adhruvan"
+ ],
+ "06.0135|laṅ|P|3|sg": [
+  "adhruvat",
+  "adhruvad"
+ ],
+ "06.0135|laṭ|P|1|du": [
+  "dhruvāvaḥ"
+ ],
+ "06.0135|laṭ|P|1|pl": [
+  "dhruvāmaḥ"
+ ],
+ "06.0135|laṭ|P|1|sg": [
+  "dhruvāmi"
+ ],
+ "06.0135|laṭ|P|2|du": [
+  "dhruvathaḥ"
+ ],
+ "06.0135|laṭ|P|2|pl": [
+  "dhruvatha"
+ ],
+ "06.0135|laṭ|P|2|sg": [
+  "dhruvasi"
+ ],
+ "06.0135|laṭ|P|3|du": [
+  "dhruvataḥ"
+ ],
+ "06.0135|laṭ|P|3|pl": [
+  "dhruvanti"
+ ],
+ "06.0135|laṭ|P|3|sg": [
+  "dhruvati"
+ ],
+ "06.0136|laṅ|Ā|1|du": [
+  "akuvāvahi"
+ ],
+ "06.0136|laṅ|Ā|1|pl": [
+  "akuvāmahi"
+ ],
+ "06.0136|laṅ|Ā|1|sg": [
+  "akuve"
+ ],
+ "06.0136|laṅ|Ā|2|du": [
+  "akuvethām"
+ ],
+ "06.0136|laṅ|Ā|2|pl": [
+  "akuvadhvam"
+ ],
+ "06.0136|laṅ|Ā|2|sg": [
+  "akuvathāḥ"
+ ],
+ "06.0136|laṅ|Ā|3|du": [
+  "akuvetām"
+ ],
+ "06.0136|laṅ|Ā|3|pl": [
+  "akuvanta"
+ ],
+ "06.0136|laṅ|Ā|3|sg": [
+  "akuvata"
+ ],
+ "06.0136|laṭ|Ā|1|du": [
+  "kuvāvahe"
+ ],
+ "06.0136|laṭ|Ā|1|pl": [
+  "kuvāmahe"
+ ],
+ "06.0136|laṭ|Ā|1|sg": [
+  "kuve"
+ ],
+ "06.0136|laṭ|Ā|2|du": [
+  "kuvethe"
+ ],
+ "06.0136|laṭ|Ā|2|pl": [
+  "kuvadhve"
+ ],
+ "06.0136|laṭ|Ā|2|sg": [
+  "kuvase"
+ ],
+ "06.0136|laṭ|Ā|3|du": [
+  "kuvete"
+ ],
+ "06.0136|laṭ|Ā|3|pl": [
+  "kuvante"
+ ],
+ "06.0136|laṭ|Ā|3|sg": [
+  "kuvate"
+ ],
+ "06.0137|laṅ|Ā|1|du": [
+  "akuvāvahi"
+ ],
+ "06.0137|laṅ|Ā|1|pl": [
+  "akuvāmahi"
+ ],
+ "06.0137|laṅ|Ā|1|sg": [
+  "akuve"
+ ],
+ "06.0137|laṅ|Ā|2|du": [
+  "akuvethām"
+ ],
+ "06.0137|laṅ|Ā|2|pl": [
+  "akuvadhvam"
+ ],
+ "06.0137|laṅ|Ā|2|sg": [
+  "akuvathāḥ"
+ ],
+ "06.0137|laṅ|Ā|3|du": [
+  "akuvetām"
+ ],
+ "06.0137|laṅ|Ā|3|pl": [
+  "akuvanta"
+ ],
+ "06.0137|laṅ|Ā|3|sg": [
+  "akuvata"
+ ],
+ "06.0137|laṭ|Ā|1|du": [
+  "kuvāvahe"
+ ],
+ "06.0137|laṭ|Ā|1|pl": [
+  "kuvāmahe"
+ ],
+ "06.0137|laṭ|Ā|1|sg": [
+  "kuve"
+ ],
+ "06.0137|laṭ|Ā|2|du": [
+  "kuvethe"
+ ],
+ "06.0137|laṭ|Ā|2|pl": [
+  "kuvadhve"
+ ],
+ "06.0137|laṭ|Ā|2|sg": [
+  "kuvase"
+ ],
+ "06.0137|laṭ|Ā|3|du": [
+  "kuvete"
+ ],
+ "06.0137|laṭ|Ā|3|pl": [
+  "kuvante"
+ ],
+ "06.0137|laṭ|Ā|3|sg": [
+  "kuvate"
+ ],
+ "06.0138|laṅ|Ā|1|du": [
+  "apriyāvahi"
+ ],
+ "06.0138|laṅ|Ā|1|pl": [
+  "apriyāmahi"
+ ],
+ "06.0138|laṅ|Ā|1|sg": [
+  "apriye"
+ ],
+ "06.0138|laṅ|Ā|2|du": [
+  "apriyethām"
+ ],
+ "06.0138|laṅ|Ā|2|pl": [
+  "apriyadhvam"
+ ],
+ "06.0138|laṅ|Ā|2|sg": [
+  "apriyathāḥ"
+ ],
+ "06.0138|laṅ|Ā|3|du": [
+  "apriyetām"
+ ],
+ "06.0138|laṅ|Ā|3|pl": [
+  "apriyanta"
+ ],
+ "06.0138|laṅ|Ā|3|sg": [
+  "apriyata"
+ ],
+ "06.0138|laṭ|Ā|1|du": [
+  "priyāvahe"
+ ],
+ "06.0138|laṭ|Ā|1|pl": [
+  "priyāmahe"
+ ],
+ "06.0138|laṭ|Ā|1|sg": [
+  "priye"
+ ],
+ "06.0138|laṭ|Ā|2|du": [
+  "priyethe"
+ ],
+ "06.0138|laṭ|Ā|2|pl": [
+  "priyadhve"
+ ],
+ "06.0138|laṭ|Ā|2|sg": [
+  "priyase"
+ ],
+ "06.0138|laṭ|Ā|3|du": [
+  "priyete"
+ ],
+ "06.0138|laṭ|Ā|3|pl": [
+  "priyante"
+ ],
+ "06.0138|laṭ|Ā|3|sg": [
+  "priyate"
+ ],
+ "06.0139|laṅ|Ā|1|du": [
+  "amriyāvahi"
+ ],
+ "06.0139|laṅ|Ā|1|pl": [
+  "amriyāmahi"
+ ],
+ "06.0139|laṅ|Ā|1|sg": [
+  "amriye"
+ ],
+ "06.0139|laṅ|Ā|2|du": [
+  "amriyethām"
+ ],
+ "06.0139|laṅ|Ā|2|pl": [
+  "amriyadhvam"
+ ],
+ "06.0139|laṅ|Ā|2|sg": [
+  "amriyathāḥ"
+ ],
+ "06.0139|laṅ|Ā|3|du": [
+  "amriyetām"
+ ],
+ "06.0139|laṅ|Ā|3|pl": [
+  "amriyanta"
+ ],
+ "06.0139|laṅ|Ā|3|sg": [
+  "amriyata"
+ ],
+ "06.0139|laṭ|Ā|1|du": [
+  "mriyāvahe"
+ ],
+ "06.0139|laṭ|Ā|1|pl": [
+  "mriyāmahe"
+ ],
+ "06.0139|laṭ|Ā|1|sg": [
+  "mriye"
+ ],
+ "06.0139|laṭ|Ā|2|du": [
+  "mriyethe"
+ ],
+ "06.0139|laṭ|Ā|2|pl": [
+  "mriyadhve"
+ ],
+ "06.0139|laṭ|Ā|2|sg": [
+  "mriyase"
+ ],
+ "06.0139|laṭ|Ā|3|du": [
+  "mriyete"
+ ],
+ "06.0139|laṭ|Ā|3|pl": [
+  "mriyante"
+ ],
+ "06.0139|laṭ|Ā|3|sg": [
+  "mriyate"
+ ],
+ "06.0140|laṅ|P|1|du": [
+  "ariyāva"
+ ],
+ "06.0140|laṅ|P|1|pl": [
+  "ariyāma"
+ ],
+ "06.0140|laṅ|P|1|sg": [
+  "ariyam"
+ ],
+ "06.0140|laṅ|P|2|du": [
+  "ariyatam"
+ ],
+ "06.0140|laṅ|P|2|pl": [
+  "ariyata"
+ ],
+ "06.0140|laṅ|P|2|sg": [
+  "ariyaḥ"
+ ],
+ "06.0140|laṅ|P|3|du": [
+  "ariyatām"
+ ],
+ "06.0140|laṅ|P|3|pl": [
+  "ariyan"
+ ],
+ "06.0140|laṅ|P|3|sg": [
+  "ariyat",
+  "ariyad"
+ ],
+ "06.0140|laṭ|P|1|du": [
+  "riyāvaḥ"
+ ],
+ "06.0140|laṭ|P|1|pl": [
+  "riyāmaḥ"
+ ],
+ "06.0140|laṭ|P|1|sg": [
+  "riyāmi"
+ ],
+ "06.0140|laṭ|P|2|du": [
+  "riyathaḥ"
+ ],
+ "06.0140|laṭ|P|2|pl": [
+  "riyatha"
+ ],
+ "06.0140|laṭ|P|2|sg": [
+  "riyasi"
+ ],
+ "06.0140|laṭ|P|3|du": [
+  "riyataḥ"
+ ],
+ "06.0140|laṭ|P|3|pl": [
+  "riyanti"
+ ],
+ "06.0140|laṭ|P|3|sg": [
+  "riyati"
+ ],
+ "06.0141|laṅ|P|1|du": [
+  "apiyāva"
+ ],
+ "06.0141|laṅ|P|1|pl": [
+  "apiyāma"
+ ],
+ "06.0141|laṅ|P|1|sg": [
+  "apiyam"
+ ],
+ "06.0141|laṅ|P|2|du": [
+  "apiyatam"
+ ],
+ "06.0141|laṅ|P|2|pl": [
+  "apiyata"
+ ],
+ "06.0141|laṅ|P|2|sg": [
+  "apiyaḥ"
+ ],
+ "06.0141|laṅ|P|3|du": [
+  "apiyatām"
+ ],
+ "06.0141|laṅ|P|3|pl": [
+  "apiyan"
+ ],
+ "06.0141|laṅ|P|3|sg": [
+  "apiyat",
+  "apiyad"
+ ],
+ "06.0141|laṭ|P|1|du": [
+  "piyāvaḥ"
+ ],
+ "06.0141|laṭ|P|1|pl": [
+  "piyāmaḥ"
+ ],
+ "06.0141|laṭ|P|1|sg": [
+  "piyāmi"
+ ],
+ "06.0141|laṭ|P|2|du": [
+  "piyathaḥ"
+ ],
+ "06.0141|laṭ|P|2|pl": [
+  "piyatha"
+ ],
+ "06.0141|laṭ|P|2|sg": [
+  "piyasi"
+ ],
+ "06.0141|laṭ|P|3|du": [
+  "piyataḥ"
+ ],
+ "06.0141|laṭ|P|3|pl": [
+  "piyanti"
+ ],
+ "06.0141|laṭ|P|3|sg": [
+  "piyati"
+ ],
+ "06.0142|laṅ|P|1|du": [
+  "adhiyāva"
+ ],
+ "06.0142|laṅ|P|1|pl": [
+  "adhiyāma"
+ ],
+ "06.0142|laṅ|P|1|sg": [
+  "adhiyam"
+ ],
+ "06.0142|laṅ|P|2|du": [
+  "adhiyatam"
+ ],
+ "06.0142|laṅ|P|2|pl": [
+  "adhiyata"
+ ],
+ "06.0142|laṅ|P|2|sg": [
+  "adhiyaḥ"
+ ],
+ "06.0142|laṅ|P|3|du": [
+  "adhiyatām"
+ ],
+ "06.0142|laṅ|P|3|pl": [
+  "adhiyan"
+ ],
+ "06.0142|laṅ|P|3|sg": [
+  "adhiyat",
+  "adhiyad"
+ ],
+ "06.0142|laṭ|P|1|du": [
+  "dhiyāvaḥ"
+ ],
+ "06.0142|laṭ|P|1|pl": [
+  "dhiyāmaḥ"
+ ],
+ "06.0142|laṭ|P|1|sg": [
+  "dhiyāmi"
+ ],
+ "06.0142|laṭ|P|2|du": [
+  "dhiyathaḥ"
+ ],
+ "06.0142|laṭ|P|2|pl": [
+  "dhiyatha"
+ ],
+ "06.0142|laṭ|P|2|sg": [
+  "dhiyasi"
+ ],
+ "06.0142|laṭ|P|3|du": [
+  "dhiyataḥ"
+ ],
+ "06.0142|laṭ|P|3|pl": [
+  "dhiyanti"
+ ],
+ "06.0142|laṭ|P|3|sg": [
+  "dhiyati"
+ ],
+ "06.0143|laṅ|P|1|du": [
+  "akṣiyāva"
+ ],
+ "06.0143|laṅ|P|1|pl": [
+  "akṣiyāma"
+ ],
+ "06.0143|laṅ|P|1|sg": [
+  "akṣiyam"
+ ],
+ "06.0143|laṅ|P|2|du": [
+  "akṣiyatam"
+ ],
+ "06.0143|laṅ|P|2|pl": [
+  "akṣiyata"
+ ],
+ "06.0143|laṅ|P|2|sg": [
+  "akṣiyaḥ"
+ ],
+ "06.0143|laṅ|P|3|du": [
+  "akṣiyatām"
+ ],
+ "06.0143|laṅ|P|3|pl": [
+  "akṣiyan"
+ ],
+ "06.0143|laṅ|P|3|sg": [
+  "akṣiyat",
+  "akṣiyad"
+ ],
+ "06.0143|laṭ|P|1|du": [
+  "kṣiyāvaḥ"
+ ],
+ "06.0143|laṭ|P|1|pl": [
+  "kṣiyāmaḥ"
+ ],
+ "06.0143|laṭ|P|1|sg": [
+  "kṣiyāmi"
+ ],
+ "06.0143|laṭ|P|2|du": [
+  "kṣiyathaḥ"
+ ],
+ "06.0143|laṭ|P|2|pl": [
+  "kṣiyatha"
+ ],
+ "06.0143|laṭ|P|2|sg": [
+  "kṣiyasi"
+ ],
+ "06.0143|laṭ|P|3|du": [
+  "kṣiyataḥ"
+ ],
+ "06.0143|laṭ|P|3|pl": [
+  "kṣiyanti"
+ ],
+ "06.0143|laṭ|P|3|sg": [
+  "kṣiyati"
+ ],
+ "06.0144|laṅ|P|1|du": [
+  "asuvāva"
+ ],
+ "06.0144|laṅ|P|1|pl": [
+  "asuvāma"
+ ],
+ "06.0144|laṅ|P|1|sg": [
+  "asuvam"
+ ],
+ "06.0144|laṅ|P|2|du": [
+  "asuvatam"
+ ],
+ "06.0144|laṅ|P|2|pl": [
+  "asuvata"
+ ],
+ "06.0144|laṅ|P|2|sg": [
+  "asuvaḥ"
+ ],
+ "06.0144|laṅ|P|3|du": [
+  "asuvatām"
+ ],
+ "06.0144|laṅ|P|3|pl": [
+  "asuvan"
+ ],
+ "06.0144|laṅ|P|3|sg": [
+  "asuvat",
+  "asuvad"
+ ],
+ "06.0144|laṭ|P|1|du": [
+  "suvāvaḥ"
+ ],
+ "06.0144|laṭ|P|1|pl": [
+  "suvāmaḥ"
+ ],
+ "06.0144|laṭ|P|1|sg": [
+  "suvāmi"
+ ],
+ "06.0144|laṭ|P|2|du": [
+  "suvathaḥ"
+ ],
+ "06.0144|laṭ|P|2|pl": [
+  "suvatha"
+ ],
+ "06.0144|laṭ|P|2|sg": [
+  "suvasi"
+ ],
+ "06.0144|laṭ|P|3|du": [
+  "suvataḥ"
+ ],
+ "06.0144|laṭ|P|3|pl": [
+  "suvanti"
+ ],
+ "06.0144|laṭ|P|3|sg": [
+  "suvati"
+ ],
+ "06.0145|laṅ|P|1|du": [
+  "akirāva"
+ ],
+ "06.0145|laṅ|P|1|pl": [
+  "akirāma"
+ ],
+ "06.0145|laṅ|P|1|sg": [
+  "akiram"
+ ],
+ "06.0145|laṅ|P|2|du": [
+  "akiratam"
+ ],
+ "06.0145|laṅ|P|2|pl": [
+  "akirata"
+ ],
+ "06.0145|laṅ|P|2|sg": [
+  "akiraḥ"
+ ],
+ "06.0145|laṅ|P|3|du": [
+  "akiratām"
+ ],
+ "06.0145|laṅ|P|3|pl": [
+  "akiran"
+ ],
+ "06.0145|laṅ|P|3|sg": [
+  "akirat",
+  "akirad"
+ ],
+ "06.0145|laṭ|P|1|du": [
+  "kirāvaḥ"
+ ],
+ "06.0145|laṭ|P|1|pl": [
+  "kirāmaḥ"
+ ],
+ "06.0145|laṭ|P|1|sg": [
+  "kirāmi"
+ ],
+ "06.0145|laṭ|P|2|du": [
+  "kirathaḥ"
+ ],
+ "06.0145|laṭ|P|2|pl": [
+  "kiratha"
+ ],
+ "06.0145|laṭ|P|2|sg": [
+  "kirasi"
+ ],
+ "06.0145|laṭ|P|3|du": [
+  "kirataḥ"
+ ],
+ "06.0145|laṭ|P|3|pl": [
+  "kiranti"
+ ],
+ "06.0145|laṭ|P|3|sg": [
+  "kirati"
+ ],
+ "06.0146|laṅ|P|1|du": [
+  "agilāva",
+  "agirāva"
+ ],
+ "06.0146|laṅ|P|1|pl": [
+  "agilāma",
+  "agirāma"
+ ],
+ "06.0146|laṅ|P|1|sg": [
+  "agilam",
+  "agiram"
+ ],
+ "06.0146|laṅ|P|2|du": [
+  "agilatam",
+  "agiratam"
+ ],
+ "06.0146|laṅ|P|2|pl": [
+  "agilata",
+  "agirata"
+ ],
+ "06.0146|laṅ|P|2|sg": [
+  "agilaḥ",
+  "agiraḥ"
+ ],
+ "06.0146|laṅ|P|3|du": [
+  "agilatām",
+  "agiratām"
+ ],
+ "06.0146|laṅ|P|3|pl": [
+  "agilan",
+  "agiran"
+ ],
+ "06.0146|laṅ|P|3|sg": [
+  "agilat",
+  "agilad",
+  "agirat",
+  "agirad"
+ ],
+ "06.0146|laṭ|P|1|du": [
+  "gilāvaḥ",
+  "girāvaḥ"
+ ],
+ "06.0146|laṭ|P|1|pl": [
+  "gilāmaḥ",
+  "girāmaḥ"
+ ],
+ "06.0146|laṭ|P|1|sg": [
+  "gilāmi",
+  "girāmi"
+ ],
+ "06.0146|laṭ|P|2|du": [
+  "gilathaḥ",
+  "girathaḥ"
+ ],
+ "06.0146|laṭ|P|2|pl": [
+  "gilatha",
+  "giratha"
+ ],
+ "06.0146|laṭ|P|2|sg": [
+  "gilasi",
+  "girasi"
+ ],
+ "06.0146|laṭ|P|3|du": [
+  "gilataḥ",
+  "girataḥ"
+ ],
+ "06.0146|laṭ|P|3|pl": [
+  "gilanti",
+  "giranti"
+ ],
+ "06.0146|laṭ|P|3|sg": [
+  "gilati",
+  "girati"
+ ],
+ "06.0147|laṅ|Ā|1|du": [
+  "adriyāvahi"
+ ],
+ "06.0147|laṅ|Ā|1|pl": [
+  "adriyāmahi"
+ ],
+ "06.0147|laṅ|Ā|1|sg": [
+  "adriye"
+ ],
+ "06.0147|laṅ|Ā|2|du": [
+  "adriyethām"
+ ],
+ "06.0147|laṅ|Ā|2|pl": [
+  "adriyadhvam"
+ ],
+ "06.0147|laṅ|Ā|2|sg": [
+  "adriyathāḥ"
+ ],
+ "06.0147|laṅ|Ā|3|du": [
+  "adriyetām"
+ ],
+ "06.0147|laṅ|Ā|3|pl": [
+  "adriyanta"
+ ],
+ "06.0147|laṅ|Ā|3|sg": [
+  "adriyata"
+ ],
+ "06.0147|laṭ|Ā|1|du": [
+  "driyāvahe"
+ ],
+ "06.0147|laṭ|Ā|1|pl": [
+  "driyāmahe"
+ ],
+ "06.0147|laṭ|Ā|1|sg": [
+  "driye"
+ ],
+ "06.0147|laṭ|Ā|2|du": [
+  "driyethe"
+ ],
+ "06.0147|laṭ|Ā|2|pl": [
+  "driyadhve"
+ ],
+ "06.0147|laṭ|Ā|2|sg": [
+  "driyase"
+ ],
+ "06.0147|laṭ|Ā|3|du": [
+  "driyete"
+ ],
+ "06.0147|laṭ|Ā|3|pl": [
+  "driyante"
+ ],
+ "06.0147|laṭ|Ā|3|sg": [
+  "driyate"
+ ],
+ "06.0148|laṅ|Ā|1|du": [
+  "adhriyāvahi"
+ ],
+ "06.0148|laṅ|Ā|1|pl": [
+  "adhriyāmahi"
+ ],
+ "06.0148|laṅ|Ā|1|sg": [
+  "adhriye"
+ ],
+ "06.0148|laṅ|Ā|2|du": [
+  "adhriyethām"
+ ],
+ "06.0148|laṅ|Ā|2|pl": [
+  "adhriyadhvam"
+ ],
+ "06.0148|laṅ|Ā|2|sg": [
+  "adhriyathāḥ"
+ ],
+ "06.0148|laṅ|Ā|3|du": [
+  "adhriyetām"
+ ],
+ "06.0148|laṅ|Ā|3|pl": [
+  "adhriyanta"
+ ],
+ "06.0148|laṅ|Ā|3|sg": [
+  "adhriyata"
+ ],
+ "06.0148|laṭ|Ā|1|du": [
+  "dhriyāvahe"
+ ],
+ "06.0148|laṭ|Ā|1|pl": [
+  "dhriyāmahe"
+ ],
+ "06.0148|laṭ|Ā|1|sg": [
+  "dhriye"
+ ],
+ "06.0148|laṭ|Ā|2|du": [
+  "dhriyethe"
+ ],
+ "06.0148|laṭ|Ā|2|pl": [
+  "dhriyadhve"
+ ],
+ "06.0148|laṭ|Ā|2|sg": [
+  "dhriyase"
+ ],
+ "06.0148|laṭ|Ā|3|du": [
+  "dhriyete"
+ ],
+ "06.0148|laṭ|Ā|3|pl": [
+  "dhriyante"
+ ],
+ "06.0148|laṭ|Ā|3|sg": [
+  "dhriyate"
+ ],
+ "06.0149|laṅ|P|1|du": [
+  "apṛcchāva"
+ ],
+ "06.0149|laṅ|P|1|pl": [
+  "apṛcchāma"
+ ],
+ "06.0149|laṅ|P|1|sg": [
+  "apṛccham"
+ ],
+ "06.0149|laṅ|P|2|du": [
+  "apṛcchatam"
+ ],
+ "06.0149|laṅ|P|2|pl": [
+  "apṛcchata"
+ ],
+ "06.0149|laṅ|P|2|sg": [
+  "apṛcchaḥ"
+ ],
+ "06.0149|laṅ|P|3|du": [
+  "apṛcchatām"
+ ],
+ "06.0149|laṅ|P|3|pl": [
+  "apṛcchan"
+ ],
+ "06.0149|laṅ|P|3|sg": [
+  "apṛcchat",
+  "apṛcchad"
+ ],
+ "06.0149|laṭ|P|1|du": [
+  "pṛcchāvaḥ"
+ ],
+ "06.0149|laṭ|P|1|pl": [
+  "pṛcchāmaḥ"
+ ],
+ "06.0149|laṭ|P|1|sg": [
+  "pṛcchāmi"
+ ],
+ "06.0149|laṭ|P|2|du": [
+  "pṛcchathaḥ"
+ ],
+ "06.0149|laṭ|P|2|pl": [
+  "pṛcchatha"
+ ],
+ "06.0149|laṭ|P|2|sg": [
+  "pṛcchasi"
+ ],
+ "06.0149|laṭ|P|3|du": [
+  "pṛcchataḥ"
+ ],
+ "06.0149|laṭ|P|3|pl": [
+  "pṛcchanti"
+ ],
+ "06.0149|laṭ|P|3|sg": [
+  "pṛcchati"
+ ],
+ "06.0150|laṅ|P|1|du": [
+  "asṛjāva"
+ ],
+ "06.0150|laṅ|P|1|pl": [
+  "asṛjāma"
+ ],
+ "06.0150|laṅ|P|1|sg": [
+  "asṛjam"
+ ],
+ "06.0150|laṅ|P|2|du": [
+  "asṛjatam"
+ ],
+ "06.0150|laṅ|P|2|pl": [
+  "asṛjata"
+ ],
+ "06.0150|laṅ|P|2|sg": [
+  "asṛjaḥ"
+ ],
+ "06.0150|laṅ|P|3|du": [
+  "asṛjatām"
+ ],
+ "06.0150|laṅ|P|3|pl": [
+  "asṛjan"
+ ],
+ "06.0150|laṅ|P|3|sg": [
+  "asṛjat",
+  "asṛjad"
+ ],
+ "06.0150|laṭ|P|1|du": [
+  "sṛjāvaḥ"
+ ],
+ "06.0150|laṭ|P|1|pl": [
+  "sṛjāmaḥ"
+ ],
+ "06.0150|laṭ|P|1|sg": [
+  "sṛjāmi"
+ ],
+ "06.0150|laṭ|P|2|du": [
+  "sṛjathaḥ"
+ ],
+ "06.0150|laṭ|P|2|pl": [
+  "sṛjatha"
+ ],
+ "06.0150|laṭ|P|2|sg": [
+  "sṛjasi"
+ ],
+ "06.0150|laṭ|P|3|du": [
+  "sṛjataḥ"
+ ],
+ "06.0150|laṭ|P|3|pl": [
+  "sṛjanti"
+ ],
+ "06.0150|laṭ|P|3|sg": [
+  "sṛjati"
+ ],
+ "06.0151|laṅ|P|1|du": [
+  "amajjāva"
+ ],
+ "06.0151|laṅ|P|1|pl": [
+  "amajjāma"
+ ],
+ "06.0151|laṅ|P|1|sg": [
+  "amajjam"
+ ],
+ "06.0151|laṅ|P|2|du": [
+  "amajjatam"
+ ],
+ "06.0151|laṅ|P|2|pl": [
+  "amajjata"
+ ],
+ "06.0151|laṅ|P|2|sg": [
+  "amajjaḥ"
+ ],
+ "06.0151|laṅ|P|3|du": [
+  "amajjatām"
+ ],
+ "06.0151|laṅ|P|3|pl": [
+  "amajjan"
+ ],
+ "06.0151|laṅ|P|3|sg": [
+  "amajjat",
+  "amajjad"
+ ],
+ "06.0151|laṭ|P|1|du": [
+  "majjāvaḥ"
+ ],
+ "06.0151|laṭ|P|1|pl": [
+  "majjāmaḥ"
+ ],
+ "06.0151|laṭ|P|1|sg": [
+  "majjāmi"
+ ],
+ "06.0151|laṭ|P|2|du": [
+  "majjathaḥ"
+ ],
+ "06.0151|laṭ|P|2|pl": [
+  "majjatha"
+ ],
+ "06.0151|laṭ|P|2|sg": [
+  "majjasi"
+ ],
+ "06.0151|laṭ|P|3|du": [
+  "majjataḥ"
+ ],
+ "06.0151|laṭ|P|3|pl": [
+  "majjanti"
+ ],
+ "06.0151|laṭ|P|3|sg": [
+  "majjati"
+ ],
+ "06.0152|laṅ|P|1|du": [
+  "arujāva"
+ ],
+ "06.0152|laṅ|P|1|pl": [
+  "arujāma"
+ ],
+ "06.0152|laṅ|P|1|sg": [
+  "arujam"
+ ],
+ "06.0152|laṅ|P|2|du": [
+  "arujatam"
+ ],
+ "06.0152|laṅ|P|2|pl": [
+  "arujata"
+ ],
+ "06.0152|laṅ|P|2|sg": [
+  "arujaḥ"
+ ],
+ "06.0152|laṅ|P|3|du": [
+  "arujatām"
+ ],
+ "06.0152|laṅ|P|3|pl": [
+  "arujan"
+ ],
+ "06.0152|laṅ|P|3|sg": [
+  "arujat",
+  "arujad"
+ ],
+ "06.0152|laṭ|P|1|du": [
+  "rujāvaḥ"
+ ],
+ "06.0152|laṭ|P|1|pl": [
+  "rujāmaḥ"
+ ],
+ "06.0152|laṭ|P|1|sg": [
+  "rujāmi"
+ ],
+ "06.0152|laṭ|P|2|du": [
+  "rujathaḥ"
+ ],
+ "06.0152|laṭ|P|2|pl": [
+  "rujatha"
+ ],
+ "06.0152|laṭ|P|2|sg": [
+  "rujasi"
+ ],
+ "06.0152|laṭ|P|3|du": [
+  "rujataḥ"
+ ],
+ "06.0152|laṭ|P|3|pl": [
+  "rujanti"
+ ],
+ "06.0152|laṭ|P|3|sg": [
+  "rujati"
+ ],
+ "06.0153|laṅ|P|1|du": [
+  "abhujāva"
+ ],
+ "06.0153|laṅ|P|1|pl": [
+  "abhujāma"
+ ],
+ "06.0153|laṅ|P|1|sg": [
+  "abhujam"
+ ],
+ "06.0153|laṅ|P|2|du": [
+  "abhujatam"
+ ],
+ "06.0153|laṅ|P|2|pl": [
+  "abhujata"
+ ],
+ "06.0153|laṅ|P|2|sg": [
+  "abhujaḥ"
+ ],
+ "06.0153|laṅ|P|3|du": [
+  "abhujatām"
+ ],
+ "06.0153|laṅ|P|3|pl": [
+  "abhujan"
+ ],
+ "06.0153|laṅ|P|3|sg": [
+  "abhujat",
+  "abhujad"
+ ],
+ "06.0153|laṭ|P|1|du": [
+  "bhujāvaḥ"
+ ],
+ "06.0153|laṭ|P|1|pl": [
+  "bhujāmaḥ"
+ ],
+ "06.0153|laṭ|P|1|sg": [
+  "bhujāmi"
+ ],
+ "06.0153|laṭ|P|2|du": [
+  "bhujathaḥ"
+ ],
+ "06.0153|laṭ|P|2|pl": [
+  "bhujatha"
+ ],
+ "06.0153|laṭ|P|2|sg": [
+  "bhujasi"
+ ],
+ "06.0153|laṭ|P|3|du": [
+  "bhujataḥ"
+ ],
+ "06.0153|laṭ|P|3|pl": [
+  "bhujanti"
+ ],
+ "06.0153|laṭ|P|3|sg": [
+  "bhujati"
+ ],
+ "06.0154|laṅ|P|1|du": [
+  "acchupāva"
+ ],
+ "06.0154|laṅ|P|1|pl": [
+  "acchupāma"
+ ],
+ "06.0154|laṅ|P|1|sg": [
+  "acchupam"
+ ],
+ "06.0154|laṅ|P|2|du": [
+  "acchupatam"
+ ],
+ "06.0154|laṅ|P|2|pl": [
+  "acchupata"
+ ],
+ "06.0154|laṅ|P|2|sg": [
+  "acchupaḥ"
+ ],
+ "06.0154|laṅ|P|3|du": [
+  "acchupatām"
+ ],
+ "06.0154|laṅ|P|3|pl": [
+  "acchupan"
+ ],
+ "06.0154|laṅ|P|3|sg": [
+  "acchupat",
+  "acchupad"
+ ],
+ "06.0154|laṭ|P|1|du": [
+  "chupāvaḥ"
+ ],
+ "06.0154|laṭ|P|1|pl": [
+  "chupāmaḥ"
+ ],
+ "06.0154|laṭ|P|1|sg": [
+  "chupāmi"
+ ],
+ "06.0154|laṭ|P|2|du": [
+  "chupathaḥ"
+ ],
+ "06.0154|laṭ|P|2|pl": [
+  "chupatha"
+ ],
+ "06.0154|laṭ|P|2|sg": [
+  "chupasi"
+ ],
+ "06.0154|laṭ|P|3|du": [
+  "chupataḥ"
+ ],
+ "06.0154|laṭ|P|3|pl": [
+  "chupanti"
+ ],
+ "06.0154|laṭ|P|3|sg": [
+  "chupati"
+ ],
+ "06.0155|laṅ|P|1|du": [
+  "aruśāva"
+ ],
+ "06.0155|laṅ|P|1|pl": [
+  "aruśāma"
+ ],
+ "06.0155|laṅ|P|1|sg": [
+  "aruśam"
+ ],
+ "06.0155|laṅ|P|2|du": [
+  "aruśatam"
+ ],
+ "06.0155|laṅ|P|2|pl": [
+  "aruśata"
+ ],
+ "06.0155|laṅ|P|2|sg": [
+  "aruśaḥ"
+ ],
+ "06.0155|laṅ|P|3|du": [
+  "aruśatām"
+ ],
+ "06.0155|laṅ|P|3|pl": [
+  "aruśan"
+ ],
+ "06.0155|laṅ|P|3|sg": [
+  "aruśat",
+  "aruśad"
+ ],
+ "06.0155|laṭ|P|1|du": [
+  "ruśāvaḥ"
+ ],
+ "06.0155|laṭ|P|1|pl": [
+  "ruśāmaḥ"
+ ],
+ "06.0155|laṭ|P|1|sg": [
+  "ruśāmi"
+ ],
+ "06.0155|laṭ|P|2|du": [
+  "ruśathaḥ"
+ ],
+ "06.0155|laṭ|P|2|pl": [
+  "ruśatha"
+ ],
+ "06.0155|laṭ|P|2|sg": [
+  "ruśasi"
+ ],
+ "06.0155|laṭ|P|3|du": [
+  "ruśataḥ"
+ ],
+ "06.0155|laṭ|P|3|pl": [
+  "ruśanti"
+ ],
+ "06.0155|laṭ|P|3|sg": [
+  "ruśati"
+ ],
+ "06.0156|laṅ|P|1|du": [
+  "ariśāva"
+ ],
+ "06.0156|laṅ|P|1|pl": [
+  "ariśāma"
+ ],
+ "06.0156|laṅ|P|1|sg": [
+  "ariśam"
+ ],
+ "06.0156|laṅ|P|2|du": [
+  "ariśatam"
+ ],
+ "06.0156|laṅ|P|2|pl": [
+  "ariśata"
+ ],
+ "06.0156|laṅ|P|2|sg": [
+  "ariśaḥ"
+ ],
+ "06.0156|laṅ|P|3|du": [
+  "ariśatām"
+ ],
+ "06.0156|laṅ|P|3|pl": [
+  "ariśan"
+ ],
+ "06.0156|laṅ|P|3|sg": [
+  "ariśat",
+  "ariśad"
+ ],
+ "06.0156|laṭ|P|1|du": [
+  "riśāvaḥ"
+ ],
+ "06.0156|laṭ|P|1|pl": [
+  "riśāmaḥ"
+ ],
+ "06.0156|laṭ|P|1|sg": [
+  "riśāmi"
+ ],
+ "06.0156|laṭ|P|2|du": [
+  "riśathaḥ"
+ ],
+ "06.0156|laṭ|P|2|pl": [
+  "riśatha"
+ ],
+ "06.0156|laṭ|P|2|sg": [
+  "riśasi"
+ ],
+ "06.0156|laṭ|P|3|du": [
+  "riśataḥ"
+ ],
+ "06.0156|laṭ|P|3|pl": [
+  "riśanti"
+ ],
+ "06.0156|laṭ|P|3|sg": [
+  "riśati"
+ ],
+ "06.0157|laṅ|P|1|du": [
+  "aliśāva"
+ ],
+ "06.0157|laṅ|P|1|pl": [
+  "aliśāma"
+ ],
+ "06.0157|laṅ|P|1|sg": [
+  "aliśam"
+ ],
+ "06.0157|laṅ|P|2|du": [
+  "aliśatam"
+ ],
+ "06.0157|laṅ|P|2|pl": [
+  "aliśata"
+ ],
+ "06.0157|laṅ|P|2|sg": [
+  "aliśaḥ"
+ ],
+ "06.0157|laṅ|P|3|du": [
+  "aliśatām"
+ ],
+ "06.0157|laṅ|P|3|pl": [
+  "aliśan"
+ ],
+ "06.0157|laṅ|P|3|sg": [
+  "aliśat",
+  "aliśad"
+ ],
+ "06.0157|laṭ|P|1|du": [
+  "liśāvaḥ"
+ ],
+ "06.0157|laṭ|P|1|pl": [
+  "liśāmaḥ"
+ ],
+ "06.0157|laṭ|P|1|sg": [
+  "liśāmi"
+ ],
+ "06.0157|laṭ|P|2|du": [
+  "liśathaḥ"
+ ],
+ "06.0157|laṭ|P|2|pl": [
+  "liśatha"
+ ],
+ "06.0157|laṭ|P|2|sg": [
+  "liśasi"
+ ],
+ "06.0157|laṭ|P|3|du": [
+  "liśataḥ"
+ ],
+ "06.0157|laṭ|P|3|pl": [
+  "liśanti"
+ ],
+ "06.0157|laṭ|P|3|sg": [
+  "liśati"
+ ],
+ "06.0158|laṅ|P|1|du": [
+  "aspṛśāva"
+ ],
+ "06.0158|laṅ|P|1|pl": [
+  "aspṛśāma"
+ ],
+ "06.0158|laṅ|P|1|sg": [
+  "aspṛśam"
+ ],
+ "06.0158|laṅ|P|2|du": [
+  "aspṛśatam"
+ ],
+ "06.0158|laṅ|P|2|pl": [
+  "aspṛśata"
+ ],
+ "06.0158|laṅ|P|2|sg": [
+  "aspṛśaḥ"
+ ],
+ "06.0158|laṅ|P|3|du": [
+  "aspṛśatām"
+ ],
+ "06.0158|laṅ|P|3|pl": [
+  "aspṛśan"
+ ],
+ "06.0158|laṅ|P|3|sg": [
+  "aspṛśat",
+  "aspṛśad"
+ ],
+ "06.0158|laṭ|P|1|du": [
+  "spṛśāvaḥ"
+ ],
+ "06.0158|laṭ|P|1|pl": [
+  "spṛśāmaḥ"
+ ],
+ "06.0158|laṭ|P|1|sg": [
+  "spṛśāmi"
+ ],
+ "06.0158|laṭ|P|2|du": [
+  "spṛśathaḥ"
+ ],
+ "06.0158|laṭ|P|2|pl": [
+  "spṛśatha"
+ ],
+ "06.0158|laṭ|P|2|sg": [
+  "spṛśasi"
+ ],
+ "06.0158|laṭ|P|3|du": [
+  "spṛśataḥ"
+ ],
+ "06.0158|laṭ|P|3|pl": [
+  "spṛśanti"
+ ],
+ "06.0158|laṭ|P|3|sg": [
+  "spṛśati"
+ ],
+ "06.0160|laṅ|P|1|du": [
+  "aviśāva"
+ ],
+ "06.0160|laṅ|P|1|pl": [
+  "aviśāma"
+ ],
+ "06.0160|laṅ|P|1|sg": [
+  "aviśam"
+ ],
+ "06.0160|laṅ|P|2|du": [
+  "aviśatam"
+ ],
+ "06.0160|laṅ|P|2|pl": [
+  "aviśata"
+ ],
+ "06.0160|laṅ|P|2|sg": [
+  "aviśaḥ"
+ ],
+ "06.0160|laṅ|P|3|du": [
+  "aviśatām"
+ ],
+ "06.0160|laṅ|P|3|pl": [
+  "aviśan"
+ ],
+ "06.0160|laṅ|P|3|sg": [
+  "aviśat",
+  "aviśad"
+ ],
+ "06.0160|laṭ|P|1|du": [
+  "viśāvaḥ"
+ ],
+ "06.0160|laṭ|P|1|pl": [
+  "viśāmaḥ"
+ ],
+ "06.0160|laṭ|P|1|sg": [
+  "viśāmi"
+ ],
+ "06.0160|laṭ|P|2|du": [
+  "viśathaḥ"
+ ],
+ "06.0160|laṭ|P|2|pl": [
+  "viśatha"
+ ],
+ "06.0160|laṭ|P|2|sg": [
+  "viśasi"
+ ],
+ "06.0160|laṭ|P|3|du": [
+  "viśataḥ"
+ ],
+ "06.0160|laṭ|P|3|pl": [
+  "viśanti"
+ ],
+ "06.0160|laṭ|P|3|sg": [
+  "viśati"
+ ],
+ "06.0161|laṅ|P|1|du": [
+  "amṛśāva"
+ ],
+ "06.0161|laṅ|P|1|pl": [
+  "amṛśāma"
+ ],
+ "06.0161|laṅ|P|1|sg": [
+  "amṛśam"
+ ],
+ "06.0161|laṅ|P|2|du": [
+  "amṛśatam"
+ ],
+ "06.0161|laṅ|P|2|pl": [
+  "amṛśata"
+ ],
+ "06.0161|laṅ|P|2|sg": [
+  "amṛśaḥ"
+ ],
+ "06.0161|laṅ|P|3|du": [
+  "amṛśatām"
+ ],
+ "06.0161|laṅ|P|3|pl": [
+  "amṛśan"
+ ],
+ "06.0161|laṅ|P|3|sg": [
+  "amṛśat",
+  "amṛśad"
+ ],
+ "06.0161|laṭ|P|1|du": [
+  "mṛśāvaḥ"
+ ],
+ "06.0161|laṭ|P|1|pl": [
+  "mṛśāmaḥ"
+ ],
+ "06.0161|laṭ|P|1|sg": [
+  "mṛśāmi"
+ ],
+ "06.0161|laṭ|P|2|du": [
+  "mṛśathaḥ"
+ ],
+ "06.0161|laṭ|P|2|pl": [
+  "mṛśatha"
+ ],
+ "06.0161|laṭ|P|2|sg": [
+  "mṛśasi"
+ ],
+ "06.0161|laṭ|P|3|du": [
+  "mṛśataḥ"
+ ],
+ "06.0161|laṭ|P|3|pl": [
+  "mṛśanti"
+ ],
+ "06.0161|laṭ|P|3|sg": [
+  "mṛśati"
+ ],
+ "06.0162|laṅ|P|1|du": [
+  "anudāva"
+ ],
+ "06.0162|laṅ|P|1|pl": [
+  "anudāma"
+ ],
+ "06.0162|laṅ|P|1|sg": [
+  "anudam"
+ ],
+ "06.0162|laṅ|P|2|du": [
+  "anudatam"
+ ],
+ "06.0162|laṅ|P|2|pl": [
+  "anudata"
+ ],
+ "06.0162|laṅ|P|2|sg": [
+  "anudaḥ"
+ ],
+ "06.0162|laṅ|P|3|du": [
+  "anudatām"
+ ],
+ "06.0162|laṅ|P|3|pl": [
+  "anudan"
+ ],
+ "06.0162|laṅ|P|3|sg": [
+  "anudat",
+  "anudad"
+ ],
+ "06.0162|laṭ|P|1|du": [
+  "nudāvaḥ"
+ ],
+ "06.0162|laṭ|P|1|pl": [
+  "nudāmaḥ"
+ ],
+ "06.0162|laṭ|P|1|sg": [
+  "nudāmi"
+ ],
+ "06.0162|laṭ|P|2|du": [
+  "nudathaḥ"
+ ],
+ "06.0162|laṭ|P|2|pl": [
+  "nudatha"
+ ],
+ "06.0162|laṭ|P|2|sg": [
+  "nudasi"
+ ],
+ "06.0162|laṭ|P|3|du": [
+  "nudataḥ"
+ ],
+ "06.0162|laṭ|P|3|pl": [
+  "nudanti"
+ ],
+ "06.0162|laṭ|P|3|sg": [
+  "nudati"
+ ],
+ "06.0163|laṅ|P|1|du": [
+  "asīdāva"
+ ],
+ "06.0163|laṅ|P|1|pl": [
+  "asīdāma"
+ ],
+ "06.0163|laṅ|P|1|sg": [
+  "asīdam"
+ ],
+ "06.0163|laṅ|P|2|du": [
+  "asīdatam"
+ ],
+ "06.0163|laṅ|P|2|pl": [
+  "asīdata"
+ ],
+ "06.0163|laṅ|P|2|sg": [
+  "asīdaḥ"
+ ],
+ "06.0163|laṅ|P|3|du": [
+  "asīdatām"
+ ],
+ "06.0163|laṅ|P|3|pl": [
+  "asīdan"
+ ],
+ "06.0163|laṅ|P|3|sg": [
+  "asīdat",
+  "asīdad"
+ ],
+ "06.0163|laṭ|P|1|du": [
+  "sīdāvaḥ"
+ ],
+ "06.0163|laṭ|P|1|pl": [
+  "sīdāmaḥ"
+ ],
+ "06.0163|laṭ|P|1|sg": [
+  "sīdāmi"
+ ],
+ "06.0163|laṭ|P|2|du": [
+  "sīdathaḥ"
+ ],
+ "06.0163|laṭ|P|2|pl": [
+  "sīdatha"
+ ],
+ "06.0163|laṭ|P|2|sg": [
+  "sīdasi"
+ ],
+ "06.0163|laṭ|P|3|du": [
+  "sīdataḥ"
+ ],
+ "06.0163|laṭ|P|3|pl": [
+  "sīdanti"
+ ],
+ "06.0163|laṭ|P|3|sg": [
+  "sīdati"
+ ],
+ "06.0164|laṅ|Ā|1|du": [
+  "aśīyāvahi"
+ ],
+ "06.0164|laṅ|Ā|1|pl": [
+  "aśīyāmahi"
+ ],
+ "06.0164|laṅ|Ā|1|sg": [
+  "aśīye"
+ ],
+ "06.0164|laṅ|Ā|2|du": [
+  "aśīyethām"
+ ],
+ "06.0164|laṅ|Ā|2|pl": [
+  "aśīyadhvam"
+ ],
+ "06.0164|laṅ|Ā|2|sg": [
+  "aśīyathāḥ"
+ ],
+ "06.0164|laṅ|Ā|3|du": [
+  "aśīyetām"
+ ],
+ "06.0164|laṅ|Ā|3|pl": [
+  "aśīyanta"
+ ],
+ "06.0164|laṅ|Ā|3|sg": [
+  "aśīyata"
+ ],
+ "06.0164|laṭ|Ā|1|du": [
+  "śīyāvahe"
+ ],
+ "06.0164|laṭ|Ā|1|pl": [
+  "śīyāmahe"
+ ],
+ "06.0164|laṭ|Ā|1|sg": [
+  "śīye"
+ ],
+ "06.0164|laṭ|Ā|2|du": [
+  "śīyethe"
+ ],
+ "06.0164|laṭ|Ā|2|pl": [
+  "śīyadhve"
+ ],
+ "06.0164|laṭ|Ā|2|sg": [
+  "śīyase"
+ ],
+ "06.0164|laṭ|Ā|3|du": [
+  "śīyete"
+ ],
+ "06.0164|laṭ|Ā|3|pl": [
+  "śīyante"
+ ],
+ "06.0164|laṭ|Ā|3|sg": [
+  "śīyate"
+ ],
+ "06.0165|laṅ|P|1|du": [
+  "amilāva"
+ ],
+ "06.0165|laṅ|P|1|pl": [
+  "amilāma"
+ ],
+ "06.0165|laṅ|P|1|sg": [
+  "amilam"
+ ],
+ "06.0165|laṅ|P|2|du": [
+  "amilatam"
+ ],
+ "06.0165|laṅ|P|2|pl": [
+  "amilata"
+ ],
+ "06.0165|laṅ|P|2|sg": [
+  "amilaḥ"
+ ],
+ "06.0165|laṅ|P|3|du": [
+  "amilatām"
+ ],
+ "06.0165|laṅ|P|3|pl": [
+  "amilan"
+ ],
+ "06.0165|laṅ|P|3|sg": [
+  "amilat",
+  "amilad"
+ ],
+ "06.0165|laṅ|Ā|1|du": [
+  "amilāvahi"
+ ],
+ "06.0165|laṅ|Ā|1|pl": [
+  "amilāmahi"
+ ],
+ "06.0165|laṅ|Ā|1|sg": [
+  "amile"
+ ],
+ "06.0165|laṅ|Ā|2|du": [
+  "amilethām"
+ ],
+ "06.0165|laṅ|Ā|2|pl": [
+  "amiladhvam"
+ ],
+ "06.0165|laṅ|Ā|2|sg": [
+  "amilathāḥ"
+ ],
+ "06.0165|laṅ|Ā|3|du": [
+  "amiletām"
+ ],
+ "06.0165|laṅ|Ā|3|pl": [
+  "amilanta"
+ ],
+ "06.0165|laṅ|Ā|3|sg": [
+  "amilata"
+ ],
+ "06.0165|laṭ|P|1|du": [
+  "milāvaḥ"
+ ],
+ "06.0165|laṭ|P|1|pl": [
+  "milāmaḥ"
+ ],
+ "06.0165|laṭ|P|1|sg": [
+  "milāmi"
+ ],
+ "06.0165|laṭ|P|2|du": [
+  "milathaḥ"
+ ],
+ "06.0165|laṭ|P|2|pl": [
+  "milatha"
+ ],
+ "06.0165|laṭ|P|2|sg": [
+  "milasi"
+ ],
+ "06.0165|laṭ|P|3|du": [
+  "milataḥ"
+ ],
+ "06.0165|laṭ|P|3|pl": [
+  "milanti"
+ ],
+ "06.0165|laṭ|P|3|sg": [
+  "milati"
+ ],
+ "06.0165|laṭ|Ā|1|du": [
+  "milāvahe"
+ ],
+ "06.0165|laṭ|Ā|1|pl": [
+  "milāmahe"
+ ],
+ "06.0165|laṭ|Ā|1|sg": [
+  "mile"
+ ],
+ "06.0165|laṭ|Ā|2|du": [
+  "milethe"
+ ],
+ "06.0165|laṭ|Ā|2|pl": [
+  "miladhve"
+ ],
+ "06.0165|laṭ|Ā|2|sg": [
+  "milase"
+ ],
+ "06.0165|laṭ|Ā|3|du": [
+  "milete"
+ ],
+ "06.0165|laṭ|Ā|3|pl": [
+  "milante"
+ ],
+ "06.0165|laṭ|Ā|3|sg": [
+  "milate"
+ ],
+ "06.0166|laṅ|P|1|du": [
+  "amuñcāva"
+ ],
+ "06.0166|laṅ|P|1|pl": [
+  "amuñcāma"
+ ],
+ "06.0166|laṅ|P|1|sg": [
+  "amuñcam"
+ ],
+ "06.0166|laṅ|P|2|du": [
+  "amuñcatam"
+ ],
+ "06.0166|laṅ|P|2|pl": [
+  "amuñcata"
+ ],
+ "06.0166|laṅ|P|2|sg": [
+  "amuñcaḥ"
+ ],
+ "06.0166|laṅ|P|3|du": [
+  "amuñcatām"
+ ],
+ "06.0166|laṅ|P|3|pl": [
+  "amuñcan"
+ ],
+ "06.0166|laṅ|P|3|sg": [
+  "amuñcat",
+  "amuñcad"
+ ],
+ "06.0166|laṅ|Ā|1|du": [
+  "amuñcāvahi"
+ ],
+ "06.0166|laṅ|Ā|1|pl": [
+  "amuñcāmahi"
+ ],
+ "06.0166|laṅ|Ā|1|sg": [
+  "amuñce"
+ ],
+ "06.0166|laṅ|Ā|2|du": [
+  "amuñcethām"
+ ],
+ "06.0166|laṅ|Ā|2|pl": [
+  "amuñcadhvam"
+ ],
+ "06.0166|laṅ|Ā|2|sg": [
+  "amuñcathāḥ"
+ ],
+ "06.0166|laṅ|Ā|3|du": [
+  "amuñcetām"
+ ],
+ "06.0166|laṅ|Ā|3|pl": [
+  "amuñcanta"
+ ],
+ "06.0166|laṅ|Ā|3|sg": [
+  "amuñcata"
+ ],
+ "06.0166|laṭ|P|1|du": [
+  "muñcāvaḥ"
+ ],
+ "06.0166|laṭ|P|1|pl": [
+  "muñcāmaḥ"
+ ],
+ "06.0166|laṭ|P|1|sg": [
+  "muñcāmi"
+ ],
+ "06.0166|laṭ|P|2|du": [
+  "muñcathaḥ"
+ ],
+ "06.0166|laṭ|P|2|pl": [
+  "muñcatha"
+ ],
+ "06.0166|laṭ|P|2|sg": [
+  "muñcasi"
+ ],
+ "06.0166|laṭ|P|3|du": [
+  "muñcataḥ"
+ ],
+ "06.0166|laṭ|P|3|pl": [
+  "muñcanti"
+ ],
+ "06.0166|laṭ|P|3|sg": [
+  "muñcati"
+ ],
+ "06.0166|laṭ|Ā|1|du": [
+  "muñcāvahe"
+ ],
+ "06.0166|laṭ|Ā|1|pl": [
+  "muñcāmahe"
+ ],
+ "06.0166|laṭ|Ā|1|sg": [
+  "muñce"
+ ],
+ "06.0166|laṭ|Ā|2|du": [
+  "muñcethe"
+ ],
+ "06.0166|laṭ|Ā|2|pl": [
+  "muñcadhve"
+ ],
+ "06.0166|laṭ|Ā|2|sg": [
+  "muñcase"
+ ],
+ "06.0166|laṭ|Ā|3|du": [
+  "muñcete"
+ ],
+ "06.0166|laṭ|Ā|3|pl": [
+  "muñcante"
+ ],
+ "06.0166|laṭ|Ā|3|sg": [
+  "muñcate"
+ ],
+ "06.0167|laṅ|P|1|du": [
+  "alumpāva"
+ ],
+ "06.0167|laṅ|P|1|pl": [
+  "alumpāma"
+ ],
+ "06.0167|laṅ|P|1|sg": [
+  "alumpam"
+ ],
+ "06.0167|laṅ|P|2|du": [
+  "alumpatam"
+ ],
+ "06.0167|laṅ|P|2|pl": [
+  "alumpata"
+ ],
+ "06.0167|laṅ|P|2|sg": [
+  "alumpaḥ"
+ ],
+ "06.0167|laṅ|P|3|du": [
+  "alumpatām"
+ ],
+ "06.0167|laṅ|P|3|pl": [
+  "alumpan"
+ ],
+ "06.0167|laṅ|P|3|sg": [
+  "alumpat",
+  "alumpad"
+ ],
+ "06.0167|laṅ|Ā|1|du": [
+  "alumpāvahi"
+ ],
+ "06.0167|laṅ|Ā|1|pl": [
+  "alumpāmahi"
+ ],
+ "06.0167|laṅ|Ā|1|sg": [
+  "alumpe"
+ ],
+ "06.0167|laṅ|Ā|2|du": [
+  "alumpethām"
+ ],
+ "06.0167|laṅ|Ā|2|pl": [
+  "alumpadhvam"
+ ],
+ "06.0167|laṅ|Ā|2|sg": [
+  "alumpathāḥ"
+ ],
+ "06.0167|laṅ|Ā|3|du": [
+  "alumpetām"
+ ],
+ "06.0167|laṅ|Ā|3|pl": [
+  "alumpanta"
+ ],
+ "06.0167|laṅ|Ā|3|sg": [
+  "alumpata"
+ ],
+ "06.0167|laṭ|P|1|du": [
+  "lumpāvaḥ"
+ ],
+ "06.0167|laṭ|P|1|pl": [
+  "lumpāmaḥ"
+ ],
+ "06.0167|laṭ|P|1|sg": [
+  "lumpāmi"
+ ],
+ "06.0167|laṭ|P|2|du": [
+  "lumpathaḥ"
+ ],
+ "06.0167|laṭ|P|2|pl": [
+  "lumpatha"
+ ],
+ "06.0167|laṭ|P|2|sg": [
+  "lumpasi"
+ ],
+ "06.0167|laṭ|P|3|du": [
+  "lumpataḥ"
+ ],
+ "06.0167|laṭ|P|3|pl": [
+  "lumpanti"
+ ],
+ "06.0167|laṭ|P|3|sg": [
+  "lumpati"
+ ],
+ "06.0167|laṭ|Ā|1|du": [
+  "lumpāvahe"
+ ],
+ "06.0167|laṭ|Ā|1|pl": [
+  "lumpāmahe"
+ ],
+ "06.0167|laṭ|Ā|1|sg": [
+  "lumpe"
+ ],
+ "06.0167|laṭ|Ā|2|du": [
+  "lumpethe"
+ ],
+ "06.0167|laṭ|Ā|2|pl": [
+  "lumpadhve"
+ ],
+ "06.0167|laṭ|Ā|2|sg": [
+  "lumpase"
+ ],
+ "06.0167|laṭ|Ā|3|du": [
+  "lumpete"
+ ],
+ "06.0167|laṭ|Ā|3|pl": [
+  "lumpante"
+ ],
+ "06.0167|laṭ|Ā|3|sg": [
+  "lumpate"
+ ],
+ "06.0168|laṅ|P|1|du": [
+  "avindāva"
+ ],
+ "06.0168|laṅ|P|1|pl": [
+  "avindāma"
+ ],
+ "06.0168|laṅ|P|1|sg": [
+  "avindam"
+ ],
+ "06.0168|laṅ|P|2|du": [
+  "avindatam"
+ ],
+ "06.0168|laṅ|P|2|pl": [
+  "avindata"
+ ],
+ "06.0168|laṅ|P|2|sg": [
+  "avindaḥ"
+ ],
+ "06.0168|laṅ|P|3|du": [
+  "avindatām"
+ ],
+ "06.0168|laṅ|P|3|pl": [
+  "avindan"
+ ],
+ "06.0168|laṅ|P|3|sg": [
+  "avindat",
+  "avindad"
+ ],
+ "06.0168|laṅ|Ā|1|du": [
+  "avindāvahi"
+ ],
+ "06.0168|laṅ|Ā|1|pl": [
+  "avindāmahi"
+ ],
+ "06.0168|laṅ|Ā|1|sg": [
+  "avinde"
+ ],
+ "06.0168|laṅ|Ā|2|du": [
+  "avindethām"
+ ],
+ "06.0168|laṅ|Ā|2|pl": [
+  "avindadhvam"
+ ],
+ "06.0168|laṅ|Ā|2|sg": [
+  "avindathāḥ"
+ ],
+ "06.0168|laṅ|Ā|3|du": [
+  "avindetām"
+ ],
+ "06.0168|laṅ|Ā|3|pl": [
+  "avindanta"
+ ],
+ "06.0168|laṅ|Ā|3|sg": [
+  "avindata"
+ ],
+ "06.0168|laṭ|P|1|du": [
+  "vindāvaḥ"
+ ],
+ "06.0168|laṭ|P|1|pl": [
+  "vindāmaḥ"
+ ],
+ "06.0168|laṭ|P|1|sg": [
+  "vindāmi"
+ ],
+ "06.0168|laṭ|P|2|du": [
+  "vindathaḥ"
+ ],
+ "06.0168|laṭ|P|2|pl": [
+  "vindatha"
+ ],
+ "06.0168|laṭ|P|2|sg": [
+  "vindasi"
+ ],
+ "06.0168|laṭ|P|3|du": [
+  "vindataḥ"
+ ],
+ "06.0168|laṭ|P|3|pl": [
+  "vindanti"
+ ],
+ "06.0168|laṭ|P|3|sg": [
+  "vindati"
+ ],
+ "06.0168|laṭ|Ā|1|du": [
+  "vindāvahe"
+ ],
+ "06.0168|laṭ|Ā|1|pl": [
+  "vindāmahe"
+ ],
+ "06.0168|laṭ|Ā|1|sg": [
+  "vinde"
+ ],
+ "06.0168|laṭ|Ā|2|du": [
+  "vindethe"
+ ],
+ "06.0168|laṭ|Ā|2|pl": [
+  "vindadhve"
+ ],
+ "06.0168|laṭ|Ā|2|sg": [
+  "vindase"
+ ],
+ "06.0168|laṭ|Ā|3|du": [
+  "vindete"
+ ],
+ "06.0168|laṭ|Ā|3|pl": [
+  "vindante"
+ ],
+ "06.0168|laṭ|Ā|3|sg": [
+  "vindate"
+ ],
+ "06.0169|laṅ|P|1|du": [
+  "alimpāva"
+ ],
+ "06.0169|laṅ|P|1|pl": [
+  "alimpāma"
+ ],
+ "06.0169|laṅ|P|1|sg": [
+  "alimpam"
+ ],
+ "06.0169|laṅ|P|2|du": [
+  "alimpatam"
+ ],
+ "06.0169|laṅ|P|2|pl": [
+  "alimpata"
+ ],
+ "06.0169|laṅ|P|2|sg": [
+  "alimpaḥ"
+ ],
+ "06.0169|laṅ|P|3|du": [
+  "alimpatām"
+ ],
+ "06.0169|laṅ|P|3|pl": [
+  "alimpan"
+ ],
+ "06.0169|laṅ|P|3|sg": [
+  "alimpat",
+  "alimpad"
+ ],
+ "06.0169|laṅ|Ā|1|du": [
+  "alimpāvahi"
+ ],
+ "06.0169|laṅ|Ā|1|pl": [
+  "alimpāmahi"
+ ],
+ "06.0169|laṅ|Ā|1|sg": [
+  "alimpe"
+ ],
+ "06.0169|laṅ|Ā|2|du": [
+  "alimpethām"
+ ],
+ "06.0169|laṅ|Ā|2|pl": [
+  "alimpadhvam"
+ ],
+ "06.0169|laṅ|Ā|2|sg": [
+  "alimpathāḥ"
+ ],
+ "06.0169|laṅ|Ā|3|du": [
+  "alimpetām"
+ ],
+ "06.0169|laṅ|Ā|3|pl": [
+  "alimpanta"
+ ],
+ "06.0169|laṅ|Ā|3|sg": [
+  "alimpata"
+ ],
+ "06.0169|laṭ|P|1|du": [
+  "limpāvaḥ"
+ ],
+ "06.0169|laṭ|P|1|pl": [
+  "limpāmaḥ"
+ ],
+ "06.0169|laṭ|P|1|sg": [
+  "limpāmi"
+ ],
+ "06.0169|laṭ|P|2|du": [
+  "limpathaḥ"
+ ],
+ "06.0169|laṭ|P|2|pl": [
+  "limpatha"
+ ],
+ "06.0169|laṭ|P|2|sg": [
+  "limpasi"
+ ],
+ "06.0169|laṭ|P|3|du": [
+  "limpataḥ"
+ ],
+ "06.0169|laṭ|P|3|pl": [
+  "limpanti"
+ ],
+ "06.0169|laṭ|P|3|sg": [
+  "limpati"
+ ],
+ "06.0169|laṭ|Ā|1|du": [
+  "limpāvahe"
+ ],
+ "06.0169|laṭ|Ā|1|pl": [
+  "limpāmahe"
+ ],
+ "06.0169|laṭ|Ā|1|sg": [
+  "limpe"
+ ],
+ "06.0169|laṭ|Ā|2|du": [
+  "limpethe"
+ ],
+ "06.0169|laṭ|Ā|2|pl": [
+  "limpadhve"
+ ],
+ "06.0169|laṭ|Ā|2|sg": [
+  "limpase"
+ ],
+ "06.0169|laṭ|Ā|3|du": [
+  "limpete"
+ ],
+ "06.0169|laṭ|Ā|3|pl": [
+  "limpante"
+ ],
+ "06.0169|laṭ|Ā|3|sg": [
+  "limpate"
+ ],
+ "06.0170|laṅ|P|1|du": [
+  "asiñcāva"
+ ],
+ "06.0170|laṅ|P|1|pl": [
+  "asiñcāma"
+ ],
+ "06.0170|laṅ|P|1|sg": [
+  "asiñcam"
+ ],
+ "06.0170|laṅ|P|2|du": [
+  "asiñcatam"
+ ],
+ "06.0170|laṅ|P|2|pl": [
+  "asiñcata"
+ ],
+ "06.0170|laṅ|P|2|sg": [
+  "asiñcaḥ"
+ ],
+ "06.0170|laṅ|P|3|du": [
+  "asiñcatām"
+ ],
+ "06.0170|laṅ|P|3|pl": [
+  "asiñcan"
+ ],
+ "06.0170|laṅ|P|3|sg": [
+  "asiñcat",
+  "asiñcad"
+ ],
+ "06.0170|laṅ|Ā|1|du": [
+  "asiñcāvahi"
+ ],
+ "06.0170|laṅ|Ā|1|pl": [
+  "asiñcāmahi"
+ ],
+ "06.0170|laṅ|Ā|1|sg": [
+  "asiñce"
+ ],
+ "06.0170|laṅ|Ā|2|du": [
+  "asiñcethām"
+ ],
+ "06.0170|laṅ|Ā|2|pl": [
+  "asiñcadhvam"
+ ],
+ "06.0170|laṅ|Ā|2|sg": [
+  "asiñcathāḥ"
+ ],
+ "06.0170|laṅ|Ā|3|du": [
+  "asiñcetām"
+ ],
+ "06.0170|laṅ|Ā|3|pl": [
+  "asiñcanta"
+ ],
+ "06.0170|laṅ|Ā|3|sg": [
+  "asiñcata"
+ ],
+ "06.0170|laṭ|P|1|du": [
+  "siñcāvaḥ"
+ ],
+ "06.0170|laṭ|P|1|pl": [
+  "siñcāmaḥ"
+ ],
+ "06.0170|laṭ|P|1|sg": [
+  "siñcāmi"
+ ],
+ "06.0170|laṭ|P|2|du": [
+  "siñcathaḥ"
+ ],
+ "06.0170|laṭ|P|2|pl": [
+  "siñcatha"
+ ],
+ "06.0170|laṭ|P|2|sg": [
+  "siñcasi"
+ ],
+ "06.0170|laṭ|P|3|du": [
+  "siñcataḥ"
+ ],
+ "06.0170|laṭ|P|3|pl": [
+  "siñcanti"
+ ],
+ "06.0170|laṭ|P|3|sg": [
+  "siñcati"
+ ],
+ "06.0170|laṭ|Ā|1|du": [
+  "siñcāvahe"
+ ],
+ "06.0170|laṭ|Ā|1|pl": [
+  "siñcāmahe"
+ ],
+ "06.0170|laṭ|Ā|1|sg": [
+  "siñce"
+ ],
+ "06.0170|laṭ|Ā|2|du": [
+  "siñcethe"
+ ],
+ "06.0170|laṭ|Ā|2|pl": [
+  "siñcadhve"
+ ],
+ "06.0170|laṭ|Ā|2|sg": [
+  "siñcase"
+ ],
+ "06.0170|laṭ|Ā|3|du": [
+  "siñcete"
+ ],
+ "06.0170|laṭ|Ā|3|pl": [
+  "siñcante"
+ ],
+ "06.0170|laṭ|Ā|3|sg": [
+  "siñcate"
+ ],
+ "06.0171|laṅ|P|1|du": [
+  "akṛntāva"
+ ],
+ "06.0171|laṅ|P|1|pl": [
+  "akṛntāma"
+ ],
+ "06.0171|laṅ|P|1|sg": [
+  "akṛntam"
+ ],
+ "06.0171|laṅ|P|2|du": [
+  "akṛntatam"
+ ],
+ "06.0171|laṅ|P|2|pl": [
+  "akṛntata"
+ ],
+ "06.0171|laṅ|P|2|sg": [
+  "akṛntaḥ"
+ ],
+ "06.0171|laṅ|P|3|du": [
+  "akṛntatām"
+ ],
+ "06.0171|laṅ|P|3|pl": [
+  "akṛntan"
+ ],
+ "06.0171|laṅ|P|3|sg": [
+  "akṛntat",
+  "akṛntad"
+ ],
+ "06.0171|laṭ|P|1|du": [
+  "kṛntāvaḥ"
+ ],
+ "06.0171|laṭ|P|1|pl": [
+  "kṛntāmaḥ"
+ ],
+ "06.0171|laṭ|P|1|sg": [
+  "kṛntāmi"
+ ],
+ "06.0171|laṭ|P|2|du": [
+  "kṛntathaḥ"
+ ],
+ "06.0171|laṭ|P|2|pl": [
+  "kṛntatha"
+ ],
+ "06.0171|laṭ|P|2|sg": [
+  "kṛntasi"
+ ],
+ "06.0171|laṭ|P|3|du": [
+  "kṛntataḥ"
+ ],
+ "06.0171|laṭ|P|3|pl": [
+  "kṛntanti"
+ ],
+ "06.0171|laṭ|P|3|sg": [
+  "kṛntati"
+ ],
+ "06.0172|laṅ|P|1|du": [
+  "akhindāva"
+ ],
+ "06.0172|laṅ|P|1|pl": [
+  "akhindāma"
+ ],
+ "06.0172|laṅ|P|1|sg": [
+  "akhindam"
+ ],
+ "06.0172|laṅ|P|2|du": [
+  "akhindatam"
+ ],
+ "06.0172|laṅ|P|2|pl": [
+  "akhindata"
+ ],
+ "06.0172|laṅ|P|2|sg": [
+  "akhindaḥ"
+ ],
+ "06.0172|laṅ|P|3|du": [
+  "akhindatām"
+ ],
+ "06.0172|laṅ|P|3|pl": [
+  "akhindan"
+ ],
+ "06.0172|laṅ|P|3|sg": [
+  "akhindat",
+  "akhindad"
+ ],
+ "06.0172|laṭ|P|1|du": [
+  "khindāvaḥ"
+ ],
+ "06.0172|laṭ|P|1|pl": [
+  "khindāmaḥ"
+ ],
+ "06.0172|laṭ|P|1|sg": [
+  "khindāmi"
+ ],
+ "06.0172|laṭ|P|2|du": [
+  "khindathaḥ"
+ ],
+ "06.0172|laṭ|P|2|pl": [
+  "khindatha"
+ ],
+ "06.0172|laṭ|P|2|sg": [
+  "khindasi"
+ ],
+ "06.0172|laṭ|P|3|du": [
+  "khindataḥ"
+ ],
+ "06.0172|laṭ|P|3|pl": [
+  "khindanti"
+ ],
+ "06.0172|laṭ|P|3|sg": [
+  "khindati"
+ ],
+ "06.0173|laṅ|P|1|du": [
+  "apiṃśāva"
+ ],
+ "06.0173|laṅ|P|1|pl": [
+  "apiṃśāma"
+ ],
+ "06.0173|laṅ|P|1|sg": [
+  "apiṃśam"
+ ],
+ "06.0173|laṅ|P|2|du": [
+  "apiṃśatam"
+ ],
+ "06.0173|laṅ|P|2|pl": [
+  "apiṃśata"
+ ],
+ "06.0173|laṅ|P|2|sg": [
+  "apiṃśaḥ"
+ ],
+ "06.0173|laṅ|P|3|du": [
+  "apiṃśatām"
+ ],
+ "06.0173|laṅ|P|3|pl": [
+  "apiṃśan"
+ ],
+ "06.0173|laṅ|P|3|sg": [
+  "apiṃśat",
+  "apiṃśad"
+ ],
+ "06.0173|laṭ|P|1|du": [
+  "piṃśāvaḥ"
+ ],
+ "06.0173|laṭ|P|1|pl": [
+  "piṃśāmaḥ"
+ ],
+ "06.0173|laṭ|P|1|sg": [
+  "piṃśāmi"
+ ],
+ "06.0173|laṭ|P|2|du": [
+  "piṃśathaḥ"
+ ],
+ "06.0173|laṭ|P|2|pl": [
+  "piṃśatha"
+ ],
+ "06.0173|laṭ|P|2|sg": [
+  "piṃśasi"
+ ],
+ "06.0173|laṭ|P|3|du": [
+  "piṃśataḥ"
+ ],
+ "06.0173|laṭ|P|3|pl": [
+  "piṃśanti"
+ ],
+ "06.0173|laṭ|P|3|sg": [
+  "piṃśati"
+ ],
+ "06.0174|laṅ|P|1|du": [
+  "aphulāva"
+ ],
+ "06.0174|laṅ|P|1|pl": [
+  "aphulāma"
+ ],
+ "06.0174|laṅ|P|1|sg": [
+  "aphulam"
+ ],
+ "06.0174|laṅ|P|2|du": [
+  "aphulatam"
+ ],
+ "06.0174|laṅ|P|2|pl": [
+  "aphulata"
+ ],
+ "06.0174|laṅ|P|2|sg": [
+  "aphulaḥ"
+ ],
+ "06.0174|laṅ|P|3|du": [
+  "aphulatām"
+ ],
+ "06.0174|laṅ|P|3|pl": [
+  "aphulan"
+ ],
+ "06.0174|laṅ|P|3|sg": [
+  "aphulat",
+  "aphulad"
+ ],
+ "06.0174|laṭ|P|1|du": [
+  "phulāvaḥ"
+ ],
+ "06.0174|laṭ|P|1|pl": [
+  "phulāmaḥ"
+ ],
+ "06.0174|laṭ|P|1|sg": [
+  "phulāmi"
+ ],
+ "06.0174|laṭ|P|2|du": [
+  "phulathaḥ"
+ ],
+ "06.0174|laṭ|P|2|pl": [
+  "phulatha"
+ ],
+ "06.0174|laṭ|P|2|sg": [
+  "phulasi"
+ ],
+ "06.0174|laṭ|P|3|du": [
+  "phulataḥ"
+ ],
+ "06.0174|laṭ|P|3|pl": [
+  "phulanti"
+ ],
+ "06.0174|laṭ|P|3|sg": [
+  "phulati"
  ]
 }

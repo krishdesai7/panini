@@ -24,6 +24,8 @@ from vidyut.prakriya import (
 from panini import request as rq
 from panini.request import all_requests, availability
 
+GANA = {"bhvādi": Gana.Bhvadi, "tudādi": Gana.Tudadi}
+
 DATA = Path("build/vidyut-data")
 OUT = Path("src/panini/data/reference_forms.json")
 
@@ -49,7 +51,7 @@ def main() -> None:
     for req in all_requests():
         if availability(req) is not None:
             continue
-        dhatu = Dhatu.mula(aupadeshika=req.root.upadesha, gana=Gana.Bhvadi)
+        dhatu = Dhatu.mula(aupadeshika=req.root.upadesha, gana=GANA[req.root.gana])
         pada = Pada.Tinanta(
             dhatu=dhatu,
             prayoga=Prayoga.Kartari,

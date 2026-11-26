@@ -150,7 +150,7 @@ _NU = "deferred to the athematic classes"
 _TWO = "the engine would show only one, so it waits for optional rules"
 _DESID = "takes a desiderative stem here, which this engine doesn't derive yet"
 
-# Roots of the bhvādi section whose laṭ/laṅ stems need machinery outside this slice:
+# Roots of the bhvādi and tudādi sections whose laṭ/laṅ stems need machinery outside this slice:
 # code -> (reason, governing sūtra).
 OUT_OF_SCOPE: dict[str, tuple[str, str]] = {
     "01.1092": (f"śru forms a nu-present (śṛṇoti), {_NU}", "3.1.74"),
@@ -178,6 +178,10 @@ OUT_OF_SCOPE: dict[str, tuple[str, str]] = {
     ),
     "01.0508": (
         "pan takes the suffix -āya- (panāyati), which this engine doesn't derive yet",
+        "3.1.28",
+    ),
+    "06.0159": (
+        "vich takes the suffix -āya- (vicchāyati), which this engine doesn't derive yet",
         "3.1.28",
     ),
     "01.1166": (
@@ -223,8 +227,8 @@ OUT_OF_SCOPE: dict[str, tuple[str, str]] = {
 VOICE_BY_SUTRA: dict[str, tuple[Voice, tuple[str, ...]]] = {
     "1.3.60": (
         Voice.MIDDLE,
-        ("01.0991",),
-    ),  # śad takes ātmanepada before an affix marked ś
+        ("01.0991", "06.0164"),
+    ),  # śad (in bhvādi and tudādi) takes ātmanepada before an affix marked ś
 }
 
 

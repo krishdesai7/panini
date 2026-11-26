@@ -284,7 +284,7 @@ if (typeof document !== "undefined") (function () {
       : document.createTextNode(r.meaning);
     [el("strong", { class: "rname", text: r.name }), " · ",
      term("Recited as", "upadeśa: the root as taught in the Dhātupāṭha, with its markers"), " " + r.upadesha_iast,
-     " · “", gloss, "” · ", term(r.class_label, r.gana + " (the bhū class, first gaṇa of the Dhātupāṭha)"),
+     " · “", gloss, "” · ", term(r.class_label, r.class_tip),
      " · ", term(pc[0], pc[1]), r.pada === "U" ? "" : " only"].forEach(function (c) {
       info.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
     });

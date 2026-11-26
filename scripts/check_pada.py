@@ -18,9 +18,11 @@ from vidyut.prakriya import (
 
 from panini.lexicon import ROOTS
 
+GANA = {"bhvādi": Gana.Bhvadi, "tudādi": Gana.Tudadi}
 
-def vidyut_pada(v: Vyakarana, upadesha: str) -> str:
-    dhatu = Dhatu.mula(aupadeshika=upadesha, gana=Gana.Bhvadi)
+
+def vidyut_pada(v: Vyakarana, upadesha: str, gana: str) -> str:
+    dhatu = Dhatu.mula(aupadeshika=upadesha, gana=GANA[gana])
     have = ""
     for letter, dp in (("P", DhatuPada.Parasmaipada), ("A", DhatuPada.Atmanepada)):
         pada = Pada.Tinanta(
@@ -41,7 +43,7 @@ def main() -> None:
     bad = [
         (r, got)
         for r in ROOTS.values()
-        if (got := vidyut_pada(v, r.upadesha)) != r.pada
+        if (got := vidyut_pada(v, r.upadesha, r.gana)) != r.pada
     ]
     for r, got in bad:
         print(f"{r.code} {r.name} {r.upadesha}: ours {r.pada}, Vidyut {got}")

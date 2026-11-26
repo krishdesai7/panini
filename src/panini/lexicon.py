@@ -93,7 +93,7 @@ class Root:
 
     @property
     def gana(self) -> str:
-        return "bhvādi"
+        return GANAS[self.code[:2]]
 
     @property
     def name(self) -> str:
@@ -179,14 +179,23 @@ TAUGHT_AS: dict[str, tuple[str, ...]] = {
 }
 
 
+# The sections of the root list in scope: list-code prefix -> gaṇa, and the vendored file of each
+# (scripts/vendor_dhatupatha.py).
+GANAS: dict[str, str] = {"01": "bhvādi", "06": "tudādi"}
+SECTION_FILES: dict[str, str] = {"01": "dhatupatha_bhvadi.tsv", "06": "dhatupatha_tudadi.tsv"}
+
+
 def _load() -> dict[str, Root]:
-    text = (
-        files("panini.data")
-        .joinpath("dhatupatha_bhvadi.tsv")
+    lines = [
+        line
+        for name in SECTION_FILES.values()
+        for line in files("panini.data")
+        .joinpath(name)
         .read_text(encoding="utf-8")
-    )
+        .splitlines()[1:]
+    ]
     roots: dict[str, Root] = {}
-    for line in text.splitlines()[1:]:
+    for line in lines:
         code, upadesha, artha = line.split("\t")
         if code in ENGLISH:
             root = Root(code, upadesha, ENGLISH[code], "english")

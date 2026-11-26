@@ -455,7 +455,11 @@ def derive(
         return Derivation(
             record, Status.UNAVAILABLE, None, (), ref, (), f"{reason} ({rule_id})"
         )
-    state = State((Term.from_upadesha(TermKind.ROOT, req.root.upadesha),), req.intent())
+    # The root carries its gaṇa as a tag: rules such as 3.1.77 tudādibhyaḥ śaḥ name a section.
+    root = Term.from_upadesha(
+        TermKind.ROOT, req.root.upadesha, frozenset({req.root.gana})
+    )
+    state = State((root,), req.intent())
     try:
         final, steps, alternatives = run(
             state,

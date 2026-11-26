@@ -151,8 +151,8 @@ R_1_3_78 = Rule(
 )
 
 
-# 1.3.60 śadeḥ śitaḥ: śad takes ātmanepada before an affix marked ś. Both lakāras here take śap,
-# so the la is known to be followed by a ś-affix before 3.1.68 adds it.
+# 1.3.60 śadeḥ śitaḥ: śad takes ātmanepada before an affix marked ś. Both lakāras here take śap
+# (or śa, in tudādi), so the la is known to be followed by a ś-affix before 3.1.68/3.1.77 add it.
 SHIT_LAKARAS = ("la~w", "la~N")
 
 
@@ -173,7 +173,8 @@ R_1_3_60 = Rule(
     _tag_pada("ātmanepada", "1.3.60"),
     blocks=("1.3.78",),
     note=lambda st, site: (
-        "śad takes {middle|ātmanepada} endings before an affix marked ś (śap follows), "
+        "śad takes {middle|ātmanepada} endings before an affix marked ś "
+        f"({'śa' if st.terms[dhatu_index(st) or 0].has_tag('tudādi') else 'śap'} follows), "
         "so l is classed as taking them; 3.4.78 will choose from that set"
     ),
 )
