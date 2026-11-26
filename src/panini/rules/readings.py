@@ -167,6 +167,14 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
         (LOC, "śa…ṣu (locative): before śa, yak or liṅ"),
         ("1.1.53", "riṅ is marked ṅ, so it replaces only the last sound"),
     ),
+    "6.1.16": (
+        ("6.1.15", "kiti ‘before an affix marked k’ carries over; ṅiti ca adds marked ṅ"),
+        ("1.1.45", "samprasāraṇa = a semivowel replaced by its vowel"),
+    ),
+    "6.1.108": (
+        ("6.1.84", "ekaḥ pūrvaparayoḥ ‘one sound for both’ (heading)"),
+        ("1.1.45", "samprasāraṇa = the vowel that replaced a semivowel"),
+    ),
     "6.4.89": (
         (BASE, "an operation on the {base|aṅga} (heading)"),
         ("6.4.77", "aci ‘before a vowel’ carries over"),

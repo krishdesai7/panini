@@ -175,3 +175,26 @@ def test_mr_has_no_active() -> None:
 
 def test_bhvadi_u_root_unaffected() -> None:
     assert "6.4.77" not in _rule_ids(form("01.0001"))
+
+
+# -- 6.1.16 samprasāraṇa, 6.1.108 samprasāraṇāc ca -----------------------------
+
+
+@pytest.mark.parametrize(
+    ("code", "expected"),
+    [
+        ("06.0149", "pṛcchati"),
+        ("06.0012", "vṛścati"),
+        ("06.0013", "vicati"),
+        ("06.0004", "bhṛjjati"),
+    ],
+)
+def test_samprasarana(code, expected) -> None:
+    d = form(code)
+    ids = _rule_ids(d)
+    assert d.result == expected
+    assert ids.index("6.1.16") < ids.index("6.1.108")
+
+
+def test_prach_also_shows_6173() -> None:
+    assert "6.1.73" in _rule_ids(form("06.0149"))

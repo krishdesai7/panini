@@ -10,6 +10,10 @@ gloss = "Where {full grade|guṇa} or {lengthened grade|vṛddhi} is prescribed 
 text = "kṅiti ca"
 gloss = "{Full grade|guṇa} and {lengthened grade|vṛddhi} do not replace an ik vowel before an affix marked with k or ṅ."
 
+["1.1.45"]
+text = "ig yaṇaḥ samprasāraṇam"
+gloss = "{Vowel weakening|samprasāraṇa} is the replacement of a semivowel (y v r l) by its vowel (i u ṛ ḷ)."
+
 ["1.1.46"]
 text = "ādyantau ṭakitau"
 gloss = "An augment marked with ṭ is placed at the beginning of what it is added to; one marked with k, at the end."
@@ -262,6 +266,14 @@ gloss = "In place of a lakāra marked with ṅ, tas, thas, tha and mip are repla
 text = "tiṅśit sārvadhātukam"
 gloss = "A {personal ending|tiṅ}, or an affix marked with ś, is called a {present-system affix|sārvadhātuka}."
 
+["6.1.15"]
+text = "vacisvapiyajādīnāṃ kiti"
+gloss = "Before an affix marked k, vac, svap and the roots of the yaj group weaken a semivowel to its vowel ({vowel weakening|samprasāraṇa})."
+
+["6.1.16"]
+text = "grahijyāvayivyadhivaṣṭivicativṛścatipṛcchatibhṛjjatīnāṃ ṅiti ca"
+gloss = "Before an affix marked k or ṅ, grah, jyā, vay, vyadh, vaś, vyac, vrasc, prach and bhrasj weaken a semivowel to its vowel ({vowel weakening|samprasāraṇa})."
+
 ["6.1.64"]
 text = "dhātvādeḥ ṣaḥ saḥ"
 gloss = "A root-initial ṣ is replaced by s (and the retroflex sound it had caused goes back to dental)."
@@ -341,6 +353,10 @@ gloss = "Short a (not at the end of a word) and a following {full-grade|guṇa} 
 ["6.1.101"]
 text = "akaḥ savarṇe dīrghaḥ"
 gloss = "A vowel a, i, u, ṛ, ḷ and a following vowel of the same kind are together replaced by the long vowel."
+
+["6.1.108"]
+text = "samprasāraṇāc ca"
+gloss = "After a {vowel-weakening|samprasāraṇa} vowel, a following vowel and it are replaced by the first of the two."
 
 ["6.4.1"]
 text = "aṅgasya"

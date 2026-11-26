@@ -748,6 +748,96 @@ R_7_4_28 = Rule(
 )
 
 
+# 6.1.16 grahijyāvayivyadhivaṣṭivicativṛścatipṛcchatibhṛjjatīnāṃ ṅiti ca: before an affix marked k
+# (kiti, from 6.1.15) or ṅ, these roots weaken a semivowel to its vowel (samprasāraṇa, 1.1.45
+# ig yaṇaḥ samprasāraṇam). In tudādi: vyac (vicati), vrasc, prach, bhrasj. Only the semivowel right
+# before the vowel weakens (6.1.37 na samprasāraṇe samprasāraṇam keeps vy- from becoming *ui-),
+# and the term is tagged so the rule does not apply again.
+SAMPRASARANA_ROOTS = frozenset({"vyaca~", "o~vrascU~", "praCa~", "Brasja~"})
+SAMPRASARANA = "samprasāraṇa"  # tag on a root whose semivowel has weakened (6.1.16)
+VOWEL_OF = {"y": "i", "v": "u", "r": "f", "l": "x"}
+
+
+def _first_vowel(t: Term) -> int | None:
+    return next(
+        (k for k, s in enumerate(t.sounds) if not s.it and is_vowel(s.char)), None
+    )
+
+
+def _find_6116(st: State) -> list[Site]:
+    out: list[Site] = []
+    for i in _before_sarvadhatuka(st):
+        t = st.terms[i]
+        k = _first_vowel(t)
+        if (
+            t.kind is TermKind.ROOT
+            and t.upadesha in SAMPRASARANA_ROOTS
+            and SAMPRASARANA not in t.tags
+            and _is_knit(st.terms[_next_term(st, i)])
+            and k is not None
+            and k > 0
+            and t.sounds[k - 1].char in VOWEL_OF
+        ):
+            out.append(Site.at(i, k - 1, k))
+    return out
+
+
+R_6_1_16 = Rule(
+    "6.1.16",
+    _find_6116,
+    lambda st, site: (
+        ReplaceSounds(
+            site.spans[0].term,
+            site.spans[0].start,
+            site.spans[0].end,
+            _sounds(VOWEL_OF[st.terms[site.spans[0].term].sounds[site.spans[0].start].char]),
+        ),
+        AddTags(site.spans[0].term, frozenset({SAMPRASARANA})),
+    ),
+    note=lambda st, site: (
+        "before an affix marked ṅ (or counting as such) the semivowel "
+        f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} weakens to "
+        f"its vowel {slp1_to_iast(VOWEL_OF[st.terms[site.spans[0].term].sounds[site.spans[0].start].char])} "
+        "({vowel weakening|samprasāraṇa}, 1.1.45)"
+    ),
+)
+
+
+# 6.1.108 samprasāraṇāc ca: a vowel after a samprasāraṇa vowel merges with it into that vowel
+# (one sound for both, 6.1.84; the earlier one, pūrva from 6.1.107): pṛ-a-cch → pṛcch.
+def _find_61108(st: State) -> list[Site]:
+    out: list[Site] = []
+    for i, t in enumerate(st.terms):
+        k = _first_vowel(t)
+        if (
+            SAMPRASARANA in t.tags
+            and k is not None
+            and k + 1 < len(t.sounds)
+            and is_vowel(t.sounds[k + 1].char)
+        ):
+            out.append(Site.at(i, k, k + 2))
+    return out
+
+
+R_6_1_108 = Rule(
+    "6.1.108",
+    _find_61108,
+    lambda st, site: (
+        ReplaceSounds(
+            site.spans[0].term,
+            site.spans[0].start,
+            site.spans[0].end,
+            (st.terms[site.spans[0].term].sounds[site.spans[0].start],),
+        ),
+    ),
+    note=lambda st, site: (
+        "the vowel after the weakened "
+        f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} merges with "
+        "it into that vowel (one sound replaces both, 6.1.84)"
+    ),
+)
+
+
 # 6.4.89 ūd upadhāyā gohaḥ: the penultimate vowel of goha becomes ū before a vowel-initial affix
 # (aci, carried over from 6.4.77). goha is guh in its full grade, so the rule follows guṇa (7.3.86)
 # and reaches only forms where guṇa applied.
@@ -805,5 +895,7 @@ RULES = (
     R_7_1_59_1,
     R_6_4_77,
     R_7_4_28,
+    R_6_1_16,
+    R_6_1_108,
     R_6_4_89,
 )
