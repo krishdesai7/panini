@@ -382,15 +382,6 @@ def _find_115(st: State) -> list[Site]:
     return out
 
 
-R_1_1_5 = Rule(
-    "1.1.5",
-    _find_115,
-    lambda st, site: (),
-    blocks=("7.3.84", "7.3.86"),
-    note=lambda st, site: _note_115(st, site),
-)
-
-
 def _note_115(st: State, site: Site) -> str:
     """Names the vowel protected: one root can need 1.1.5 more than once (mṛ → mri → mriy)."""
     sp = site.spans[0]
@@ -401,6 +392,15 @@ def _note_115(st: State, site: Site) -> str:
         f"the {where} {slp1_to_iast(t.sounds[sp.start].char)} gets no {{full grade|guṇa}} "
         f"before {affix}, which is marked ṅ (or counts as such)"
     )
+
+
+R_1_1_5 = Rule(
+    "1.1.5",
+    _find_115,
+    lambda st, site: (),
+    blocks=("7.3.84", "7.3.86"),
+    note=_note_115,
+)
 
 
 # 7.1.58 idito num dhātoḥ

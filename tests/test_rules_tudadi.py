@@ -249,7 +249,7 @@ def test_bhu_trace_says_full_grade_applies_either_way() -> None:
 def test_each_1_1_5_step_names_the_vowel_it_protects() -> None:
     # mriyate: 1.1.5 blocks full grade three times, each on a different vowel
     d = form("06.0139", voice="middle")
-    notes = [s.note for s in d.steps if "1.1.5" in s.rule_ids]
+    notes = [s.note or "" for s in d.steps if "1.1.5" in s.rule_ids]
     tail = " gets no {full grade|guṇa} before a, which is marked ṅ (or counts as such)"
     assert [
         n.removeprefix("(form unchanged: prevents another rule) ") for n in notes
