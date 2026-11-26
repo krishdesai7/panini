@@ -13,8 +13,8 @@ follows Paul Kiparsky's analysis. The design is in
 
 It covers laṭ (present) and laṅ (imperfect) of the whole bhvādi class, in both
 voices where the root allows them: 1,133 of the 1,156 roots (the other 23 need
-present stems or suffixes the engine doesn't derive yet). 21,528 of 21,582 forms
-match the reference (Vidyut 0.4). The 54 that don't are documented differences
+present stems or suffixes the engine doesn't derive yet). 21,555 of 21,582 forms
+match the reference (Vidyut 0.4). The 27 that don't are documented differences
 in `docs/findings.md`, each awaiting a ruling or a rule not yet modelled.
 
 ## Use

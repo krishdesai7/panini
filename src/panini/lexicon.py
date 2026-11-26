@@ -118,6 +118,10 @@ FEATURED: tuple[str, ...] = (
     "01.1074", "01.1075", "01.1076", "01.1077", "01.1078", "01.1079", "01.0990", "01.0991", "01.1086", "01.1143",
 )
 
+# The upadeśas as the dhātupāṭha teaches them, for roots stored in another spelling
+# (scripts/vendor_dhatupatha.py): yuch and uch are stored with cch. Lookup accepts either.
+TAUGHT_AS: dict[str, tuple[str, ...]] = {"01.0242": ("yuch", "yuchã"), "01.0244": ("uch", "uchī̃")}
+
 
 def _load() -> dict[str, Root]:
     text = files("panini.data").joinpath("dhatupatha_bhvadi.tsv").read_text(encoding="utf-8")
@@ -170,7 +174,8 @@ def lookup_root(text: str) -> Root:
     found: list[Root] = []
     for fold in (_fold, _fold_ascii):
         norm = fold(text)
-        found = [r for r in ROOTS.values() if norm in (fold(r.name), fold(r.upadesha_iast))]
+        found = [r for r in ROOTS.values()
+                 if norm in (fold(r.name), fold(r.upadesha_iast), *map(fold, TAUGHT_AS.get(r.code, ())))]
         if found:
             break
     if not found:

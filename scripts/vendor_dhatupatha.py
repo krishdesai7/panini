@@ -17,7 +17,15 @@ TARGET = ROOT / "src/panini/data/dhatupatha_bhvadi.tsv"
 #   are named by the vārttika ik-śtipau dhātunirdeśe on 3.3.108), not recited with its markers.
 #   As an upadeśa it is chad with the plain marker vowel: parasmaipada (1.3.78), no nasal (not
 #   idit), so chadati, as Vidyut derives.
-READINGS = {"CadiH": "Cada~"}
+# - yuCa~ (01.0242) and uCI~ (01.0244): stored with the t already inserted, yucCa~ and ucCI~.
+#   The upadeśas have a single ch; the printed lists write yuccha and ucchī only because 6.1.73
+#   che ca applies in recitation. In a derivation, 6.1.73 (t after a short vowel before ch) and
+#   7.3.86 (full grade of a light penultimate vowel) each remove the other's context, and neither
+#   nitya nor the siddha principle decides between them (Kiparsky, "Pāṇini is slick", on ṛch), so
+#   the grammar alone predicts *yocchati as readily as yucchati. Storing the cch is a stipulation
+#   that closes this gap, not a traditional reading. It can't be extended to every root in ch:
+#   prach must keep a single ch for 6.4.19 chvoḥ śūḍ anunāsike ca (praśna). See docs/findings.md.
+READINGS = {"CadiH": "Cada~", "yuCa~": "yucCa~", "uCI~": "ucCI~"}
 
 
 def _read(line: str) -> str:

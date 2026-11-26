@@ -256,18 +256,31 @@ For *ghṛṇ* (`GfRi~\`) our trace cites the vārttika 8.4.1.1 *ṛvarṇāc ce
   *svajate*, *rajati*). Each is one small rule naming its roots by upadeśa, with
   *na lopaḥ* (6.4.23) and *upadhāyāḥ* (6.4.24) carried over. 6.4.24 itself is
   still not traced (śap is not kit or ṅit).
-- **Open: 6.1.73 *che ca* against 7.3.86 for yuch 01.0242 and uch 01.0244.** On
-  *yuch + a + ti* the two bleed each other. Tuk makes the u heavy, so guṇa can't
-  apply. Guṇa makes the vowel long, so 6.1.73 can't apply (6.1.75 would add the
-  same tuk). The resolver raises `UnresolvedConflict` (*yucchati* vs *yocchati*).
-  Kiparsky ("Pāṇini is slick", on the same conflict in *ṛch*) notes that neither
-  the nitya nor the siddha principle decides it. The tradition gets *yucchati* from
-  the antaraṅga paribhāṣā (tuk is conditioned inside the root), which the spec
-  excludes without a ruling. Vidyut gets it by running 6.1.73 at an earlier stage.
-  The standard printed dhātupāṭha writes both roots with the tuk (*yuccha*,
-  *ucchī*), but Vidyut's list doesn't. Awaiting a ruling. Until then the 27
-  requests (yuch laṭ and laṅ, uch laṭ; laṅ of uch merges āṭ + u first) are in the
-  `XFAIL` table, and the fast tests are strict xfails.
+- **6.1.73 *che ca* against 7.3.86 for yuch 01.0242 and uch 01.0244: a gap in the
+  grammar, closed by storing the roots with *cch*.** On *yuch + a + ti* the two rules
+  bleed each other. Inserting *t* makes the *u* heavy (1.4.11), so full grade can't
+  apply. Full grade makes the vowel long, so 6.1.73 can't apply (6.1.75 adds the same
+  *t*). Neither nitya nor the siddha principle decides (Kiparsky, "Pāṇini is slick",
+  on *ṛch*). The extended siddha principle makes it worse, since it predicts
+  *\*yocchati* even more strongly. Under Joshi and Kiparsky's framework only an
+  explicit asiddha stipulation or an exception rule could block *\*yocchati*, and the
+  Aṣṭādhyāyī has neither for yuch. The tradition gets *yucchati* from the antaraṅga
+  paribhāṣā, which the spec excludes. Vidyut gets it by running 6.1.73 at an earlier
+  stage.
+  - **Ruling (user):** `scripts/vendor_dhatupatha.py` rewrites the two roots as
+    `yucCa~` and `ucCI~`. With *cch* stored, neither rule applies: *yucchati*,
+    *ayucchat*, *ucchati*, *aucchat*. This is a stipulation that closes the gap, not a
+    traditional reading. The dhātupāṭha's upadeśas have a single *ch* (*yucha*
+    pramāde, *uchī* vivāse). They are recited and printed as *yuccha* and *ucchī* only
+    because 6.1.73 applies in saṃhitā. Lookup still accepts *yuch*, *uch* and *uchī*
+    (`TAUGHT_AS` in `lexicon.py`). The 27 requests now match Vidyut.
+  - **Cost:** the trace no longer shows 6.1.73 for these roots. The fix also can't be
+    applied to every root in *ch*. *prach* (tudādi) has to keep a single *ch*:
+    stored as *pracch*, it would break 6.4.19 *chvoḥ śūḍ anunāsike ca* for *praśna*,
+    which forces Patañjali's *cchvoḥ* reparsing that Kiparsky rejects. So the class is
+    split arbitrarily: *yuch*, *uch* and (when tudādi comes in) *ṛch* and tudādi *uch*
+    get *cch*, and *prach* keeps *ch*. Revisit if a later slice adopts a principled
+    ordering device.
 
 ## Task 9: closing the sweep
 
@@ -329,8 +342,7 @@ For *ghṛṇ* (`GfRi~\`) our trace cites the vārttika 8.4.1.1 *ṛvarṇāc ce
 
 The slow sweep checks 21,582 requests over 1,133 of the 1,156 bhvādi roots (23 are
 in `OUT_OF_SCOPE`: other present stems, the *-āya-*/*-īya-*/ṇiṅ suffixes, optional
-stems). 21,528 match Vidyut. The 54 documented differences, all in `XFAIL`:
+stems). 21,555 match Vidyut. The 27 documented differences, all in `XFAIL`:
 
 - ṛ 01.1086 laṅ, 9 requests: no 8.4.65 (*ārchat*).
-- yuch 01.0242 and uch 01.0244, 27 requests: 6.1.73 against 7.3.86, awaiting a ruling.
 - jabh 01.0453, 18 requests: 7.1.61, awaiting a ruling on which jabh it names.

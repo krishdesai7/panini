@@ -2,6 +2,7 @@
 import pytest
 from panini.derivation import Derivation, Status
 from panini.engine import derive
+from panini.lexicon import lookup_root
 from panini.request import parse_request
 
 
@@ -287,14 +288,21 @@ def test_chad_ih_marker():
     assert form("01.0925").result == "chadati"
 
 
-# 6.1.73 tuk and 7.3.86 guṇa bleed each other on yuch/uch + śap; neither nitya nor the siddha
-# principle decides (Kiparsky, "Pāṇini is slick", on the same conflict in ṛch). Open: see the
-# Task 8 report and docs/findings.md.
-@pytest.mark.xfail(strict=True, reason="6.1.73 vs 7.3.86 unresolved; awaiting a ruling (findings)")
-@pytest.mark.parametrize("code, expected", [("01.0242", "yucchati"), ("01.0244", "ucchati")])
-def test_tuk_and_guna_resolve(code, expected):
-    d = form(code)
+# yuch and uch are stored with cch (scripts/vendor_dhatupatha.py), because 6.1.73 tuk and 7.3.86
+# guṇa bleed each other and no meta-rule decides (docs/findings.md). With the cch stored, neither
+# rule applies and the full grade can't happen.
+@pytest.mark.parametrize("code, tense, expected", [
+    ("01.0242", "laṭ", "yucchati"), ("01.0242", "laṅ", "ayucchat"),
+    ("01.0244", "laṭ", "ucchati"), ("01.0244", "laṅ", "aucchat")])
+def test_stored_cch_roots(code, tense, expected):
+    d = form(code, tense)
     assert d.status is Status.OK and d.result == expected
+
+
+@pytest.mark.parametrize("text, code", [("yuch", "01.0242"), ("yucch", "01.0242"), ("uch", "01.0244"),
+                                        ("uchī", "01.0244"), ("ucch", "01.0244"), ("uñch", "01.0243")])
+def test_stored_cch_roots_found_by_taught_spelling(text, code):
+    assert lookup_root(text).code == code
 
 
 @pytest.mark.parametrize("code, tense, voice, expected, rule", [
