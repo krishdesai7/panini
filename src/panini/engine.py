@@ -4,10 +4,8 @@ from __future__ import annotations
 
 from copy import copy
 from dataclasses import replace
-from typing import TYPE_CHECKING, Any, Self
+from typing import TYPE_CHECKING
 lazy from collections.abc import Callable, Mapping, Sequence
-
-from panini.rules.readings import Aside
 
 from .derivation import Derivation, Status, StepRecord, render_terms
 from .edits import AddTags, Edit, InsertTerm, ReplaceTerm, apply_edit
@@ -25,11 +23,12 @@ from .rules.base import Optionality, Rule
 from .translit import slp1_to_iast
 
 if TYPE_CHECKING:
-    from typing import Literal
+    from typing import Any, Literal, Self
 
     from .edits import Op
     from .model import Sound
     from .resolver import Choice
+    from .rules.readings import Aside
 
 
 class StepLimitExceeded(Exception):
