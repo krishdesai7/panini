@@ -64,6 +64,7 @@ def test_middle_only_reason_names_the_marker_1312_reads():
     assert "anudātta" in edh and "ṅ" not in edh
     assert smi[1] == "1.3.12" and "marked ṅ" in smi[0] and "anudātta" not in smi[0]
 
+
 def test_reference_fixture_matches_available_requests():
     ref = json.loads(REFERENCE_PATH.read_text())
     avail = [r.key for r in all_requests() if availability(r) is None]
@@ -97,6 +98,12 @@ def test_out_of_scope_roots_say_why():
     assert availability(parse_request("01.0461", "laṭ", 3, "sg"))[1] == "3.1.28"   # gup → gopāyati
 
 
-def test_fixture_covers_every_available_request():
-    avail = {r.key for r in all_requests() if availability(r) is None}
-    assert avail == set(json.loads(REFERENCE_PATH.read_text()))
+def test_lookup_accepts_plain_ascii_spellings():
+    # every diacritic folds away, as in the explorer's search: ñ → n, ṃ → m, ā → a, dot-below dropped
+    assert lookup_root("sanj").code == "01.1142"
+    assert lookup_root("stha").code == lookup_root("01.1077").code == "01.1077"
+    assert lookup_root("dams").name == "daṃś"
+    # an exact spelling still wins over a folded one: pat is pat, not paṭ or pāt
+    assert lookup_root("pat").name == "pat"
+    with pytest.raises(AmbiguousRoot):
+        lookup_root("yam")

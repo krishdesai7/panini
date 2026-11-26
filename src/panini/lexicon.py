@@ -150,18 +150,29 @@ class AmbiguousRoot(UnknownRoot):
 
 
 def _fold(s: str) -> str:
-    bare = unicodedata.normalize("NFD", s).replace("̃", "").replace("~", "")
+    """Lookup key: no nasal sign (tilde or ~), no trailing hyphen, any case; other diacritics kept."""
+    bare = unicodedata.normalize("NFD", s).replace("\u0303", "").replace("~", "")
     return unicodedata.normalize("NFC", bare).strip().removesuffix("-").casefold()
+
+
+def _fold_ascii(s: str) -> str:
+    """Looser key, like the explorer's search: every combining mark dropped (ṃ → m, ā → a, ṭ → t)."""
+    return "".join(c for c in unicodedata.normalize("NFD", _fold(s)) if not unicodedata.combining(c))
 
 
 def lookup_root(text: str) -> Root:
     """Find a root by code, name or IAST upadeśa, ignoring Unicode form, spaces and a trailing hyphen.
 
+    A spelling with its diacritics is matched first; failing that, one without them (sanj, stha).
     A name shared by several roots resolves to the featured one if exactly one is featured."""
-    norm = _fold(text)
     if text.strip() in ROOTS:
         return ROOTS[text.strip()]
-    found = [r for r in ROOTS.values() if norm in (_fold(r.name), _fold(r.upadesha_iast))]
+    found: list[Root] = []
+    for fold in (_fold, _fold_ascii):
+        norm = fold(text)
+        found = [r for r in ROOTS.values() if norm in (fold(r.name), fold(r.upadesha_iast))]
+        if found:
+            break
     if not found:
         raise UnknownRoot(text, tuple(r.name for r in (ROOTS[c] for c in FEATURED)))
     if len(found) > 1:
