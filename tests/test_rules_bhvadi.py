@@ -540,7 +540,9 @@ def test_krap_is_not_krp() -> None:
 
 # 7.1.61 radhijabhor aci: jabh gets num before śap's vowel. 01.0150 jaBa~ is Kṣīrasvāmin's reading
 # of the same root and is out of scope (docs/findings.md).
-@pytest.mark.parametrize(("tense", "expected"), [("laṭ", "jambhate"), ("laṅ", "ajambhata")])
+@pytest.mark.parametrize(
+    ("tense", "expected"), [("laṭ", "jambhate"), ("laṅ", "ajambhata")]
+)
 def test_jabh_takes_nasal_before_a_vowel(tense, expected) -> None:
     d = form("01.0453", tense, voice="middle")
     assert d.result == expected

@@ -153,7 +153,9 @@ def _root_initial(st: State, i: int, k: int) -> bool:
 def _candidates_6166(st: State) -> list[tuple[int, int]]:
     w = _word(st)
     return [
-        (i, k) for (i, k, c), (_, _, nxt) in itertools.pairwise(w) if c in "yv" and nxt in VAL
+        (i, k)
+        for (i, k, c), (_, _, nxt) in itertools.pairwise(w)
+        if c in "yv" and nxt in VAL
     ]
 
 

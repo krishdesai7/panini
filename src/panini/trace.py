@@ -76,7 +76,9 @@ def _render_step(n: int, s: StepRecord, width: int, verbosity: int) -> list[str]
         out.append(f"{'':>4}  {'':<{width}}{'':<9}historically: {s.history}")
     out.extend(f"{'':>4}  ↳ {plain(nm, verbosity)}" for nm in s.near_misses)
     if verbosity >= 1:
-        out.extend(f"{'':>4}     ✗ {l.rule_id}: {plain(l.reason, verbosity)}" for l in s.losers)
+        out.extend(
+            f"{'':>4}     ✗ {l.rule_id}: {plain(l.reason, verbosity)}" for l in s.losers
+        )
     if verbosity >= 2:
         out.extend(f"{'':>4}     ! {plain(w, verbosity)}" for w in s.warnings)
     return out
