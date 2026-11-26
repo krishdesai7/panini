@@ -101,7 +101,10 @@ class StepRecord:
             "before": views(self.before),
             "after": views(self.after),
             "note": self.note,
-            "losers": [{"rule_id": l.rule_id, "reason": l.reason} for l in self.losers],
+            "losers": [
+                {"rule_id": loser.rule_id, "reason": loser.reason}
+                for loser in self.losers
+            ],
             "near_misses": list(self.near_misses),
             "warnings": list(self.warnings),
             "alternatives": list(self.alternatives),

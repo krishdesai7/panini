@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from panini.edits import ReplaceSounds
+from panini.edits import Ekadesha
 from collections.abc import Callable, Iterator
 
 from panini.edits import DeleteSounds, Ekadesha, ReplaceSounds
@@ -37,7 +39,7 @@ def _sandhi_rule(rule_id: str, cond: Callable[[str, str], bool], result: Callabl
         return [_site(st, l, r) for l, r, x, y in junctions(st) if cond(x, y)
                 and not (word_internal and "pada" in st.terms[l].tags)]
 
-    def rewrite(st: State, site: Site):
+    def rewrite(st: State, site: Site) -> tuple[Ekadesha]:
         l, r = site.spans[0].term, site.spans[1].term
         x, y = st.terms[l].sounds[-1].char, st.terms[r].sounds[0].char
         return (Ekadesha(l, r, _sounds(result(x, y)), rule_id),)
@@ -55,7 +57,7 @@ def _find_6178(st: State) -> list[Site]:
     return [_site(st, l, r) for l, r, x, y in junctions(st) if x in EC and is_vowel(y)]
 
 
-def _rewrite_6178(st: State, site: Site):
+def _rewrite_6178(st: State, site: Site) -> tuple[ReplaceSounds]:
     sp = site.spans[0]
     x = st.terms[sp.term].sounds[sp.start].char
     return (ReplaceSounds(sp.term, sp.start, sp.end, _sounds(_AYADI[x])),)

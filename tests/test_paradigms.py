@@ -17,7 +17,7 @@ XFAIL: dict[str, str] = {
 }
 
 
-def _check(req, request):
+def _check(req, request) -> None:
     if req.key in XFAIL:
         request.applymarker(pytest.mark.xfail(reason=XFAIL[req.key], strict=True))
     d = derive(req)
@@ -30,17 +30,17 @@ ALL = [r for r in all_requests() if availability(r) is None]
 
 
 @pytest.mark.parametrize("req", FAST, ids=lambda r: r.key)
-def test_form_matches_reference(req, request):
+def test_form_matches_reference(req, request) -> None:
     _check(req, request)
 
 
 @pytest.mark.slow
 @pytest.mark.parametrize("req", ALL, ids=lambda r: r.key)
-def test_form_matches_reference_whole_class(req, request):
+def test_form_matches_reference_whole_class(req, request) -> None:
     _check(req, request)
 
 
-def test_edhete_order():
+def test_edhete_order() -> None:
     from panini.request import parse_request
     o = [i for s in derive(parse_request("edh", "laṭ", 3, "du", "middle")).steps for i in s.rule_ids]
     for a, b in [("3.4.79", "7.2.81"), ("7.2.81", "6.1.66"), ("6.1.66", "6.1.87")]:

@@ -1,5 +1,9 @@
 """Meta-rule behaviour of the engine, tested with toy rules (ids 9.9.x)."""
 
+from panini.model import Site
+from panini.edits import ReplaceSounds
+from panini.edits import DeleteSounds
+from panini.derivation import StepRecord
 import json
 
 import pytest
@@ -23,18 +27,18 @@ def replace_rule(rule_id: str, old: str, new: str, *, only_at: int | None = None
         return [Site.at(0, k) for k, s in enumerate(st.terms[0].sounds)
                 if s.char == old and (only_at is None or k == only_at)]
 
-    def rewrite(st: State, site: Site):
+    def rewrite(st: State, site: Site) -> tuple[ReplaceSounds]:
         k = site.spans[0].start
         return (ReplaceSounds(0, k, k + 1, (Sound(new),)),)
 
     return Rule(rule_id, find, rewrite, **kw)
 
 
-def ids(steps) -> list[str]:
+def ids(steps: tuple[StepRecord, ...]) -> list[str]:
     return [i for s in steps for i in s.rule_ids]
 
 
-def test_blocking_special_beats_general():
+def test_blocking_special_beats_general() -> None:
     general = replace_rule("9.9.2", "a", "i")
     special = replace_rule("9.9.3", "a", "u", only_at=0, blocks=("9.9.2",))
     state, steps, _ = run(S("aba"), [general, special])
@@ -42,7 +46,7 @@ def test_blocking_special_beats_general():
     assert Loser("9.9.2", "blocked by 9.9.3") in steps[0].losers
 
 
-def test_collective_blocking():
+def test_collective_blocking() -> None:
     a = replace_rule("9.9.2", "a", "i")
     b = replace_rule("9.9.5", "a", "e", only_at=0)
     c = replace_rule("9.9.4", "a", "o", only_at=0, blocks=("9.9.2", "9.9.5"))
@@ -52,7 +56,7 @@ def test_collective_blocking():
     assert Loser("9.9.2", "blocked by 9.9.4") in losers and Loser("9.9.5", "blocked by 9.9.4") in losers
 
 
-def test_nisedha_keeps_blocking():
+def test_nisedha_keeps_blocking() -> None:
     general = replace_rule("9.9.2", "a", "i")
     nisedha = Rule("9.9.6", lambda st: [Site.at(0, 0)] if st.terms[0].adi == "a" else [],
                    lambda st, site: (), blocks=("9.9.2",))
@@ -61,20 +65,20 @@ def test_nisedha_keeps_blocking():
     assert ids(steps) == ["9.9.6"]
 
 
-def test_nitya_preference():
+def test_nitya_preference() -> None:
     # X deletes a final "su"; Y turns d into a before s. X applies whether or not
     # Y has applied; after X, Y has nothing to apply to. So X is nitya and goes first.
-    def find_x(st):
+    def find_x(st) -> list[Site]:
         t = st.terms[0].text
         return [Site.at(0, len(t) - 2, len(t))] if t.endswith("su") else []
 
-    def rewrite_x(st, site):
+    def rewrite_x(st, site) -> tuple[DeleteSounds]:
         sp = site.spans[0]
         return (DeleteSounds(0, tuple(range(sp.start, sp.end))),)
 
     x = Rule("9.9.7", find_x, rewrite_x)
 
-    def find_y(st):
+    def find_y(st) -> list[Site]:
         t = st.terms[0].text
         return [Site.at(0, k) for k in range(len(t) - 1) if t[k] == "d" and t[k + 1] == "s"]
 
@@ -85,14 +89,14 @@ def test_nitya_preference():
     assert Loser("9.9.8", "deferred: 9.9.7 {applies either way|nitya}") in steps[0].losers
 
 
-def test_commuting_tie_lowest_id():
+def test_commuting_tie_lowest_id() -> None:
     a = replace_rule("9.9.2", "a", "i")
     b = replace_rule("9.9.9", "b", "p")
     state, steps, _ = run(S("ab"), [b, a])
     assert final_text(state) == "ip" and ids(steps) == ["9.9.2", "9.9.9"]
 
 
-def test_noncommuting_tie_raises():
+def test_noncommuting_tie_raises() -> None:
     a = replace_rule("9.9.2", "a", "i")
     b = replace_rule("9.9.5", "a", "e", only_at=0)
     with pytest.raises(UnresolvedConflict) as e:
@@ -100,21 +104,21 @@ def test_noncommuting_tie_raises():
     assert set(e.value.rule_ids) == {"9.9.2", "9.9.5"}
 
 
-def test_tripadi_one_pass():
+def test_tripadi_one_pass() -> None:
     earlier = replace_rule("9.9.1", "c", "k", section_override="tripadi")
     later = replace_rule("9.9.2", "a", "c", section_override="tripadi")
     state, steps, _ = run(S("a"), [earlier, later])
     assert final_text(state) == "c" and ids(steps) == ["9.9.2"]
 
 
-def test_step_limit():
+def test_step_limit() -> None:
     grow = Rule("9.9.2", lambda st: [Site.at(0, len(st.terms[0].sounds), len(st.terms[0].sounds))],
                 lambda st, site: (InsertSounds(0, site.spans[0].start, (Sound("a"),)),))
     with pytest.raises(StepLimitExceeded):
         run(S("a"), [grow], max_steps=20)
 
 
-def test_optional_va_alternative():
+def test_optional_va_alternative() -> None:
     va = replace_rule("9.9.4", "a", "o", section_override="tripadi", optional=Optionality.VA)
     state, steps, alternatives = run(S("ba"), [va])
     assert final_text(state) == "bo"
@@ -122,7 +126,7 @@ def test_optional_va_alternative():
     assert steps[-1].alternatives == ("ba",) and "also correct: ba" in steps[-1].note
 
 
-def test_derivation_to_json_roundtrips_types():
+def test_derivation_to_json_roundtrips_types() -> None:
     general = replace_rule("9.9.2", "a", "i")
     special = replace_rule("9.9.3", "a", "u", only_at=0, blocks=("9.9.2",))
     state, steps, alts = run(S("aba"), [general, special])
@@ -131,7 +135,7 @@ def test_derivation_to_json_roundtrips_types():
     assert data["status"] == "ok" and data["steps"][0]["after"][0]["iast"] == "abi"
 
 
-def test_commuting_candidate_applies_before_an_open_conflict():
+def test_commuting_candidate_applies_before_an_open_conflict() -> None:
     # 9.9.2 and 9.9.5 conflict on "a"; 9.9.8 (a higher id) commutes with both and, once applied,
     # enables 9.9.6, a no-op niṣedha that blocks 9.9.5 — so the conflict dissolves.
     a = replace_rule("9.9.2", "a", "i")
@@ -143,7 +147,7 @@ def test_commuting_candidate_applies_before_an_open_conflict():
     assert final_text(state) == "ip"
 
 
-def test_orders_converging_on_the_same_final_form_are_not_a_conflict():
+def test_orders_converging_on_the_same_final_form_are_not_a_conflict() -> None:
     # 9.9.2 a→i then 9.9.3 i→e, versus 9.9.5 a→e directly (which leaves a tag behind):
     # different intermediate states, same final form, so no UnresolvedConflict.
     from panini.edits import AddTags
@@ -156,7 +160,7 @@ def test_orders_converging_on_the_same_final_form_are_not_a_conflict():
     assert any("both orders give e" in l.reason for s in steps for l in s.losers)
 
 
-def test_declined_optional_rule_stops_blocking_in_later_alternative_branches():
+def test_declined_optional_rule_stops_blocking_in_later_alternative_branches() -> None:
     # 9.9.1 (vibhāṣā) declines b → u; it must then stop blocking 9.9.3 (b → y) everywhere,
     # including in the branch spawned afterwards by the optional 9.9.2 (a → o).
     opt = replace_rule("9.9.1", "b", "u", blocks=("9.9.3",), optional=Optionality.VIBHASHA)
@@ -168,7 +172,7 @@ def test_declined_optional_rule_stops_blocking_in_later_alternative_branches():
     assert ids(steps).count("9.9.1") == 1   # declined once, never offered again
 
 
-def test_optional_rule_supplies_its_own_phrase():
+def test_optional_rule_supplies_its_own_phrase() -> None:
     opt = replace_rule("9.9.5", "b", "u", optional=Optionality.VIBHASHA, optional_phrase="only in sense Z, so not applied here")
     _, steps, _ = run(S("ab"), [opt])
     assert "only in sense Z, so not applied here; also correct: au" in steps[0].note

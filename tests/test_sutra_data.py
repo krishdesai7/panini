@@ -8,19 +8,19 @@ CITED = ["1.4.99", "1.4.100", "1.4.101", "1.4.102", "1.4.104", "1.4.105", "1.4.1
 
 
 @pytest.mark.parametrize("rule_id", [r.id for r in ALL_RULES] + CITED)
-def test_every_rule_and_cited_sutra_has_text_and_gloss(rule_id):
+def test_every_rule_and_cited_sutra_has_text_and_gloss(rule_id) -> None:
     text, gloss = sutra_info(rule_id)
     assert text and gloss and text != "toy"
 
 
-def test_marker_rule_glosses_avoid_jargon():
+def test_marker_rule_glosses_avoid_jargon() -> None:
     t7, g7 = sutra_info("1.3.7")
     t8, g8 = sutra_info("1.3.8")
     assert "row" not in g7 and "row" not in g8
     assert "{secondary nominal suffix|taddhita}" in g8
 
 
-def test_no_bare_jargon_left_in_these_glosses():
+def test_no_bare_jargon_left_in_these_glosses() -> None:
     import re
     for rid in ("7.3.101", "8.3.24", "8.4.58"):
         bare = re.sub(r"\{[^}]*\}", "", sutra_info(rid)[1])

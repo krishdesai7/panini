@@ -140,14 +140,14 @@ ROOTS: dict[str, Root] = _load()
 
 
 class UnknownRoot(LookupError):
-    def __init__(self, text: str, available: tuple[str, ...]):
+    def __init__(self, text: str, available: tuple[str, ...]) -> None:
         self.text, self.available = text, available
         shown = ", ".join(available[:12]) + (", …" if len(available) > 12 else "")
         super().__init__(f"unknown root: {text!r}; try a root such as {shown}, or a code like 01.0001")
 
 
 class AmbiguousRoot(UnknownRoot):
-    def __init__(self, text: str, codes: tuple[str, ...]):
+    def __init__(self, text: str, codes: tuple[str, ...]) -> None:
         self.text, self.codes, self.available = text, codes, codes
         listing = "; ".join(f'{c} {ROOTS[c].name} "{ROOTS[c].meaning}"' for c in codes)
         LookupError.__init__(self, f"{text!r} names several roots; use a code: {listing}")

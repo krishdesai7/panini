@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+from typing import Callable
+from panini.model import State
+from panini.model import Site
+from panini.edits import ReplaceTerm
+from panini.edits import AddTags
 from panini.edits import AddTags, InsertTerm, ReplaceTerm
 from panini.lexicon import middle_voice_markers, middle_voice_reason
 from panini.meta import substitute_term
@@ -35,7 +40,7 @@ def _la_index(st: State) -> int | None:
 
 
 # 3.2.123 vartamāne laṭ / 3.2.111 anadyatane laṅ
-def _add_la(time: Time):
+def _add_la(time: Time) -> Callable[[State], list[Site]]:
     def find(st: State) -> list[Site]:
         d = dhatu_index(st)
         if d is not None and d == len(st.terms) - 1 and "dhātu" in st.terms[d].tags and st.intent.time is time:
@@ -64,7 +69,7 @@ R_3_2_111 = Rule("3.2.111", _add_la(Time.PAST_NOT_TODAY), _insert_la("la~N"),
 
 # Pada: 1.3.12 anudāttaṅita ātmanepadam, 1.3.72 svaritañitaḥ kartrabhiprāye kriyāphale,
 # 1.3.78 śeṣāt kartari parasmaipadam
-def _pada_find(condition):
+def _pada_find(condition) -> Callable[[State], list[Site]]:
     def find(st: State) -> list[Site]:
         la, d = _la_index(st), dhatu_index(st)
         if la is None or d is None or any(st.terms[la].has_tag(p) for p in PADA_TAGS):
@@ -121,7 +126,7 @@ def _chosen(st: State, la: Term) -> tuple[str, str]:
     return pada, TIN[pada][st.intent.coreference][st.intent.number.value - 1]
 
 
-def _rewrite_3478(st: State, site: Site):
+def _rewrite_3478(st: State, site: Site) -> tuple[ReplaceTerm, AddTags]:
     i = site.spans[0].term
     la = st.terms[i]
     pada, ending = _chosen(st, la)

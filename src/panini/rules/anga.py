@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+from panini.rules.readings import Aside
+from panini.model import Term
+from panini.edits import ReplaceSounds
 from dataclasses import replace
 
 from panini.edits import VIKRTA, AddTags, DeleteSounds, ReplaceSounds
@@ -45,7 +48,7 @@ def _find_7384(st: State) -> list[Site]:
             if st.terms[i].antya in IK]
 
 
-def _rewrite_7384(st: State, site: Site):
+def _rewrite_7384(st: State, site: Site) -> tuple[ReplaceSounds]:
     sp = site.spans[0]
     return (ReplaceSounds(sp.term, sp.start, sp.end, _sounds(guna(st.terms[sp.term].sounds[sp.start].char))),)
 
@@ -263,7 +266,7 @@ RULES = (*RULES, R_1_1_5)
 
 
 # 7.1.58 idito num dhātoḥ
-def _is_idit(t) -> bool:
+def _is_idit(t: Term) -> bool:
     """A root whose marker is a final i. The it-rules must have marked it (1.3.2); the upadeśa
     tells i from ir: in i~r (dṛś, df\\Si~r) the nasal i belongs to the marker ir and adds no nasal."""
     return t.kind is TermKind.ROOT and t.has_marker("i") and t.upadesha.endswith("i~")
@@ -360,7 +363,7 @@ def _note_7378(st: State, site: Site) -> str:
     return note
 
 
-def _history_7378(st: State, site: Site):
+def _history_7378(st: State, site: Site) -> Aside | None:
     return HISTORY.get(st.terms[site.spans[0].term].upadesha)
 
 

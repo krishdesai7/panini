@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from panini.derivation import TermView
 import re
 
 from panini.derivation import Derivation, Status, StepRecord
@@ -22,7 +23,7 @@ def plain(text: str, verbosity: int = 0) -> str:
     return _TERM.sub(r"\1 (\2)" if verbosity >= 1 else r"\1", text)
 
 
-def _form(views) -> str:
+def _form(views: tuple[TermView, ...]) -> str:
     return " + ".join(v.iast() for v in views)
 
 

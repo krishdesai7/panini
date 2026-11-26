@@ -47,7 +47,7 @@ class Choice:
 
 
 class UnresolvedConflict(Exception):
-    def __init__(self, rule_ids: tuple[str, ...], sites: tuple[Site, ...], outcomes: tuple[str, ...]):
+    def __init__(self, rule_ids: tuple[str, ...], sites: tuple[Site, ...], outcomes: tuple[str, ...]) -> None:
         self.rule_ids, self.sites, self.outcomes = rule_ids, sites, outcomes
         super().__init__(
             "unresolved conflict between " + " and ".join(rule_ids)

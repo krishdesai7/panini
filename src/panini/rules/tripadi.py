@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from panini.edits import ReplaceSounds
 from collections.abc import Iterator
 
 from panini.edits import DeleteSounds, ReplaceSounds
@@ -36,7 +37,7 @@ def _final(st: State) -> tuple[int, int, str] | None:
     return sounds[-1] if sounds else None
 
 
-def _replace(term: int, k: int, new: str):
+def _replace(term: int, k: int, new: str) -> tuple[ReplaceSounds]:
     return (ReplaceSounds(term, k, k + 1, tuple(Sound(c) for c in new)),)
 
 
@@ -50,7 +51,7 @@ def _final_rule(rule_id: str, letters: frozenset[str] | set[str], target: dict[s
             return [Site.at(f[0], f[1])]
         return []
 
-    def rewrite(st: State, site: Site):
+    def rewrite(st: State, site: Site) -> tuple[ReplaceSounds]:
         sp = site.spans[0]
         return _replace(sp.term, sp.start, get(st.terms[sp.term].sounds[sp.start].char))
 
@@ -269,7 +270,7 @@ def _find_8458(st: State) -> list[Site]:
             if c == "M" and nxt in YAY and _nasal_of(nxt)]
 
 
-def _rewrite_8458(st: State, site: Site):
+def _rewrite_8458(st: State, site: Site) -> tuple[ReplaceSounds]:
     sounds = list(word_sounds(st))
     n = next(m for m, (i, k, _) in enumerate(sounds) if (i, k) == (site.spans[0].term, site.spans[0].start))
     return _replace(site.spans[0].term, site.spans[0].start, _nasal_of(sounds[n + 1][2]) or "M")

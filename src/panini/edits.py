@@ -7,10 +7,10 @@ slice-2 resolver needs to evaluate siddha relations.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
 from dataclasses import dataclass, replace
+lazy from collections.abc import Sequence
 
-from panini.model import Sound, State, Term
+lazy from panini.model import Sound, State, Term
 
 
 class EditConflict(Exception):
@@ -75,15 +75,27 @@ class Ekadesha:
     left: int
     right: int
     sounds: tuple[Sound, ...]
-    rule: str | None = None  # the rule making it: recorded on the substitute so it can be recomputed
+    rule: str | None = (
+        None  # the rule making it: recorded on the substitute so it can be recomputed
+    )
 
 
-type Op = AddTags | MarkIt | DeleteSounds | ReplaceSounds | InsertSounds | InsertTerm | ReplaceTerm | Ekadesha
+type Op = (
+    AddTags
+    | MarkIt
+    | DeleteSounds
+    | ReplaceSounds
+    | InsertSounds
+    | InsertTerm
+    | ReplaceTerm
+    | Ekadesha
+)
 type Edit = tuple[Op, ...]
 
 
 VIKRTA = "vikrta"  # tag: the term's sounds were changed beyond deleting markers
-EKADESHA_START = "ekādeśa-start"  # tag: this term begins with the single substitute stored on its left
+# tag: this term begins with the single substitute stored on its left
+EKADESHA_START = "ekādeśa-start"
 
 
 def _set_term(terms: list[Term], i: int, term: Term) -> None:
@@ -99,21 +111,33 @@ def _apply_op(terms: list[Term], op: Op) -> None:
         case AddTags(term=i, tags=tags):
             _set_term(terms, i, replace(terms[i], tags=terms[i].tags | tags))
         case MarkIt(term=i, positions=pos, markers=markers):
-            t = terms[i]
-            sounds = tuple(replace(s, it=True) if k in pos else s for k, s in enumerate(t.sounds))
+            t: Term = terms[i]
+            sounds: tuple[Sound, ...] = tuple(
+                replace(s, it=True) if k in pos else s for k, s in enumerate(t.sounds)
+            )
             _set_term(terms, i, replace(t, sounds=sounds, markers=t.markers | markers))
         case DeleteSounds(term=i, positions=pos):
-            t = terms[i]
-            new_t = replace(t, sounds=tuple(s for k, s in enumerate(t.sounds) if k not in pos))
+            t: Term = terms[i]
+            new_t: Term = replace(
+                t, sounds=tuple(s for k, s in enumerate(t.sounds) if k not in pos)
+            )
             if not all(t.sounds[k].it for k in pos if k < len(t.sounds)):
-                new_t = _vikrta(new_t)
+                new_t: Term = _vikrta(new_t)
             _set_term(terms, i, new_t)
         case ReplaceSounds(term=i, start=a, end=b, sounds=new):
-            t = terms[i]
-            _set_term(terms, i, _vikrta(replace(t, sounds=t.sounds[:a] + tuple(new) + t.sounds[b:])))
+            t: Term = terms[i]
+            _set_term(
+                terms,
+                i,
+                _vikrta(replace(t, sounds=t.sounds[:a] + tuple(new) + t.sounds[b:])),
+            )
         case InsertSounds(term=i, at=a, sounds=new):
-            t = terms[i]
-            _set_term(terms, i, _vikrta(replace(t, sounds=t.sounds[:a] + tuple(new) + t.sounds[a:])))
+            t: Term = terms[i]
+            _set_term(
+                terms,
+                i,
+                _vikrta(replace(t, sounds=t.sounds[:a] + tuple(new) + t.sounds[a:])),
+            )
         case InsertTerm(index=i, term=term):
             terms.insert(i, term)
         case ReplaceTerm(index=i, term=term):
@@ -121,7 +145,10 @@ def _apply_op(terms: list[Term], op: Op) -> None:
         case Ekadesha(left=l, right=r, sounds=new, rule=rule):
             lt, rt = terms[l], terms[r]
             inputs = (lt.sounds[-1].char, rt.sounds[0].char)
-            flagged = tuple(replace(s, ekadesha=True, ekadesha_rule=rule, ekadesha_inputs=inputs) for s in new)
+            flagged = tuple(
+                replace(s, ekadesha=True, ekadesha_rule=rule, ekadesha_inputs=inputs)
+                for s in new
+            )
             _set_term(terms, l, _vikrta(replace(lt, sounds=lt.sounds[:-1] + flagged)))
             right = _vikrta(replace(rt, sounds=rt.sounds[1:]))
             _set_term(terms, r, replace(right, tags=right.tags | {EKADESHA_START}))

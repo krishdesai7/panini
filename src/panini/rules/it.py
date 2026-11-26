@@ -2,6 +2,12 @@
 
 from __future__ import annotations
 
+from typing import Callable
+from panini.model import Term
+from panini.model import State
+from panini.model import Site
+from panini.edits import ReplaceSounds
+from panini.edits import MarkIt
 from panini.edits import AddTags, DeleteSounds, MarkIt, ReplaceSounds
 from panini.model import Site, Sound, State, TermKind
 from panini.rules.base import Rule, adi, is_pratyaya
@@ -13,7 +19,7 @@ TU_S_M = frozenset("tTdDnsm")  # 1.3.4: tu (t th d dh n), s, m
 CU, TU, KU = pratyahara("cu"), pratyahara("wu"), frozenset("kKgGN")
 
 
-def _mark(term_i: int, pos: tuple[int, ...], letters: str):
+def _mark(term_i: int, pos: tuple[int, ...], letters: str) -> tuple[MarkIt]:
     return (MarkIt(term_i, pos, frozenset({letters})),)
 
 
@@ -156,7 +162,7 @@ R_1_3_9 = Rule("1.3.9", _find_139,
 # 6.1.64 dhātvādeḥ ṣaḥ saḥ / 6.1.65 ṇo naḥ — about the root's beginning, which includes a single
 # substitute on its left (6.1.85): when a vowel merged into the augment (laṅ of iṣ: a + iṣ → aiṣ),
 # the ṣ that is left is no longer the root's first sound.
-def _root_initial(old: str):
+def _root_initial(old: str) -> Callable[[State], list[Site]]:
     def find(st: State) -> list[Site]:
         return [Site.at(i, 0) for i, t in enumerate(st.terms)
                 if t.kind is TermKind.ROOT and "dhātu" in t.tags and adi(st, i) == old]
@@ -170,13 +176,13 @@ def _root_initial(old: str):
 UNDO_RETROFLEX = {"w": "t", "W": "T", "R": "n"}
 
 
-def _caused(t) -> list[int]:
+def _caused(t: Term) -> list[int]:
     """Positions of the sounds the initial ṣ had made retroflex: a ṭ/ṭh right after it, and an ṇ anywhere
     in the root (8.4.1 raṣābhyāṃ no ṇaḥ samānapade: ṇ after ṣ, as in ṣaṇ for san)."""
     return [k for k, x in enumerate(t.sounds) if k > 0 and x.char in UNDO_RETROFLEX and (k == 1 or x.char == "R")]
 
 
-def _rewrite_64(st: State, site: Site):
+def _rewrite_64(st: State, site: Site) -> tuple[ReplaceSounds, *tuple[ReplaceSounds, ...]]:
     i = site.spans[0].term
     return (ReplaceSounds(i, 0, 1, (Sound("s"),)),
             *(ReplaceSounds(i, k, k + 1, (Sound(UNDO_RETROFLEX[st.terms[i].sounds[k].char]),))

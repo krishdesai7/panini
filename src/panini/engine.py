@@ -66,7 +66,7 @@ def _join(*parts: str | None) -> str | None:
 
 
 class _Runner:
-    def __init__(self, rules: Sequence[Rule], resolver: Resolver, max_steps: int, disabled: frozenset[str]):
+    def __init__(self, rules: Sequence[Rule], resolver: Resolver, max_steps: int, disabled: frozenset[str]) -> None:
         self.all_rules = tuple(rules)
         self.resolver = resolver
         self.max_steps = max_steps

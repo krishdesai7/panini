@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Callable
+from panini.model import State
+from panini.model import Site
+from panini.edits import ReplaceTerm
 from panini.edits import VIKRTA, AddTags, DeleteSounds, ReplaceSounds, ReplaceTerm
 from panini.meta import augment_edit, sthanivat_note, substitute_term
 from panini.model import Site, Sound, State, Term, TermKind
@@ -91,7 +95,7 @@ def _ending_note(st: State, i: int, what: str) -> str:
 
 
 # 6.4.71 luṅlaṅlṛṅkṣv aḍ udāttaḥ / 6.4.72 āḍ ajādīnām
-def _augment_find(vowel_initial: bool):
+def _augment_find(vowel_initial: bool) -> Callable[[State], list[Site]]:
     def find(st: State) -> list[Site]:
         d = next((i for i, t in enumerate(st.terms) if t.kind is TermKind.ROOT), None)
         if d is None or not _lan_in_word(st) or "aṅga" not in st.terms[d].tags:
@@ -149,7 +153,7 @@ def _find_34101(st: State) -> list[Site]:
             if t.kind is TermKind.TIN and _in_nit_lakara(t) and t.upadesha in _TAM and VIKRTA not in t.tags]
 
 
-def _rewrite_34101(st: State, site: Site):
+def _rewrite_34101(st: State, site: Site) -> tuple[ReplaceTerm]:
     i = site.spans[0].term
     t = st.terms[i]
     return (ReplaceTerm(i, substitute_term(t, TermKind.TIN, _TAM[t.upadesha])),)
