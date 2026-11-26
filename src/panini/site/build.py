@@ -29,7 +29,7 @@ def root_entries() -> list[dict]:
             for r in ROOTS.values()]
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=128)
 def root_derivations(code: str) -> dict[str, dict]:
     """Every request of one root (unavailable ones included): request key -> Derivation.to_json()."""
     reference = load_reference()

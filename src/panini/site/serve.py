@@ -19,7 +19,8 @@ def _handler(page: bytes) -> type[BaseHTTPRequestHandler]:
             self.send_header("Content-Type", content_type)
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
-            self.wfile.write(body)
+            if self.command != "HEAD":
+                self.wfile.write(body)
 
         def _json(self, status: int, obj: dict) -> None:
             self._send(status, json.dumps(obj, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
@@ -36,6 +37,9 @@ def _handler(page: bytes) -> type[BaseHTTPRequestHandler]:
                     self._json(404, {"error": f"unknown root {code!r}"})
             else:
                 self._json(404, {"error": "not found"})
+
+        def do_HEAD(self) -> None:  # noqa: N802
+            self.do_GET()   # same status and headers; _send leaves out the body
 
         def log_message(self, format: str, *args) -> None:
             pass

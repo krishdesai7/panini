@@ -121,6 +121,14 @@ function markerTip(upadesha, ch, notes) {
 }
 
 /* Tooltip for a sūtra: number and text, then the gloss on the next line. */
+/* The option an arrow key moves to in a list of n, wrapping round; from none (-1),
+   down goes to the first and up to the last. */
+function nextActive(active, n, down) {
+  if (!n) return -1;
+  if (active < 0) return down ? 0 : n - 1;
+  return (active + (down ? 1 : n - 1)) % n;
+}
+
 /* Why a root has no forms at all (outside this engine's scope), as [reason, sūtra], or null.
    Such a root gets this one notice instead of its paradigm tables. */
 function rootNotice(root) {
@@ -141,7 +149,7 @@ function tipPosition(rect, size, view) {
   return { left: left, top: top };
 }
 
-if (typeof module !== "undefined") module.exports = { rootNotice: rootNotice, parseHash: parseHash, fold: fold, searchRoots: searchRoots, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, splitGlossary: splitGlossary, sutraTitle: sutraTitle, markerTip: markerTip, tipPosition: tipPosition };
+if (typeof module !== "undefined") module.exports = { nextActive: nextActive, rootNotice: rootNotice, parseHash: parseHash, fold: fold, searchRoots: searchRoots, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, splitGlossary: splitGlossary, sutraTitle: sutraTitle, markerTip: markerTip, tipPosition: tipPosition };
 
 if (typeof document !== "undefined") (function () {
   var data = JSON.parse(document.getElementById("data").textContent);
@@ -229,6 +237,8 @@ if (typeof document !== "undefined") (function () {
   }
   function showMatches(query) {
     matches = searchRoots(query, data.roots, data.featured, 50);
+    active = -1;
+    rootInput.removeAttribute("aria-activedescendant");
     rootList.innerHTML = "";
     matches.forEach(function (r, i) {
       var attrs = { role: "option", id: "root-opt-" + i, "aria-selected": "false" };
@@ -236,7 +246,6 @@ if (typeof document !== "undefined") (function () {
       var gloss = el("span", { class: "gloss" }, [r.meaning_kind === "traditional" ? el("em", { text: r.meaning }) : r.meaning]);
       var li = el("li", attrs, [el("span", { class: "rname", text: r.name }), el("span", { class: "rup", text: r.upadesha_iast }), gloss,
                                 el("span", { class: "rvoice", text: PADA_CLASS[r.pada][0] })]);
-      li.addEventListener("mousedown", function (e) { e.preventDefault(); });
       li.addEventListener("click", function () { pickRoot(r.key); });
       rootList.appendChild(li);
     });
@@ -244,6 +253,7 @@ if (typeof document !== "undefined") (function () {
     openList(true);
     if (matches.length && query) setActive(0);
   }
+  rootList.addEventListener("mousedown", function (e) { e.preventDefault(); });   // its scrollbar must not blur the box
   rootInput.addEventListener("focus", function () { rootInput.select(); showMatches(""); });
   rootInput.addEventListener("input", function () { showMatches(rootInput.value); });
   rootInput.addEventListener("blur", function () { openList(false); rootInput.value = rootByKey(state.root).name; });
@@ -251,10 +261,12 @@ if (typeof document !== "undefined") (function () {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
       if (rootList.hidden) showMatches(rootInput.value === rootByKey(state.root).name ? "" : rootInput.value);
-      if (matches.length) setActive((active + (e.key === "ArrowDown" ? 1 : matches.length - 1)) % matches.length);
+      if (matches.length) setActive(nextActive(active, matches.length, e.key === "ArrowDown"));
     } else if (e.key === "Enter") {
       e.preventDefault();
-      var pick = matches[active < 0 ? 0 : active];
+      // the highlighted root; with none highlighted, the best match for a typed query (an empty
+      // query lists every root, so nothing is picked)
+      var pick = active >= 0 ? matches[active] : rootInput.value.trim() ? matches[0] : null;
       if (!rootList.hidden && pick) pickRoot(pick.key);
     } else if (e.key === "Escape") {
       openList(false); rootInput.value = rootByKey(state.root).name; rootInput.select();
@@ -289,7 +301,7 @@ if (typeof document !== "undefined") (function () {
       .then(function (res) { if (!res.ok) throw new Error("HTTP " + res.status); return res.json(); })
       .then(function (body) {
         Object.keys(body.derivations).forEach(function (k) { data.derivations[k] = body.derivations[k]; });
-        if (loading === code) { loading = null; if (state.key && !data.derivations[state.key]) state.key = null; render(); }
+        if (loading === code) { loading = null; if (state.key && !data.derivations[state.key]) { state.key = null; writeHash(); } render(); }
       })
       .catch(function (e) {
         if (loading === code) { loading = null; loadError = "Couldn’t load " + rootByKey(code).name + " (" + e.message + ")."; render(); }

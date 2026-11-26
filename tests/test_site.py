@@ -2,7 +2,7 @@
 import json, re, threading
 from pathlib import Path
 from urllib.error import HTTPError
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 from panini.lexicon import FEATURED, ROOTS
 from panini.site.build import build_site, page_html, root_derivations, root_entries, site_data
 from panini.site.serve import make_server
@@ -38,6 +38,8 @@ def test_api_root_and_404():
         with pytest.raises(HTTPError) as e:
             urlopen(base + "/api/root/99.9999")
         assert e.value.code == 404 and "error" in json.load(e.value)
+        head = urlopen(Request(base + "/", method="HEAD"))
+        assert head.status == 200 and int(head.headers["Content-Length"]) > 0 and head.read() == b""
         page = urlopen(base + "/").read().decode()
         data = json.loads(re.search(r'<script type="application/json" id="data">(.*?)</script>', page, re.S).group(1))
         assert data["source"] == "server" and len(data["roots"]) == len(ROOTS) and data["derivations"] == {}
@@ -262,3 +264,10 @@ def test_out_of_scope_root_gets_its_own_reason_not_a_voice_restriction():
 def test_out_of_scope_roots_stay_selectable():
     # the learner can pick śru to read why it has no forms; nothing marks it disabled
     assert "aria-disabled" not in APP_JS.read_text()
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_arrow_keys_wrap_and_start_from_the_ends():
+    assert _node("[app.nextActive(-1, 5, true), app.nextActive(-1, 5, false)]") == [0, 4]
+    assert _node("[app.nextActive(4, 5, true), app.nextActive(0, 5, false), app.nextActive(2, 5, false)]") == [0, 4, 1]
+    assert _node("app.nextActive(-1, 0, true)") == -1
