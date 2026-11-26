@@ -251,5 +251,6 @@ For *ghṛṇ* (`GfRi~\`) our trace cites the vārttika 8.4.1.1 *ṛvarṇāc ca
   the antaraṅga paribhāṣā (tuk is conditioned inside the root), which the spec
   excludes without a ruling. Vidyut gets it by running 6.1.73 at an earlier stage.
   The standard printed dhātupāṭha writes both roots with the tuk (*yuccha*,
-  *ucchī*), but Vidyut's list doesn't. Awaiting a ruling. Until then these 27
-  requests fail the sweep, and the fast tests are strict xfails.
+  *ucchī*), but Vidyut's list doesn't. Awaiting a ruling. Until then the 27
+  requests (yuch laṭ and laṅ, uch laṭ; laṅ of uch merges āṭ + u first) are in the
+  `XFAIL` table, and the fast tests are strict xfails.

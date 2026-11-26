@@ -14,6 +14,10 @@ _SLOT = lambda code: [r.key for r in all_requests([code]) if availability(r) is 
 XFAIL: dict[str, str] = {
     # Vidyut also gives ārchat: 8.4.65 jharo jhari savarṇe optionally drops one c of rcch (docs/findings.md).
     **{k: "8.4.65 optional cluster simplification not modelled (ārchat)" for k in _SLOT("01.1086") if "|laṅ|" in k},
+    # yuch, uch: 6.1.73 tuk and 7.3.86 guṇa bleed each other; no meta-rule decides (docs/findings.md).
+    # Laṅ of uch is unaffected: āṭ and u merge first (6.1.90), so there is no light u for guṇa.
+    **{k: "6.1.73 vs 7.3.86 unresolved; awaiting a ruling (docs/findings.md)"
+       for k in [*_SLOT("01.0242"), *(k for k in _SLOT("01.0244") if "|laṭ|" in k)]},
 }
 
 
