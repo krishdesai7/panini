@@ -3,7 +3,7 @@ import pytest
 from panini.derivation import Derivation, Status
 from panini.engine import derive
 from panini.lexicon import lookup_root
-from panini.request import parse_request
+from panini.request import OUT_OF_SCOPE, availability, parse_request
 
 
 def form(code: str, tense: str = "laṭ", person: int = 3, number: str = "sg", voice: str = "active") -> Derivation:
@@ -355,11 +355,17 @@ def test_krap_is_not_krp():
     assert "8.2.18" not in _rule_ids(form("01.0876", voice="middle"))   # krapa~, a different root
 
 
-# 7.1.61 radhijabhor aci: which jabh does the sūtra name? Vidyut gives num only to jaBI~ (01.0453),
-# not to jaBa~ (01.0150), with no reason cited. Open: see docs/findings.md.
-@pytest.mark.xfail(strict=True, reason="7.1.61: which jabh is meant; awaiting a ruling (findings)")
-def test_jabh_takes_nasal_before_a_vowel():
-    assert form("01.0453", voice="middle").result == "jambhate"
+# 7.1.61 radhijabhor aci: jabh gets num before śap's vowel. 01.0150 jaBa~ is Kṣīrasvāmin's reading
+# of the same root and is out of scope (docs/findings.md).
+@pytest.mark.parametrize("tense, expected", [("laṭ", "jambhate"), ("laṅ", "ajambhata")])
+def test_jabh_takes_nasal_before_a_vowel(tense, expected):
+    d = form("01.0453", tense, voice="middle")
+    assert d.result == expected and "7.1.61" in _rule_ids(d)
+
+
+def test_jabha_variant_is_out_of_scope():
+    req = parse_request("01.0150", "laṭ", 3, "sg", "active")
+    assert availability(req) == OUT_OF_SCOPE["01.0150"]
 
 
 # -- 1.3.12 anudāttaṅita ātmanepadam: the note names the marker that applies -----

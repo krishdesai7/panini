@@ -319,17 +319,47 @@ For *ghṛṇ* (`GfRi~\`) our trace cites the vārttika 8.4.1.1 *ṛvarṇāc ce
   sūtra names the root by its shape, as it does elsewhere); *krap* 01.0876 is not.
   The rule also covers the r heard inside ṛ (ṛ → ḷ, as in *kḷpta*), which laṭ and laṅ
   never reach because guṇa always applies first.
-- **Open: 7.1.61 *radhijabhor aci* for jabh.** The rule gives radh and jabh the
-  augment num before a vowel (*jambhate*). Two bhvādi roots are taught as jabh, both
-  "gātravināme": *jabhī* (`jaBI~\`, 01.0453, ātmanepada) and *jabha* (`jaBa~`,
-  01.0150, parasmaipada). Vidyut gives num to the first only (*jambhate*, but
-  *jabhati*), with no reason cited (`angasya.rs`: `has_u("jaBI~\\")`). The options:
-  (1) apply 7.1.61 to every root of the shape jabh, as the sūtra's wording reads and as
-  the engine does for kṛp; 01.0150 then gives *jambhati* and differs from Vidyut;
-  (2) restrict it to *jabhī* by upadeśa, matching Vidyut, which needs a source for the
-  restriction (a commentary that reads *jabhi* in the sūtra as *jabhī*), or else it is
-  citation-matching; (3) leave it out. Until a ruling, the rule is not implemented and
-  the 18 requests of 01.0453 are in `XFAIL`, with a strict xfail test.
+- **7.1.61 *radhijabhor aci* for jabh: applied by shape; 01.0150 is out of scope.** The
+  rule gives radh and jabh the augment num before a vowel-initial affix. Two bhvādi
+  entries are taught as jabh, both "gātravināme": `jaBI~\` (01.0453, ātmanepada) and
+  `jaBa~` (01.0150, parasmaipada). Vidyut gives num to the first only (*jambhate*,
+  *jabhati*), testing `has_u("jaBI~\\")` in `angasya.rs` with no comment, issue or
+  cited reason. What the sources say:
+  - **Kāśikā** (7.1.61): *radhi jabhi ity etayor ajādau pratyaye num āgamo bhavati*;
+    examples *jambhayati, jambhakaḥ, sādhujambhī, jambhaṃjambham, jambho vartate*. No
+    restriction to either jabh.
+  - **Siddhānta Kaumudī**: *etayor numāgamaḥ syād aci*; *jambhate, jajambhe, jambhitā,
+    jambhiṣṭa*. Its dhātupāṭha has one jabh for this sense (*jabhi jṛbhi
+    gātravināme*). No restriction.
+  - **Mādhavīya Dhātuvṛtti** 266 (printed pp. 120–121; archive.org
+    `madhaviyahdhatuv00sayauoft`, scans 174–175): *jabhi jṛbhi gātravināme. 'jabhī ity
+    eke, jabdham' iti Maitreyaḥ. ayam eva pāṭhaḥ prāyeṇa vṛttikārasya sammataḥ*. The
+    Kāśikā's counterexample *jabdham* shows it takes the *jabhī* reading. Conjugated in
+    the middle voice with num, citing 7.1.61: *jambhate, jajambhe, jambhitā …*. At the
+    end of the entry: *jabhiḥ vināśanārthe curādau*, and some count a jabh among the
+    active-voice roots too.
+  - **Kṣīrataraṅgiṇī** (Liebich 1930) I.415–416: *jabha jṛbhi gātravināme. jabhate,
+    jṛmbhate. jabhitaḥ … radhijabhor aci iti num: jambhakaḥ, jambhanam, jambhaḥ*.
+    Kṣīrasvāmin reads *jabha* at the same place in the list and gives *jabhate*, middle
+    voice and without num before śap. He uses 7.1.61 only for derived nouns and gives no
+    reason. Under X.176 he repeats it (*bhvādau jabha jṛbhi jambhane: jabhate*) and adds
+    *Candro jabhety āha*. At I.1029, after *yabha*: *jabhi ceti Daurgāḥ: jambhati (VII,
+    1, 61)*, a separate active-voice jabh of the Daurga school.
+  - ashtadhyayi.com's root data (Vidyut's source) notes on 01.0150 that it is a
+    variant reading of *jabhī* (1.453), absent from the Siddhānta Kaumudī and found in
+    the Kṣīrataraṅgiṇī, and tags it ātmanepada. Vidyut's `jaBa~` has no
+    unaccented-vowel mark, so it is conjugated as parasmaipada.
+
+  **Ruling (user):** 7.1.61 applies to every root whose bare form is raD or jaB, as
+  the sūtra's wording reads. 01.0453 gives *jambhate*, as the Siddhānta Kaumudī, Mādhava
+  and Vidyut give it. 01.0150 is in `OUT_OF_SCOPE`, with a reason the explorer shows. It
+  is Kṣīrasvāmin's reading of the same root, and his *jabhate* (no num before śap)
+  can't be derived from the sūtra as worded. Vidyut's *jabhati* is attested in no
+  source: Kṣīrasvāmin has middle voice and no nasal, the Daurgas active voice with the
+  nasal. So there is no reference form to compare against. Vidyut's restriction by
+  upadeśa happens to reproduce Kṣīrasvāmin's missing nasal, but with a voice he doesn't
+  give. 7.1.62 *neṭy aliṭi radheḥ* (radh before iṭ) isn't reached in laṭ and laṅ, and
+  radh isn't a bhvādi root.
 - **Citation names** now quote a taught nasal at the place of the consonant after it,
   as the tripādī would pronounce it: *sañj*, *svañj*, *rañj*, *añc*, *tump*,
   *śrambh* (ṃ before a sibilant or h, as in *daṃś*; n before a dental). A name is only
@@ -340,9 +370,8 @@ For *ghṛṇ* (`GfRi~\`) our trace cites the vārttika 8.4.1.1 *ṛvarṇāc ce
 
 ## Where slice 1.5 ends
 
-The slow sweep checks 21,582 requests over 1,133 of the 1,156 bhvādi roots (23 are
+The slow sweep checks 21,564 requests over 1,132 of the 1,156 bhvādi roots (24 are
 in `OUT_OF_SCOPE`: other present stems, the *-āya-*/*-īya-*/ṇiṅ suffixes, optional
-stems). 21,555 match Vidyut. The 27 documented differences, all in `XFAIL`:
+stems, one variant reading). 21,555 match Vidyut. The 9 documented differences, all in `XFAIL`:
 
 - ṛ 01.1086 laṅ, 9 requests: no 8.4.65 (*ārchat*).
-- jabh 01.0453, 18 requests: 7.1.61, awaiting a ruling on which jabh it names.

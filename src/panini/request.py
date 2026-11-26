@@ -152,6 +152,11 @@ OUT_OF_SCOPE: dict[str, tuple[str, str]] = {
     "01.1148": (f"kit {_DESID} (cikitsati)", "3.1.5"),
     "01.1149": (f"dān {_DESID} (dīdāṃsate)", "3.1.6"),
     "01.1150": (f"śān {_DESID} (śīśāṃsate)", "3.1.6"),
+    # Kṣīrataraṅgiṇī I.415: "jabha jṛbhi gātravināme. jabhate"; Vidyut's jabhati (active) is attested
+    # nowhere, so there is no reference to derive against (docs/findings.md).
+    "01.0150": ("this jabh is Kṣīrasvāmin's reading (jabha) of jabhī, 01.0453. He conjugates it jabhate: "
+                "middle voice, and without the nasal that 7.1.61 adds before a vowel. The sūtra as worded "
+                "doesn't give that form, so the entry is left out", "7.1.61"),
 }
 
 

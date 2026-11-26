@@ -286,6 +286,40 @@ R_7_1_58 = Rule("7.1.58", _find_7158,
 RULES = (*RULES, R_7_1_58)
 
 
+# 7.1.61 radhijabhor aci: radh and jabh get num before a vowel-initial affix. The sūtra names the
+# roots by shape, so every root whose bare form is raD or jaB is meant: in bhvādi that is jabhī
+# (jaBI~\, 01.0453; jambhate, as the Siddhānta Kaumudī and the Mādhavīya Dhātuvṛtti give it).
+# Vidyut restricts the rule to jaBI~ by upadeśa, citing nothing. The other bhvādi jabh, jaBa~
+# (01.0150), is Kṣīrasvāmin's reading of the same root and is out of scope (docs/findings.md).
+# 7.1.62 neṭy aliṭi radheḥ (radh, before iṭ) is not reached in laṭ and laṅ.
+RADH_JABH = frozenset({"raD", "jaB"})
+
+
+def _bare(t: Term) -> str:
+    return "".join(s.char for s in t.sounds if not s.it and not s.agama)
+
+
+def _find_7161(st: State) -> list[Site]:
+    out = []
+    for i, t in enumerate(st.terms):
+        j = _following(st, i)
+        if (t.kind is TermKind.ROOT and _bare(t) in RADH_JABH and j is not None
+                and not any(s.agama and s.char == "n" for s in t.sounds)
+                and is_pratyaya(st.terms[j]) and is_vowel(adi(st, j) or "")
+                and (pos := mit_position(st, i)) is not None):
+            out.append(Site.at(i, pos, pos))
+    return out
+
+
+R_7_1_61 = Rule("7.1.61", _find_7161,
+                lambda st, site: mit_augment_edit(st, site.spans[0].term, (Sound("n"),)),
+                note=lambda st, site: f"{slp1_to_iast(_bare(st.terms[site.spans[0].term]))} gets the "
+                "{augment|āgama} n (num) before an affix beginning with a vowel; it goes right after "
+                "the last vowel (1.1.47)")
+
+RULES = (*RULES, R_7_1_61)
+
+
 # 7.3.78 pāghrādhmāsthāmnādāṇdṛśyartisartiśadasadāṃ pibajighradhamatiṣṭhamanayacchapaśyarcchadhauśīyasīdāḥ:
 # before an affix marked ś the whole root is replaced by a present stem, listed by upadeśa.
 STEMS_7378 = {"pA": "piba", "GrA": "jiGra", "DmA": "Dama", "zWA": "tizWa", "mnA": "mana", "dAR": "yacCa",

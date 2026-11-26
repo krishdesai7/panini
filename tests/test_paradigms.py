@@ -14,9 +14,6 @@ _SLOT = lambda code: [r.key for r in all_requests([code]) if availability(r) is 
 XFAIL: dict[str, str] = {
     # Vidyut also gives ārchat: 8.4.65 jharo jhari savarṇe optionally drops one c of rcch (docs/findings.md).
     **{k: "8.4.65 optional cluster simplification not modelled (ārchat)" for k in _SLOT("01.1086") if "|laṅ|" in k},
-    # jabh: 7.1.61 radhijabhor aci is not implemented until it is settled which jabh it names; Vidyut
-    # gives num to jaBI~ (01.0453, jambhate) but not to jaBa~ (01.0150, jabhati) (docs/findings.md).
-    **{k: "7.1.61: which jabh is meant; awaiting a ruling (docs/findings.md)" for k in _SLOT("01.0453")},
 }
 
 

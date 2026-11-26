@@ -392,6 +392,10 @@ gloss = "In a {middle|ātmanepada} ending, jh is replaced by at after a base tha
 text = "idito num dhātoḥ"
 gloss = "A root marked with i gets the augment num (n)."
 
+["7.1.61"]
+text = "radhijabhor aci"
+gloss = "Before an affix beginning with a vowel, radh and jabh get the augment num (n)."
+
 ["7.2.80"]
 text = "ato yeyaḥ"
 gloss = "After a base in a, the yā of the optative is replaced by iy."
