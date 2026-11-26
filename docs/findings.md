@@ -327,6 +327,9 @@ For _ghṛṇ_ (`GfRi~\`) our trace cites the vārttika 8.4.1.1 _ṛvarṇāc ce
         - −29 "7.3.78: order with 6.1.97 is immaterial" (3pl and laṅ 1sg of the 7.3.78
           roots): false matches from the old signature. 6.1.97 now goes before the laṅ
           augment, which commutes with it (10 traces reordered).
+        - Cost: the lookahead now reads markers (about 400 settle calls per derivation,
+          about 75 distinct, so they're cached per derivation). The full sweep takes
+          about 2½ minutes instead of 1½.
 - **6.4.89 _ūd upadhāyā gohaḥ_** (guh 01.1043). The sūtra names the root as _goha_,
   guh in its full grade (as the commentaries read it), so the engine applies guṇa
   first (7.3.86, _goh_) and then replaces the penultimate o by ū before the vowel of

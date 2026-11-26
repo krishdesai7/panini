@@ -2,13 +2,17 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable
 from dataclasses import dataclass
 from enum import Enum
+from typing import TYPE_CHECKING
+lazy from collections.abc import Iterable
 
-from panini.model import Term
-from panini.resolver import Loser
 from panini.translit import slp1_to_iast
+lazy from panini.model import Term
+lazy from panini.resolver import Loser
+
+if TYPE_CHECKING:
+    from typing import Any
 
 
 class Status(Enum):
@@ -23,21 +27,31 @@ class TermView:
     """One term as displayed: (IAST sound, is_marker) pairs."""
 
     chars: tuple[tuple[str, bool], ...]
-    upadesha: str = ""  # the term as taught, in IAST (lets the page explain its markers)
+    upadesha: str = (
+        ""  # the term as taught, in IAST (lets the page explain its markers)
+    )
 
     def iast(self) -> str:
-        """Markers in capitals (first letter of the sound); a nasal vowel keeps its tilde."""
-        return "".join(c[:1].upper() + c[1:] if marker else c for c, marker in self.chars)
+        """Markers in capitals; a nasal vowel keeps its tilde."""
+        return "".join(
+            c[:1].upper() + c[1:] if marker else c for c, marker in self.chars
+        )
 
 
 def render_terms(terms: Iterable[Term]) -> tuple[TermView, ...]:
-    views = []
+    views: list[TermView] = []
     for t in terms:
         if not t.sounds:
             continue
-        views.append(TermView(tuple(
-            (slp1_to_iast(s.char + ("~" if s.nasal else "")), s.it) for s in t.sounds
-        ), slp1_to_iast(t.upadesha)))
+        views.append(
+            TermView(
+                tuple(
+                    (slp1_to_iast(s.char + ("~" if s.nasal else "")), s.it)
+                    for s in t.sounds
+                ),
+                slp1_to_iast(t.upadesha),
+            )
+        )
     return tuple(views)
 
 
@@ -52,17 +66,29 @@ class StepRecord:
     warnings: tuple[str, ...]
     alternatives: tuple[str, ...] = ()
     reads: tuple[tuple[str, str], ...] = ()
-    kind: str = "change"  # "change" (the form changes), "category" (assigns a label), "prohibition"
-    history: str | None = None  # a historical aside about the step (not part of Pāṇini's account)
-    history_italic: tuple[str, ...] = ()  # words of the aside to set in italics (Latin, Greek)
+    # "change" (the form changes), "category" (assigns a label), "prohibition"
+    kind: str = "change"
+    history: str | None = (
+        None  # a historical aside about the step (not part of Pāṇini's account)
+    )
+    history_italic: tuple[
+        str, ...
+    ] = ()  # words of the aside to set in italics (Latin, Greek)
 
-    def to_json(self) -> dict:
+    def to_json(self) -> dict[str, Any]:
         from panini.rules.base import sutra_info
 
-        def views(vs: tuple[TermView, ...]) -> list[dict]:
-            return [{"iast": v.iast(), "chars": [[c, m] for c, m in v.chars], "upadesha": v.upadesha} for v in vs]
+        def views(vs: tuple[TermView, ...]) -> list[dict[str, Any]]:
+            return [
+                {
+                    "iast": v.iast(),
+                    "chars": [[c, m] for c, m in v.chars],
+                    "upadesha": v.upadesha,
+                }
+                for v in vs
+            ]
 
-        sutras = []
+        sutras: list[dict[str, str]] = []
         for rid in self.rule_ids:
             try:
                 text, gloss = sutra_info(rid)
@@ -88,7 +114,7 @@ class StepRecord:
 
 @dataclass(frozen=True)
 class Derivation:
-    request: dict
+    request: dict[str, Any]
     status: Status
     result: str | None
     alternatives: tuple[str, ...]
@@ -96,7 +122,7 @@ class Derivation:
     steps: tuple[StepRecord, ...]
     message: str | None
 
-    def to_json(self) -> dict:
+    def to_json(self) -> dict[str, Any]:
         return {
             "request": dict(self.request),
             "status": self.status.value,

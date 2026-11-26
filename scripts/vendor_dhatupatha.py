@@ -35,7 +35,11 @@ def _read(line: str) -> str:
 
 def main() -> None:
     lines = SOURCE.read_text(encoding="utf-8").splitlines()
-    rows = [_read(line) for line in lines[1:] if line.startswith("01.") and line.split("\t")[1] != "-"]
+    rows = [
+        _read(line)
+        for line in lines[1:]
+        if line.startswith("01.") and line.split("\t")[1] != "-"
+    ]
     TARGET.write_text("code\tdhatu\tartha\n" + "\n".join(rows) + "\n", encoding="utf-8")
     print(f"wrote {len(rows)} roots to {TARGET}")
 
