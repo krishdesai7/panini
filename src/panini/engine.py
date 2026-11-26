@@ -4,14 +4,16 @@ from __future__ import annotations
 
 from copy import copy
 from dataclasses import replace
-from typing import Literal
-lazy from collections.abc import Mapping, Sequence
+from typing import TYPE_CHECKING, Any, Self
+lazy from collections.abc import Callable, Mapping, Sequence
 
-from panini.derivation import Derivation, Status, StepRecord, render_terms
-from panini.edits import AddTags, Edit, InsertTerm, ReplaceTerm, apply_edit
-from panini.model import Site, State, Term, TermKind
-from panini.request import Request, availability
-from panini.resolver import (
+from panini.rules.readings import Aside
+
+from .derivation import Derivation, Status, StepRecord, render_terms
+from .edits import AddTags, Edit, InsertTerm, ReplaceTerm, apply_edit
+from .model import Site, State, Term, TermKind
+from .request import Request, availability
+from .resolver import (
     Candidate,
     LocalResolver,
     Loser,
@@ -19,8 +21,15 @@ from panini.resolver import (
     UnresolvedConflict,
     blocked_by,
 )
-from panini.rules.base import Optionality, Rule
-from panini.translit import slp1_to_iast
+from .rules.base import Optionality, Rule
+from .translit import slp1_to_iast
+
+if TYPE_CHECKING:
+    from typing import Literal
+
+    from .edits import Op
+    from .model import Sound
+    from .resolver import Choice
 
 
 class StepLimitExceeded(Exception):
@@ -79,50 +88,52 @@ class _Runner:
         max_steps: int,
         disabled: frozenset[str],
     ) -> None:
-        self.all_rules = tuple(rules)
-        self.resolver = resolver
-        self.max_steps = max_steps
-        self.disabled = disabled
-        self.rules = tuple(r for r in rules if r.id not in disabled)
-        self.main = tuple(r for r in self.rules if not r.in_tripadi)
-        self.it_rules = tuple(r for r in self.main if r.is_it_rule)
-        self.tripadi = tuple(
+        self.all_rules: tuple[Rule, ...] = tuple(rules)
+        self.resolver: Resolver = resolver
+        self.max_steps: int = max_steps
+        self.disabled: frozenset[str] = disabled
+        self.rules: tuple[Rule, ...] = tuple(r for r in rules if r.id not in disabled)
+        self.main: tuple[Rule, ...] = tuple(r for r in self.rules if not r.in_tripadi)
+        self.it_rules: tuple[Rule, ...] = tuple(r for r in self.main if r.is_it_rule)
+        self.tripadi: tuple[Rule, ...] = tuple(
             sorted((r for r in self.rules if r.in_tripadi), key=lambda r: r.key)
         )
         self.steps: list[StepRecord] = []
         self.alternatives: list[str] = []
-        self.declined: set[tuple[str, tuple]] = (
+        self.declined: set[Any] = (
             set()
         )  # (rule id, terms) where an optional rule chose not to apply
-        self.applied: set[tuple] = set()
+        self.applied: set[Any] = set()
         self.near_seen: set[str] = set()
         self.abhiya: list[str] = []
         self.losers_seen: set[Loser] = set()
         self.count = 0
         self.nested = False  # lookahead runners don't look ahead again
-        # _settle results, shared with this derivation's lookahead runners: (state, edit, disabled) -> state
-        self.settle_cache: dict[tuple, State] = {}
+        # _settle results, shared with this derivation's lookahead runners:
+        # (state, edit, disabled) -> state
+        self.settle_cache: dict[tuple[State, Edit, frozenset[str]], State] = {}
 
     @property
     def _effective(self) -> tuple[Rule, ...]:
-        """The rules as blockers: a rule that declined to apply (vibhāṣā, a sense condition) blocks
-        nothing at that site, so the general rule it would have overridden applies after all."""
+        """The rules as blockers: a rule that declined to apply (vibhāṣā, a sense
+        condition) blocks nothing at that site, so the general rule it would have
+        overridden applies after all."""
         if not self.declined:
             return self.rules
-        declined = self.declined
+        declined: set[tuple[str, tuple[TermKind, str]]] = self.declined
 
-        def undeclined(r: Rule):
+        def undeclined(r: Rule) -> Callable[[State], list[Site]]:
             return lambda st: [
                 s for s in r.find(st) if (r.id, self._terms_key(st, s)) not in declined
             ]
 
-        ids = {rid for rid, _ in declined}
+        ids: set[str] = {rid for rid, _ in declined}
         return tuple(
             replace(r, find=undeclined(r)) if r.id in ids else r for r in self.rules
         )
 
     @staticmethod
-    def _terms_key(state: State, site: Site) -> tuple:
+    def _terms_key(state: State, site: Site) -> tuple[tuple[TermKind, str], ...]:
         return tuple(
             (state.terms[sp.term].kind, state.terms[sp.term].upadesha)
             for sp in site.spans
@@ -135,18 +146,27 @@ class _Runner:
     # -- bookkeeping -------------------------------------------------------
 
     @staticmethod
-    def _fp(state: State, site: Site) -> tuple:
-        """The input a rule reads at a site, independent of term indices (which shift when
-        terms are inserted) and of tags (saṃjñā tags don't make old material new input)."""
-        out = []
+    def _fp(
+        state: State, site: Site
+    ) -> tuple[tuple[TermKind, str, tuple[Sound, ...], int, int] | None, ...]:
+        """The input a rule reads at a site, independent of term indices (which shift
+        when terms are inserted) and of tags (saṃjñā tags don't make old material new
+        input)."""
+        out: list[tuple[TermKind, str, tuple[Sound, ...], int, int] | None] = []
         for sp in site.spans:
-            t = state.terms[sp.term] if sp.term < len(state.terms) else None
+            t: Term | None = (
+                state.terms[sp.term] if sp.term < len(state.terms) else None
+            )
             out.append(
                 None if t is None else (t.kind, t.upadesha, t.sounds, sp.start, sp.end)
             )
         return tuple(out)
 
-    def _guard_key(self, state: State, cand: Candidate) -> tuple:
+    def _guard_key(
+        self, state: State, cand: Candidate
+    ) -> tuple[
+        str, tuple[tuple[TermKind, str, tuple[Sound, ...], int, int] | None, ...]
+    ]:
         return (cand.rule.id, self._fp(state, cand.site))
 
     def _tick(self) -> None:
@@ -167,15 +187,19 @@ class _Runner:
     ) -> tuple[State, tuple[StepRecord, ...], tuple[str, ...]]:
         if not skip_main:
             state = self._main(state, self.main, ("main",))
-        state = self._tripadi(state, tripadi_from)
-        final = final_text(state)
-        alts = tuple(dict.fromkeys(a for a in self.alternatives if a != final))
+        state: State = self._tripadi(state, tripadi_from)
+        final: str = final_text(state)
+        alts: tuple[str, ...] = tuple(
+            dict.fromkeys(a for a in self.alternatives if a != final)
+        )
         return state, tuple(self.steps), alts
 
     def _main(self, state: State, rules: Sequence[Rule], resume: Resume) -> State:
         while True:
-            cands = [Candidate(r, s) for r in rules for s in r.find(state)]
-            cands = [
+            cands: list[Candidate] = [
+                Candidate(r, s) for r in rules for s in r.find(state)
+            ]
+            cands: list[Candidate] = [
                 c
                 for c in cands
                 if self._guard_key(state, c) not in self.applied
@@ -183,7 +207,7 @@ class _Runner:
             ]
             if not cands:
                 return state
-            choice = self.resolver.choose(
+            choice: Choice | None = self.resolver.choose(
                 state,
                 cands,
                 self._effective,
@@ -196,18 +220,24 @@ class _Runner:
             if rules is not self.it_rules and any(
                 isinstance(op, (InsertTerm, ReplaceTerm)) for op in edit
             ):
-                # A newly introduced upadeśa is read with its markers (amendment A2, generalized).
-                state = self._main(state, self.it_rules, resume)
+                # A newly introduced upadeśa is read with its markers (amendment A2).
+                state: State = self._main(state, self.it_rules, resume)
 
     def _tripadi(self, state: State, start: tuple[int, int, int] | None) -> State:
         for rule in self.tripadi:
             if start is not None and rule.key < start:
                 continue
             while True:
-                free = []
+                free: list[Candidate] = []
                 for site in rule.find(state):
                     cand = Candidate(rule, site)
-                    key = self._guard_key(state, cand)
+                    key: tuple[
+                        str,
+                        tuple[
+                            tuple[TermKind, str, tuple[Sound, ...], int, int] | None,
+                            ...,
+                        ],
+                    ] = self._guard_key(state, cand)
                     if key in self.applied:
                         continue
                     if blocked_by(state, cand, self._effective):
@@ -216,38 +246,41 @@ class _Runner:
                     free.append(cand)
                 if not free:
                     break
-                state, _ = self._apply(state, free[0], (), ("tripadi", rule.key))
+                state: State = self._apply(state, free[0], (), ("tripadi", rule.key))[0]
                 if rule.reintroduces_upadesha:
                     # Amendment A2: newly introduced upadeśa material gets its
                     # markers identified and deleted right away.
-                    state = self._main(state, self.it_rules, ("tripadi", rule.key))
+                    state: State = self._main(
+                        state, self.it_rules, ("tripadi", rule.key)
+                    )
         return state
 
     # -- applying one rule -------------------------------------------------
 
     def _settle(self, state: State, edit: Edit) -> State:
-        """Apply an edit as ``_main`` does, without recording it: the edit, then the reading of a new
-        upadeśa's markers (amendment A2). The resolver's one-step checks use it."""
-        new = apply_edit(state, edit)
+        """Apply an edit as ``_main`` does, without recording it: the edit, then the
+        reading of a new upadeśa's markers (amendment A2). The resolver's one-step
+        checks use it."""
+        new: State = apply_edit(state, edit)
         if not any(isinstance(op, (InsertTerm, ReplaceTerm)) for op in edit):
             return new
-        key = (state, edit, self.disabled)
+        key: tuple[State, tuple[Op, ...], frozenset[str]] = (state, edit, self.disabled)
         if key not in self.settle_cache:
             self.settle_cache[key] = self._read_new_markers(new, edit)
         return self.settle_cache[key]
 
     def _read_new_markers(self, new: State, edit: Edit) -> State:
-        introduced = [
+        introduced: list[Term] = [
             op.term for op in edit if isinstance(op, (InsertTerm, ReplaceTerm))
         ]
-        fresh = frozenset(
+        fresh: frozenset[int] = frozenset(
             i for i, t in enumerate(new.terms) if any(t is u for u in introduced)
         )
         if not fresh:
             return new
 
         def on_fresh(r: Rule) -> Rule:
-            # Only the new upadeśa is read here; markers elsewhere wait for their own step.
+            # Only the new upadeśa is read here; markers elsewhere wait for own step.
             return replace(
                 r,
                 find=lambda st: [
@@ -255,23 +288,28 @@ class _Runner:
                 ],
             )
 
-        sub = self._lookahead_runner()
+        sub: _Runner = self._lookahead_runner()
         return sub._main(new, tuple(on_fresh(r) for r in sub.it_rules), ("main",))
 
     def _lookahead_runner(self) -> _Runner:
-        """A runner for a silent lookahead from the current state: same rules, nothing recorded here."""
-        sub = copy(
+        """A runner for a silent lookahead from the current state: same rules,
+        nothing recorded here."""
+        sub: Self = copy(
             self
         )  # shares the rule tuples; the mutable bookkeeping is replaced below
-        sub.steps, sub.alternatives, sub.abhiya = [], [], []
-        sub.applied, sub.declined = set(self.applied), set(self.declined)
-        sub.near_seen, sub.losers_seen = set(self.near_seen), set(self.losers_seen)
+        sub.steps = []
+        sub.alternatives = []
+        sub.abhiya = []
+        sub.applied = set(self.applied)
+        sub.declined = set(self.declined)
+        sub.near_seen = set(self.near_seen)
+        sub.losers_seen = set(self.losers_seen)
         sub.nested = True
         return sub
 
     def _finish(self, state: State) -> str:
-        """Final form reached from ``state`` (a lookahead for the resolver's conflict check)."""
-        final, _, _ = self._lookahead_runner().run(state)
+        """Final form reached from `state` (lookahead for resolver's conflict check)."""
+        final: State = self._lookahead_runner().run(state)[0]
         return final_text(final)
 
     def _alternative(
@@ -294,7 +332,9 @@ class _Runner:
 
     def _new_losers(self, losers: tuple[Loser, ...]) -> tuple[Loser, ...]:
         """Each competitor is reported once, at the first step where it lost."""
-        fresh = tuple(dict.fromkeys(l for l in losers if l not in self.losers_seen))
+        fresh: tuple[Loser, ...] = tuple(
+            dict.fromkeys(loser for loser in losers if loser not in self.losers_seen)
+        )
         self.losers_seen.update(fresh)
         return fresh
 
@@ -302,19 +342,21 @@ class _Runner:
         self, state: State, cand: Candidate, losers: tuple[Loser, ...], resume: Resume
     ) -> tuple[State, Edit]:
         self._tick()
-        rule = cand.rule
+        rule: Rule = cand.rule
         self.applied.add(self._guard_key(state, cand))
-        edit = rule.rewrite(state, cand.site)
-        note = rule.note(state, cand.site) if rule.note else None
+        edit: tuple[Op, ...] = rule.rewrite(state, cand.site)
+        note: str | None = rule.note(state, cand.site) if rule.note else None
         alternatives: tuple[str, ...] = ()
 
         match rule.optional:
             case None:
-                new = apply_edit(state, edit)
+                new: State = apply_edit(state, edit)
             case Optionality.VA:
-                new = apply_edit(state, edit)
-                alternatives = self._alternative(state, frozenset({rule.id}), resume)
-                note = _join(
+                new: State = apply_edit(state, edit)
+                alternatives: tuple[str, ...] = self._alternative(
+                    state, frozenset({rule.id}), resume
+                )
+                note: str | None = _join(
                     note, "{preferably|vā}; also correct: " + ", ".join(alternatives)
                 )
             case Optionality.VIBHASHA | Optionality.SENSE:
@@ -331,17 +373,17 @@ class _Runner:
                 )
             case Optionality.ANYATARASYAM:
                 raise OptionalRuleNotSupported(
-                    f"{rule.id} is optional (anyatarasyām, an equal choice); optional rules of this kind "
-                    "are not supported yet"
+                    f"{rule.id} is optional (anyatarasyām, an equal choice); optional"
+                    "rules of this kind are not supported yet"
                 )
 
         warnings: list[str] = []
         if rule.in_abhiya:
-            others = [a for a in self.abhiya if a != rule.id]
+            others: list[str] = [a for a in self.abhiya if a != rule.id]
             if others:
                 warnings.append(
-                    f"6.4.22: {others[0]} and {rule.id} are both in the ābhīya section; "
-                    "asiddhavat not modelled in slice 1"
+                    f"6.4.22: {others[0]} and {rule.id} are both in the ābhīya section;"
+                    " asiddhavat not modelled in slice 1"
                 )
             self.abhiya.append(rule.id)
 
@@ -353,8 +395,8 @@ class _Runner:
                     self.near_seen.add(msg)
                     near.append(msg)
 
-        aside = rule.history(state, cand.site) if rule.history else None
-        # A later choice varies fastest, so its alternatives come before those of an earlier one.
+        aside: Aside | None = rule.history(state, cand.site) if rule.history else None
+        # A later choice varies fastest, so its alternatives come before earlier ones'.
         self.alternatives[:0] = alternatives
         self.steps.append(
             StepRecord(
@@ -387,8 +429,15 @@ def derive(
     from panini.rules import ALL_RULES
 
     panini, pie = req.describe()
-    record = {"key": req.key, "root": req.root.name, "panini": panini, "pie": pie}
-    ref = tuple(reference[req.key]) if reference and req.key in reference else None
+    record: dict[str, str] = {
+        "key": req.key,
+        "root": req.root.name,
+        "panini": panini,
+        "pie": pie,
+    }
+    ref: tuple[str, ...] | None = (
+        tuple(reference[req.key]) if reference and req.key in reference else None
+    )
     if (why := availability(req)) is not None:
         reason, rule_id = why
         return Derivation(
