@@ -11,7 +11,9 @@ from urllib.parse import quote, urlsplit
 
 RULES_DIR = "rules"
 INDEX_PAGE = "index.html"
-_INLINE = re.compile(r"\{([^{}|]+)\|([^{}]+)\}|\b\d+\.\d+\.\d+(?:\.\d+)?\b")
+_INLINE = re.compile(
+    r"\{([^{}|]+)\|([^{}]+)\}|\[@([a-zA-Z0-9_-]+)\]|\b\d+\.\d+\.\d+(?:\.\d+)?\b"
+)
 _KIND = {"definition": "Definition", "operation": "Operation"}
 
 
@@ -24,29 +26,63 @@ def _link(href: str, text: str, css_class: str = "") -> str:
     return f'<a{css} href="{escape(href)}">{escape(text)}</a>'
 
 
-def _reading(text: str, articles: dict[str, Any]) -> str:
-    """Render glossary markup and link sūtra numbers that have an article."""
+def _term(label: str, tip: str) -> str:
+    return (
+        f'<span class="term" tabindex="0" data-tip="{escape(tip)}">'
+        f"{escape(label)}</span>"
+    )
+
+
+def _sutra_citation(
+    rule_id: str, articles: set[str], sutras: dict[str, Any], *, show_text: bool = False
+) -> str:
+    sutra = sutras.get(rule_id)
+    if sutra is None:
+        return escape(rule_id)
+    heading = f"{rule_id} {sutra['text']}"
+    gloss = _INLINE.sub(lambda match: match[1] or match[0], sutra["gloss"])
+    tip = f"{heading}\n{gloss}"
+    label = heading if show_text else rule_id
+    if rule_id in articles:
+        return f'<a href="{escape(rule_id)}.html" data-tip="{escape(tip)}">{escape(label)}</a>'
+    return _term(label, tip)
+
+
+def _reading(
+    text: str,
+    articles: set[str],
+    sutras: dict[str, Any],
+    citations: dict[str, tuple[int, str]] | None = None,
+) -> str:
+    """Render glossary terms, sūtra citations, and references to article sources."""
     parts = []
     start = 0
     for match in _INLINE.finditer(text):
         parts.append(escape(text[start : match.start()]))
         if match[1]:
-            parts.append(f'<abbr title="{escape(match[2])}">{escape(match[1])}</abbr>')
-        elif match[0] in articles:
-            parts.append(_link(f"{match[0]}.html", match[0]))
+            parts.append(_term(match[1], match[2]))
+        elif match[3]:
+            if citations is None or match[3] not in citations:
+                raise ValueError(
+                    f"Source {match[3]!r} is missing from the article's citations"
+                )
+            number, label = citations[match[3]]
+            parts.append(f"({_link(f'#source-{number}', label)})")
         else:
-            parts.append(escape(match[0]))
+            parts.append(_sutra_citation(match[0], articles, sutras))
         start = match.end()
     parts.append(escape(text[start:]))
     return "".join(parts)
 
 
 def _rule_reference(
-    rule_id: str, note: str, articles: dict[str, Any], sutras: dict[str, Any]
+    rule_id: str, note: str, articles: set[str], sutras: dict[str, Any]
 ) -> str:
-    label = f"{rule_id} {sutras[rule_id]['text']}" if rule_id in sutras else rule_id
-    title = _link(f"{rule_id}.html", label) if rule_id in articles else escape(label)
-    return f"<li>{title} · {_reading(note, articles)}</li>"
+    title = _sutra_citation(rule_id, articles, sutras, show_text=True)
+    return (
+        f"<li>{title}"
+        f'<p class="rule-reference-note">{_reading(note, articles, sutras)}</p></li>'
+    )
 
 
 def _refs(title: str, entries: list[str]) -> str:
@@ -57,7 +93,8 @@ def _refs(title: str, entries: list[str]) -> str:
 
 def _examples(
     examples: list[dict[str, Any]],
-    articles: dict[str, Any],
+    articles: set[str],
+    sutras: dict[str, Any],
     explorer: str,
     available_roots: set[str],
 ) -> str:
@@ -69,7 +106,7 @@ def _examples(
         before = " + ".join(term["iast"] for term in step["before"] if term["iast"])
         after = " + ".join(term["iast"] for term in step["after"] if term["iast"])
         number = example["step_number"]
-        step_rule = _reading(example["step_rule"], articles)
+        step_rule = _sutra_citation(example["step_rule"], articles, sutras)
         trace = ""
         if key[0] in available_roots:
             fragment = "/".join(quote(part, safe="") for part in [*key, str(number)])
@@ -80,7 +117,7 @@ def _examples(
             f'<p class="rule-change"><span>{escape(before)}</span>'
             f'<span class="arrow" aria-label="becomes">→</span><span>{escape(after)}</span></p>'
             f'<p class="rule-step">Step {number} · {step_rule}</p>'
-            f"<p>{_reading(example['note'], articles)}</p>{trace}</article>"
+            f"<p>{_reading(example['note'], articles, sutras)}</p>{trace}</article>"
         )
     return (
         f"<section><h2>Worked examples</h2>{''.join(entries)}</section>"
@@ -91,7 +128,7 @@ def _examples(
 
 def _sources(citations: list[dict[str, str]], sources: dict[str, Any]) -> str:
     entries = []
-    for citation in citations:
+    for number, citation in enumerate(citations, start=1):
         source = sources[citation["source"]]
         url = source.get("url", "")
         title = source["title"]
@@ -100,7 +137,9 @@ def _sources(citations: list[dict[str, str]], sources: dict[str, Any]) -> str:
             if urlsplit(url).scheme in {"https", "http"}
             else escape(title)
         )
-        entries.append(f"<li>{label} · {escape(citation['locator'])}</li>")
+        entries.append(
+            f'<li id="source-{number}">{label} · {escape(citation["locator"])}</li>'
+        )
     return _refs("Sources", entries)
 
 
@@ -112,15 +151,19 @@ def _article(
     available_roots: set[str],
 ) -> str:
     rule_id = rule["id"]
-    articles = {rid: entry for rid, entry in catalog["rules"].items() if rid != rule_id}
+    articles = set(catalog["rules"]) - {rule_id}
     engine = rule["engine"]
     kind = _KIND.get(rule["kind"], rule["kind"].capitalize())
+    citations = {
+        citation["source"]: (number, citation.get("label", citation["locator"]))
+        for number, citation in enumerate(rule["citations"], start=1)
+    }
     paragraphs = "".join(
-        f"<p>{_reading(paragraph, articles)}</p>"
+        f"<p>{_reading(paragraph, articles, sutras, citations)}</p>"
         for paragraph in rule["explanation"].strip().split("\n\n")
     )
     scope = (
-        f'<p class="rule-scope"><strong>In the explorer.</strong> {_reading(engine["scope"], articles)}</p>'
+        f'<p class="rule-scope"><strong>In the explorer.</strong> {_reading(engine["scope"], articles, sutras)}</p>'
         if engine["scope"]
         else ""
     )
@@ -138,9 +181,9 @@ def _article(
     return (
         f'<header><p class="rule-meta">{escape(rule_id)} · {escape(kind)}</p>'
         f"<h1>{escape(rule['text'])}</h1>"
-        f'<p class="rule-gloss">{_reading(rule["gloss"], articles)}</p></header>'
+        f'<p class="rule-gloss">{_reading(rule["gloss"], articles, sutras)}</p></header>'
         f'<section class="rule-explanation"><h2>How to read it</h2>{paragraphs}{scope}</section>'
-        + _examples(rule["examples"], articles, explorer, available_roots)
+        + _examples(rule["examples"], articles, sutras, explorer, available_roots)
         + _refs("Rules used in this reading", readings)
         + _refs(
             "Related rules",
@@ -166,8 +209,11 @@ def render_rule_pages(
     articles = catalog["rules"]
     rows = "".join(
         f'<li><span class="rule-number">{escape(rid)}</span>'
-        f"{_link(f'{rid}.html', rule['text'], 'rule-name')}"
-        f'<p class="rule-gloss">{_reading(rule["gloss"], articles)}</p></li>'
+        f'<span class="rule-name">{escape(rule["text"])}</span>'
+        f'<p class="rule-gloss">{_reading(rule["gloss"], set(), sutras)}</p>'
+        f'<a class="rule-open" href="{escape(rid)}.html" '
+        f'aria-label="Open {escape(rid)} {escape(rule["text"])}">'
+        '<span class="chevron" aria-hidden="true"></span></a></li>'
         for rid, rule in articles.items()
     )
     index = f'<h1>Rules</h1><ul class="rule-index">{rows}</ul>'

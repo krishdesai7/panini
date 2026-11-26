@@ -134,7 +134,8 @@ ol.steps > li::before { content: counter(step); color: var(--faint); text-align:
 .tip {
   position: fixed;
   z-index: 40;
-  max-width: 24rem;
+  max-width: min(24rem, calc(100vw - 16px));
+  box-sizing: border-box;
   padding: 0.45rem 0.75rem;
   font: 400 var(--fs-14)/1.45 var(--serif);
   color: var(--ink);

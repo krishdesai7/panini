@@ -51,6 +51,7 @@ def test_api_root_and_404() -> None:
         article = urlopen(base + "/rules/1.1.1.html").read().decode()
         assert 'href="../#01.1086/la%E1%B9%85/P/3/sg/23"' in article
         assert urlopen(base + "/rules/style.css").headers.get_content_type() == "text/css"
+        assert urlopen(base + "/rules/tooltip.js").headers.get_content_type() == "text/javascript"
         with pytest.raises(HTTPError) as e:
             urlopen(base + "/rules/1.1.3.html")
         assert e.value.code == 404
@@ -73,13 +74,25 @@ def test_build_without_fonts(tmp_path, capsys) -> None:
     assert not urls
     assert 'href="rules/index.html"' in html
     index = (tmp_path / "rules" / "index.html").read_text()
-    assert 'href="7.3.84.html"' in index
+    assert '<span class="rule-name">vṛddhir ādaic</span>' in index
+    assert 'class="rule-open" href="1.1.1.html" aria-label="Open 1.1.1 vṛddhir ādaic"' in index
+    assert 'data-tip="vṛddhi">lengthened grade</span>' in index
+    assert '<script defer src="tooltip.js"></script>' in index
+    definition = (tmp_path / "rules" / "1.1.1.html").read_text()
+    assert "data-tip=\"1.1.51 uraṇ raparaḥ" in definition
+    assert 'href="1.1.51.html"' not in definition
+    assert "iko guṇavṛddhī</span><p class=\"rule-reference-note\">Which vowel" in definition
+    assert 'data-tip="vṛddhi">lengthened-grade</span> vowel' in definition
     article = (tmp_path / "rules" / "7.3.84.html").read_text()
     assert 'href="../p.html#01.0001/la%E1%B9%AD/P/3/sg/19"' in article
     assert '<span>bhū + a + ti</span>' in article
     assert '<span>bho + a + ti</span>' in article
     assert 'href="1.1.2.html"' in article
     assert 'href="1.1.3.html"' not in article
+    assert 'data-tip="laṭ">present imperfective</span>' in article
+    assert 'data-tip="laṅ">past imperfective</span>' in article
+    assert '<a href="#source-3">Kiparsky, §3.4.1</a>' in article
+    assert '<li id="source-3"><a href="https://web.stanford.edu/~kiparsky/Papers/hyderabad.pdf">' in article
     assert (tmp_path / "rules" / "style.css").is_file()
     assert (tmp_path / "rules" / "theme.js").is_file()
 

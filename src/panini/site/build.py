@@ -158,6 +158,7 @@ def rule_assets(catalog: dict, explorer_href: str, roots: set[str], css: str) ->
         **render_rule_pages(catalog, _sutras(), explorer_href, roots),
         "style.css": css + "\n" + _asset("rules.css"),
         "theme.js": _asset("theme.js"),
+        "tooltip.js": _asset("tooltip.js"),
     }
 
 
@@ -169,6 +170,7 @@ def page_html(data: dict, style_dir: Path | None, *, css: str | None = None) -> 
             .replace("/*PAGE_CSS*/", css)
             .replace("/*THEME_JS*/", _asset("theme.js"))
             .replace("/*DATA*/", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
+            .replace("/*TOOLTIP_JS*/", _asset("tooltip.js"))
             .replace("/*APP_JS*/", _asset("app.js")))
 
 

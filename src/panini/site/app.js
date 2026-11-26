@@ -140,16 +140,7 @@ function sutraTitle(id, sutras) {
   return s ? id + " " + s.text + "\n" + splitTerms(s.gloss).map(function (p) { return p[0]; }).join("") : id;
 }
 
-/* Where to put a tooltip: just below the word, kept 8px inside the viewport; above it if
-   there's no room below. rect: the word's box; size: the tooltip's; view: the viewport's. */
-function tipPosition(rect, size, view) {
-  var left = Math.max(8, Math.min(rect.left, view.width - size.width - 8));
-  var top = rect.bottom + 6;
-  if (top + size.height > view.height - 8) top = rect.top - size.height - 6;
-  return { left: left, top: top };
-}
-
-if (typeof module !== "undefined") module.exports = { nextActive: nextActive, rootNotice: rootNotice, parseHash: parseHash, fold: fold, searchRoots: searchRoots, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, splitGlossary: splitGlossary, sutraTitle: sutraTitle, markerTip: markerTip, tipPosition: tipPosition };
+if (typeof module !== "undefined") module.exports = { nextActive: nextActive, rootNotice: rootNotice, parseHash: parseHash, fold: fold, searchRoots: searchRoots, keyOf: keyOf, splitCitations: splitCitations, splitTerms: splitTerms, splitGlossary: splitGlossary, sutraTitle: sutraTitle, markerTip: markerTip, tipPosition: require("./tooltip.js").tipPosition };
 
 if (typeof document !== "undefined") (function () {
   var data = JSON.parse(document.getElementById("data").textContent);
@@ -236,7 +227,7 @@ if (typeof document !== "undefined") (function () {
   }
   function pickRoot(key) {
     openList(false);
-    hideTip(null);
+    hideTooltip();
     rootInput.blur();
     pendingStep = null;
     state = { root: key, key: null };
@@ -500,34 +491,6 @@ if (typeof document !== "undefined") (function () {
     render();
   }
   window.addEventListener("hashchange", applyHash);
-
-  /* One shared tooltip, shown at once on hover or keyboard focus (native title tooltips
-     carry a browser delay the page cannot change). */
-  var tip = el("div", { class: "tip", role: "tooltip", id: "tip" });
-  document.body.appendChild(tip);
-  function showTip(target) {
-    tip.textContent = target.getAttribute("data-tip");
-    tip.classList.add("on");
-    var pos = tipPosition(target.getBoundingClientRect(), tip.getBoundingClientRect(),
-                          { width: window.innerWidth, height: window.innerHeight });
-    tip.style.left = pos.left + "px";
-    tip.style.top = pos.top + "px";
-    target.setAttribute("aria-describedby", "tip");
-  }
-  function hideTip(target) { tip.classList.remove("on"); if (target) target.removeAttribute("aria-describedby"); }
-  ["mouseover", "focusin"].forEach(function (ev) {
-    document.addEventListener(ev, function (e) {
-      var t = e.target.closest && e.target.closest("[data-tip]");
-      if (t) showTip(t);
-    });
-  });
-  ["mouseout", "focusout"].forEach(function (ev) {
-    document.addEventListener(ev, function (e) {
-      var t = e.target.closest && e.target.closest("[data-tip]");
-      if (t && !(e.relatedTarget && t.contains(e.relatedTarget))) hideTip(t);
-    });
-  });
-  window.addEventListener("scroll", function () { hideTip(null); }, { passive: true });
 
   applyHash();
 })();

@@ -14,7 +14,9 @@ distinguishes three sources of information:
   use the existing `{plain term|Sanskrit term}` markup. Cite an edition or
   commentary using a bibliography key, locator, and role (`text`, `commentary`,
   or `analysis`). Follow Kiparsky where his work addresses a question of
-  interpretation, and cite the particular passage. Use `related` for a
+  interpretation, and cite the particular passage. In the explanation,
+  `[@source_key]` links to the source entry. An optional citation `label`
+  supplies a short label for that link. Use `related` for a
   sūtra and a short explanation of why it matters. A related sūtra needs a
   text entry and can acquire its own article later.
 - **Explorer behavior.** The export pulls readings from `rules/readings.py`
