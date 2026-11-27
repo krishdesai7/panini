@@ -180,7 +180,7 @@ def _near_137(st: State) -> str | None:
         for i, c in _initial_unmarked_pratyaya(st, frozenset("J"))
     ):
         return (
-            "1.3.7 (initial cu/ṭu of an affix is a marker) is not applied to the jh of the ending: "
+            "1.3.7 (initial {palatal stops|cu} and {retroflex stops|ṭu} of an affix are markers) is not applied to the jh of the ending: "
             "7.1.3 jho 'ntaḥ replaces that jh, which it could not do if jh were a marker"
         )
     return None

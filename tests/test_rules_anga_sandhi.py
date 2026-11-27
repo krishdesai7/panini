@@ -38,7 +38,7 @@ def test_bhavanti_shows_collective_blocking() -> None:
 def test_pathati_near_miss() -> None:
     d = derive(parse_request("paṭh", "laṭ", 3, "sg", "active"))
     assert any(
-        "7.3.86" in n and "is not one of {i u ṛ ḷ|ik}" in n
+        "7.3.86" in n and "is outside the {close syllabics|ik}" in n
         for s in d.steps
         for n in s.near_misses
     )
@@ -64,7 +64,7 @@ def test_7377_note_names_the_replaced_sound() -> None:
 def test_yan_described_as_resonants_jh_and_bh() -> None:
     d = derive(parse_request("bhū", "laṭ", 1, "sg", "active"))
     note = next(s.note for s in d.steps if "7.3.101" in s.rule_ids)
-    assert "{resonants, jh, and bh|yañ}" in note
+    assert "{resonant, [[jh]], or [[bh]]|yañ}" in note
 
 
 def test_anusvara_shown_as_nasal_glide() -> None:

@@ -2,13 +2,21 @@
 # In glosses and notes, {modern|traditional} marks a technical term: the page shows the
 # modern word with the traditional one on hover.
 
+["1.1.1"]
+text = "vṛddhir ādaic"
+gloss = "Long [[ā]] and the {long diphthongs|aic} ([[ai]] and [[au]]) are called {lengthened grade|vṛddhi}."
+
+["1.1.2"]
+text = "adeṅ guṇaḥ"
+gloss = "Short [[a]] and the {short diphthongs|eṅ} ([[e]] and [[o]]) are called {full grade|guṇa}."
+
 ["1.1.3"]
 text = "iko guṇavṛddhī"
-gloss = "Where {full grade|guṇa} or {lengthened grade|vṛddhi} is prescribed without naming the vowel it replaces, it replaces one of {i u ṛ ḷ|ik}."
+gloss = "When {full grade|guṇa} or {lengthened grade|vṛddhi} is prescribed without specifying what it replaces, it replaces a {close syllabic|ik} ([[i]], [[u]], [[ṛ]], or [[ḷ]], including their long counterparts)."
 
 ["1.1.5"]
 text = "kṅiti ca"
-gloss = "{Full grade|guṇa} and {lengthened grade|vṛddhi} do not replace an ik vowel before an affix marked with k or ṅ."
+gloss = "{Full grade|guṇa} and {lengthened grade|vṛddhi} do not replace a {close syllabic|ik} before an affix marked with [[k]] or [[ṅ]]."
 
 ["1.1.45"]
 text = "ig yaṇaḥ samprasāraṇam"
@@ -20,7 +28,7 @@ gloss = "An augment marked with ṭ is placed at the beginning of what it is add
 
 ["1.1.47"]
 text = "mid aco 'ntyāt paraḥ"
-gloss = "An augment marked with m is placed right after the last vowel of what it is added to."
+gloss = "An augment marked with [[m]] is placed right after the last {syllabic|ac} of what it is added to."
 
 ["1.1.49"]
 text = "ṣaṣṭhī sthāneyogā"
@@ -32,11 +40,11 @@ gloss = "A substitute is the one closest to the original (in place, manner, and 
 
 ["1.1.51"]
 text = "uraṇ raparaḥ"
-gloss = "A vowel that replaces ṛ or ḷ is followed by r (or l)."
+gloss = "A vowel that replaces [[ṛ]] or [[ḷ]] is followed by [[r]] or [[l]], respectively."
 
 ["1.1.52"]
 text = "alo 'ntyasya"
-gloss = "A substitute replaces only the last sound of what is named."
+gloss = "A substitute replaces only the last {sound|al} of what is named."
 
 ["1.1.53"]
 text = "ṅic ca"
@@ -44,11 +52,11 @@ gloss = "A substitute marked with ṅ, even one of more than one sound, replaces
 
 ["1.1.55"]
 text = "anekālśit sarvasya"
-gloss = "A substitute of more than one sound, or one marked ś, replaces the whole of what is named."
+gloss = "A substitute of more than one {sound|al}, or one marked [[ś]], replaces the whole of what is named."
 
 ["1.1.56"]
 text = "sthānivad ādeśo 'nalvidhau"
-gloss = "A substitute is treated like what it replaces, except in operations conditioned by a single sound."
+gloss = "A substitute is treated like what it replaces, except in operations conditioned by a single {sound|al}."
 
 ["1.1.60"]
 text = "adarśanaṃ lopaḥ"
@@ -56,11 +64,11 @@ gloss = "Lopa means disappearance."
 
 ["1.1.64"]
 text = "aco 'ntyādi ṭi"
-gloss = "The last vowel and whatever follows it is called ṭi."
+gloss = "The last {syllabic|ac} and whatever follows it is called [[ṭi]]."
 
 ["1.1.65"]
 text = "alo 'ntyāt pūrva upadhā"
-gloss = "The sound before the last is called the {penultimate|upadhā}."
+gloss = "The {sound|al} before the last is called the {penultimate|upadhā}."
 
 ["1.1.66"]
 text = "tasminn iti nirdiṣṭe pūrvasya"
@@ -72,7 +80,7 @@ gloss = "When a condition is stated in the ablative, the operation applies to wh
 
 ["1.1.69"]
 text = "aṇudit savarṇasya cāpratyayaḥ"
-gloss = "A vowel, semivowel or h, or a sound marked with u, also stands for the sounds of its kind (unless it is being introduced)."
+gloss = "A {syllabic, approximant, or [[h]]|aṇ}, or a sound marked with [[u]], also stands for the sounds of its kind (unless it is being introduced)."
 
 ["1.1.70"]
 text = "taparas tatkālasya"
@@ -80,7 +88,7 @@ gloss = "A vowel followed by the marker t stands only for a vowel of that length
 
 ["1.1.71"]
 text = "ādir antyena sahetā"
-gloss = "A sound together with a final marker names all the sounds from it up to that marker (abbreviations such as ac, hal)."
+gloss = "A sound together with a final marker names all the sounds from it up to that marker. For example, one {sound-class abbreviation|pratyāhāra} names {all syllabics|ac} and another names {all consonants|hal}."
 
 ["1.2.1"]
 text = "gāṅkuṭādibhyo 'ñṇin ṅit"
@@ -96,15 +104,15 @@ gloss = "bhū ‘be’ and the others listed in the Dhātupāṭha are called {r
 
 ["1.3.2"]
 text = "upadeśe 'janunāsika it"
-gloss = "In a {form as taught|upadeśa}, a nasalized vowel is a {marker|it}."
+gloss = "In a {form as taught|upadeśa}, a nasalized {syllabic|ac} is a {marker|it}."
 
 ["1.3.3"]
 text = "hal antyam"
-gloss = "In a form as taught, a final consonant is a {marker|it}."
+gloss = "In a form as taught, a final {consonant|hal} is a {marker|it}."
 
 ["1.3.4"]
 text = "na vibhaktau tusmāḥ"
-gloss = "But in an {inflectional ending|vibhakti}, a final t, th, d, dh, n, s or m is not a marker."
+gloss = "In an {inflectional ending|vibhakti}, final {dental stops|tu}, [[s]], and [[m]] do not count as markers."
 
 ["1.3.5"]
 text = "ādir ñiṭuḍavaḥ"
@@ -116,11 +124,11 @@ gloss = "An initial ṣ of an {affix|pratyaya} is a {marker|it}."
 
 ["1.3.7"]
 text = "cuṭū"
-gloss = "In an affix as taught, an initial palatal or retroflex stop is a {marker|it}."
+gloss = "In an affix as taught, an initial {palatal stop|cu} or {retroflex stop|ṭu} is a {marker|it}."
 
 ["1.3.8"]
 text = "laśakvataddhite"
-gloss = "In an affix other than a {secondary nominal suffix|taddhita}, an initial l, ś or velar stop is a {marker|it}."
+gloss = "In an affix other than a {secondary nominal suffix|taddhita}, an initial [[l]], [[ś]], or {velar stop|ku} is a {marker|it}."
 
 ["1.3.9"]
 text = "tasya lopaḥ"
@@ -176,7 +184,7 @@ gloss = "The substitutes of l are called {active endings|parasmaipada}."
 
 ["1.4.100"]
 text = "taṅānāv ātmanepadam"
-gloss = "The endings ta … mahiṅ (taṅ) and the participle suffixes in -āna are called {middle|ātmanepada}."
+gloss = "The {endings [[ta]] through [[mahiṅ]]|taṅ} and the participle suffixes in [[-āna]] are called {middle|ātmanepada}."
 
 ["1.4.101"]
 text = "tiṅas trīṇi trīṇi prathamamadhyamottamāḥ"
@@ -288,7 +296,7 @@ gloss = "A root-initial ṇ is replaced by n."
 
 ["6.1.66"]
 text = "lopo vyor vali"
-gloss = "y and v are deleted before any consonant other than y ({val|val})."
+gloss = "[[y]] and [[v]] are deleted before {any consonant other than [[y]]|val}."
 
 ["6.1.71"]
 text = "hrasvasya piti kṛti tuk"
@@ -308,11 +316,11 @@ gloss = "Before ch, a long vowel gets the augment tuk (t)."
 
 ["6.1.77"]
 text = "iko yaṇ aci"
-gloss = "Before a vowel, i u ṛ ḷ are replaced by y v r l."
+gloss = "Before a {syllabic|ac}, a {close syllabic|ik} ([[i]], [[u]], [[ṛ]], [[ḷ]]) becomes the corresponding {approximant|yaṇ} ([[y]], [[v]], [[r]], [[l]])."
 
 ["6.1.78"]
 text = "eco 'yavāyāvaḥ"
-gloss = "Before a vowel, e, o, ai, au are replaced by ay, av, āy, āv."
+gloss = "Before a {syllabic|ac}, the {diphthongs|ec} [[e]], [[o]], [[ai]], and [[au]] become [[ay]], [[av]], [[āy]], and [[āv]], respectively."
 
 ["6.1.84"]
 text = "ekaḥ pūrvaparayoḥ"
@@ -332,15 +340,15 @@ gloss = "a or ā and a following vowel are together replaced by {full grade|gu�
 
 ["6.1.88"]
 text = "vṛddhir eci"
-gloss = "a or ā and a following e, o, ai, au are together replaced by {lengthened grade|vṛddhi} (ā, ai, au)."
+gloss = "[[a]] or [[ā]] and a following {diphthong|ec} are together replaced by {lengthened grade|vṛddhi} ([[ā]], [[ai]], [[au]])."
 
 ["6.1.90"]
 text = "āṭaś ca"
-gloss = "The augment āṭ and a following vowel are together replaced by {lengthened grade|vṛddhi}."
+gloss = "The augment [[āṭ]] and a following vowel are together replaced by {lengthened grade|vṛddhi}."
 
 ["6.1.94"]
 text = "eṅi pararūpam"
-gloss = "The a of a preverb and a following e or o of a root are together replaced by the second."
+gloss = "The [[a]] of a preverb and a following {short diphthong|eṅ} ([[e]] or [[o]]) of a root are together replaced by the second."
 
 ["6.1.96"]
 text = "usy apadāntāt"
@@ -352,7 +360,7 @@ gloss = "Short a (not at the end of a word) and a following {full-grade|guṇa} 
 
 ["6.1.101"]
 text = "akaḥ savarṇe dīrghaḥ"
-gloss = "A vowel a, i, u, ṛ, ḷ and a following vowel of the same kind are together replaced by the long vowel."
+gloss = "A {simple syllabic|ak} ([[a]], [[i]], [[u]], [[ṛ]], [[ḷ]]) and a following syllabic of the same kind are together replaced by the long syllabic."
 
 ["6.1.108"]
 text = "samprasāraṇāc ca"
@@ -372,7 +380,7 @@ gloss = "After the stem suffix śna (the na of the seventh class), n is dropped.
 
 ["6.4.24"]
 text = "aniditāṃ hala upadhāyāḥ kṅiti"
-gloss = "Before an affix marked with k or ṅ, the penultimate nasal of a root ending in a consonant is dropped, unless the root is marked with i."
+gloss = "Before an affix marked with [[k]] or [[ṅ]], the penultimate nasal of a root ending in a {consonant|hal} is dropped, unless the root is marked with [[i]]."
 # Traced since slice 1.6: in laṭ and laṅ only śa (tudādi, 3.1.77) counts as marked ṅ; śap is
 # marked p, so bhvādi roots never meet 6.4.24 there.
 
@@ -390,11 +398,11 @@ gloss = "Before luṅ, laṅ and lṛṅ, the base gets the (accented) augment a
 
 ["6.4.72"]
 text = "āḍ ajādīnām"
-gloss = "A base beginning with a vowel gets the augment āṭ instead."
+gloss = "A base beginning with a {syllabic|ac} gets the augment [[āṭ]] instead."
 
 ["6.4.77"]
 text = "aci śnudhātubhruvāṃ yvor iyaṅuvaṅau"
-gloss = "Before a vowel, the i/u of śnu, of a root and of bhrū is replaced by iy/uv."
+gloss = "Before a {syllabic|ac}, the [[i]] or [[u]] of [[śnu]], of a root, or of [[bhrū]] becomes [[iy]] or [[uv]], respectively."
 
 ["6.4.89"]
 text = "ūd upadhāyā gohaḥ"
@@ -426,7 +434,7 @@ gloss = "(Vārttika on 7.1.59) The roots of the tṛmph group also get num befor
 
 ["7.1.61"]
 text = "radhijabhor aci"
-gloss = "Before an affix beginning with a vowel, radh and jabh get the augment num (n)."
+gloss = "Before an affix beginning with a {syllabic|ac}, [[radh]] and [[jabh]] get the augment [[num]] ([[n]])."
 
 ["7.1.100"]
 text = "ṝta id dhātoḥ"
@@ -462,15 +470,15 @@ gloss = "Before an affix marked ś, the vowel of mid takes {full grade|guṇa}."
 
 ["7.3.84"]
 text = "sārvadhātukārdhadhātukayoḥ"
-gloss = "Before a {present-system|sārvadhātuka} or {non-present|ārdhadhātuka} affix, a final {i u ṛ ḷ|ik} of the {base|aṅga} takes {full grade|guṇa}."
+gloss = "Before a {present-system|sārvadhātuka} or {non-present|ārdhadhātuka} affix, a final {close syllabic|ik} of the {base|aṅga} takes {full grade|guṇa}."
 
 ["7.3.86"]
 text = "pugantalaghūpadhasya ca"
-gloss = "Before a {present-system|sārvadhātuka} or {non-present|ārdhadhātuka} affix, a light penultimate {i u ṛ ḷ|ik} of the {base|aṅga} also takes {full grade|guṇa}."
+gloss = "Before a {present-system|sārvadhātuka} or {non-present|ārdhadhātuka} affix, a light penultimate {close syllabic|ik} of the {base|aṅga} also takes {full grade|guṇa}."
 
 ["7.3.101"]
 text = "ato dīrgho yañi"
-gloss = "Before a {present-system affix|sārvadhātuka} beginning with one of {resonants, jh, and bh|yañ}, a base-final short a is lengthened."
+gloss = "Before a {present-system affix|sārvadhātuka} beginning with a {resonant, [[jh]], or [[bh]]|yañ}, a base-final short [[a]] is lengthened."
 
 ["7.4.27"]
 text = "rīṅ ṛtaḥ"
@@ -506,7 +514,7 @@ gloss = "The final consonant of a word ending in a consonant cluster is deleted.
 
 ["8.2.39"]
 text = "jhalāṃ jaśo 'nte"
-gloss = "At the end of a word, an {obstruent|jhal} is replaced by the {voiced unaspirated stop|jaś} of its class."
+gloss = "At the end of a word, an {obstruent|jhal} becomes the corresponding {modal voiced oral stop|jaś}."
 
 ["8.2.66"]
 text = "sasajuṣo ruḥ"
@@ -514,15 +522,15 @@ gloss = "At the end of a word, s (and the final of sajuṣ) is replaced by ru."
 
 ["8.2.76"]
 text = "rvor upadhāyā dīrgha ikaḥ"
-gloss = "(Heading) The {simple vowel|ik} (i, u, ṛ, ḷ) that stands in the {penultimate position|upadhā} of a root ending in r or v is lengthened."
+gloss = "(Heading) The {close syllabic|ik} that stands in the {penultimate position|upadhā} of a root ending in [[r]] or [[v]] is lengthened."
 
 ["8.2.77"]
 text = "hali ca"
-gloss = "Also before a consonant (hal)."
+gloss = "Also before a {consonant|hal}."
 
 ["8.2.78"]
 text = "upadhāyāṃ ca"
-gloss = "Also when the r or v itself stands in the {penultimate position|upadhā}: the {simple vowel|ik} before it is lengthened."
+gloss = "Also when the [[r]] or [[v]] itself stands in the {penultimate position|upadhā}: the {close syllabic|ik} before it is lengthened."
 
 ["8.2.79"]
 text = "na bhakurchurām"
@@ -530,11 +538,11 @@ gloss = "Not for the roots bha, kur and chur."
 
 ["8.3.15"]
 text = "kharavasānayor visarjanīyaḥ"
-gloss = "Before a {voiceless consonant|khar} or at a pause, r at the end of a word becomes {final h|visarga} (ḥ)."
+gloss = "Before a {voiceless obstruent|khar} or at a pause, [[r]] at the end of a word becomes {final h|visarga} ([[ḥ]])."
 
 ["8.3.24"]
 text = "naś cāpadāntasya jhali"
-gloss = "Before an obstruent, n or m not at the end of a word becomes {nasal glide|anusvāra} (ṃ)."
+gloss = "Before an {obstruent|jhal}, [[n]] or [[m]] inside a word becomes the {nasal glide|anusvāra} ([[ṃ]])."
 
 ["8.4.1"]
 text = "raṣābhyāṃ no ṇaḥ samānapade"
@@ -546,7 +554,7 @@ gloss = "(Vārttika on 8.4.1) ṛ and ṝ count like r: n after them, in the sam
 
 ["8.4.2"]
 text = "aṭkupvāṅnumvyavāye 'pi"
-gloss = "n becomes ṇ after r or ṣ even when a vowel, h, y, v, r, a velar or labial stop, the preverb ā (āṅ), or the augment n (num) comes between."
+gloss = "[[n]] becomes [[ṇ]] after [[r]] or [[ṣ]] even with intervening {syllabics or [[h y v r]]|aṭ}, {velar stops|ku}, {labial stops|pu}, the preverb [[ā]] ([[āṅ]]), or the augment [[n]] ([[num]])."
 
 ["8.4.37"]
 text = "padāntasya"
@@ -554,27 +562,27 @@ gloss = "(Prohibition) A word-final n is not replaced by ṇ."
 
 ["8.4.40"]
 text = "stoḥ ścunā ścuḥ"
-gloss = "s and the dentals (t th d dh n), next to ś or a palatal, become ś and the corresponding palatals."
+gloss = "Next to [[ś]] or a {palatal stop|cu}, [[s]] and the {dental stops|tu} become [[ś]] and the corresponding palatal stops."
 
 ["8.4.41"]
 text = "ṣṭunā ṣṭuḥ"
-gloss = "s and the dentals (t th d dh n), next to ṣ or a retroflex stop, become ṣ and the corresponding retroflexes."
+gloss = "Next to [[ṣ]] or a {retroflex stop|ṭu}, [[s]] and the {dental stops|tu} become [[ṣ]] and the corresponding retroflex stops."
 
 ["8.4.53"]
 text = "jhalāṃ jaś jhaśi"
-gloss = "An obstruent (jhal) before a voiced stop (jhaś) becomes the voiced unaspirated stop (jaś) of its own place."
+gloss = "Before a {voiced oral stop|jhaś}, an {obstruent|jhal} becomes the corresponding {modal voiced oral stop|jaś}."
 
 ["8.4.55"]
 text = "khari ca"
-gloss = "Before a {voiceless consonant|khar}, an {obstruent|jhal} also becomes the {voiceless unaspirated stop|car}."
+gloss = "Before a {voiceless obstruent|khar}, an {obstruent|jhal} becomes the corresponding {voiceless unaspirated obstruent|car}."
 
 ["8.4.56"]
 text = "vāvasāne"
-gloss = "At a pause, an obstruent is {preferably|vā} replaced by the {voiceless unaspirated stop|car}."
+gloss = "At a pause, an {obstruent|jhal} {preferably|vā} becomes the corresponding {voiceless unaspirated obstruent|car}."
 
 ["8.4.58"]
 text = "anusvārasya yayi parasavarṇaḥ"
-gloss = "Before a consonant other than a sibilant or h ({yay|yay}), {the nasal glide|anusvāra} is replaced by a sound of the same class as the following one."
+gloss = "Before a {stop or approximant|yay}, the {nasal glide|anusvāra} becomes a sound of the same class as the following one."
 
 # [toy] rules used by tests/test_engine_meta.py
 ["9.9.1"]

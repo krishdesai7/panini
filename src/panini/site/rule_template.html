@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" data-dark="glass">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>$title · Prakriyā explorer</title>
+<script src="theme.js"></script>
+<script defer src="tooltip.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="measure rule-page">
+  <header class="top">
+    <div>
+      <div class="eyebrow" aria-label="Pāṇini">Pā<span class="dot-below" aria-hidden="true">n</span>ini</div>
+      <nav class="site-nav" aria-label="Explorer">
+        <a href="$verbs">Verbs</a>
+        $rules_nav
+      </nav>
+    </div>
+    <button class="theme-toggle" id="theme" type="button" aria-label="Toggle light and dark theme">◐</button>
+  </header>
+  <main>
+$content
+  </main>
+</div>
+</body>
+</html>

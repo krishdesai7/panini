@@ -22,7 +22,7 @@ forms match the reference (Vidyut 0.4). The 18 that don't need a rule not yet mo
 ## Use
 
 ```sh
-uv run panini site --open              # build and open the explorer page (build/panini.html)
+uv run panini site --open              # build the explorer and its rule pages under build/
 uv run panini serve --open             # serve every root locally, deriving one root at a time
 uv run panini derive paṭh present 3 sg # one derivation in the terminal
 uv run panini derive bhū laṅ 3 pl -v   # -v adds the competitors each step beat
@@ -35,6 +35,11 @@ Either vocabulary works: `present imperfective` or `laṭ`, `3` or `prathama`,
 (default `.cache/panini/`), so a restarted server doesn't derive them again. The
 cache is keyed by a hash of the engine's code and data, so any change to the rules
 starts a fresh one. `--no-cache` bypasses it.
+
+Choose **Rules** in the explorer to browse the catalogue, or follow a linked
+sūtra in a verb trace. Worked examples link back to the exact step.
+Export the [rule catalogue](docs/rule-catalog.md) as JSON with
+`uv run panini rules`, or pass a sūtra number to select one article.
 
 ## Development
 

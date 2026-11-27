@@ -84,6 +84,24 @@ def derive(
 
 
 @app.command()
+def rules(
+    rule_id: Annotated[
+        str | None, typer.Argument(help="Optional sūtra number, e.g. 1.1.1.")
+    ] = None,
+) -> None:
+    """Export rule articles as JSON."""
+    import json
+
+    from panini.rule_catalog import build_catalog
+
+    try:
+        catalog = build_catalog(rule_id)
+    except ValueError as e:
+        _fail(str(e))
+    typer.echo(json.dumps(catalog, ensure_ascii=False, indent=2))
+
+
+@app.command()
 def site(
     out: Annotated[Path, typer.Option(help="Where to write the page.")] = Path(
         "build/panini.html"

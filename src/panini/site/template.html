@@ -6,16 +6,9 @@
 <meta name="color-scheme" content="light dark">
 <title>Prakriyā explorer · Pāṇini</title>
 <script>
-  (function () {
-    var t; try { t = localStorage.getItem('theme'); } catch (e) {}
-    var dark = t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-    document.documentElement.dataset.dark = 'glass';
-  })();
+/*THEME_JS*/
 </script>
 <style>
-/*FONTS*/
-/*BASE_CSS*/
 /*PAGE_CSS*/
 </style>
 </head>
@@ -24,7 +17,11 @@
   <header class="top">
     <div>
       <div class="eyebrow" aria-label="Pāṇini">Pā<span class="dot-below" aria-hidden="true">n</span>ini</div>
-      <h1>Prakriyā explorer</h1>
+      <h1><span lang="sa-Latn">Prakriyā</span> explorer</h1>
+      <nav class="site-nav" aria-label="Explorer">
+        <span aria-current="page">Verbs</span>
+        <a href="rules/index.html">Rules</a>
+      </nav>
     </div>
     <button class="theme-toggle" id="theme" type="button" aria-label="Toggle light and dark theme">◐</button>
   </header>
@@ -40,11 +37,12 @@
   <section class="paradigm" id="paradigm" aria-label="Conjugated forms"></section>
 
   <section class="derivation" id="derivation" aria-live="polite">
-    <p class="note empty">Pick a form above to see how Pāṇini’s rules derive it.</p>
+    <p class="note empty">Pick a form above to see how <span lang="sa-Latn">Pāṇini</span>’s rules derive it.</p>
   </section>
 </div>
 <script type="application/json" id="data">/*DATA*/</script>
 <script>
+/*TOOLTIP_JS*/
 /*APP_JS*/
 </script>
 </body>

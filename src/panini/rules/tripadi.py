@@ -68,7 +68,7 @@ def _final_rule(
 
     def note(st: State, site: Site) -> str:
         c = st.terms[site.spans[0].term].sounds[site.spans[0].start].char
-        return f"word-final {slp1_to_iast(c)} → {slp1_to_iast(get(c))} ({what})"
+        return f"word-final [[{slp1_to_iast(c)} → {slp1_to_iast(get(c))}]] ({what})"
 
     return Rule(rule_id, find, rewrite, note=note, **kw)
 
@@ -127,7 +127,7 @@ R_8_2_39 = _final_rule(
     "8.2.39",
     JHAL & _JAS.keys(),
     _JAS,
-    "an obstruent at the end of a word becomes voiced",
+    "an {obstruent|jhal} becomes the corresponding {modal voiced oral stop|jaś}",
 )
 
 
@@ -236,7 +236,7 @@ R_8_2_78 = Rule(
         _DIRGHA[st.terms[site.spans[0].term].sounds[site.spans[0].start].char],
     ),
     note=lambda st, site: (
-        "the {simple vowel|ik} "
+        "the {close syllabic|ik} "
         f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} is lengthened "
         "before an r or v that is the {penultimate sound|upadhā} of the {root|dhātu} and is followed by a consonant"
     ),
@@ -411,7 +411,7 @@ R_8_4_53 = Rule(
     ),
     note=lambda st, site: (
         f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} "
-        "before a voiced stop becomes voiced: "
+        "before a {voiced oral stop|jhaś} becomes the corresponding {modal voiced oral stop|jaś}: "
         f"{slp1_to_iast(_JAS_53[st.terms[site.spans[0].term].sounds[site.spans[0].start].char])}"
     ),
 )
@@ -420,7 +420,7 @@ R_8_4_56 = _final_rule(
     "8.4.56",
     JHAL & _CAR.keys(),
     _CAR,
-    "at a pause an obstruent becomes voiceless",
+    "devoicing at a pause",
     optional=Optionality.VA,
 )
 

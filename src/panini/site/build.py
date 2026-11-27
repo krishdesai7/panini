@@ -11,6 +11,7 @@ from functools import lru_cache
 from importlib.resources import files
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
 lazy from collections.abc import Iterable
 
 from panini.cache import DerivationCache
@@ -18,6 +19,8 @@ from panini.derivation import Derivation, Status
 from panini.engine import derive
 from panini.lexicon import FEATURED, ROOTS
 from panini.request import OUT_OF_SCOPE, all_requests, effective_pada, load_reference
+from panini.rule_catalog import build_catalog
+from panini.site.rules import RULES_DIR, render_rule_pages, rule_links
 
 DEFAULT_STYLE_DIR = Path.home() / ".local/state/claude/skills/krish-frontend-style"
 
@@ -209,25 +212,55 @@ def _asset(name: str) -> str:
     return files("panini.site").joinpath(name).read_text(encoding="utf-8")
 
 
-def page_html(data: dict[str, Any], style_dir: Path | None) -> str:
-    """The explorer page with `data` and (if `style_dir` has them) the fonts embedded."""
+def stylesheet(style_dir: Path | None) -> str:
     if style_dir is None:
         style_dir = Path(os.environ.get("PANINI_STYLE_DIR", DEFAULT_STYLE_DIR))
+    return "\n".join((_font_css(style_dir), _asset("base.css"), _asset("style.css")))
+
+
+def rule_assets(
+    catalog: dict[str, Any], explorer_href: str, roots: set[str], css: str
+) -> dict[str, str]:
+    return {
+        **render_rule_pages(catalog, _sutras(), explorer_href, roots),
+        "style.css": css + "\n" + _asset("rules.css"),
+        "theme.js": _asset("theme.js"),
+        "tooltip.js": _asset("tooltip.js"),
+    }
+
+
+def page_html(
+    data: dict[str, Any], style_dir: Path | None, *, css: str | None = None
+) -> str:
+    """The explorer page with `data` and (if `style_dir` has them) the fonts embedded."""
+    if css is None:
+        css = stylesheet(style_dir)
     return (
         _asset("template.html")
-        .replace("/*FONTS*/", _font_css(style_dir))
-        .replace("/*BASE_CSS*/", _asset("base.css"))
-        .replace("/*PAGE_CSS*/", _asset("style.css"))
+        .replace("/*PAGE_CSS*/", css)
+        .replace("/*THEME_JS*/", _asset("theme.js"))
         .replace("/*DATA*/", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
+        .replace("/*TOOLTIP_JS*/", _asset("tooltip.js"))
         .replace("/*APP_JS*/", _asset("app.js"))
     )
 
 
 def build_site(out: Path, style_dir: Path | None = None) -> Path:
-    """Write the static explorer: the featured roots only, every form baked in."""
-    html = page_html(
-        {**site_data(FEATURED, embed_all_roots=False), "source": "static"}, style_dir
-    )
-    out.parent.mkdir(parents=True, exist_ok=True)
+    """Write the verb explorer and its sibling rule pages for offline browsing."""
+    catalog = build_catalog()
+    css = stylesheet(style_dir)
+    data = {
+        **site_data(FEATURED, embed_all_roots=False),
+        "source": "static",
+        "rule_pages": rule_links(catalog),
+    }
+    html = page_html(data, style_dir, css=css)
+    rule_dir = out.parent / RULES_DIR
+    rule_dir.mkdir(parents=True, exist_ok=True)
+    explorer_href = f"../{quote(out.name, safe='')}"
+    for name, content in rule_assets(
+        catalog, explorer_href, set(FEATURED), css
+    ).items():
+        (rule_dir / name).write_text(content, encoding="utf-8")
     out.write_text(html, encoding="utf-8")
     return out

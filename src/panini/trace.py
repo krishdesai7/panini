@@ -14,11 +14,13 @@ _UNCHANGED = {
 
 
 _TERM = re.compile(r"\{([^{}|]+)\|([^{}]+)\}")
+_IAST = re.compile(r"\[\[([^\[\]]+)\]\]")
 
 
 def plain(text: str, verbosity: int = 0) -> str:
     """Render {modern|traditional} markup: the modern word, plus the traditional one at -v."""
-    return _TERM.sub(r"\1 (\2)" if verbosity >= 1 else r"\1", text)
+    terms = _TERM.sub(r"\1 (\2)" if verbosity >= 1 else r"\1", text)
+    return _IAST.sub(r"\1", terms)
 
 
 def _form(views: tuple[TermView, ...]) -> str:
