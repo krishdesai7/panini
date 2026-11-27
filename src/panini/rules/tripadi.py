@@ -9,7 +9,7 @@ lazy from collections.abc import Iterator
 from panini.edits import DeleteSounds, ReplaceSounds
 from panini.model import Site, Sound, State, TermKind
 from panini.rules.base import Optionality, Rule
-from panini.sounds import pratyahara
+from panini.sounds import is_vowel, pratyahara
 from panini.translit import slp1_to_iast
 
 JHAL = pratyahara("Jal")
@@ -174,6 +174,33 @@ R_8_3_24 = Rule(
     note=lambda st, site: (
         "n inside a word before an {obstruent|jhal} becomes the {nasal glide|anusvāra} ṃ"
     ),
+)
+
+
+# 8.2.21 aci vibhāṣā (with graḥ from 8.2.20 gro yaṅi): the r of gṝ (gir after 7.1.100) may become l
+# before a vowel. Vibhāṣā: preferably not (Kiparsky), so girati first and gilati as the
+# alternative; Vidyut lists gilati first (docs/findings.md, slice 1.6).
+def _find_8221(st: State) -> list[Site]:
+    out: list[Site] = []
+    for n in range(len(st.terms) - 1):
+        t, nxt = st.terms[n], st.terms[n + 1]
+        if (
+            t.kind is TermKind.ROOT
+            and t.upadesha == "gF"
+            and t.antya == "r"
+            and (first := next((x for x in nxt.sounds if not x.it), None)) is not None
+            and is_vowel(first.char)
+        ):
+            out.append(Site.at(n, len(t.sounds) - 1))
+    return out
+
+
+R_8_2_21 = Rule(
+    "8.2.21",
+    _find_8221,
+    lambda st, site: _replace(site.spans[0].term, site.spans[0].start, "l"),
+    optional=Optionality.VIBHASHA,
+    note=lambda st, site: "the r of gṝ may become l before a vowel",
 )
 
 
@@ -437,6 +464,7 @@ R_8_4_58 = Rule(
 
 RULES = (
     R_8_2_18,
+    R_8_2_21,
     R_8_2_23,
     R_8_2_39,
     R_8_2_66,

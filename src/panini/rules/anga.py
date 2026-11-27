@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import itertools
 from dataclasses import replace
+lazy from collections.abc import Callable
 
 from panini.edits import VIKRTA, AddTags, DeleteSounds, ReplaceSounds
 from panini.lexicon import citation_name
@@ -90,7 +91,8 @@ def _note_7384(st: State, site: Site) -> str:
     return note
 
 
-R_7_3_84 = Rule("7.3.84", _find_7384, _rewrite_7384, note=_note_7384)
+# 7.3.84 and 7.3.86 are one operation, guṇa (both carry guṇaḥ from 7.3.82), for the nitya check.
+R_7_3_84 = Rule("7.3.84", _find_7384, _rewrite_7384, note=_note_7384, operation="guṇa")
 
 
 # 7.3.86 pugantalaghūpadhasya ca (guṇa of a light penultimate ik)
@@ -133,6 +135,7 @@ R_7_3_86 = Rule(
     _find_7386,
     _rewrite_7384,
     near_miss=_near_7386,
+    operation="guṇa",
     note=lambda st, site: (
         "the light penultimate "
         f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} takes {{full grade|guṇa}}"
@@ -379,15 +382,24 @@ def _find_115(st: State) -> list[Site]:
     return out
 
 
+def _note_115(st: State, site: Site) -> str:
+    """Names the vowel protected: one root can need 1.1.5 more than once (mṛ → mri → mriy)."""
+    sp = site.spans[0]
+    t = st.terms[sp.term]
+    where = "final" if sp.start == len(t.sounds) - 1 else "penultimate"
+    affix = slp1_to_iast(st.terms[_next_term(st, sp.term)].text)
+    return (
+        f"the {where} {slp1_to_iast(t.sounds[sp.start].char)} gets no {{full grade|guṇa}} "
+        f"before {affix}, which is marked ṅ (or counts as such)"
+    )
+
+
 R_1_1_5 = Rule(
     "1.1.5",
     _find_115,
     lambda st, site: (),
     blocks=("7.3.84", "7.3.86"),
-    note=lambda st, site: (
-        f"no {{full grade|guṇa}} before {slp1_to_iast(st.terms[_next_term(st, site.spans[0].term)].text)}, "
-        "which is marked ṅ (or counts as such)"
-    ),
+    note=_note_115,
 )
 
 
@@ -582,6 +594,307 @@ R_6_4_25 = _nasal_loss("6.4.25")
 R_6_4_26 = _nasal_loss("6.4.26")
 
 
+# 6.4.24 aniditāṃ hala upadhāyāḥ kṅiti: a root not marked with i, ending in a consonant, loses
+# its penultimate n before an affix marked k or ṅ (or counting as such, 1.2.4). In laṭ/laṅ that is
+# only śa (3.1.77): śap is marked p. An augment n (num) is not touched: num added by 7.1.59 would
+# otherwise be pointless (the tradition's vidhāna-sāmarthya), and Vidyut agrees.
+def _find_6424(st: State) -> list[Site]:
+    out: list[Site] = []
+    for i in _before_sarvadhatuka(st):
+        t = st.terms[i]
+        k = len(t.sounds) - 2
+        if (
+            t.kind is TermKind.ROOT
+            and not _is_idit(t)
+            and _is_knit(st.terms[_next_term(st, i)])
+            and k >= 0
+            and t.antya in HAL
+            and t.sounds[k].char == "n"
+            and not t.sounds[k].agama
+        ):
+            out.append(Site.at(i, k))
+    return out
+
+
+R_6_4_24 = Rule(
+    "6.4.24",
+    _find_6424,
+    lambda st, site: (DeleteSounds(site.spans[0].term, (site.spans[0].start,)),),
+    note=lambda st, site: (
+        f"{citation_name(st.terms[site.spans[0].term].upadesha)} is not marked with i, so its "
+        "{penultimate|upadhā} n is dropped before an affix marked ṅ (or counting as such)"
+    ),
+)
+
+
+# 7.1.59 śe mucādīnām: the muc group gets num before śa. The group is listed by upadeśa (accents
+# removed), codes 06.0166–06.0173. Vārttika 7.1.59.1 śe tṛmphādīnāṃ num vācyaḥ does the same for
+# the tṛmph group, roots taught with a nasal (06.0031 … 06.0077): 6.4.24 drops that nasal before
+# śa and the vārttika restores it. Both rules apply only to a root with no n left (a non-marker
+# sound): for the muc group that makes num apply once; for the tṛmph group it means the vārttika
+# waits until 6.4.24 has dropped the taught n (its purpose is to undo 6.4.24; num beside the
+# taught n would give a double nasal no one recites). No root of either group ends in n.
+MUCADI = frozenset(
+    {"mucx~", "lupx~", "vidx~", "lipa~", "zica~", "kftI~", "Kida~", "piSa~"}
+)
+TRMPHADI = frozenset(
+    {
+        "tfnPa~",
+        "tunpa~",
+        "tunPa~",
+        "dfnPa~",
+        "fnPa~",
+        "gunPa~",
+        "unBa~",
+        "SunBa~",
+        "tfnhU~",
+    }
+)
+
+
+def _bare_upadesha(t: Term) -> str:
+    return t.upadesha.replace("\\", "").replace("^", "")
+
+
+def _num_before_sha(group: frozenset[str]):
+    def find(st: State) -> list[Site]:
+        out: list[Site] = []
+        for i in range(len(st.terms) - 1):
+            t, nxt = st.terms[i], st.terms[i + 1]
+            if (
+                t.kind is TermKind.ROOT
+                and _bare_upadesha(t) in group
+                and nxt.upadesha == "Sa"
+                and not any(s.char == "n" for s in t.sounds if not s.it)
+                and (pos := mit_position(st, i)) is not None
+            ):
+                out.append(Site.at(i, pos, pos))
+        return out
+
+    return find
+
+
+NASAL_INFIX = Aside(
+    "historically a nasal-infix present, cf. Latin rumpit and the rudh class",
+    ("rumpit",),
+)
+
+
+def _note_num(which: str) -> Callable[[State, Site], str]:
+    def note(st: State, site: Site) -> str:
+        return (
+            f"{citation_name(st.terms[site.spans[0].term].upadesha)}, one of the {which} group, "
+            "gets the {augment|āgama} n (num) before śa; it goes right after the last vowel (1.1.47)"
+        )
+
+    return note
+
+
+R_7_1_59 = Rule(
+    "7.1.59",
+    _num_before_sha(MUCADI),
+    lambda st, site: mit_augment_edit(st, site.spans[0].term, (Sound("n"),)),
+    note=_note_num("muc"),
+    history=lambda st, site: NASAL_INFIX,
+)
+R_7_1_59_1 = Rule(
+    "7.1.59.1",
+    _num_before_sha(TRMPHADI),
+    lambda st, site: mit_augment_edit(st, site.spans[0].term, (Sound("n"),)),
+    note=_note_num("tṛmph"),
+)
+
+
+# 6.4.77 aci śnudhātubhruvāṃ yvor iyaṅuvaṅau: the final i/ī of a root becomes iy, u/ū becomes uv,
+# before an affix beginning with a vowel. Iyaṅ and uvaṅ are marked ṅ, so they replace only the
+# last sound (1.1.53). The śnu and bhrū parts of the sūtra are not reached in this slice.
+IYAN_UVAN = {"i": "iy", "I": "iy", "u": "uv", "U": "uv"}
+
+
+def _find_6477(st: State) -> list[Site]:
+    out: list[Site] = []
+    for i, t in enumerate(st.terms):
+        j = _following(st, i)
+        if (
+            t.kind is TermKind.ROOT
+            and t.antya in IYAN_UVAN
+            and j is not None
+            and is_pratyaya(st.terms[j])
+            and is_vowel(adi(st, j) or "")
+        ):
+            k = len(t.sounds) - 1
+            out.append(Site.at(i, k, k + 1))
+    return out
+
+
+def _vowel_at(st: State, site: Site) -> str:
+    return st.terms[site.spans[0].term].sounds[site.spans[0].start].char
+
+
+R_6_4_77 = Rule(
+    "6.4.77",
+    _find_6477,
+    lambda st, site: (
+        ReplaceSounds(
+            site.spans[0].term,
+            site.spans[0].start,
+            site.spans[0].end,
+            _sounds(IYAN_UVAN[_vowel_at(st, site)]),
+        ),
+    ),
+    note=lambda st, site: (
+        f"before a vowel the root's final {slp1_to_iast(_vowel_at(st, site))} becomes "
+        f"{slp1_to_iast(IYAN_UVAN[_vowel_at(st, site)])} "
+        "(iyaṅ/uvaṅ, marked ṅ, so only the last sound is replaced, 1.1.53)"
+    ),
+)
+
+
+# 7.4.28 riṅ śayagliṅkṣu: a root's final ṛ becomes ri before śa (and before yak and the
+# benedictive liṅ, not reached here). Riṅ is marked ṅ, so it replaces only the last sound (1.1.53).
+def _find_7428(st: State) -> list[Site]:
+    out: list[Site] = []
+    for i in range(len(st.terms) - 1):
+        t, nxt = st.terms[i], st.terms[i + 1]
+        if t.kind is TermKind.ROOT and t.antya == "f" and nxt.upadesha == "Sa":
+            k = len(t.sounds) - 1
+            out.append(Site.at(i, k, k + 1))
+    return out
+
+
+R_7_4_28 = Rule(
+    "7.4.28",
+    _find_7428,
+    lambda st, site: (
+        ReplaceSounds(
+            site.spans[0].term, site.spans[0].start, site.spans[0].end, _sounds("ri")
+        ),
+    ),
+    note=lambda st, site: (
+        "the root's final ṛ becomes ri before śa (riṅ, marked ṅ, so only the last sound is "
+        "replaced, 1.1.53)"
+    ),
+)
+
+
+# 6.1.16 grahijyāvayivyadhivaṣṭivicativṛścatipṛcchatibhṛjjatīnāṃ ṅiti ca: before an affix marked k
+# (kiti, from 6.1.15) or ṅ, these roots weaken a semivowel to its vowel (samprasāraṇa, 1.1.45
+# ig yaṇaḥ samprasāraṇam). In tudādi: vyac (vicati), vrasc, prach, bhrasj. Only the semivowel right
+# before the vowel weakens (6.1.37 na samprasāraṇe samprasāraṇam keeps vy- from becoming *ui-),
+# and the term is tagged so the rule does not apply again.
+SAMPRASARANA_ROOTS = frozenset({"vyaca~", "o~vrascU~", "praCa~", "Brasja~"})
+SAMPRASARANA = "samprasāraṇa"  # tag on a root whose semivowel has weakened (6.1.16)
+VOWEL_OF = {"y": "i", "v": "u", "r": "f", "l": "x"}
+
+
+def _first_vowel(t: Term) -> int | None:
+    return next(
+        (k for k, s in enumerate(t.sounds) if not s.it and is_vowel(s.char)), None
+    )
+
+
+def _find_6116(st: State) -> list[Site]:
+    out: list[Site] = []
+    for i in _before_sarvadhatuka(st):
+        t = st.terms[i]
+        k = _first_vowel(t)
+        if (
+            t.kind is TermKind.ROOT
+            and t.upadesha in SAMPRASARANA_ROOTS
+            and SAMPRASARANA not in t.tags
+            and _is_knit(st.terms[_next_term(st, i)])
+            and k is not None
+            and k > 0
+            and t.sounds[k - 1].char in VOWEL_OF
+        ):
+            out.append(Site.at(i, k - 1, k))
+    return out
+
+
+R_6_1_16 = Rule(
+    "6.1.16",
+    _find_6116,
+    lambda st, site: (
+        ReplaceSounds(
+            site.spans[0].term,
+            site.spans[0].start,
+            site.spans[0].end,
+            _sounds(
+                VOWEL_OF[st.terms[site.spans[0].term].sounds[site.spans[0].start].char]
+            ),
+        ),
+        AddTags(site.spans[0].term, frozenset({SAMPRASARANA})),
+    ),
+    note=lambda st, site: (
+        "before an affix marked ṅ (or counting as such) the semivowel "
+        f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} weakens to "
+        f"its vowel {slp1_to_iast(VOWEL_OF[st.terms[site.spans[0].term].sounds[site.spans[0].start].char])} "
+        "({vowel weakening|samprasāraṇa}, 1.1.45)"
+    ),
+)
+
+
+# 6.1.108 samprasāraṇāc ca: a vowel after a samprasāraṇa vowel merges with it into that vowel
+# (one sound for both, 6.1.84; the earlier one, pūrva from 6.1.107): pṛ-a-cch → pṛcch.
+def _find_61108(st: State) -> list[Site]:
+    out: list[Site] = []
+    for i, t in enumerate(st.terms):
+        k = _first_vowel(t)
+        if (
+            SAMPRASARANA in t.tags
+            and k is not None
+            and k + 1 < len(t.sounds)
+            and is_vowel(t.sounds[k + 1].char)
+        ):
+            out.append(Site.at(i, k, k + 2))
+    return out
+
+
+R_6_1_108 = Rule(
+    "6.1.108",
+    _find_61108,
+    lambda st, site: (
+        ReplaceSounds(
+            site.spans[0].term,
+            site.spans[0].start,
+            site.spans[0].end,
+            (st.terms[site.spans[0].term].sounds[site.spans[0].start],),
+        ),
+    ),
+    note=lambda st, site: (
+        "the vowel after the weakened "
+        f"{slp1_to_iast(st.terms[site.spans[0].term].sounds[site.spans[0].start].char)} merges with "
+        "it into that vowel (one sound replaces both, 6.1.84)"
+    ),
+)
+
+
+# 7.1.100 ṝta id dhātoḥ: a root's final ṝ is replaced by i, which takes an r after it (1.1.51 uraṇ
+# raparaḥ): kṝ → kir, gṝ → gir. Where full grade applies (bhvādi tṝ, tarati) the two compete.
+def _find_71100(st: State) -> list[Site]:
+    out: list[Site] = []
+    for i in range(len(st.terms) - 1):
+        t = st.terms[i]
+        if t.kind is TermKind.ROOT and t.antya == "F" and is_pratyaya(st.terms[i + 1]):
+            k = len(t.sounds) - 1
+            out.append(Site.at(i, k, k + 1))
+    return out
+
+
+R_7_1_100 = Rule(
+    "7.1.100",
+    _find_71100,
+    lambda st, site: (
+        ReplaceSounds(
+            site.spans[0].term, site.spans[0].start, site.spans[0].end, _sounds("ir")
+        ),
+    ),
+    note=lambda st, site: (
+        "the root's final ṝ is replaced by i, which is followed by r because it replaces ṛ (1.1.51)"
+    ),
+)
+
+
 # 6.4.89 ūd upadhāyā gohaḥ: the penultimate vowel of goha becomes ū before a vowel-initial affix
 # (aci, carried over from 6.4.77). goha is guh in its full grade, so the rule follows guṇa (7.3.86)
 # and reaches only forms where guṇa applied.
@@ -634,5 +947,13 @@ RULES = (
     R_7_3_78_OPT,
     R_6_4_25,
     R_6_4_26,
+    R_6_4_24,
+    R_7_1_59,
+    R_7_1_59_1,
+    R_6_4_77,
+    R_7_4_28,
+    R_6_1_16,
+    R_6_1_108,
+    R_7_1_100,
     R_6_4_89,
 )

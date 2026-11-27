@@ -12,7 +12,6 @@ from vidyut.lipi import Scheme, transliterate
 from vidyut.prakriya import (
     Dhatu,
     DhatuPada,
-    Gana,
     Lakara,
     Pada,
     Prayoga,
@@ -20,6 +19,7 @@ from vidyut.prakriya import (
     Vacana,
     Vyakarana,
 )
+from vidyut_gana import vidyut_gana
 
 from panini import request as rq
 from panini.request import all_requests, availability
@@ -49,7 +49,9 @@ def main() -> None:
     for req in all_requests():
         if availability(req) is not None:
             continue
-        dhatu = Dhatu.mula(aupadeshika=req.root.upadesha, gana=Gana.Bhvadi)
+        dhatu = Dhatu.mula(
+            aupadeshika=req.root.upadesha, gana=vidyut_gana(req.root.gana)
+        )
         pada = Pada.Tinanta(
             dhatu=dhatu,
             prayoga=Prayoga.Kartari,

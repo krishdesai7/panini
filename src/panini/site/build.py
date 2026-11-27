@@ -35,7 +35,8 @@ def root_entries() -> list[dict[str, Any]]:
             "meaning": r.meaning,
             "meaning_kind": r.meaning_kind,
             "gana": r.gana,
-            "class_label": GANA_LABELS.get(r.gana, r.gana),
+            "class_label": GANA_LABELS[r.gana][0],
+            "class_tip": GANA_LABELS[r.gana][1],
             "pada": effective_pada(r),
             "unavailable": OUT_OF_SCOPE[r.code][0] if r.code in OUT_OF_SCOPE else None,
             "unavailable_rule": OUT_OF_SCOPE[r.code][1]
@@ -149,7 +150,17 @@ MARKER_NOTES: dict[str, str] = {
 
 
 # Plain descriptions of the Dhātupāṭha classes, shown instead of their Sanskrit names.
-GANA_LABELS = {"bhvādi": "class 1 · thematic, full grade"}
+# gaṇa -> (label, tooltip) for the explorer's root heading.
+GANA_LABELS: dict[str, tuple[str, str]] = {
+    "bhvādi": (
+        "class 1 · thematic, full grade",
+        "bhvādi (the bhū class, first gaṇa of the Dhātupāṭha)",
+    ),
+    "tudādi": (
+        "class 6 · thematic, zero grade",
+        "tudādi (the tud class, sixth gaṇa of the Dhātupāṭha)",
+    ),
+}
 
 
 def _sutras() -> dict[str, dict[str, str]]:

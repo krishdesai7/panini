@@ -25,10 +25,10 @@ def test_cli_derive() -> None:
 
 
 def test_cli_unknown_root() -> None:
-    result = runner.invoke(app, ["derive", "kṛ", "laṭ", "3", "sg"])
+    result = runner.invoke(app, ["derive", "brū", "laṭ", "3", "sg"])
     assert result.exit_code == 2
     err = result.stderr
-    assert "kṛ" in err
+    assert "brū" in err
     assert "bhū" in err
     assert "Traceback" not in err
 

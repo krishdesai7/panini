@@ -64,6 +64,10 @@ class Rule:
         None  # replaces "preferably not, so not applied" for a VIBHASHA or SENSE rule
     )
     assigns: str | None = None
+    # The operation this rule shares with sibling rules under one heading, e.g. "guṇa" for 7.3.84
+    # and 7.3.86 (both carry guṇaḥ from 7.3.82). The nitya check counts a sibling acting on the same
+    # sound as the operation surviving, whatever its result (resolver.surviving_rule).
+    operation: str | None = None
     tuk_or_satva: bool = False
     reintroduces_upadesha: bool = False
     section_override: str | None = None  # tests only: "tripadi" or "main"

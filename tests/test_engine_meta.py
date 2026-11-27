@@ -117,6 +117,87 @@ def test_nitya_preference() -> None:
     )
 
 
+def test_nitya_counts_one_operation_across_sibling_rules() -> None:
+    # bU: G1 (final U -> o) and Y (final U -> uv) bleed each other as rules, but after Y the
+    # sibling G2 (penultimate u -> o, the same operation) makes the same change on the same
+    # term. So the operation survives Y and Y does not survive it: G1 is nitya (bhū: guṇa
+    # 7.3.84/7.3.86 over uvaṅ 6.4.77).
+    g1 = replace_rule("9.9.10", "U", "o", operation="g")
+    y = Rule(
+        "9.9.11",
+        lambda st: [Site.at(0, 1)] if st.terms[0].text == "bU" else [],
+        lambda st, site: (ReplaceSounds(0, 1, 2, (Sound("u"), Sound("v"))),),
+    )
+    g2 = replace_rule("9.9.12", "u", "o", only_at=1, operation="g")
+    state, steps, _ = run(S("bU"), [g1, y, g2])
+    assert final_text(state) == "bo"
+    assert ids(steps) == ["9.9.10"]
+    assert (
+        Loser(
+            "9.9.11",
+            "deferred: g {applies either way|nitya}: after 9.9.11, "
+            "9.9.12 still applies at the same place",
+        )
+        in steps[0].losers
+    )
+
+
+def test_nitya_operation_survives_on_the_same_vowel_whatever_its_result() -> None:
+    # tF: G1 (final F -> ar) and Y (final F -> ir) bleed each other; after Y the sibling G2 still
+    # applies to the same vowel (i -> e), with a different result. The operation survives Y, so
+    # G1 is nitya (tṝ: guṇa over 7.1.100, tarati; the user's ruling, slice 1.6).
+    def g1_rewrite(_st, _site):
+        return (ReplaceSounds(0, 1, 2, (Sound("a"), Sound("r"))),)
+
+    g1 = Rule(
+        "9.9.10",
+        lambda st: [Site.at(0, 1)] if st.terms[0].text == "tF" else [],
+        g1_rewrite,
+        operation="g",
+    )
+    y = Rule(
+        "9.9.11",
+        lambda st: [Site.at(0, 1)] if st.terms[0].text == "tF" else [],
+        lambda st, site: (ReplaceSounds(0, 1, 2, (Sound("i"), Sound("r"))),),
+    )
+    g2 = replace_rule("9.9.12", "i", "e", only_at=1, operation="g")
+    state, steps, _ = run(S("tF"), [g1, y, g2])
+    assert final_text(state) == "tar"
+    assert ids(steps) == ["9.9.10"]
+
+
+def test_a_blocked_sibling_does_not_carry_the_operation() -> None:
+    # As in the bU test, but after Y a niṣedha blocks G2: the operation no longer survives Y,
+    # so nothing decides between G1 and Y.
+    g1 = replace_rule("9.9.10", "U", "o", operation="g")
+    y = Rule(
+        "9.9.11",
+        lambda st: [Site.at(0, 1)] if st.terms[0].text == "bU" else [],
+        lambda st, site: (ReplaceSounds(0, 1, 2, (Sound("u"), Sound("v"))),),
+    )
+    g2 = replace_rule("9.9.12", "u", "o", only_at=1, operation="g")
+    nisedha = Rule(
+        "9.9.13",
+        lambda st: [Site.at(0, 1)] if "v" in st.terms[0].text else [],
+        lambda st, site: (),
+        blocks=("9.9.12",),
+    )
+    with pytest.raises(UnresolvedConflict):
+        run(S("bU"), [g1, y, g2, nisedha])
+
+
+def test_sibling_rules_without_a_shared_operation_still_conflict() -> None:
+    g1 = replace_rule("9.9.10", "U", "o")
+    y = Rule(
+        "9.9.11",
+        lambda st: [Site.at(0, 1)] if st.terms[0].text == "bU" else [],
+        lambda st, site: (ReplaceSounds(0, 1, 2, (Sound("u"), Sound("v"))),),
+    )
+    g2 = replace_rule("9.9.12", "u", "o", only_at=1)
+    with pytest.raises(UnresolvedConflict):
+        run(S("bU"), [g1, y, g2])
+
+
 def test_commuting_tie_lowest_id() -> None:
     a = replace_rule("9.9.2", "a", "i")
     b = replace_rule("9.9.9", "b", "p")

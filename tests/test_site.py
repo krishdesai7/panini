@@ -481,3 +481,20 @@ def test_arrow_keys_wrap_and_start_from_the_ends() -> None:
         "[app.nextActive(4, 5, true), app.nextActive(0, 5, false), app.nextActive(2, 5, false)]"
     ) == [0, 4, 1]
     assert _node("app.nextActive(-1, 0, true)") == -1
+
+
+def test_tudadi_root_entry_has_its_class_label_and_tip() -> None:
+    entries = {e["key"]: e for e in root_entries()}
+    tud = entries["06.0001"]
+    assert tud["gana"] == "tudādi"
+    assert tud["class_label"] == "class 6 · thematic, zero grade"
+    assert "sixth gaṇa" in tud["class_tip"]
+    assert "first gaṇa" in entries["01.0001"]["class_tip"]
+
+
+def test_app_uses_the_class_tip_from_the_data() -> None:
+    from panini.site import build
+
+    js = (Path(build.__file__).parent / "app.js").read_text()
+    assert "r.class_tip" in js
+    assert "the bhū class" not in js

@@ -196,6 +196,10 @@ Loop until no candidates remain:
    something different, X does **not** count as still applicable. That is
    the traditional _śabdāntaraprāpti_ exception. It-marking and it-deletion
    rules count as Ys like any other rule.
+   _Amended in slice 1.6 (user's rulings):_ for rules sharing an operation
+   (`Rule.operation`; so far guṇa, 7.3.84/7.3.86), the operation counts as
+   still applicable if an unblocked sibling acts on the same sound after Y,
+   whatever its result (bhavati, tarati). See `docs/findings.md`, "Slice 1.6".
 5. **Remaining ties.** If several candidates remain, the engine checks that
    they commute: applying them in either order gives the same state. If
    they do, apply the lowest sūtra number. The order is arbitrary, the

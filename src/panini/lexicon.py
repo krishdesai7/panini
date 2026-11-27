@@ -93,7 +93,7 @@ class Root:
 
     @property
     def gana(self) -> str:
-        return "bhvādi"
+        return GANAS[self.code[:2]]
 
     @property
     def name(self) -> str:
@@ -148,9 +148,15 @@ ENGLISH = {
     "01.0002": "to grow, prosper",
     "01.1049": "to lead",
     "01.1151": "to cook",
+    "06.0001": "to strike, push",
+    "06.0003": "to point, show",
+    "06.0166": "to release",
+    "06.0149": "to ask",
+    "06.0145": "to scatter",
+    "06.0139": "to die",
 }
 
-# The slice-1 seven, then the 7.3.78 roots.
+# The slice-1 seven, then the 7.3.78 roots, then six tudādi roots (slice 1.6).
 FEATURED: tuple[str, ...] = (
     "01.0001",
     "01.0381",
@@ -169,6 +175,12 @@ FEATURED: tuple[str, ...] = (
     "01.0991",
     "01.1086",
     "01.1143",
+    "06.0001",
+    "06.0003",
+    "06.0166",
+    "06.0149",
+    "06.0145",
+    "06.0139",
 )
 
 # The upadeśas as the dhātupāṭha teaches them, for roots stored in another spelling
@@ -179,14 +191,26 @@ TAUGHT_AS: dict[str, tuple[str, ...]] = {
 }
 
 
+# The sections of the root list in scope: list-code prefix -> gaṇa, and the vendored file of each
+# (scripts/vendor_dhatupatha.py).
+GANAS: dict[str, str] = {"01": "bhvādi", "06": "tudādi"}
+SECTION_FILES: dict[str, str] = {
+    "01": "dhatupatha_bhvadi.tsv",
+    "06": "dhatupatha_tudadi.tsv",
+}
+
+
 def _load() -> dict[str, Root]:
-    text = (
-        files("panini.data")
-        .joinpath("dhatupatha_bhvadi.tsv")
+    lines = [
+        line
+        for name in SECTION_FILES.values()
+        for line in files("panini.data")
+        .joinpath(name)
         .read_text(encoding="utf-8")
-    )
+        .splitlines()[1:]
+    ]
     roots: dict[str, Root] = {}
-    for line in text.splitlines()[1:]:
+    for line in lines:
         code, upadesha, artha = line.split("\t")
         if code in ENGLISH:
             root = Root(code, upadesha, ENGLISH[code], "english")
@@ -236,7 +260,8 @@ def lookup_root(text: str) -> Root:
     """Find a root by code, name or IAST upadeśa, ignoring Unicode form, spaces and a trailing hyphen.
 
     A spelling with its diacritics is matched first; failing that, one without them (sanj, stha).
-    A name shared by several roots resolves to the featured one if exactly one is featured."""
+    A name shared by several roots of one class resolves to the featured one if exactly one is
+    featured; a name shared across classes always needs a code."""
     if text.strip() in ROOTS:
         return ROOTS[text.strip()]
     found: list[Root] = []
@@ -257,8 +282,10 @@ def lookup_root(text: str) -> Root:
     if not found:
         raise UnknownRoot(text, tuple(r.name for r in (ROOTS[c] for c in FEATURED)))
     if len(found) > 1:
+        # The featured root breaks a tie only within one class: a name shared across classes
+        # (śad, sad in bhvādi and tudādi) needs a code, since the traces differ (śap vs śa).
         featured = [r for r in found if r.code in FEATURED]
-        if len(featured) != 1:
+        if len(featured) != 1 or len({r.gana for r in found}) > 1:
             raise AmbiguousRoot(text, tuple(r.code for r in found))
         return featured[0]
     return found[0]

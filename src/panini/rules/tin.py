@@ -9,6 +9,7 @@ from panini.lexicon import middle_voice_markers, middle_voice_reason
 from panini.meta import substitute_term
 from panini.model import Coreference, Number, Site, State, Term, TermKind, Time
 from panini.rules.base import Find, Rewrite, Rule, dhatu_index, is_pratyaya
+from panini.rules.readings import TUDADI_ASIDE
 from panini.translit import slp1_to_iast
 
 PADA_TAGS = ("parasmaipada", "ātmanepada")
@@ -151,8 +152,8 @@ R_1_3_78 = Rule(
 )
 
 
-# 1.3.60 śadeḥ śitaḥ: śad takes ātmanepada before an affix marked ś. Both lakāras here take śap,
-# so the la is known to be followed by a ś-affix before 3.1.68 adds it.
+# 1.3.60 śadeḥ śitaḥ: śad takes ātmanepada before an affix marked ś. Both lakāras here take śap
+# (or śa, in tudādi), so the la is known to be followed by a ś-affix before 3.1.68/3.1.77 add it.
 SHIT_LAKARAS = ("la~w", "la~N")
 
 
@@ -173,7 +174,8 @@ R_1_3_60 = Rule(
     _tag_pada("ātmanepada", "1.3.60"),
     blocks=("1.3.78",),
     note=lambda st, site: (
-        "śad takes {middle|ātmanepada} endings before an affix marked ś (śap follows), "
+        "śad takes {middle|ātmanepada} endings before an affix marked ś "
+        f"({'śa' if st.terms[dhatu_index(st) or 0].has_tag('tudādi') else 'śap'} follows), "
         "so l is classed as taking them; 3.4.78 will choose from that set"
     ),
 )
@@ -272,6 +274,33 @@ R_3_1_68 = Rule(
 )
 
 
+# 3.1.77 tudādibhyaḥ śaḥ: after a root of the tud class the stem suffix is śa instead of śap
+# (an apavāda of 3.1.68, at the same site). Śa has no marker p, so 1.2.4 makes it count as
+# marked ṅ and 1.1.5 then blocks full grade: tudati, not *todati.
+def _find_3177(st: State) -> list[Site]:
+    d = dhatu_index(st)
+    if d is None or not st.terms[d].has_tag("tudādi"):
+        return []
+    return _find_3168(st)
+
+
+R_3_1_77 = Rule(
+    "3.1.77",
+    _find_3177,
+    lambda st, site: (
+        InsertTerm(
+            site.spans[1].term,
+            Term.from_upadesha(TermKind.VIKARANA, "Sa", frozenset({"pratyaya"})),
+        ),
+    ),
+    blocks=("3.1.68",),
+    note=lambda st, site: (
+        "after a root of the tud class the {stem suffix|vikaraṇa} is śa instead of śap"
+    ),
+    history=lambda st, site: TUDADI_ASIDE,
+)
+
+
 # 1.2.4 sārvadhātukam apit
 def _find_124(st: State) -> list[Site]:
     return [
@@ -343,6 +372,7 @@ RULES = (
     R_3_4_78,
     R_3_4_113,
     R_3_1_68,
+    R_3_1_77,
     R_1_2_4,
     R_1_4_13,
     R_1_4_14,

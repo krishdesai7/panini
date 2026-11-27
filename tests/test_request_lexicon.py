@@ -22,7 +22,7 @@ def _unavailable(req: Request) -> tuple[str, str]:
 
 
 def test_lexicon_loads_whole_section() -> None:
-    assert len(ROOTS) == 1156
+    assert len(ROOTS) == 1156 + 174
     assert "01.0933" not in ROOTS
     assert ROOTS["01.0001"].upadesha == "BU"
     assert ROOTS["01.0001"].meaning == "to be, become"
@@ -174,3 +174,57 @@ def test_lookup_accepts_plain_ascii_spellings() -> None:
     assert lookup_root("pat").name == "pat"
     with pytest.raises(AmbiguousRoot):
         lookup_root("yam")
+
+
+# -- slice 1.6: tudādi ------------------------------------------------------
+
+
+def test_tudadi_roots_are_loaded_with_their_class() -> None:
+    assert ROOTS["06.0001"].upadesha == "tu\\da~^"
+    assert ROOTS["06.0001"].gana == "tudādi"
+    assert ROOTS["01.0001"].gana == "bhvādi"
+    assert sum(c.startswith("06.") for c in ROOTS) == 174
+
+
+def test_cch_reading_applies_to_bhvadi_only() -> None:
+    assert ROOTS["01.0244"].upadesha == "ucCI~"
+    assert ROOTS["06.0015"].upadesha == "uCI~"
+    assert ROOTS["06.0016"].upadesha == "fCa~"
+
+
+@pytest.mark.parametrize("name", ["uch", "uchī", "uñch", "nud", "śad", "sad"])
+def test_names_shared_across_classes_are_ambiguous(name) -> None:
+    with pytest.raises(AmbiguousRoot):
+        lookup_root(name)
+
+
+def test_tud_by_name() -> None:
+    assert lookup_root("tud").code == "06.0001"
+
+
+def test_vich_is_out_of_scope() -> None:
+    req = parse_request("06.0159", "laṭ", 3, "sg", "active")
+    assert availability(req) == (
+        "vich takes the suffix -āya- (vicchāyati), which this engine doesn't derive yet",
+        "3.1.28",
+    )
+
+
+def test_tudadi_shad_takes_middle_endings_by_1360() -> None:
+    active = parse_request("06.0164", "laṭ", 3, "sg", "active")
+    got = availability(active)
+    assert got is not None
+    assert got[1] == "1.3.60"
+    from panini.engine import derive
+
+    d = derive(parse_request("06.0164", "laṭ", 3, "sg", "middle"))
+    step = next(s for s in d.steps if "1.3.60" in s.rule_ids)
+    assert "śa follows" in step.note
+
+
+def test_trut_has_two_present_stems() -> None:
+    req = parse_request("06.0102", "laṭ", 3, "sg", "active")
+    got = availability(req)
+    assert got is not None
+    assert got[1] == "3.1.70"
+    assert "truṭyati" in got[0]

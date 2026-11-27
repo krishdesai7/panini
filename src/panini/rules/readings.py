@@ -127,6 +127,14 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
             "sārvadhātuke ‘before a {present-system affix|sārvadhātuka}’ carries over",
         ),
     ),
+    "3.1.77": (
+        *AFFIX,
+        (
+            "3.1.67",
+            "sārvadhātuke ‘before a {present-system affix|sārvadhātuka}’ carries over",
+        ),
+        ("3.1.68", "kartari ‘denoting the agent’ carries over; śa replaces its śap"),
+    ),
     "1.2.4": (("1.2.1", "ṅit ‘counts as marked ṅ’ carries over"),),
     "1.4.13": (),
     "1.4.14": (
@@ -159,6 +167,37 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
         (BASE, "an operation on the {base|aṅga} (heading)"),
         ("6.4.25", "śapi ‘before śap’ carries over, with na lopaḥ and upadhāyāḥ"),
     ),
+    "6.4.77": (
+        (BASE, "an operation on the {base|aṅga} (heading)"),
+        (LOC, "aci (locative): before a vowel"),
+        ("1.1.53", "iyaṅ and uvaṅ are marked ṅ, so they replace only the last sound"),
+    ),
+    "7.4.28": (
+        (BASE, "an operation on the {base|aṅga} (heading)"),
+        ("7.4.27", "ṛtaḥ ‘of ṛ’ and akṛtsārvadhātukayoḥ carry over"),
+        (LOC, "śa…ṣu (locative): before śa, yak or liṅ"),
+        ("1.1.53", "riṅ is marked ṅ, so it replaces only the last sound"),
+    ),
+    "6.1.16": (
+        (
+            "6.1.15",
+            "kiti ‘before an affix marked k’ carries over; ṅiti ca adds marked ṅ",
+        ),
+        ("1.1.45", "samprasāraṇa = a semivowel replaced by its vowel"),
+    ),
+    "6.1.108": (
+        ("6.1.84", "ekaḥ pūrvaparayoḥ ‘one sound for both’ (heading)"),
+        ("1.1.45", "samprasāraṇa = the vowel that replaced a semivowel"),
+    ),
+    "7.1.100": (
+        (BASE, "an operation on the {base|aṅga} (heading)"),
+        (GEN, "ṝtaḥ (genitive): ṝ is what is replaced"),
+        ("1.1.51", "a vowel replacing ṛ/ṝ is followed by r"),
+    ),
+    "8.2.21": (
+        ("8.2.20", "graḥ ‘of gṝ’ and the r → l change (from 8.2.18) carry over"),
+        (LOC, "aci (locative): before a vowel"),
+    ),
     "6.4.89": (
         (BASE, "an operation on the {base|aṅga} (heading)"),
         ("6.4.77", "the condition ‘before a {syllabic|ac}’ carries over"),
@@ -188,6 +227,22 @@ READS: dict[str, tuple[tuple[str, str], ...]] = {
     "7.1.58": (
         (BASE, "an operation on the {base|aṅga} (heading)"),
         ("1.1.47", "num, marked m, goes right after the last vowel"),
+    ),
+    "7.1.59": (
+        (BASE, "an operation on the {base|aṅga} (heading)"),
+        ("7.1.58", "num carries over"),
+        (LOC, "śe (locative): before śa"),
+        ("1.1.47", "num, marked m, goes right after the last vowel"),
+    ),
+    "7.1.59.1": (
+        ("7.1.59", "śe ‘before śa’ and num carry over"),
+        ("1.1.47", "num, marked m, goes right after the last vowel"),
+    ),
+    "6.4.24": (
+        (BASE, "an operation on the {base|aṅga} (heading)"),
+        ("6.4.23", "na lopaḥ ‘n is dropped’ carries over"),
+        ("1.1.65", "upadhā = the penultimate sound"),
+        (LOC, "kṅiti (locative): before an affix marked k or ṅ"),
     ),
     "7.1.61": (
         (BASE, "an operation on the {base|aṅga} (heading)"),
@@ -433,6 +488,12 @@ class Aside:
 
 REDUPLICATED = "a reduplicated present"
 SK_PRESENT = "a present in *-sḱe-"
+
+# The tud class as a whole (3.1.77).
+TUDADI_ASIDE = Aside(
+    "the Indo-European *tudé- type, accented on the thematic vowel "
+    "(accent is not shown yet)"
+)
 
 # Historical asides for the substituted present stems (7.3.77, 7.3.78), keyed by upadeśa.
 HISTORY: dict[str, Aside] = {

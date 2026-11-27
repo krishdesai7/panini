@@ -444,10 +444,7 @@ def test_stored_cch_roots(code, tense, expected) -> None:
     [
         ("yuch", "01.0242"),
         ("yucch", "01.0242"),
-        ("uch", "01.0244"),
-        ("uchī", "01.0244"),
         ("ucch", "01.0244"),
-        ("uñch", "01.0243"),
     ],
 )
 def test_stored_cch_roots_found_by_taught_spelling(text, code) -> None:

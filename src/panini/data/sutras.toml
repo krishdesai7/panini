@@ -18,6 +18,10 @@ gloss = "When {full grade|guṇa} or {lengthened grade|vṛddhi} is prescribed w
 text = "kṅiti ca"
 gloss = "{Full grade|guṇa} and {lengthened grade|vṛddhi} do not replace a {close syllabic|ik} before an affix marked with [[k]] or [[ṅ]]."
 
+["1.1.45"]
+text = "ig yaṇaḥ samprasāraṇam"
+gloss = "{Vowel weakening|samprasāraṇa} is the replacement of a semivowel (y v r l) by its vowel (i u ṛ ḷ)."
+
 ["1.1.46"]
 text = "ādyantau ṭakitau"
 gloss = "An augment marked with ṭ is placed at the beginning of what it is added to; one marked with k, at the end."
@@ -41,6 +45,10 @@ gloss = "A vowel that replaces [[ṛ]] or [[ḷ]] is followed by [[r]] or [[l]],
 ["1.1.52"]
 text = "alo 'ntyasya"
 gloss = "A substitute replaces only the last {sound|al} of what is named."
+
+["1.1.53"]
+text = "ṅic ca"
+gloss = "A substitute marked with ṅ, even one of more than one sound, replaces only the last sound."
 
 ["1.1.55"]
 text = "anekālśit sarvasya"
@@ -218,6 +226,10 @@ gloss = "Before a {present-system affix|sārvadhātuka} in the passive or impers
 text = "kartari śap"
 gloss = "When a {present-system affix|sārvadhātuka} denoting the agent follows, the {stem suffix|vikaraṇa} śap is added to the root (as an affix, 3.1.1, placed after it, 3.1.2, after a root, 3.1.91)."
 
+["3.1.77"]
+text = "tudādibhyaḥ śaḥ"
+gloss = "After the roots of the tud class the {stem suffix|vikaraṇa} śa is added instead of śap (3.1.68), before a {present-system affix|sārvadhātuka} denoting the agent."
+
 ["3.1.91"]
 text = "dhātoḥ"
 gloss = "(Heading over the rest of book 3) The affixes introduced from here on are added after a root."
@@ -261,6 +273,14 @@ gloss = "In place of a lakāra marked with ṅ, tas, thas, tha and mip are repla
 ["3.4.113"]
 text = "tiṅśit sārvadhātukam"
 gloss = "A {personal ending|tiṅ}, or an affix marked with ś, is called a {present-system affix|sārvadhātuka}."
+
+["6.1.15"]
+text = "vacisvapiyajādīnāṃ kiti"
+gloss = "Before an affix marked k, vac, svap and the roots of the yaj group weaken a semivowel to its vowel ({vowel weakening|samprasāraṇa})."
+
+["6.1.16"]
+text = "grahijyāvayivyadhivaṣṭivicativṛścatipṛcchatibhṛjjatīnāṃ ṅiti ca"
+gloss = "Before an affix marked k or ṅ, grah, jyā, vay, vyadh, vaś, vyac, vrasc, prach and bhrasj weaken a semivowel to its vowel ({vowel weakening|samprasāraṇa})."
 
 ["6.1.64"]
 text = "dhātvādeḥ ṣaḥ saḥ"
@@ -342,6 +362,10 @@ gloss = "Short a (not at the end of a word) and a following {full-grade|guṇa} 
 text = "akaḥ savarṇe dīrghaḥ"
 gloss = "A {simple syllabic|ak} ([[a]], [[i]], [[u]], [[ṛ]], [[ḷ]]) and a following syllabic of the same kind are together replaced by the long syllabic."
 
+["6.1.108"]
+text = "samprasāraṇāc ca"
+gloss = "After a {vowel-weakening|samprasāraṇa} vowel, a following vowel and it are replaced by the first of the two."
+
 ["6.4.1"]
 text = "aṅgasya"
 gloss = "(Heading over 6.4.1–7.4.97) The following operations apply to a {base|aṅga}."
@@ -357,8 +381,8 @@ gloss = "After the stem suffix śna (the na of the seventh class), n is dropped.
 ["6.4.24"]
 text = "aniditāṃ hala upadhāyāḥ kṅiti"
 gloss = "Before an affix marked with [[k]] or [[ṅ]], the penultimate nasal of a root ending in a {consonant|hal} is dropped, unless the root is marked with [[i]]."
-# Not traced in slice 1.5: in laṭ and laṅ the root is followed by śap, which is not marked
-# with k or ṅ, so 6.4.24 never applies there (docs/findings.md, "7.1.58 and 6.4.24").
+# Traced since slice 1.6: in laṭ and laṅ only śa (tudādi, 3.1.77) counts as marked ṅ; śap is
+# marked p, so bhvādi roots never meet 6.4.24 there.
 
 ["6.4.25"]
 text = "daṃśasañjasvañjāṃ śapi"
@@ -400,9 +424,21 @@ gloss = "In a {middle|ātmanepada} ending, jh is replaced by at after a base tha
 text = "idito num dhātoḥ"
 gloss = "A root marked with i gets the augment num (n)."
 
+["7.1.59"]
+text = "śe mucādīnām"
+gloss = "Before śa, the roots of the muc group get the {augment|āgama} n (num)."
+
+["7.1.59.1"]
+text = "śe tṛmphādīnāṃ num vācyaḥ"
+gloss = "(Vārttika on 7.1.59) The roots of the tṛmph group also get num before śa."
+
 ["7.1.61"]
 text = "radhijabhor aci"
 gloss = "Before an affix beginning with a {syllabic|ac}, [[radh]] and [[jabh]] get the augment [[num]] ([[n]])."
+
+["7.1.100"]
+text = "ṝta id dhātoḥ"
+gloss = "A root's final ṝ is replaced by i (followed by r, 1.1.51)."
 
 ["7.2.80"]
 text = "ato yeyaḥ"
@@ -444,6 +480,14 @@ gloss = "Before a {present-system|sārvadhātuka} or {non-present|ārdhadhātuka
 text = "ato dīrgho yañi"
 gloss = "Before a {present-system affix|sārvadhātuka} beginning with a {resonant, [[jh]], or [[bh]]|yañ}, a base-final short [[a]] is lengthened."
 
+["7.4.27"]
+text = "rīṅ ṛtaḥ"
+gloss = "Before yak and a {suffix|pratyaya} beginning with y that is neither a kṛt suffix nor a {present-system affix|sārvadhātuka} (akṛtsārvadhātukayoḥ, from 7.4.25), a base-final ṛ is replaced by rī (rīṅ)."
+
+["7.4.28"]
+text = "riṅ śayagliṅkṣu"
+gloss = "Before śa, yak and the benedictive liṅ, a root's final ṛ is replaced by ri (riṅ)."
+
 ["8.1.16"]
 text = "padasya"
 gloss = "(Heading to 8.3.55) The following apply to a {word|pada}."
@@ -455,6 +499,14 @@ gloss = "(Heading) From here to the end of the grammar, each rule is treated as 
 ["8.2.18"]
 text = "kṛpo ro laḥ"
 gloss = "In the root kṛp, r (also the r heard in ṛ) is replaced by l."
+
+["8.2.20"]
+text = "gro yaṅi"
+gloss = "Before the intensive suffix yaṅ, the r of gṝ becomes l."
+
+["8.2.21"]
+text = "aci vibhāṣā"
+gloss = "Before a vowel, the r of gṝ preferably does not become l (it may)."
 
 ["8.2.23"]
 text = "saṃyogāntasya lopaḥ"

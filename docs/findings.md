@@ -223,10 +223,9 @@ _kṛp_ → _kalpate_, and _vraj_ losing its initial _v_ (a bug, fixed in Task 8
   (_āñchat_, _auñchat_).
 - **6.4.24 _aniditāṃ hala upadhāyāḥ kṅiti_** is the contrast: roots _not_
   marked with _i_ lose a penultimate nasal before a kit/ṅit affix, which is
-  why the _i_ marker matters. It is not traced in this slice: in laṭ and laṅ
-  the root is always followed by śap, which is neither kit nor ṅit, so the
-  rule can never come close to applying and a near-miss note would mislead.
-  Its text and gloss are in `sutras.toml`.
+  why the _i_ marker matters. It is not traced in slice 1.5: in bhvādi laṭ and laṅ
+  the root is always followed by śap, which is neither kit nor ṅit. **Since slice
+  1.6 it is traced** for tudādi, whose śa counts as ṅit (see "Slice 1.6" below).
 - After 7.1.58, 6 of the 196 _i_-marked roots still fail the sweep, for
   missing sound rules rather than the augment: _stambh_ (the ṣṭ-initial bug,
   Task 4), _ghiṇṇ_, _ghuṇṇ_, _ghṛṇṇ_ (n before ṇ needs 8.4.41 _ṣṭunā ṣṭuḥ_:
@@ -280,9 +279,12 @@ For _ghṛṇ_ (`GfRi~\`) our trace cites the vārttika 8.4.1.1 _ṛvarṇāc ce
       applied to every root in _ch_. _prach_ (tudādi) has to keep a single _ch_:
       stored as _pracch_, it would break 6.4.19 _chvoḥ śūḍ anunāsike ca_ for _praśna_,
       which forces Patañjali's _cchvoḥ_ reparsing that Kiparsky rejects. So the class is
-      split arbitrarily: _yuch_, _uch_ and (when tudādi comes in) _ṛch_ and tudādi _uch_
-      get _cch_, and _prach_ keeps _ch_. Revisit if a later slice adopts a principled
-      ordering device.
+      split arbitrarily: _yuch_ and _uch_ get _cch_, and _prach_ keeps _ch_. Revisit if a
+      later slice adopts a principled ordering device.
+    - **Corrected in slice 1.6:** tudādi _ṛch_ (06.0016) and _uch_ (06.0015) do *not* need
+      _cch_, as this note used to predict. Before śa, 1.1.5 blocks full grade, so 6.1.73 has
+      no rival and the trace shows it (_ṛcchati_, _ucchati_). The stipulation stays for the
+      two bhvādi roots only, and `scripts/vendor_dhatupatha.py` now keys it by list code.
 
 ## Task 9: closing the sweep
 
@@ -399,3 +401,74 @@ in `OUT_OF_SCOPE`: other present stems, the _-āya-_/_-īya-_/ṇiṅ suffixes, 
 stems, one variant reading). 21,555 match Vidyut. The 9 documented differences, all in `XFAIL`:
 
 - ṛ 01.1086 laṅ, 9 requests: no 8.4.65 (_ārchat_).
+
+## Slice 1.6: tudādi
+
+The tudādi section (174 roots, codes `06.`) is in, for laṭ and laṅ. Two roots are out of
+scope: _vich_ 06.0159 takes _-āya-_ (_vicchāyati_, 3.1.28), and _truṭ_ 06.0102 has two
+present stems (_truṭyati_, _truṭati_, 3.1.70), like bhvādi _bhram_ and _laṣ_. The slow
+sweep now checks 24,876 requests over both classes: 3,312 of them over 172 tudādi roots.
+Everything matches except 18 documented differences, all the 8.4.65 _ārchat_ variant: 9
+for bhvādi _ṛ_ and 9 for tudādi _ṛch_ laṅ.
+
+**New rules.** 3.1.77 _tudādibhyaḥ śaḥ_ (śa for śap; with 1.2.4 and 1.1.5, already
+present, the zero grade comes free). Then 6.4.24 and 7.1.59 _śe mucādīnām_ with the
+vārttika _śe tṛmphādīnāṃ num vācyaḥ_, 6.4.77 _iyaṅ/uvaṅ_, 7.4.28 _riṅ_, 6.1.16
+samprasāraṇa with 6.1.108, 7.1.100 _ṝ → ir_, and 8.2.21 _aci vibhāṣā_. 1.3.60 now also
+covers tudādi _śad_ (06.0164), which `scripts/check_pada.py` flagged.
+
+**A meta-rule change: guṇa is one operation for nitya (user's rulings).** Adding 6.4.77
+and 7.1.100 made bhvādi forms fail with unresolved conflicts:
+
+- _bhū + a_: full grade 7.3.84 gives _bho-_; uvaṅ 6.4.77 gives _bhuv-_, after which 7.3.86
+  gives the penultimate _u_ full grade: _\*bhovati_. The same holds for _nī_ and the other
+  roots in final i/u.
+- _tṝ + a_ (also _dṝ_, _nṝ_): full grade gives _tar-_; 7.1.100 gives _tir-_, then 7.3.86:
+  _\*terati_.
+
+Rule by rule, the two bleed each other, so the rule-identity nitya check couldn't decide,
+and para (1.4.2) is restricted to saṃjñās. Ruling: 7.3.84 and 7.3.86 share the operation
+guṇa (both carry _guṇaḥ_ from 7.3.82; `Rule.operation`). In the nitya check, an
+operation survives the other rule if one of its rules still acts on the same sound
+afterwards, whatever its result (`resolver.surviving_rule`). So guṇa is nitya over uvaṅ
+and over 7.1.100: _bhavati_, _tarati_. In tudādi, 1.1.5 blocks guṇa, so 6.4.77 and
+7.1.100 apply: _dhuvati_, _kirati_. The trace says so: "6.4.77: deferred: full grade applies either way (nitya): after 6.4.77, 7.3.86 still applies
+at the same place".
+
+This reads nitya more loosely than the tradition's _śabdāntaraprāpti_ caveat, which
+says a rule that applies to a changed form afterwards (_bhuv_, _tir_) is not nitya. The
+tradition decides both cases by 1.4.2 _vipratiṣedhe paraṃ kāryam_ (7.3.84 is the later
+rule). Kiparsky's restriction of 1.4.2 rules that out here. Worth revisiting when the
+derivation search (extended siddha) comes in.
+
+**Other calls.**
+
+- **8.2.79 _na bhakurchurām_ is not added.** Vidyut cites it for _churati_. But the _r_
+  of _chur_ precedes a vowel in laṭ and laṅ, so 8.2.76–78 never apply and 8.2.79 has
+  nothing to block.
+- **gṝ: _girati_ first, _gilati_ as the alternative.** 8.2.21 says _vibhāṣā_, which the
+  engine reads as "preferably not" (Kiparsky). Vidyut lists _gilati_ first. The paradigm
+  test compares this root's forms in any order (`ORDER_DIFFERS`).
+- **The tṛmph vārttika applies only once the nasal is gone.** It applies to a root with
+  no nasal left before its final consonant, so it follows 6.4.24, which deletes the
+  taught nasal. The vārttika exists to undo that loss. 6.4.24 leaves an augment _n_
+  alone: num added by 7.1.59 would otherwise be pointless, and Vidyut agrees. A bug the
+  sweep caught: in laṅ of _ṛmph_ the root's vowel merges with āṭ (6.1.90), and an earlier
+  version added num twice (_\*ārṇmphat_).
+- **6.1.108 merges inside the root** (one sound replacing both, 6.1.84), not with the
+  cross-term ekādeśa edit.
+- **Names now shared across classes** (_uch_, _uñch_, _nud_, _śad_, _sad_, and others) need
+  a list code. A featured root breaks a tie only within one class, since the traces differ
+  (śap vs śa). _kṛ_
+  resolves to tudādi _kṝ_ through the diacritic-free fallback; revisit when a class with
+  _kṛ_ arrives.
+- **Vidyut cites a code 2542 on _vid_** (06.0168), which is not a sūtra number (not looked into). It gives
+  _vindati_ twice; the reference keeps one.
+- **6.4.24 now shows as a deferred competitor in bhvādi traces** (about 620 forms, e.g.
+  _manth_ laṭ 3pl): "6.4.24: deferred: 3.1.68 applies either way (nitya)". Before śap is
+  added, the root stands right before an ending that 1.2.4 makes count as marked ṅ, so 6.4.24
+  is briefly a candidate. The line is true under the nitya check, and the same thing already
+  happens with 1.1.5 on _bhū + tas_. Keeping it out would mean special-casing the rule, so it
+  stays. Slice 1.5's worry that a 6.4.24 note "would mislead" was about a near-miss note;
+  this is a resolver loser line. 6.4.77 and 7.1.100 show as deferred competitors in bhvādi
+  for the same reason (585 and 54 forms).

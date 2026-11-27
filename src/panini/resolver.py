@@ -7,7 +7,12 @@ LocalResolver implements the restricted siddha principle, the slice-1 design:
 2. para (1.4.2), only for conflicting saṃjñā assignments inside the
    ekasaṃjñā section 1.4.1–2.2.38, as Kiparsky restricts it;
 3. nitya: prefer X if X still makes the same change after Y applies, but
-   Y no longer does after X (śabdāntaraprāpti: a changed effect doesn't count);
+   Y no longer does after X (śabdāntaraprāpti: a changed effect doesn't count).
+   An operation shared by sibling rules (``Rule.operation``, e.g. guṇa by 7.3.84
+   or 7.3.86) survives Y if a sibling still acts on the same sound after Y, whatever
+   its result (bhū: guṇa over uvaṅ 6.4.77; tṝ: guṇa over 7.1.100; the user's
+   rulings, slice 1.6). This is looser than the traditional śabdāntaraprāpti caveat,
+   which counts a rule applying to a changed form against nitya (docs/findings.md);
 4. ties: the lowest-numbered candidate that commutes with all the others goes
    first (an arbitrary order with an identical result); if none commutes with
    all the others, raise UnresolvedConflict. The resolver never guesses.
@@ -180,6 +185,64 @@ def still_applies(
     return _matching_site(s2, x, sig) is not None
 
 
+# How a shared operation (Rule.operation) is named in trace notes, modern term first.
+OPERATION_LABELS = {"guṇa": "{full grade|guṇa}"}
+
+
+def _targets(state: State, edit: Edit) -> tuple[tuple[object, int], ...]:
+    """Where a substitution edit acts: (term, start position) per ReplaceSounds. Only the place
+    counts, not what it replaces or what it puts there: after ū → uv the u is still the vowel that
+    takes guṇa (bhū), and after ṝ → ir the i is (tṝ, where guṇa then gives e, not ar)."""
+    return tuple(
+        (_term_key(state, op.term), op.start)
+        for op in edit
+        if isinstance(op, ReplaceSounds)
+    )
+
+
+def surviving_rule(
+    state: State,
+    x: Candidate,
+    after: Candidate,
+    settle: Settle,
+    rules: Sequence[Rule],
+) -> str | None:
+    """The rule that still carries out x's operation once ``after`` has applied: x itself (the same
+    edit), or a sibling sharing x's operation that acts on the same sound of the same term,
+    whatever its result (the user's ruling, slice 1.6). None if neither does."""
+    if still_applies(state, x, after, settle):
+        return x.rule.id
+    if x.rule.operation is None:
+        return None
+    want = _targets(state, x.rule.rewrite(state, x.site))
+    if not want:
+        return None
+    s2 = settle(state, after.rule.rewrite(state, after.site))
+    siblings = (
+        r for r in rules if r.operation == x.rule.operation and r.id != x.rule.id
+    )
+    return next((r.id for r in siblings if _acts_on(s2, r, want, rules)), None)
+
+
+def _acts_on(
+    state: State,
+    rule: Rule,
+    targets: tuple[tuple[object, int], ...],
+    rules: Sequence[Rule],
+) -> bool:
+    """Does ``rule`` apply, unblocked, somewhere in ``state`` acting on exactly these sounds?
+
+    Sounds are matched by (term, position) in the state after the other rule. That is safe
+    when the other rule changes the length of the term before the target (no match, so the
+    conflict surfaces as UnresolvedConflict); it could match a different sound only if the
+    other rule shifted another vowel into the same place, which no current rule does."""
+    return any(
+        _targets(state, rule.rewrite(state, site)) == targets
+        and blocked_by(state, Candidate(rule, site), rules) is None
+        for site in rule.find(state)
+    )
+
+
 def then(
     state: State, first: Candidate, second: Candidate, settle: Settle = apply_edit
 ) -> State:
@@ -248,22 +311,23 @@ def _drop_para_losers(remaining: list[Candidate], losers: list[Loser]) -> None:
 
 
 def _nitya_domination(
-    state: State, remaining: list[Candidate], settle: Settle
-) -> dict[int, Candidate]:
-    """Step 3: index of each dominated candidate -> the candidate that dominates it.
+    state: State, remaining: list[Candidate], settle: Settle, rules: Sequence[Rule]
+) -> dict[int, tuple[Candidate, str]]:
+    """Step 3: index of each dominated candidate -> (the candidate that dominates it, the rule that
+    makes its change after the dominated one: itself or a sibling, see surviving_rule).
 
     X dominates Y if X survives Y but Y does not survive X.
     """
-    dominated_by: dict[int, Candidate] = {}
+    dominated_by: dict[int, tuple[Candidate, str]] = {}
     for i, x in enumerate(remaining):
         for j, y in enumerate(remaining):
             if (
                 i != j
                 and j not in dominated_by
-                and still_applies(state, x, y, settle)
-                and not still_applies(state, y, x, settle)
+                and (by := surviving_rule(state, x, y, settle, rules)) is not None
+                and surviving_rule(state, y, x, settle, rules) is None
             ):
-                dominated_by[j] = x
+                dominated_by[j] = (x, by)
     return dominated_by
 
 
@@ -335,7 +399,7 @@ def _accept_if_same_result(
 def _with_nitya_losers(
     winner: Candidate,
     remaining: list[Candidate],
-    dominated_by: dict[int, Candidate],
+    dominated_by: dict[int, tuple[Candidate, str]],
     losers: list[Loser],
 ) -> Choice:
     # "Deferred because X is nitya" is reported on the step where X applies.
@@ -343,9 +407,14 @@ def _with_nitya_losers(
     extra = [
         Loser(
             remaining[k].rule.id,
-            f"deferred: {x.rule.id} {{applies either way|nitya}}",
+            f"deferred: {x.rule.id} {{applies either way|nitya}}"
+            if by == x.rule.id
+            # The operation, not x itself, survives: name it and the sibling that carries it.
+            else f"deferred: {OPERATION_LABELS.get(x.rule.operation or '', x.rule.operation)} "
+            f"{{applies either way|nitya}}: after {remaining[k].rule.id}, {by} still applies "
+            "at the same place",
         )
-        for k, x in dominated_by.items()
+        for k, (x, by) in dominated_by.items()
         if x is winner and remaining[k].rule.id != winner.rule.id
     ]
     return Choice(winner, tuple(losers + extra))
@@ -369,7 +438,7 @@ class LocalResolver:
         if len(remaining) == 1:
             return Choice(remaining[0], tuple(losers))
 
-        dominated_by = _nitya_domination(state, remaining, settle)
+        dominated_by = _nitya_domination(state, remaining, settle, rules)
         # Cyclic domination leaves nothing undominated; treat all as tied.
         undominated = [
             c for k, c in enumerate(remaining) if k not in dominated_by

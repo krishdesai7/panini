@@ -20,10 +20,16 @@ XFAIL: dict[str, str] = {
     # Vidyut also gives ārchat: 8.4.65 jharo jhari savarṇe optionally drops one c of rcch (docs/findings.md).
     **{
         k: "8.4.65 optional cluster simplification not modelled (ārchat)"
-        for k in _slots("01.1086")
+        for code in ("01.1086", "06.0016")  # bhvādi ṛ (ṛcchati), tudādi ṛch
+        for k in _slots(code)
         if "|laṅ|" in k
     },
 }
+
+
+# Roots whose forms match Vidyut's but in another order (docs/findings.md). gṝ: 8.2.21 aci vibhāṣā
+# is "preferably not" (Kiparsky), so girati comes first; Vidyut lists gilati first.
+ORDER_DIFFERS = frozenset({"06.0146"})
 
 
 def _check(req, request) -> None:
@@ -31,7 +37,11 @@ def _check(req, request) -> None:
         request.applymarker(pytest.mark.xfail(reason=XFAIL[req.key], strict=True))
     d = derive(req)
     assert d.status is Status.OK, d.message
-    assert [d.result, *d.alternatives] == REF[req.key]
+    assert d.result is not None
+    got, want = [d.result, *d.alternatives], REF[req.key]
+    if req.root.code in ORDER_DIFFERS:
+        got, want = sorted(got), sorted(want)
+    assert got == want
 
 
 FAST = [r for r in all_requests(FEATURED) if availability(r) is None]
