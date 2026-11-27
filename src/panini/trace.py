@@ -2,12 +2,10 @@
 
 from __future__ import annotations
 
-from panini.derivation import TermView
 import re
 
-from panini.derivation import Derivation, Status, StepRecord
+from panini.derivation import Derivation, Status, StepRecord, TermView
 from panini.rules.base import sutra_info
-
 
 _UNCHANGED = {
     "category": "(form unchanged: assigns a category later rules use) ",
@@ -16,11 +14,13 @@ _UNCHANGED = {
 
 
 _TERM = re.compile(r"\{([^{}|]+)\|([^{}]+)\}")
+_IAST = re.compile(r"\[\[([^\[\]]+)\]\]")
 
 
 def plain(text: str, verbosity: int = 0) -> str:
     """Render {modern|traditional} markup: the modern word, plus the traditional one at -v."""
-    return _TERM.sub(r"\1 (\2)" if verbosity >= 1 else r"\1", text)
+    terms = _TERM.sub(r"\1 (\2)" if verbosity >= 1 else r"\1", text)
+    return _IAST.sub(r"\1", terms)
 
 
 def _form(views: tuple[TermView, ...]) -> str:
@@ -46,8 +46,10 @@ def render_text(d: Derivation, verbosity: int = 0) -> str:
         return head + f"(no form: {d.message})"
     if d.status is Status.ERROR:
         return head + f"(error: {plain(d.message or '')})"
-    lines = [head + (d.result or ""),
-             "    notation: capitals = markers (it), ã = nasal vowel, + = boundary between elements"]
+    lines = [
+        head + (d.result or ""),
+        "    notation: capitals = markers (it), ã = nasal vowel, + = boundary between elements",
+    ]
     if d.alternatives:
         lines.append(f"    also correct: {', '.join(d.alternatives)}")
     lines.append("")
@@ -59,7 +61,7 @@ def render_text(d: Derivation, verbosity: int = 0) -> str:
 
 def _render_step(n: int, s: StepRecord, width: int, verbosity: int) -> list[str]:
     rid = s.rule_ids[0]
-    out = []
+    out: list[str] = []
     if verbosity >= 2:
         out.append(f"{'':>4}  {'(' + _form(s.before) + ')':<{width}}")
     out.append(f"{n:>4}  {_form(s.after):<{width}}{rid:<9}{_text(rid)}")
@@ -69,15 +71,17 @@ def _render_step(n: int, s: StepRecord, width: int, verbosity: int) -> list[str]
         out.extend(f"{'':>4}  {'':<{width}}{'':<9}{line}" for line in rest)
     if verbosity >= 1:
         for src, note in s.reads:
-            out.append(f"{'':>4}  {'':<{width}}{'':<9}read via {src}: {plain(note, verbosity)}")
+            out.append(
+                f"{'':>4}  {'':<{width}}{'':<9}read via {src}: {plain(note, verbosity)}"
+            )
     if verbosity >= 1 and s.history:
         out.append(f"{'':>4}  {'':<{width}}{'':<9}historically: {s.history}")
-    for nm in s.near_misses:
-        out.append(f"{'':>4}  ↳ {plain(nm, verbosity)}")
+    out.extend(f"{'':>4}  ↳ {plain(nm, verbosity)}" for nm in s.near_misses)
     if verbosity >= 1:
-        for l in s.losers:
-            out.append(f"{'':>4}     ✗ {l.rule_id}: {plain(l.reason, verbosity)}")
+        out.extend(
+            f"{'':>4}     ✗ {loser.rule_id}: {plain(loser.reason, verbosity)}"
+            for loser in s.losers
+        )
     if verbosity >= 2:
-        for w in s.warnings:
-            out.append(f"{'':>4}     ! {plain(w, verbosity)}")
+        out.extend(f"{'':>4}     ! {plain(w, verbosity)}" for w in s.warnings)
     return out

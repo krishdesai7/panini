@@ -1,24 +1,153 @@
 [project]
-name = "panini"
-version = "0.1.0"
-description = "A Pāṇinian prakriyā engine: watch the Aṣṭādhyāyī derive Sanskrit verb forms step by step"
-authors = [
-    { name = "Krish Desai", email = "27725015+krishdesai7@users.noreply.github.com" }
-]
-requires-python = ">=3.15"
-dependencies = []
+  name            = "panini"
+  version         = "0.1.0"
+  description     = "A Pāṇinian prakriyā engine: watch the Aṣṭādhyāyī derive Sanskrit verb forms step by step"
+  requires-python = ">=3.15"
+  authors         = [{ name = "Krish Desai", email = "27725015+krishdesai7@users.noreply.github.com" }]
+  dependencies    = ["rich>=15.0.0", "typer>=0.29.2"]
 
-[project.scripts]
-panini = "panini.cli:main"
+
+  [project.scripts]
+    panini = "panini.__main__:main"
+
 
 [dependency-groups]
-dev = ["pytest", "vidyut==0.4.*"]
+  dev  = ["pytest", "vidyut==0.4.*"]
+  test = [
+    "pytest-cov>=7.1.0",
+    "pytest-env>=1.8.6",
+  ]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-markers = ["slow: full-class sweep"]
-addopts = "-m 'not slow'"
 
 [build-system]
-requires = ["uv_build>=0.13.9,<0.14.0"]
-build-backend = "uv_build"
+  requires      = ["uv_build>=0.13.9,<0.14.0"]
+  build-backend = "uv_build"
+
+
+[tool.complexipy]
+  paths                  = ["."]
+  max-complexity-allowed = 10
+  sort                   = "desc"
+  check-script           = true
+  no-ignore              = true
+  ignore-complexity      = true
+  failed                 = true
+  cache-dir              = ".cache/complexipy"
+
+
+[tool.coverage.run]
+  data_file = ".cache/coverage/.coverage"
+
+
+[tool.pyrefly]
+  python-interpreter-path          = ".venv/bin/python"
+  search-path                      = ["src", "."]
+  site-package-path                = []
+  check-unannotated-defs           = true
+  infer-return-types               = "checked"
+  infer-param-types-from-docstring = true
+  preset                           = "strict"
+  min-severity                     = "info"
+  treat-all-caps-as-final          = true
+  permissive-ignores               = true
+  strict-callable-subtyping        = true
+  strict-partial-subtyping         = true
+
+
+  # Tests: pytest fixtures and parametrize arguments go unannotated, and assertions
+  # like `"x" in step.note` on an optional note fail loudly at runtime anyway.
+  [[tool.pyrefly.sub-config]]
+    matches = "tests/**"
+
+    [tool.pyrefly.sub-config.errors]
+      implicit-any-parameter       = false
+      implicit-any-lambda          = false
+      implicit-any-empty-container = false
+      not-iterable                 = false
+
+  # Maintenance scripts drive vidyut, whose bundled stubs are incomplete.
+  [[tool.pyrefly.sub-config]]
+    matches = "scripts/**"
+
+    [tool.pyrefly.sub-config.errors]
+      missing-module-attribute = false
+      missing-attribute        = false
+
+[tool.pytest.ini_options]
+  addopts    = "-m 'not slow' -xq --cov panini"
+  cache_dir  = ".cache/pytest"
+  markers    = ["slow: full-class sweep"]
+  pythonpath = ["."]
+  testpaths  = ["tests"]
+  env        = [
+    "OMP_NUM_THREADS = 1",
+    "OPENBLAS_NUM_THREADS = 1",
+    "MKL_NUM_THREADS = 1",
+    "XLA_PYTHON_CLIENT_PREALLOCATE = false",
+    # Typer forces Rich terminal output when `GITHUB_ACTIONS` (or `FORCE_COLOR`, `PY_COLORS`) is set, and the option highlighter then splits `--n-epochs` into separately styled pieces, so an assertion on CLI output passes locally and fails in CI. This is Typer's own off switch.
+    "_TYPER_FORCE_DISABLE_TERMINAL = 1",
+  ]
+
+
+[tool.ruff]
+  # A project config replaces ~/.config/ruff/ruff.toml outright, so this repeats its
+  # settings (keeping CI on any machine identical) and adds the project's exceptions.
+  src            = ["src", "."]
+  line-length    = 88
+  extend-exclude = ["*.ipynb", "docs"]
+  cache-dir      = ".cache/ruff"
+
+
+  [tool.ruff.lint]
+    future-annotations = true
+    preview            = true
+    extend-select      = [
+      "B", "I", "UP", "E", "W", "F", "C90", "N", "ASYNC", "S", "A", "FA", "PIE", "PT",
+      "RET", "SIM", "ARG", "PTH", "PGH", "RUF", "PERF", "FURB", "T20", "LOG", "TC",
+    ]
+    ignore = [
+      "line-too-long", # the formatter wraps code; what's left is sūtra text and prose comments
+      "error-suffix-on-exception-name", # UnknownRoot etc. read better without an Error suffix
+    ]
+    # Glosses and comments use typographic quotes and dashes on purpose.
+    allowed-confusables = ["‘", "’", "–", "∪"]
+
+
+    [tool.ruff.lint.per-file-ignores]
+      # Rule callbacks share one (state, site) signature whether or not they use both.
+      "src/panini/rules/**.py" = ["unused-lambda-argument"]
+      "tests/**.py"            = ["assert", "unused-lambda-argument"]
+      # The site tests drive node and a localhost server.
+      "tests/test_site.py" = [
+        "suspicious-subprocess-import",
+        "subprocess-without-shell-equals-true",
+        "start-process-with-partial-path",
+        "suspicious-url-open-usage",
+      ]
+      # The package root is the rule registry that every caller imports from.
+      "src/panini/rules/__init__.py" = ["non-empty-init-module"]
+      # Maintenance scripts talk to the terminal.
+      "scripts/**.py"          = ["print"]
+
+
+  [tool.ruff.format]
+    quote-style           = "double"
+    indent-style          = "space"
+    docstring-code-format = true
+
+
+# ty is advisory (just typecheck ignores its exit code); these mirror the pyrefly sub-configs.
+[[tool.ty.overrides]]
+  include = ["tests/**"]
+  rules   = { unsupported-operator = "ignore" }
+
+[[tool.ty.overrides]]
+  include = ["scripts/**"]
+  rules   = { missing-module-member = "ignore", missing-attribute = "ignore" }
+
+[tool.uv]
+  default-groups = ["dev", "test"]
+  required-environments = [
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "sys_platform == 'darwin' and platform_machine == 'arm64'",
+  ]

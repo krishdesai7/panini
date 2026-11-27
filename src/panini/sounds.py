@@ -5,8 +5,20 @@ from functools import cache
 # The fourteen Śiva sūtras (māheśvara sūtras). The last letter of each is the
 # it marker that closes it; pratyāhāras are named by a first sound plus a marker.
 SHIVA_SUTRAS: tuple[str, ...] = (
-    "aiuR", "fxk", "eoN", "EOc", "hyvrw", "lR", "YmNRnm",
-    "JBY", "GQDz", "jbgqdS", "KPCWTcwtv", "kpy", "Szsr", "hl",
+    "aiuR",
+    "fxk",
+    "eoN",
+    "EOc",
+    "hyvrw",
+    "lR",
+    "YmNRnm",
+    "JBY",
+    "GQDz",
+    "jbgqdS",
+    "KPCWTcwtv",
+    "kpy",
+    "Szsr",
+    "hl",
 )
 
 SHORT_VOWELS = frozenset("aiufx")
@@ -17,16 +29,59 @@ VOWELS = frozenset("aAiIuUfFxXeEoO")
 # Stop classes (varga): sounds in one varga share place and internal effort,
 # so they are savarṇa with each other (1.1.9).
 VARGAS: tuple[frozenset[str], ...] = (
-    frozenset("kKgGN"), frozenset("cCjJY"), frozenset("wWqQR"),
-    frozenset("tTdDn"), frozenset("pPbBm"),
+    frozenset("kKgGN"),
+    frozenset("cCjJY"),
+    frozenset("wWqQR"),
+    frozenset("tTdDn"),
+    frozenset("pPbBm"),
 )
 
-_GUNA = {"a": "a", "A": "a", "i": "e", "I": "e", "u": "o", "U": "o",
-         "f": "ar", "F": "ar", "x": "al", "X": "al",
-         "e": "e", "E": "e", "o": "o", "O": "o"}  # nearest guṇa (1.1.50) for 6.1.87 with a following ec
-_VRDDHI = {"a": "A", "A": "A", "i": "E", "I": "E", "u": "O", "U": "O",
-           "f": "Ar", "F": "Ar", "x": "Al", "X": "Al",
-           "e": "E", "E": "E", "o": "O", "O": "O"}
+_GUNA = {
+    "a": "a",
+    "A": "a",
+    "i": "e",
+    "I": "e",
+    "u": "o",
+    "U": "o",
+    "f": "ar",
+    "F": "ar",
+    "x": "al",
+    "X": "al",
+    "e": "e",
+    "E": "e",
+    "o": "o",
+    "O": "o",
+}  # nearest guṇa (1.1.50) for 6.1.87 with a following ec
+_VRDDHI = {
+    "a": "A",
+    "A": "A",
+    "i": "E",
+    "I": "E",
+    "u": "O",
+    "U": "O",
+    "f": "Ar",
+    "F": "Ar",
+    "x": "Al",
+    "X": "Al",
+    "e": "E",
+    "E": "E",
+    "o": "O",
+    "O": "O",
+}
+
+
+def _shiva_span(first: str, marker: str) -> list[str] | None:
+    """Sounds of the Śiva sūtras from ``first`` up to the sūtra ending in ``marker``."""
+    sounds: list[str] = []
+    for sutra in SHIVA_SUTRAS:
+        body, end = sutra[:-1], sutra[-1]
+        if sounds:
+            sounds.extend(body)
+        elif first in body:
+            sounds.extend(body[body.index(first) :])
+        if sounds and end == marker:
+            return sounds
+    return None
 
 
 @cache
@@ -41,18 +96,8 @@ def pratyahara(name: str) -> frozenset[str]:
         first = first[0]
     if name in ("cu", "wu"):  # the ku/cu/ṭu/tu/pu classes (1.1.69 udit)
         return next(v for v in VARGAS if name[0] in v)
-    sounds: list[str] = []
-    started = False
-    for sutra in SHIVA_SUTRAS:
-        body, end = sutra[:-1], sutra[-1]
-        for c in body:
-            if not started and c == first:
-                started = True
-            if started:
-                sounds.append(c)
-        if started and end == marker:
-            break
-    else:
+    sounds = _shiva_span(first, marker)
+    if sounds is None:
         raise ValueError(f"unknown pratyāhāra: {name}")
     out = set(sounds)
     out |= {LONG_OF[c] for c in sounds if c in LONG_OF}

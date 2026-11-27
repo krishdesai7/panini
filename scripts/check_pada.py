@@ -4,7 +4,6 @@ Run with:  uv run --group dev python scripts/check_pada.py
 Disagreements are recorded in docs/findings.md.
 """
 
-from panini.lexicon import ROOTS
 from vidyut.prakriya import (
     Dhatu,
     DhatuPada,
@@ -16,6 +15,8 @@ from vidyut.prakriya import (
     Vacana,
     Vyakarana,
 )
+
+from panini.lexicon import ROOTS
 
 
 def vidyut_pada(v: Vyakarana, upadesha: str) -> str:

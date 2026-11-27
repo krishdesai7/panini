@@ -193,65 +193,60 @@ class _Runner:
         )
         return state, tuple(self.steps), alts
 
+    def _open_candidates(self, state: State, rules: Sequence[Rule]) -> list[Candidate]:
+        """Every rule at every site, less those already applied or declined there."""
+        return [
+            c
+            for c in (Candidate(r, s) for r in rules for s in r.find(state))
+            if self._guard_key(state, c) not in self.applied
+            and not self._was_declined(state, c)
+        ]
+
+    def _choose(self, state: State, rules: Sequence[Rule]) -> Choice | None:
+        cands = self._open_candidates(state, rules)
+        if not cands:
+            return None
+        return self.resolver.choose(
+            state,
+            cands,
+            self._effective,
+            finish=None if self.nested else self._finish,
+            settle=self._settle,
+        )
+
     def _main(self, state: State, rules: Sequence[Rule], resume: Resume) -> State:
-        while True:
-            cands: list[Candidate] = [
-                Candidate(r, s) for r in rules for s in r.find(state)
-            ]
-            cands: list[Candidate] = [
-                c
-                for c in cands
-                if self._guard_key(state, c) not in self.applied
-                and not self._was_declined(state, c)
-            ]
-            if not cands:
-                return state
-            choice: Choice | None = self.resolver.choose(
-                state,
-                cands,
-                self._effective,
-                finish=self._finish if not self.nested else None,
-                settle=self._settle,
-            )
-            if choice is None:
-                return state
+        while (choice := self._choose(state, rules)) is not None:
             state, edit = self._apply(state, choice.winner, choice.losers, resume)
-            if rules is not self.it_rules and any(
-                isinstance(op, (InsertTerm, ReplaceTerm)) for op in edit
-            ):
+            if rules is not self.it_rules and _introduces_upadesha(edit):
                 # A newly introduced upadeśa is read with its markers (amendment A2).
-                state: State = self._main(state, self.it_rules, resume)
+                state = self._main(state, self.it_rules, resume)
+        return state
+
+    def _free_sites(self, state: State, rule: Rule) -> list[Candidate]:
+        """A tripādī rule's unapplied, unblocked sites. A blocked site counts as handled."""
+        free: list[Candidate] = []
+        for site in rule.find(state):
+            cand = Candidate(rule, site)
+            key = self._guard_key(state, cand)
+            if key in self.applied:
+                continue
+            if blocked_by(state, cand, self._effective):
+                self.applied.add(key)
+                continue
+            free.append(cand)
+        return free
 
     def _tripadi(self, state: State, start: tuple[int, int, int] | None) -> State:
         for rule in self.tripadi:
             if start is not None and rule.key < start:
                 continue
-            while True:
-                free: list[Candidate] = []
-                for site in rule.find(state):
-                    cand = Candidate(rule, site)
-                    key: tuple[
-                        str,
-                        tuple[
-                            tuple[TermKind, str, tuple[Sound, ...], int, int] | None,
-                            ...,
-                        ],
-                    ] = self._guard_key(state, cand)
-                    if key in self.applied:
-                        continue
-                    if blocked_by(state, cand, self._effective):
-                        self.applied.add(key)
-                        continue
-                    free.append(cand)
-                if not free:
-                    break
-                state: State = self._apply(state, free[0], (), ("tripadi", rule.key))[0]
+            resume: Resume = ("tripadi", rule.key)
+            while free := self._free_sites(state, rule):
+                state = self._apply(state, free[0], (), resume)[0]
                 if rule.reintroduces_upadesha:
                     # Amendment A2: newly introduced upadeśa material gets its
                     # markers identified and deleted right away.
-                    state: State = self._main(
-                        state, self.it_rules, ("tripadi", rule.key)
-                    )
+                    state = self._main(state, self.it_rules, resume)
         return state
 
     # -- applying one rule -------------------------------------------------
@@ -261,7 +256,7 @@ class _Runner:
         reading of a new upadeśa's markers (amendment A2). The resolver's one-step
         checks use it."""
         new: State = apply_edit(state, edit)
-        if not any(isinstance(op, (InsertTerm, ReplaceTerm)) for op in edit):
+        if not _introduces_upadesha(edit):
             return new
         key: tuple[State, tuple[Op, ...], frozenset[str]] = (state, edit, self.disabled)
         if key not in self.settle_cache:
@@ -337,29 +332,26 @@ class _Runner:
         self.losers_seen.update(fresh)
         return fresh
 
-    def _apply(
-        self, state: State, cand: Candidate, losers: tuple[Loser, ...], resume: Resume
-    ) -> tuple[State, Edit]:
-        self._tick()
-        rule: Rule = cand.rule
-        self.applied.add(self._guard_key(state, cand))
-        edit: tuple[Op, ...] = rule.rewrite(state, cand.site)
-        note: str | None = rule.note(state, cand.site) if rule.note else None
-        alternatives: tuple[str, ...] = ()
-
+    def _apply_option(
+        self,
+        state: State,
+        cand: Candidate,
+        edit: Edit,
+        note: str | None,
+        resume: Resume,
+    ) -> tuple[State, str | None, tuple[str, ...]]:
+        """The state after an (optional) rule, its note, and the forms the other choice gives."""
+        rule = cand.rule
         match rule.optional:
             case None:
-                new: State = apply_edit(state, edit)
+                return apply_edit(state, edit), note, ()
             case Optionality.VA:
-                new: State = apply_edit(state, edit)
-                alternatives: tuple[str, ...] = self._alternative(
-                    state, frozenset({rule.id}), resume
-                )
-                note: str | None = _join(
+                alternatives = self._alternative(state, frozenset({rule.id}), resume)
+                note = _join(
                     note, "{preferably|vā}; also correct: " + ", ".join(alternatives)
                 )
+                return apply_edit(state, edit), note, alternatives
             case Optionality.VIBHASHA | Optionality.SENSE:
-                new = state
                 self.declined.add((rule.id, self._terms_key(state, cand.site)))
                 alternatives = self._alternative(
                     apply_edit(state, edit), frozenset({rule.id}), resume
@@ -370,30 +362,47 @@ class _Runner:
                     + "; also correct: "
                     + ", ".join(alternatives),
                 )
+                return state, note, alternatives
             case Optionality.ANYATARASYAM:
                 raise OptionalRuleNotSupported(
-                    f"{rule.id} is optional (anyatarasyām, an equal choice); optional"
+                    f"{rule.id} is optional (anyatarasyām, an equal choice); optional "
                     "rules of this kind are not supported yet"
                 )
 
-        warnings: list[str] = []
-        if rule.in_abhiya:
-            others: list[str] = [a for a in self.abhiya if a != rule.id]
-            if others:
-                warnings.append(
-                    f"6.4.22: {others[0]} and {rule.id} are both in the ābhīya section;"
-                    " asiddhavat not modelled in slice 1"
-                )
-            self.abhiya.append(rule.id)
+    def _abhiya_warnings(self, rule: Rule) -> tuple[str, ...]:
+        if not rule.in_abhiya:
+            return ()
+        others = [a for a in self.abhiya if a != rule.id]
+        self.abhiya.append(rule.id)
+        if not others:
+            return ()
+        warning = (
+            f"6.4.22: {others[0]} and {rule.id} are both in the ābhīya section;"
+            " asiddhavat not modelled in slice 1"
+        )
+        return (warning,)
 
+    def _near_misses(self, new: State) -> tuple[str, ...]:
+        """Near-miss messages for the new state, each reported once per derivation."""
         near: list[str] = []
         for r in self.rules:
-            if r.near_miss is not None:
-                msg = r.near_miss(new)
-                if msg and msg not in self.near_seen:
-                    self.near_seen.add(msg)
-                    near.append(msg)
+            msg = r.near_miss(new) if r.near_miss is not None else None
+            if msg and msg not in self.near_seen:
+                self.near_seen.add(msg)
+                near.append(msg)
+        return tuple(near)
 
+    def _apply(
+        self, state: State, cand: Candidate, losers: tuple[Loser, ...], resume: Resume
+    ) -> tuple[State, Edit]:
+        self._tick()
+        rule: Rule = cand.rule
+        self.applied.add(self._guard_key(state, cand))
+        edit: tuple[Op, ...] = rule.rewrite(state, cand.site)
+        note: str | None = rule.note(state, cand.site) if rule.note else None
+        new, note, alternatives = self._apply_option(state, cand, edit, note, resume)
+        warnings = self._abhiya_warnings(rule)
+        near = self._near_misses(new)
         aside: Aside | None = rule.history(state, cand.site) if rule.history else None
         # A later choice varies fastest, so its alternatives come before earlier ones'.
         self.alternatives[:0] = alternatives
@@ -404,8 +413,8 @@ class _Runner:
                 after=render_terms(new.terms),
                 note=note,
                 losers=self._new_losers(losers),
-                near_misses=tuple(near),
-                warnings=tuple(warnings),
+                near_misses=near,
+                warnings=warnings,
                 alternatives=alternatives,
                 kind=_step_kind(edit),
                 reads=rule.reads if rule.section_override is None else (),
@@ -414,6 +423,10 @@ class _Runner:
             )
         )
         return new, edit
+
+
+def _introduces_upadesha(edit: Edit) -> bool:
+    return any(isinstance(op, (InsertTerm, ReplaceTerm)) for op in edit)
 
 
 def derive(

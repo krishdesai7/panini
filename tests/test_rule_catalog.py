@@ -1,7 +1,9 @@
 import json
 
 import pytest
-from panini.cli import main
+from typer.testing import CliRunner
+
+from panini.cli import app
 from panini.rule_catalog import _example, build_catalog
 
 
@@ -44,11 +46,14 @@ def test_export_rejects_an_example_without_its_selected_step() -> None:
         )
 
 
-def test_rules_cli_exports_a_single_article(capsys) -> None:
-    assert main(["rules", "1.1.1"]) == 0
-    catalog = json.loads(capsys.readouterr().out)
+def test_rules_cli_exports_a_single_article() -> None:
+    runner = CliRunner()
+    result = runner.invoke(app, ["rules", "1.1.1"])
+    assert result.exit_code == 0
+    catalog = json.loads(result.stdout)
     assert catalog["schema_version"] == 1
     assert list(catalog["rules"]) == ["1.1.1"]
 
-    assert main(["rules", "1.1.3"]) == 2
-    assert "no rule article for 1.1.3" in capsys.readouterr().err
+    result = runner.invoke(app, ["rules", "1.1.3"])
+    assert result.exit_code == 2
+    assert "no rule article for 1.1.3" in result.stderr

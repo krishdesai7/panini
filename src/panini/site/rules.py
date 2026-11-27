@@ -32,7 +32,10 @@ def _iast(text: str) -> str:
 
 
 def _inline_iast(text: str) -> str:
-    return "".join(_iast(part) if i % 2 else escape(part) for i, part in enumerate(_IAST.split(text)))
+    return "".join(
+        _iast(part) if i % 2 else escape(part)
+        for i, part in enumerate(_IAST.split(text))
+    )
 
 
 def _term(label_html: str, tip: str, kind: str) -> str:
@@ -52,7 +55,9 @@ def _sutra_citation(
     gloss = _INLINE.sub(lambda match: match[1] or match[0], sutra["gloss"])
     gloss = _IAST.sub(r"\1", gloss)
     tip = f"{heading}\n{gloss}"
-    label = f"{escape(rule_id)} {_iast(sutra['text'])}" if show_text else escape(rule_id)
+    label = (
+        f"{escape(rule_id)} {_iast(sutra['text'])}" if show_text else escape(rule_id)
+    )
     if rule_id in articles:
         return f'<a href="{escape(rule_id)}.html" data-tip-kind="sutra" data-tip="{escape(tip)}">{label}</a>'
     return _term(label, tip, "sutra")

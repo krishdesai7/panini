@@ -4,18 +4,19 @@ import json
 
 import pytest
 
-import panini.cache as cache
-import panini.site.build as build
+from panini import cache
 from panini.cache import DerivationCache, fingerprint_of
+from panini.site import build
+lazy from panini.derivation import Derivation
 
 
 @pytest.fixture
-def disk(tmp_path, monkeypatch):
+def disk(tmp_path, monkeypatch) -> DerivationCache:
     monkeypatch.setattr(cache, "fingerprint", lambda: "fp1")
     return DerivationCache(tmp_path)
 
 
-def test_round_trip_and_miss(disk):
+def test_round_trip_and_miss(disk) -> None:
     assert disk.get("01.0001") is None
     disk.put("01.0001", {"k": {"result": "bhavati"}})
     assert disk.get("01.0001") == {"k": {"result": "bhavati"}}
@@ -23,7 +24,7 @@ def test_round_trip_and_miss(disk):
     assert not list((disk.root / "derivations/fp1").glob(".*.tmp"))
 
 
-def test_corrupt_or_wrong_shape_file_is_a_miss(disk):
+def test_corrupt_or_wrong_shape_file_is_a_miss(disk) -> None:
     disk.put("01.0001", {"k": 1})
     path = disk.root / "derivations/fp1/01.0001.json"
     path.write_text("{not json", encoding="utf-8")
@@ -32,7 +33,7 @@ def test_corrupt_or_wrong_shape_file_is_a_miss(disk):
     assert disk.get("01.0001") is None
 
 
-def test_another_fingerprint_misses_and_its_folder_is_pruned(disk, monkeypatch):
+def test_another_fingerprint_misses_and_its_folder_is_pruned(disk, monkeypatch) -> None:
     disk.put("01.0001", {"k": 1})
     monkeypatch.setattr(cache, "fingerprint", lambda: "fp2")
     assert disk.get("01.0001") is None
@@ -41,7 +42,7 @@ def test_another_fingerprint_misses_and_its_folder_is_pruned(disk, monkeypatch):
     assert disk.get("01.0002") == {"k": 2}
 
 
-def test_disabled_cache_neither_reads_nor_writes(disk):
+def test_disabled_cache_neither_reads_nor_writes(disk) -> None:
     disk.put("01.0001", {"k": 1})
     disk.enabled = False
     assert disk.get("01.0001") is None
@@ -49,21 +50,23 @@ def test_disabled_cache_neither_reads_nor_writes(disk):
     assert not (disk.root / "derivations/fp1/01.0002.json").exists()
 
 
-def test_a_failed_write_is_ignored(tmp_path, monkeypatch):
+def test_a_failed_write_is_ignored(tmp_path, monkeypatch) -> None:
     monkeypatch.setattr(cache, "fingerprint", lambda: "fp1")
     blocker = tmp_path / "file"
     blocker.write_text("not a folder")
-    DerivationCache(blocker).put("01.0001", {"k": 1})   # can't mkdir under a file: no exception
+    DerivationCache(blocker).put(
+        "01.0001", {"k": 1}
+    )  # can't mkdir under a file: no exception
 
 
-def test_default_root_follows_the_environment(tmp_path, monkeypatch):
+def test_default_root_follows_the_environment(tmp_path, monkeypatch) -> None:
     monkeypatch.setenv("PANINI_CACHE_DIR", str(tmp_path))
     assert DerivationCache().root == tmp_path
     monkeypatch.delenv("PANINI_CACHE_DIR")
     assert DerivationCache().root == cache.DEFAULT_DIR
 
 
-def test_fingerprint_covers_engine_code_and_data_but_not_rendering(tmp_path):
+def test_fingerprint_covers_engine_code_and_data_but_not_rendering(tmp_path) -> None:
     (tmp_path / "data").mkdir()
     (tmp_path / "site").mkdir()
     (tmp_path / "__pycache__").mkdir()
@@ -85,16 +88,22 @@ def test_fingerprint_covers_engine_code_and_data_but_not_rendering(tmp_path):
     assert fingerprint_of(tmp_path) not in (base, changed_data)
 
 
-def test_site_reads_a_cached_root_without_deriving(tmp_path, monkeypatch):
+def test_site_reads_a_cached_root_without_deriving(tmp_path, monkeypatch) -> None:
     monkeypatch.setattr(build, "DISK_CACHE", DerivationCache(tmp_path))
     build.root_derivations.cache_clear()
     try:
         first = build.root_derivations("01.0242")
         assert first["01.0242|laṭ|P|3|sg"]["result"] == "yucchati"
-        assert json.loads(next((tmp_path / "derivations").glob("*/01.0242.json")).read_text()) == first
+        assert (
+            json.loads(
+                next((tmp_path / "derivations").glob("*/01.0242.json")).read_text()
+            )
+            == first
+        )
 
         def no_engine(*_args, **_kwargs):
             raise AssertionError("derived although the root was cached")
+
         monkeypatch.setattr(build, "derive", no_engine)
         build.root_derivations.cache_clear()
         assert build.root_derivations("01.0242") == first
@@ -102,18 +111,21 @@ def test_site_reads_a_cached_root_without_deriving(tmp_path, monkeypatch):
         build.root_derivations.cache_clear()
 
 
-def test_a_root_with_a_crashed_derivation_is_not_cached(tmp_path, monkeypatch):
+def test_a_root_with_a_crashed_derivation_is_not_cached(tmp_path, monkeypatch) -> None:
     monkeypatch.setattr(build, "DISK_CACHE", DerivationCache(tmp_path))
     real = build.derive
 
-    def flaky(req, **kw):
+    def flaky(req, **kw) -> Derivation:
         if req.key == "01.0242|laṭ|P|3|sg":
             raise RuntimeError("boom")
         return real(req, **kw)
+
     monkeypatch.setattr(build, "derive", flaky)
     build.root_derivations.cache_clear()
     try:
-        assert build.root_derivations("01.0242")["01.0242|laṭ|P|3|sg"]["status"] == "error"
+        assert (
+            build.root_derivations("01.0242")["01.0242|laṭ|P|3|sg"]["status"] == "error"
+        )
         assert not list(tmp_path.rglob("01.0242.json"))
     finally:
         build.root_derivations.cache_clear()

@@ -17,6 +17,7 @@ import shutil
 import threading
 from functools import cache
 from pathlib import Path
+from typing import Any
 
 ENV = "PANINI_CACHE_DIR"
 DEFAULT_DIR = Path(".cache/panini")
@@ -49,7 +50,7 @@ def fingerprint() -> str:
 class DerivationCache:
     """Per-root derivation JSON on disk. ``root`` defaults to ``cache_dir()``, read on each use."""
 
-    def __init__(self, root: Path | None = None, *, enabled: bool = True):
+    def __init__(self, root: Path | None = None, *, enabled: bool = True) -> None:
         self._root = root
         self.enabled = enabled
         self._pruned: set[Path] = set()
@@ -62,16 +63,18 @@ class DerivationCache:
     def _dir(self) -> Path:
         return self.root / "derivations" / fingerprint()
 
-    def get(self, code: str) -> dict | None:
+    def get(self, code: str) -> dict[str, Any] | None:
         if not self.enabled:
             return None
         try:
-            data = json.loads((self._dir() / f"{code}.json").read_text(encoding="utf-8"))
-        except (OSError, ValueError):
+            data = json.loads(
+                (self._dir() / f"{code}.json").read_text(encoding="utf-8")
+            )
+        except OSError, ValueError:
             return None
         return data if isinstance(data, dict) else None
 
-    def put(self, code: str, data: dict) -> None:
+    def put(self, code: str, data: dict[str, Any]) -> None:
         if not self.enabled:
             return
         here = self._dir()
@@ -81,7 +84,7 @@ class DerivationCache:
             # Write then rename, so a reader on another server thread never sees half a file.
             tmp = here / f".{code}.{os.getpid()}.{threading.get_ident()}.tmp"
             tmp.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
-            os.replace(tmp, here / f"{code}.json")
+            Path(tmp).replace(here / f"{code}.json")
         except OSError:
             pass
 

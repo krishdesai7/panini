@@ -21,10 +21,32 @@ class Sound:
     it: bool = False
     nasal: bool = False
     agama: bool = False
-    upos: int | None = None  # position in the recited upadeśa; None for sounds added later
+    upos: int | None = (
+        None  # position in the recited upadeśa; None for sounds added later
+    )
     ekadesha: bool = False  # a single substitute for two sounds (6.1.84), stored at the end of the left term
     ekadesha_rule: str | None = None  # the rule that made that substitute ...
-    ekadesha_inputs: tuple[str, str] | None = None  # ... and the two sounds it replaced (left, right)
+    ekadesha_inputs: tuple[str, str] | None = (
+        None  # ... and the two sounds it replaced (left, right)
+    )
+
+
+def _nasalize_last(sounds: list[Sound]) -> None:
+    """``~`` nasalizes the vowel before it; after anything else it is ignored."""
+    if sounds and is_vowel(sounds[-1].char):
+        sounds[-1] = replace(sounds[-1], nasal=True)
+
+
+def _accent_tag(mark: str, last: Sound | None) -> str | None:
+    r"""The tag an accent mark (``\`` anudātta, ``^`` svarita) leaves after ``last``."""
+    if last is None:
+        return None
+    anudatta = mark == "\\"
+    if last.nasal:
+        return "anudattet" if anudatta else "svaritet"
+    if is_vowel(last.char):
+        return "anudatta-vowel" if anudatta else "svarita-vowel"
+    return None
 
 
 class TermKind(Enum):
@@ -47,26 +69,24 @@ class Term:
     replaced: Term | None = None
 
     @classmethod
-    def from_upadesha(cls, kind: TermKind, upadesha_slp1: str, tags: frozenset[str] = frozenset()) -> Term:
-        """Parse a recited form. ``~`` nasalizes the preceding vowel.
+    def from_upadesha(
+        cls, kind: TermKind, upadesha_slp1: str, tags: frozenset[str] = frozenset()
+    ) -> Term:
+        r"""Parse a recited form. ``~`` nasalizes the preceding vowel.
 
-        Accent marks (``\\`` anudātta, ``^`` svarita) are not sounds. On a nasal
+        Accent marks (``\`` anudātta, ``^`` svarita) are not sounds. On a nasal
         marker vowel they are recorded as the tags ``anudattet``/``svaritet``,
         which pada assignment needs (1.3.12, 1.3.72); elsewhere they are dropped.
         """
         sounds: list[Sound] = []
         extra: set[str] = set()
         for c in upadesha_slp1:
-            if c == "~":
-                if sounds and is_vowel(sounds[-1].char):
-                    sounds[-1] = replace(sounds[-1], nasal=True)
-            elif c in "\\^":
-                if sounds and sounds[-1].nasal:
-                    extra.add("anudattet" if c == "\\" else "svaritet")
-                elif sounds and is_vowel(sounds[-1].char):
-                    extra.add("anudatta-vowel" if c == "\\" else "svarita-vowel")
-            else:
+            if c not in "~\\^":
                 sounds.append(Sound(c, upos=len(sounds)))
+            elif c == "~":
+                _nasalize_last(sounds)
+            elif tag := _accent_tag(c, sounds[-1] if sounds else None):
+                extra.add(tag)
         clean = upadesha_slp1.replace("\\", "").replace("^", "")
         return cls(kind, clean, tuple(sounds), frozenset(tags) | extra)
 
